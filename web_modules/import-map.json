@@ -1,0 +1,7 @@
+{
+  "imports": {
+    "lit-html": "./lit-html.js",
+    "lit-element": "./lit-element.js",
+    "workbox-window": "./workbox-window.js"
+  }
+}

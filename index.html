@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="Description" content="Tax calculator">
+
+  <title>tax-calculator</title>
+
+  <link rel="icon" href="./web_assets/icons/favicon.ico" />
+  <link rel="manifest" href="./web_assets/manifest.json" />
+
+  <style type="text/css">
+
+    *, *:before, *:after {
+      -moz-box-sizing: border-box;
+      -webkit-box-sizing: border-box;
+      box-sizing: border-box;
+    }
+
+    html {
+      line-height: 1.15;
+      -webkit-text-size-adjust: 100%;
+    }
+
+    body {
+      margin: 0;
+    }
+
+  </style>
+
+  <base href="/">
+</head>
+<body>
+
+  <tax-calculator></tax-calculator>
+
+  <script src="./web_modules/import-map.json" type="importmap-shim"></script>
+  <script defer src="./web_assets/es-module-shims.min.js"></script>
+  <script type="module-shim" src="./src/tax-calculator.js"></script>
+
+  <!-- DEVELOPMENT ONLY SECTION -->
+  <script>
+    // NOTE: Remove this after user agent stylesheet bug is fixed
+    // https://bugs.chromium.org/p/chromium/issues/detail?id=946975
+    delete Document.prototype.adoptedStyleSheets;
+  </script>
+  <!-- END OF DEVELOPMENT ONLY SECTION -->
+
+</body>
+</html>

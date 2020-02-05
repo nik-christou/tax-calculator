@@ -1,0 +1,11 @@
+{
+  "description": "Tax calculator PWA",
+  "manifest_version": 1,
+  "name": "tax-calculator",
+  "short_name": "tax-calculator",
+  "version": "1.0.0-alpha.24",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#fff",
+  "theme_color":"#fff"
+}
