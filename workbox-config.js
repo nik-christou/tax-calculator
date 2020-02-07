@@ -1,18 +1,18 @@
 module.exports = {
-  directoryIndex: '.',
-  clientsClaim: true,
   swDest: './service-worker.js',
-  globDirectory: '.',
+  globDirectory: "./",
   globPatterns: [
     './index.html',
     './src/**/*',
     './web_assets/**/*',
     './web_modules/**/*'
   ],
-  importWorkboxFrom: 'disabled',
-  importScripts: ['./web_assets/workbox-v4.3.1/workbox-sw.js'],
+  importScripts: ['./web_assets/workbox-v5.0.0/workbox-sw.js'],
+  cleanupOutdatedCaches: true,
+  clientsClaim: true,
+  directoryIndex: '.',
+  mode: 'development',
   cacheId: 'tax-calculator-pwa',
   offlineGoogleAnalytics: false,
-  cleanupOutdatedCaches: true,
   navigateFallback: './index.html'
 };

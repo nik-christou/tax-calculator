@@ -9,18 +9,11 @@
     "url": "https://github.com/nik-christou/tax-calculator"
   },
   "scripts": {
-    "lint:eslint": "eslint --ext .js,.html . --ignore-path .gitignore",
-    "format:eslint": "eslint --ext .js,.html . --fix --ignore-path .gitignore",
-    "lint:prettier": "prettier \"**/*.js\" --tab-width 4 --check --ignore-path .gitignore",
-    "format:prettier": "prettier \"**/*.js\" --tab-width 4 --write --ignore-path .gitignore",
-    "lint": "npm run lint:eslint && npm run lint:prettier",
-    "format": "npm run format:eslint && npm run format:prettier",
+    "lint:prettier": "prettier \"./src/**/*.js\" --tab-width 4 --list-different",
+    "format:prettier": "prettier \"./src/**/*.js\" --tab-width 4 --write",
     "test": "karma start --coverage",
     "test:watch": "karma start --auto-watch=true --single-run=false",
-    "test:update-snapshots": "karma start --update-snapshots",
-    "test:prune-snapshots": "karma start --prune-snapshots",
     "test:bs": "karma start karma.bs.config.js --coverage",
-    "tsc:build": "rimraf ./types && tsc -p tsconfig.json",
     "serve:demo": "es-dev-server --node-resolve --app-index index.html",
     "serve:demo:watch": "es-dev-server --node-resolve --app-index index.html --watch",
     "sw:gen": "workbox generateSW workbox-config.js",
@@ -35,21 +28,16 @@
     "workbox-window": "^5.0.0"
   },
   "devDependencies": {
-    "@open-wc/eslint-config": "^2.0.2",
-    "@open-wc/prettier-config": "^0.1.13",
     "@open-wc/testing": "^2.5.2",
     "@open-wc/testing-karma": "^3.2.37",
     "@open-wc/testing-karma-bs": "^1.3.37",
-    "sinon": "^8.1.1",
     "deepmerge": "^4.2.2",
     "es-dev-server": "^1.38.2",
-    "eslint": "^6.8.0",
-    "husky": "^4.2.1",
-    "lint-staged": "^10.0.7",
+    "prettier": "^1.19.1",
     "rimraf": "^3.0.1",
+    "sinon": "^8.1.1",
     "snowpack": "^1.1.4",
     "web-component-analyzer": "^1.0.2",
-    "workbox-sw": "^5.0.0",
     "workbox-cli": "^5.0.0"
   },
   "snowpack": {
@@ -57,25 +45,6 @@
       "lit-html",
       "lit-element",
       "workbox-window"
-    ]
-  },
-  "eslintConfig": {
-    "extends": [
-      "@open-wc/eslint-config",
-      "eslint-config-prettier"
-    ]
-  },
-  "prettier": "@open-wc/prettier-config",
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
-  },
-  "lint-staged": {
-    "*.js": [
-      "eslint --fix",
-      "prettier --write",
-      "git add"
     ]
   }
 }

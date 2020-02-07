@@ -8,7 +8,7 @@ export const TaxCalculatorCss = css`
     }
 
     .container {
-      display: grid;
-      grid-template-rows: 50px 100px;
+        display: grid;
+        grid-template-rows: 50px 100px;
     }
 `;
