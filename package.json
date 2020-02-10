@@ -16,11 +16,16 @@
     "test:bs": "karma start karma.bs.config.js --coverage",
     "serve:demo": "es-dev-server --node-resolve --app-index index.html",
     "serve:demo:watch": "es-dev-server --node-resolve --app-index index.html --watch",
-    "sw:gen": "workbox generateSW workbox-config.js",
+    "sw:gen": "workbox generateSW workbox.config.js",
     "sw:copy": "workbox copyLibraries ./web_assets",
     "lit-analyze": "lit-analyzer src --failFast",
     "snowpack:dev": "npx snowpack",
-    "snowpack:prod": "npx snowpack -optimize"
+    "build:clean": "rimraf dist && mkdir -p ./dist",
+    "build:genDeps": "npx snowpack -optimize --dest ./dist/web_modules/",
+    "build:copyAssets": "cp -r ./web_assets ./dist",
+    "build:copyIndex": "html-minifier -o ./dist/index.html --config-file ./minify.config.json index.html",
+    "build:compile": "npx babel src --out-dir ./dist/src",
+    "build": "npm run build:clean && npm run build:genDeps && npm run build:copyAssets && npm run build:compile && npm run build:copyIndex"
   },
   "dependencies": {
     "lit-element": "^2.2.1",
@@ -28,11 +33,17 @@
     "workbox-window": "^5.0.0"
   },
   "devDependencies": {
+    "@babel/cli": "^7.8.4",
+    "@babel/core": "^7.8.4",
+    "@babel/preset-modules": "^0.1.2",
     "@open-wc/testing": "^2.5.2",
     "@open-wc/testing-karma": "^3.2.37",
     "@open-wc/testing-karma-bs": "^1.3.37",
+    "babel-plugin-template-html-minifier": "^4.0.0",
+    "babel-preset-minify": "^0.5.1",
     "deepmerge": "^4.2.2",
     "es-dev-server": "^1.38.2",
+    "html-minifier": "^4.0.0",
     "prettier": "^1.19.1",
     "rimraf": "^3.0.1",
     "sinon": "^8.1.1",
@@ -45,6 +56,38 @@
       "lit-html",
       "lit-element",
       "workbox-window"
+    ]
+  },
+  "babel": {
+    "presets": [
+      "minify",
+      "@babel/preset-modules"
+    ],
+    "plugins": [
+      [
+        "template-html-minifier",
+        {
+          "modules": {
+            "lit-html": [
+              "html"
+            ],
+            "lit-element": [
+              "html",
+              {
+                "name": "css",
+                "encapsulation": "style"
+              }
+            ]
+          },
+          "strictCSS": true,
+          "htmlMinifier": {
+            "collapseWhitespace": true,
+            "conservativeCollapse": true,
+            "removeComments": true,
+            "caseSensitive": true
+          }
+        }
+      ]
     ]
   }
 }
