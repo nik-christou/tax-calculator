@@ -29,6 +29,7 @@ export class SWRegistration {
 
     _handleWaitingState(event) {
         console.log(event);
+        console.log('New and updated content is available. waiting...');
         // present an update app button
     }
 }

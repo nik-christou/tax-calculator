@@ -9,23 +9,23 @@
     "url": "https://github.com/nik-christou/tax-calculator"
   },
   "scripts": {
+    "snowpack:deps": "npx snowpack",
+    "lit-analyze": "lit-analyzer src --failFast",
     "lint:prettier": "prettier \"./src/**/*.js\" --tab-width 4 --list-different",
     "format:prettier": "prettier \"./src/**/*.js\" --tab-width 4 --write",
     "test": "karma start --coverage",
     "test:watch": "karma start --auto-watch=true --single-run=false",
     "test:bs": "karma start karma.bs.config.js --coverage",
-    "serve:demo": "es-dev-server --node-resolve --app-index index.html",
-    "serve:demo:watch": "es-dev-server --node-resolve --app-index index.html --watch",
-    "sw:gen": "workbox generateSW workbox.config.js",
-    "sw:copy": "workbox copyLibraries ./web_assets",
-    "lit-analyze": "lit-analyzer src --failFast",
-    "snowpack:dev": "npx snowpack",
+    "serve": "es-dev-server --config ./es-dev-server.config.js",
+    "serve:watch": "es-dev-server --node-resolve --app-index index.html --watch",
+    "build:sw:gen": "workbox generateSW workbox.config.js",
+    "build:sw:copy": "workbox copyLibraries ./dist/web_assets",
     "build:clean": "rimraf dist && mkdir -p ./dist",
     "build:genDeps": "npx snowpack -optimize --dest ./dist/web_modules/",
     "build:copyAssets": "cp -r ./web_assets ./dist",
     "build:copyIndex": "html-minifier -o ./dist/index.html --config-file ./minify.config.json index.html",
     "build:compile": "npx babel src --out-dir ./dist/src",
-    "build": "npm run build:clean && npm run build:genDeps && npm run build:copyAssets && npm run build:compile && npm run build:copyIndex"
+    "build": "npm run build:clean && npm run build:genDeps && npm run build:copyAssets && npm run build:compile && npm run build:copyIndex && npm run build:sw:copy && npm run build:sw:gen"
   },
   "dependencies": {
     "lit-element": "^2.2.1",
