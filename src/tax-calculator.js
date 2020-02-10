@@ -17,11 +17,9 @@ export class TaxCalculator extends BaseElementMixin(LitElement) {
         `;
     }
 
-    constructor() {
-        super();
+    firstUpdated() {
 
-        // const swRegistration = new SWRegistration();
-        // swRegistration.register();
+        new SWRegistration().register();
     }
 }
 

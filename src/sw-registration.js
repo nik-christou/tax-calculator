@@ -1,13 +1,19 @@
 import { Workbox } from "workbox-window";
 
 export class SWRegistration {
-    register() {
-        console.log("Service worker registration");
 
-        if (!"serviceWorker" in navigator) {
+    register() {
+
+        // only proceed with regisration if not in
+        // local development enviroment
+        if ( (!"serviceWorker" in navigator)
+            || location.hostname !== "localhost"
+            || location.hostname !== "127.0.0.1") {
+            console.log("Skipping service worker registration in localhost...");
             return;
         }
 
+        console.log("Proceeding with service worker registration...");
         const wb = new Workbox("../service-worker.js");
 
         wb.addEventListener("activated", event =>

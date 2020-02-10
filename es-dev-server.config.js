@@ -10,9 +10,7 @@ module.exports = {
         async function chromiumCSSPatch({ url, status, contentType, body }) {
             if (url === '/' || url === '/index.html') {
                 const patch = `
-                    <script>
-                        delete Document.prototype.adoptedStyleSheets;
-                    </script>
+                    <script>delete Document.prototype.adoptedStyleSheets;</script>
                     </body>
                 `;
                 const rewritten = body.replace(`</body>`, patch);
