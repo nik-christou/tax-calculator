@@ -18,6 +18,7 @@ export class TaxCalculator extends BaseElementMixin(LitElement) {
             <div class="container">
                 <h2>Tax calculator</h2>
                 <country-select></country-select>
+                <h3>Annually</h3>
                 <results-container
                     gross="10"
                     tax="5"
