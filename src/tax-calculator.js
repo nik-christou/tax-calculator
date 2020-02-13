@@ -6,6 +6,7 @@ import { TaxCalculatorCss } from "./tax-calculator.css.js";
 import { SWRegistration } from "./sw-registration.js";
 
 import "./country-select.js";
+import "./results-container.js";
 
 export class TaxCalculator extends BaseElementMixin(LitElement) {
     static get styles() {
@@ -17,6 +18,13 @@ export class TaxCalculator extends BaseElementMixin(LitElement) {
             <div class="container">
                 <h2>Tax calculator</h2>
                 <country-select></country-select>
+                <results-container
+                    gross="10"
+                    tax="5"
+                    social="1"
+                    nhs="1"
+                    net="3">
+                </results-container>
             </div>
         `;
     }
