@@ -1,11 +1,6 @@
 import { css } from "lit-element";
 
 export const TaxCalculatorCss = css`
-    *,
-    *::before,
-    *::after {
-        box-sizing: border-box;
-    }
 
     .container {
         display: grid;
