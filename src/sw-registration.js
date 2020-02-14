@@ -2,7 +2,7 @@ import { Workbox } from "workbox-window";
 
 export class SWRegistration {
 
-    register() {
+    static register() {
 
         // only proceed with regisration if not in
         // local development enviroment
