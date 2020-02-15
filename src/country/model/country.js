@@ -1,9 +1,8 @@
 // @ts-check
 
-import { TaxBracket } from './tax-bracket.js';
+import { TaxBracket } from "./tax-bracket.js";
 
 export class Country {
-
     /**
      * @param {Number} id
      * @param {String} name
@@ -16,10 +15,10 @@ export class Country {
         this.taxBrackets = taxBrackets;
         this.healthContributionPercent = healthContributionPercent;
 
-        Object.freeze(this.id)
+        Object.freeze(this.id);
         Object.freeze(this.name);
         Object.freeze(this.taxBrackets);
-        Object.freeze(this.healthContributionPercent)
+        Object.freeze(this.healthContributionPercent);
         Object.freeze(this);
     }
 }

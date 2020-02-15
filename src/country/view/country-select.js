@@ -6,7 +6,6 @@ import { Country } from "../model/country.js";
 import { CountryLoader } from "../control/country-loader.js";
 
 export class CountrySelect extends BaseElementMixin(LitElement) {
-
     static get properties() {
         return {
             country: Country
@@ -20,9 +19,8 @@ export class CountrySelect extends BaseElementMixin(LitElement) {
     }
 
     firstUpdated() {
-
-        const selectElement = this.shadowRoot.querySelector('select');
-        selectElement.addEventListener('input', event => this._handleChangeEvent(event));
+        const selectElement = this.shadowRoot.querySelector("select");
+        selectElement.addEventListener("input", event => this._handleChangeEvent(event));
 
         this._addCaptionOption(selectElement);
         this._populateCountries(selectElement);
@@ -32,9 +30,8 @@ export class CountrySelect extends BaseElementMixin(LitElement) {
      * @param {HTMLSelectElement} selectElement
      */
     _populateCountries(selectElement) {
-
-        CountryLoader.loadCountryFromJson('../../../web_assets/data/cyprus.json')
-            .then(country => this.country = country)
+        CountryLoader.loadCountryFromJson("../../../web_assets/data/cyprus.json")
+            .then(country => (this.country = country))
             .then(country => this._createOptionItem(country))
             .then(optionItem => selectElement.add(optionItem))
             .catch(reason => console.log(reason.message));
@@ -44,7 +41,7 @@ export class CountrySelect extends BaseElementMixin(LitElement) {
      * @param {HTMLSelectElement} selectElement
      */
     _addCaptionOption(selectElement) {
-        const optionItem = new Option('Select a country:', '', true, true);
+        const optionItem = new Option("Select a country:", "", true, true);
         selectElement.add(optionItem);
     }
 
@@ -60,7 +57,6 @@ export class CountrySelect extends BaseElementMixin(LitElement) {
      * @param {InputEvent} event
      */
     _handleChangeEvent(event) {
-
         const countrySelectChangeEvent = new CustomEvent("country-select-change", {
             bubbles: true,
             composed: true,

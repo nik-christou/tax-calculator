@@ -9,7 +9,6 @@ import "./country/view/country-select.js";
 import "./salary/view/salary-input.js";
 
 export class TaxCalculatorApp extends BaseElementMixin(LitElement) {
-
     static get styles() {
         return [...super.styles, TaxCalculatorCss];
     }
@@ -26,18 +25,16 @@ export class TaxCalculatorApp extends BaseElementMixin(LitElement) {
     }
 
     firstUpdated() {
-
         SWRegistration.register();
 
-        this.addEventListener('country-select-change', event => this._handleCountryChange(event));
-        this.addEventListener('salary-details-change', event => this._handleSalaryDetailsChange(event));
+        this.addEventListener("country-select-change", event => this._handleCountryChange(event));
+        this.addEventListener("salary-details-change", event => this._handleSalaryDetailsChange(event));
     }
 
     /**
      * @param {CustomEvent} event
      */
     _handleCountryChange(event) {
-
         const selectedCountry = event.detail;
         console.log(selectedCountry);
     }
@@ -46,7 +43,6 @@ export class TaxCalculatorApp extends BaseElementMixin(LitElement) {
      * @param {CustomEvent} event
      */
     _handleSalaryDetailsChange(event) {
-
         const salaryDetails = event.detail;
         console.log(salaryDetails);
     }

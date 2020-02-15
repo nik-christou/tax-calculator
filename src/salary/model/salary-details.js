@@ -3,7 +3,6 @@
 import { SalaryType } from "./salary-type.js";
 
 export class SalaryDetails {
-
     /**
      * @param {Number} amount
      * @param {SalaryType} type
@@ -16,7 +15,7 @@ export class SalaryDetails {
 
         Object.freeze(this.amount);
         Object.freeze(this.type);
-        Object.freeze(this.includesThirteen)
+        Object.freeze(this.includesThirteen);
         Object.freeze(this);
     }
 }

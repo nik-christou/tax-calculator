@@ -1,7 +1,6 @@
 // @ts-check
 
 export class TaxBracket {
-
     /**
      * @param {Number} start
      * @param {Number} end

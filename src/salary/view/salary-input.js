@@ -2,11 +2,10 @@
 
 import { LitElement, html } from "lit-element";
 import { BaseElementMixin } from "../../base/base-element-mixin.js";
-import { SalaryTypes } from '../control/salary-type-enum.js';
-import { SalaryDetails } from '../model/salary-details.js';
+import { SalaryTypes } from "../control/salary-type-enum.js";
+import { SalaryDetails } from "../model/salary-details.js";
 
 export class SalaryInput extends BaseElementMixin(LitElement) {
-
     render() {
         return html`
             <div>
@@ -15,7 +14,7 @@ export class SalaryInput extends BaseElementMixin(LitElement) {
                 <select id="salaryType"></select>
                 <br />
                 <div>
-                    <input type="checkbox" id="thirteen" name="thirteen" checked>
+                    <input type="checkbox" id="thirteen" name="thirteen" checked />
                     <label for="thirteen">Includes 13th salary</label>
                 </div>
             </div>
@@ -23,14 +22,13 @@ export class SalaryInput extends BaseElementMixin(LitElement) {
     }
 
     firstUpdated() {
+        const salaryElement = this.shadowRoot.querySelector("input#salary");
+        const salaryTypeElement = this.shadowRoot.querySelector("select#salaryType");
+        const thirteenSalaryElement = this.shadowRoot.querySelector("input#thirteen");
 
-        const salaryElement = this.shadowRoot.querySelector('input#salary');
-        const salaryTypeElement = this.shadowRoot.querySelector('select#salaryType');
-        const thirteenSalaryElement = this.shadowRoot.querySelector('input#thirteen');
-
-        salaryElement.addEventListener('input', event => this._handleSalaryDetailsChange(event));
-        salaryTypeElement.addEventListener('input', event => this._handleSalaryDetailsChange(event));
-        thirteenSalaryElement.addEventListener('input', event => this._handleSalaryDetailsChange(event));
+        salaryElement.addEventListener("input", event => this._handleSalaryDetailsChange(event));
+        salaryTypeElement.addEventListener("input", event => this._handleSalaryDetailsChange(event));
+        thirteenSalaryElement.addEventListener("input", event => this._handleSalaryDetailsChange(event));
 
         this._addSalaryTypesFromEnum(salaryTypeElement);
     }
@@ -39,9 +37,7 @@ export class SalaryInput extends BaseElementMixin(LitElement) {
      * @param {HTMLSelectElement} salaryTypeElement
      */
     _addSalaryTypesFromEnum(salaryTypeElement) {
-
         Object.keys(SalaryTypes).forEach(type => {
-
             const salaryType = SalaryTypes[type];
             const optionItem = new Option(salaryType.type, salaryType.id, false, false);
 
@@ -57,11 +53,11 @@ export class SalaryInput extends BaseElementMixin(LitElement) {
     }
 
     _getSalaryType() {
-        const salaryTypeElement = this.shadowRoot.querySelector('select#salaryType');
+        const salaryTypeElement = this.shadowRoot.querySelector("select#salaryType");
         const selectedOption = salaryTypeElement.selectedOptions[0];
         const selectedOptionValue = Number(selectedOption.value);
 
-        if(selectedOptionValue === SalaryTypes.ANNUAL.id) {
+        if (selectedOptionValue === SalaryTypes.ANNUAL.id) {
             return SalaryTypes.ANNUAL;
         }
 
@@ -69,21 +65,17 @@ export class SalaryInput extends BaseElementMixin(LitElement) {
     }
 
     _getSalaryAmount() {
-        const salaryElement = this.shadowRoot.querySelector('input#salary');
+        const salaryElement = this.shadowRoot.querySelector("input#salary");
         return salaryElement.value;
     }
 
     _getThirteenSalaryCheck() {
-        const thirteenSalaryElement = this.shadowRoot.querySelector('input#thirteen');
+        const thirteenSalaryElement = this.shadowRoot.querySelector("input#thirteen");
         return thirteenSalaryElement.checked;
     }
 
     _dispatchSalaryDetailsChangeEvent() {
-
-        const salaryDetails = new SalaryDetails(
-            this._getSalaryAmount(),
-            this._getSalaryType(),
-            this._getThirteenSalaryCheck());
+        const salaryDetails = new SalaryDetails(this._getSalaryAmount(), this._getSalaryType(), this._getThirteenSalaryCheck());
 
         const salaryDetailsChangeEvent = new CustomEvent("salary-details-change", {
             bubbles: true,

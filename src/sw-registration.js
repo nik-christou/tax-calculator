@@ -1,14 +1,11 @@
+// @ts-check
+
 import { Workbox } from "workbox-window";
 
 export class SWRegistration {
-
     static register() {
-
-        // only proceed with regisration if not in
-        // local development enviroment
-        if ( (!"serviceWorker" in navigator)
-            || location.hostname !== "localhost"
-            || location.hostname !== "127.0.0.1") {
+        // only proceed with regisration if not in local development enviroment
+        if (!("serviceWorker" in navigator) || location.hostname === "localhost") {
             console.log("Skipping service worker registration in localhost...");
             return;
         }
@@ -16,26 +13,23 @@ export class SWRegistration {
         console.log("Proceeding with service worker registration...");
         const wb = new Workbox("../service-worker.js");
 
-        wb.addEventListener("activated", event =>
-            this._handleActivationState(event)
-        );
-        wb.addEventListener("waiting", event =>
-            this._handleWaitingState(event)
-        );
+        wb.addEventListener("activated", event => this._handleActivationState(event));
+
+        wb.addEventListener("waiting", event => this._handleWaitingState(event));
 
         wb.register();
     }
 
-    _handleActivationState(event) {
+    static _handleActivationState(event) {
         console.log(event);
         if (!event.isUpdate) {
             console.log("Service worker activated for the first time!");
         }
     }
 
-    _handleWaitingState(event) {
+    static _handleWaitingState(event) {
         console.log(event);
-        console.log('New and updated content is available. waiting...');
+        console.log("New and updated content is available. waiting...");
         // present an update app button
     }
 }
