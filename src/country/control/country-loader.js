@@ -21,7 +21,7 @@ export class CountryLoader {
 
             var end = taxBracketJson["end"];
             if (end == -1) {
-                end = Number.MAX_VALUE;
+                end = Number.POSITIVE_INFINITY;
             }
 
             const taxBracket = new TaxBracket(taxBracketJson["start"], end, taxBracketJson["ratePercent"]);
