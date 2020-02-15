@@ -10,9 +10,8 @@
   },
   "scripts": {
     "snowpack:deps": "npx snowpack",
-    "lit-analyze": "lit-analyzer src --failFast",
     "lint:prettier": "prettier \"./src/**/*.js\" --tab-width 4 --list-different",
-    "format:prettier": "prettier \"./src/**/*.js\" --tab-width 4 --write",
+    "format:prettier": "prettier \"./src/**/*.js\" --tab-width 4 --print-width 150 --write",
     "test": "karma start --coverage",
     "test:watch": "karma start --auto-watch=true --single-run=false",
     "test:bs": "karma start karma.bs.config.js --coverage",
