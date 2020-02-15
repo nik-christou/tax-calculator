@@ -18,11 +18,22 @@ export class CountryLoader {
         const taxBrackets = [];
 
         data.taxBrackets.forEach(taxBracketJson => {
-            const taxBracket = new TaxBracket(taxBracketJson["start"], taxBracketJson["end"], taxBracketJson["ratePercent"]);
+
+            var end = taxBracketJson["end"];
+            if (end == -1) {
+                end = Number.MAX_VALUE;
+            }
+
+            const taxBracket = new TaxBracket(taxBracketJson["start"], end, taxBracketJson["ratePercent"]);
 
             taxBrackets.push(taxBracket);
         });
 
-        return new Country(data.id, data.name, taxBrackets, data.healthContributionPercent);
+        return new Country(
+            data.id,
+            data.name,
+            taxBrackets,
+            data.socialInsurancePercent,
+            data.healthContributionPercent);
     }
 }

@@ -8,5 +8,6 @@
     {"start": 36301, "end": 60000, "ratePercent": 30},
     {"start": 60000, "end": -1, "ratePercent": 35}
   ],
+  "socialInsurancePercent": 8.3,
   "healthContributionPercent": 1.70
 }

@@ -8,7 +8,7 @@ export class ResultsContainer extends BaseElementMixin(LitElement) {
 
     static get properties() {
         return {
-            montlyResults: TaxResults,
+            monthlyResults: TaxResults,
             annualResults: TaxResults
         };
     }
@@ -39,19 +39,19 @@ export class ResultsContainer extends BaseElementMixin(LitElement) {
                 <h4>Monthly</h4>
                 <table>
                     <tr>
-                        <td>Gross</td><td>€${this.montlyResults.grossAmount}</td>
+                        <td>Gross</td><td>€${this.monthlyResults.grossAmount}</td>
                     </tr>
                     <tr>
-                        <td>Tax</td><td>€${this.montlyResults.taxAmount}</td>
+                        <td>Tax</td><td>€${this.monthlyResults.taxAmount}</td>
                     </tr>
                     <tr>
-                        <td>Social</td><td>€${this.montlyResults.socialAmount}</td>
+                        <td>Social</td><td>€${this.monthlyResults.socialAmount}</td>
                     </tr>
                     <tr>
-                        <td>NHS (GESY)</td><td>€${this.montlyResults.healthContributionAmount}</td>
+                        <td>NHS (GESY)</td><td>€${this.monthlyResults.healthContributionAmount}</td>
                     </tr>
                     <tr>
-                        <td>Net</td><td>€${this.montlyResults.netAmount}</td>
+                        <td>Net</td><td>€${this.monthlyResults.netAmount}</td>
                     </tr>
                 </table>
             </div>
@@ -60,7 +60,7 @@ export class ResultsContainer extends BaseElementMixin(LitElement) {
 
     constructor() {
         super();
-        this.montlyResults = new TaxResults(0,0,0,0,0);
+        this.monthlyResults = new TaxResults(0,0,0,0,0);
         this.annualResults = new TaxResults(0,0,0,0,0);
     }
 }
