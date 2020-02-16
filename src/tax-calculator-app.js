@@ -5,6 +5,8 @@ import { BaseElementMixin } from "./base/base-element-mixin.js";
 import { TaxCalculatorCss } from "./tax-calculator-app.css.js";
 import { SWRegistration } from "./sw-registration.js";
 import { TaxCalculator } from "./tax-calculator.js";
+import { SalaryTypes } from "./salary/control/salary-type-enum.js";
+import { TaxResults } from "./results/model/tax-results.js";
 
 import "./country/view/country-select.js";
 import "./salary/view/salary-input.js";
@@ -13,11 +15,6 @@ import "./results/view/results-container.js";
 export class TaxCalculatorApp extends BaseElementMixin(LitElement) {
     static get styles() {
         return [...super.styles, TaxCalculatorCss];
-    }
-
-    constructor() {
-        super();
-        this.taxCalculator = new TaxCalculator();
     }
 
     render() {
@@ -43,8 +40,6 @@ export class TaxCalculatorApp extends BaseElementMixin(LitElement) {
      */
     _handleCountryChange(event) {
         this.selectedCountry = event.detail;
-        console.log(this.selectedCountry);
-
         this._calculateResults();
     }
 
@@ -53,21 +48,31 @@ export class TaxCalculatorApp extends BaseElementMixin(LitElement) {
      */
     _handleSalaryDetailsChange(event) {
         this.salaryDetails = event.detail;
-        console.log(this.salaryDetails);
-
         this._calculateResults();
+    }
+
+    /**
+     * @param {TaxResults} taxResults
+     */
+    _populateResults(taxResults) {
+
+        const resultContainer = this.shadowRoot.querySelector("results-container");
+        resultContainer.taxResults = taxResults;
     }
 
     _calculateResults() {
 
-        if (this.selectedCountry !== undefined && this.salaryDetails !== undefined) {
+        if (this.selectedCountry && this.salaryDetails) {
 
-            const taxResults = this.taxCalculator.calculateTaxFromAnnualIncome(this.selectedCountry, this.salaryDetails);
+            let taxTesults;
 
-            const resultContainer = this.shadowRoot.querySelector("results-container");
+            if(this.salaryDetails.type === SalaryTypes.ANNUAL) {
+                taxTesults = TaxCalculator.calculateTaxFromAnnualIncome(this.selectedCountry, this.salaryDetails);
+            } else {
+                taxTesults = TaxCalculator.calculateTaxFromMonthlyIncome(this.selectedCountry, this.salaryDetails);
+            }
 
-            resultContainer.monthlyResults = taxResults.monthly;
-            resultContainer.annualResults = taxResults.annual;
+            this._populateResults(taxTesults);
         }
     }
 }

@@ -19,11 +19,7 @@ export class CountryLoader {
 
         data.taxBrackets.forEach(taxBracketJson => {
 
-            var end = taxBracketJson["end"];
-            if (end == -1) {
-                end = Number.POSITIVE_INFINITY;
-            }
-
+            const end = taxBracketJson["end"] === -1 ? Number.POSITIVE_INFINITY : taxBracketJson["end"];
             const taxBracket = new TaxBracket(taxBracketJson["start"], end, taxBracketJson["ratePercent"]);
 
             taxBrackets.push(taxBracket);

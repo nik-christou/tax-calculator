@@ -1,29 +1,65 @@
+// @ts-check
+
+import { TaxResult } from "./results/model/tax-result.js";
 import { TaxResults } from "./results/model/tax-results.js";
 import { SalaryDetails } from "./salary/model/salary-details.js";
+import { Country } from "./country/model/country.js";
 
 export class TaxCalculator {
 
-    calculateTaxFromAnnualIncome(selectedCountry, salaryDetails) {
+    /**
+     * @static
+     * @param {Country} selectedCountry
+     * @param {SalaryDetails} salaryDetails
+     */
+    static calculateTaxFromMonthlyIncome(selectedCountry, salaryDetails) {
 
-        const annualTax = this._calculateTax(selectedCountry, salaryDetails);
-        const monthlyTax = this._convertAnnualToMonthlyTax(annualTax, salaryDetails.includesThirteen);
+        const monthlyTaxResults = this._calculateTax(selectedCountry, salaryDetails);
+        const annualTaxResults = this._convertMontlyToAnnualTax(monthlyTaxResults, salaryDetails.includesThirteen);
 
-        return {
-            annual: annualTax,
-            monthly: monthlyTax
-        };
+        return new TaxResults(monthlyTaxResults, annualTaxResults);
     }
 
-    _convertAnnualToMonthlyTax(annualTax, includes13thSalary) {
+    /**
+     * @static
+     * @param {Country} selectedCountry
+     * @param {SalaryDetails} salaryDetails
+     */
+    static calculateTaxFromAnnualIncome(selectedCountry, salaryDetails) {
 
-        var numMonths;
-        if (includes13thSalary) {
-            numMonths = 13;
-        } else {
-            numMonths = 12;
-        }
+        const annualTaxResults = this._calculateTax(selectedCountry, salaryDetails);
+        const monthlyTaxResults = this._convertAnnualToMonthlyTax(annualTaxResults, salaryDetails.includesThirteen);
 
-        return new TaxResults(
+        return new TaxResults(monthlyTaxResults, annualTaxResults);
+    }
+
+    /**
+     * @static
+     * @param {TaxResult} monthlyTax
+     * @param {Boolean} includes13thSalary
+     */
+    static _convertMontlyToAnnualTax(monthlyTax, includes13thSalary) {
+
+        const numMonths = includes13thSalary ? 13 : 12;
+
+        return new TaxResult(
+            monthlyTax.grossAmount * numMonths,
+            monthlyTax.taxAmount * numMonths,
+            monthlyTax.socialAmount * numMonths,
+            monthlyTax.healthContributionAmount * numMonths,
+            monthlyTax.netAmount * numMonths);
+    }
+
+    /**
+     * @static
+     * @param {TaxResult} annualTax
+     * @param {Boolean} includes13thSalary
+     */
+    static _convertAnnualToMonthlyTax(annualTax, includes13thSalary) {
+
+        const numMonths = includes13thSalary ? 13 : 12;
+
+        return new TaxResult(
             annualTax.grossAmount / numMonths,
             annualTax.taxAmount / numMonths,
             annualTax.socialAmount / numMonths,
@@ -31,17 +67,25 @@ export class TaxCalculator {
             annualTax.netAmount / numMonths);
     }
 
-    _calculateTax(selectedCountry, salaryDetails) {
+    /**
+     * @static
+     * @param {Country} selectedCountry
+     * @param {SalaryDetails} salaryDetails
+     *
+     * @returns {TaxResult} the tax result
+     */
+    static _calculateTax(selectedCountry, salaryDetails) {
 
         const gross = salaryDetails.amount;
+        const lastTaxBracketIndex = selectedCountry.taxBrackets.length - 1;
 
-        var remainingAmount = gross;
-        var totalTax = 0;
+        let remainingAmount = gross;
+        let totalTax = 0;
 
-        for (var i = selectedCountry.taxBrackets.length - 1; i >= 0; i--) {
+        for (let index = lastTaxBracketIndex; index >= 0; index--) {
 
-            const bracket = selectedCountry.taxBrackets[i];
-            
+            const bracket = selectedCountry.taxBrackets[index];
+
             if (remainingAmount >= bracket.start && remainingAmount <= bracket.end) {
 
                 const tax = (remainingAmount - bracket.start) * bracket.ratePercent * 0.01;
@@ -54,7 +98,7 @@ export class TaxCalculator {
         const socialInsurance = gross * selectedCountry.socialInsuranceContributionPercent * 0.01;
         const nhs = gross * selectedCountry.healthContributionPercent * 0.01;
 
-        return new TaxResults(
+        return new TaxResult(
             gross,
             totalTax,
             socialInsurance,
