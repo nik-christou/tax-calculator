@@ -1,5 +1,3 @@
-// @ts-check
-
 import { Country } from "../model/country.js";
 import { TaxBracket } from "../model/tax-bracket.js";
 
@@ -18,11 +16,18 @@ export class CountryLoader {
         const taxBrackets = [];
 
         data.taxBrackets.forEach(taxBracketJson => {
-            const taxBracket = new TaxBracket(taxBracketJson["start"], taxBracketJson["end"], taxBracketJson["ratePercent"]);
+
+            const end = taxBracketJson["end"] === -1 ? Number.POSITIVE_INFINITY : taxBracketJson["end"];
+            const taxBracket = new TaxBracket(taxBracketJson["start"], end, taxBracketJson["ratePercent"]);
 
             taxBrackets.push(taxBracket);
         });
 
-        return new Country(data.id, data.name, taxBrackets, data.healthContributionPercent);
+        return new Country(
+            data.id,
+            data.name,
+            taxBrackets,
+            data.socialInsurancePercent,
+            data.healthContributionPercent);
     }
 }

@@ -1,5 +1,3 @@
-// @ts-check
-
 import { SalaryType } from "../model/salary-type.js";
 
 /**
