@@ -1,7 +1,8 @@
 {
   "imports": {
-    "lit-html": "./lit-html.js?rev=08bc96ba21",
-    "lit-element": "./lit-element.js?rev=db26ba5501",
-    "workbox-window": "./workbox-window.js?rev=31861ebf32"
+    "currency": "./currency.js",
+    "lit-element": "./lit-element.js",
+    "lit-html": "./lit-html.js",
+    "workbox-window": "./workbox-window.js"
   }
 }
