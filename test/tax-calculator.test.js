@@ -3,7 +3,6 @@ import { Country } from '../src/country/model/country.js';
 import { TaxBracket } from '../src/country/model/tax-bracket.js';
 import { SalaryDetails } from '../src/salary/model/salary-details.js';
 import { SalaryTypes } from '../src/salary/control/salary-type-enum.js';
-import { TaxResults } from '../src/results/model/tax-results.js';
 import { TaxResult } from '../src/results/model/tax-result.js';
 
 describe('TaxCalculator tests', () => {
@@ -18,6 +17,7 @@ describe('TaxCalculator tests', () => {
             new TaxBracket(36301, 60000, 30),
             new TaxBracket(60000, -1, 35)
         ];
+
         const selectedCountry = new Country(0, "cyprus", taxBrackets, 8.3, 1.70);
         const salaryDetails = new SalaryDetails(20000.00, SalaryTypes.ANNUAL, true);
 
@@ -25,10 +25,10 @@ describe('TaxCalculator tests', () => {
         const taxResults = TaxCalculator.calculateTaxFromAnnualIncome(selectedCountry, salaryDetails);
 
         // then
-        const expectedMonthlyTaxResult = new TaxResult(1538.46, 0, 127.69, 127.69, 127.69);
-        const expectedAnnualTaxResults = new TaxResults(20000.00, 0, 1660, 340, 18000);
-        const expectedTaxResults = new TaxResults(expectedMonthlyTaxResult, expectedAnnualTaxResults);
+        const expectedMonthlyTaxResult = new TaxResult(1538.46, 7.68, 127.69, 26.15, 1376.94);
+        const expectedAnnualTaxResults = new TaxResult(20000.00, 99.80, 1660, 340, 17900.20);
 
-        chai.assert.equal(taxResults, expectedTaxResults, 'tax results do not match');
+        chai.assert.deepEqual(taxResults.monthlyTaxResult, expectedMonthlyTaxResult, 'monthly tax results do not match');
+        chai.assert.deepEqual(taxResults.annualTaxResult, expectedAnnualTaxResults, 'annual tax results do not match');
     });
 });

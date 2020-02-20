@@ -3,6 +3,8 @@ import { TaxResults } from "./results/model/tax-results.js";
 import { SalaryDetails } from "./salary/model/salary-details.js";
 import { Country } from "./country/model/country.js";
 
+import { default as currency } from "currency";
+
 export class TaxCalculator {
 
     /**
@@ -41,11 +43,11 @@ export class TaxCalculator {
         const numMonths = includes13thSalary ? 13 : 12;
 
         return new TaxResult(
-            monthlyTax.grossAmount * numMonths,
-            monthlyTax.taxAmount * numMonths,
-            monthlyTax.socialAmount * numMonths,
-            monthlyTax.healthContributionAmount * numMonths,
-            monthlyTax.netAmount * numMonths);
+            currency(monthlyTax.grossAmount * numMonths).value,
+            currency(monthlyTax.taxAmount * numMonths).value,
+            currency(monthlyTax.socialAmount * numMonths).value,
+            currency(monthlyTax.healthContributionAmount * numMonths).value,
+            currency(monthlyTax.netAmount * numMonths).value);
     }
 
     /**
@@ -58,11 +60,11 @@ export class TaxCalculator {
         const numMonths = includes13thSalary ? 13 : 12;
 
         return new TaxResult(
-            annualTax.grossAmount / numMonths,
-            annualTax.taxAmount / numMonths,
-            annualTax.socialAmount / numMonths,
-            annualTax.healthContributionAmount / numMonths,
-            annualTax.netAmount / numMonths);
+            currency(annualTax.grossAmount / numMonths).value,
+            currency(annualTax.taxAmount / numMonths).value,
+            currency(annualTax.socialAmount / numMonths).value,
+            currency(annualTax.healthContributionAmount / numMonths).value,
+            currency(annualTax.netAmount / numMonths).value);
     }
 
     /**
@@ -95,12 +97,13 @@ export class TaxCalculator {
 
         const socialInsurance = gross * selectedCountry.socialInsuranceContributionPercent * 0.01;
         const nhs = gross * selectedCountry.healthContributionPercent * 0.01;
+        const netAmount = gross - totalTax - socialInsurance - nhs;
 
         return new TaxResult(
-            gross,
-            totalTax,
-            socialInsurance,
-            nhs,
-            gross - totalTax - socialInsurance - nhs);
+            currency(gross).value,
+            currency(totalTax).value,
+            currency(socialInsurance).value,
+            currency(nhs).value,
+            currency(netAmount).value);
     }
 }
