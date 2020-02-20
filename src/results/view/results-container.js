@@ -1,5 +1,3 @@
-// @ts-check
-
 import { LitElement, html } from "lit-element";
 import { BaseElementMixin } from "../../base/base-element-mixin.js";
 import { TaxResult } from "../model/tax-result.js";

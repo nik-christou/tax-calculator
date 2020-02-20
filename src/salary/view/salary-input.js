@@ -1,5 +1,3 @@
-// @ts-check
-
 import { LitElement, html } from "lit-element";
 import { BaseElementMixin } from "../../base/base-element-mixin.js";
 import { SalaryTypes } from "../control/salary-type-enum.js";
@@ -10,7 +8,7 @@ export class SalaryInput extends BaseElementMixin(LitElement) {
         return html`
             <div>
                 <label for="salary">Salary:</label>
-                <input type="number" id="salary" min="0" placeholder="eg 20000" />
+                <input type="number" id="salary" min="0" placeholder="eg.20000" />
                 <select id="salaryType"></select>
                 <br />
                 <div>

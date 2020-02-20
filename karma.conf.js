@@ -1,24 +1,59 @@
-/* eslint-disable import/no-extraneous-dependencies */
-const { createDefaultConfig } = require('@open-wc/testing-karma');
-const merge = require('deepmerge');
+
+const coverage = process.argv.find(arg => arg.includes('--coverage'));
 
 module.exports = config => {
-  config.set(
-    merge(createDefaultConfig(config), {
-      files: [
-        // runs all files ending with .test in the test folder,
-        // can be overwritten by passing a --grep flag. examples:
-        //
-        // npm run test -- --grep test/foo/bar.test.js
-        // npm run test -- --grep test/bar/*
-        { pattern: config.grep ? config.grep : 'components/*/test/**/*.test.js', type: 'module' },
-      ],
+  config.set({
+    basePath: "",
+    autoWatch: false,
+    colors: true,
+    logLevel: config.LOG_INFO,
+    singleRun: true,
+    concurrency: Infinity,
 
-      esm: {
-        nodeResolve: true,
-      },
-      // you can overwrite/extend the config further
-    }),
-  );
-  return config;
+    frameworks: ['esm', 'mocha', 'chai'],
+
+    plugins: [
+      'karma-mocha',
+      'karma-chai',
+      '@open-wc/karma-esm',
+      'karma-chrome-launcher',
+      'karma-mocha-reporter',
+      'karma-coverage-istanbul-reporter'
+    ],
+
+    browsers: ['ChromeHeadlessNoSandbox'],
+
+    customLaunchers: {
+      ChromeHeadlessNoSandbox: {
+        base: 'ChromeHeadless',
+        flags: ['--no-sandbox', '--disable-setuid-sandbox'],
+      }
+    },
+
+    esm: {
+      coverage,
+      nodeResolve: true
+    },
+
+    files: [
+      require.resolve('axe-core/axe.min.js'),
+      { pattern: "test/**/*.test.js", type: "module", included: true },
+      { pattern: "src/**/*.js", type: "module", included: false },
+    ],
+
+    reporters: coverage ? ['mocha', 'coverage-istanbul'] : ['mocha'],
+
+    restartOnFileChange: true,
+
+    mochaReporter: {
+      showDiff: true,
+    },
+
+    client: {
+      mocha: {
+        reporter: 'html'
+      }
+    }
+
+  });
 };

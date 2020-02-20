@@ -1,5 +1,3 @@
-// @ts-check
-
 import { TaxBracket } from "./tax-bracket.js";
 
 export class Country {

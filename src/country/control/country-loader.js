@@ -1,5 +1,3 @@
-// @ts-check
-
 import { Country } from "../model/country.js";
 import { TaxBracket } from "../model/tax-bracket.js";
 

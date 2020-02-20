@@ -1,5 +1,3 @@
-// @ts-check
-
 import { SalaryType } from "./salary-type.js";
 
 export class SalaryDetails {

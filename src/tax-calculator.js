@@ -1,5 +1,3 @@
-// @ts-check
-
 import { TaxResult } from "./results/model/tax-result.js";
 import { TaxResults } from "./results/model/tax-results.js";
 import { SalaryDetails } from "./salary/model/salary-details.js";

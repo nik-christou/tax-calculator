@@ -1,5 +1,3 @@
-// @ts-check
-
 import { TaxResult } from "./tax-result";
 
 export class TaxResults {

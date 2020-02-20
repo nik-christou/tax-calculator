@@ -1,5 +1,3 @@
-// @ts-check
-
 import { Workbox } from "workbox-window";
 
 export class SWRegistration {
