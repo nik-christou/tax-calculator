@@ -1,9 +1,23 @@
 {
   "compilerOptions": {
-    "allowJs": true,
-    "checkJs": true
+      "target": "esnext",
+      "module": "esnext",
+      "moduleResolution": "node",
+      "lib": ["es2017", "dom"],
+      "allowJs": true,
+      "checkJs": true,
+      "declaration": true,
+      "noEmit": false,
+      "emitDeclarationOnly": true,
+      "declarationDir": "./types",
+      "strict": false,
+      "noImplicitAny": false,
+      "noImplicitReturns": true,
+      "noUnusedLocals": true
   },
+  "include": ["src/**/*.js"],
   "exclude": [
+    "test/**/*.js",
     "node_modules",
     "**/node_modules/*"
   ]

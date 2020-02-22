@@ -9,5 +9,7 @@
     {"start": 60000, "end": -1, "ratePercent": 35}
   ],
   "socialInsurancePercent": 8.3,
-  "healthContributionPercent": 1.70
+  "healthContributionPercent": 1.70,
+  "locale": "el-GR",
+  "currency": "EUR"
 }
