@@ -28,6 +28,8 @@ export class CountryLoader {
             data.name,
             taxBrackets,
             data.socialInsurancePercent,
-            data.healthContributionPercent);
+            data.healthContributionPercent,
+            data.locale,
+            data.currency);
     }
 }

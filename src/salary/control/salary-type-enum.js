@@ -7,6 +7,6 @@ import { SalaryType } from "../model/salary-type.js";
  * @enum {SalaryType}
  */
 export const SalaryTypes = Object.freeze({
-    MONTHLY: new SalaryType(1, "Monthly"),
-    ANNUAL: new SalaryType(2, "Annual")
+    ANNUAL: new SalaryType(1, "Annual"),
+    MONTHLY: new SalaryType(2, "Monthly")
 });

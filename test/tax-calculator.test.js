@@ -28,7 +28,7 @@ describe('TaxCalculator tests', () => {
         const expectedMonthlyTaxResult = new TaxResult(1538.46, 7.68, 127.69, 26.15, 1376.94);
         const expectedAnnualTaxResults = new TaxResult(20000.00, 99.80, 1660, 340, 17900.20);
 
-        chai.assert.deepEqual(taxResults.monthlyTaxResult, expectedMonthlyTaxResult, 'monthly tax results do not match');
+        chai.assert.deepEqual(taxResults.monthlyTaxResult, expectedMonthlyTaxResult2, 'monthly tax results do not match');
         chai.assert.deepEqual(taxResults.annualTaxResult, expectedAnnualTaxResults, 'annual tax results do not match');
     });
 });

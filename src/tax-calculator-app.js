@@ -38,6 +38,8 @@ export class TaxCalculatorApp extends BaseElementMixin(LitElement) {
      */
     _handleCountryChange(event) {
         this.selectedCountry = event.detail;
+
+        this._updateCurrencyFormatter();
         this._calculateResults();
     }
 
@@ -47,6 +49,18 @@ export class TaxCalculatorApp extends BaseElementMixin(LitElement) {
     _handleSalaryDetailsChange(event) {
         this.salaryDetails = event.detail;
         this._calculateResults();
+    }
+
+    _updateCurrencyFormatter() {
+
+        const formatter = new Intl.NumberFormat(this.selectedCountry.locale, {
+            style: 'currency',
+            currency: this.selectedCountry.currency,
+            minimumFractionDigits: 2
+        });
+
+        const resultContainer = this.shadowRoot.querySelector("results-container");
+        resultContainer.formatter = formatter;
     }
 
     /**
