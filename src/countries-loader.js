@@ -1,7 +1,25 @@
-import { Country } from "../model/country.js";
-import { TaxBracket } from "../model/tax-bracket.js";
+import { Country } from "./country/model/country.js";
+import { TaxBracket } from "./country/model/tax-bracket.js";
 
-export class CountryLoader {
+export class CountriesLoader {
+
+    /**
+     * @param {Array<String>} countriesJson JSON file paths
+     * @returns {Promise<Array<Country>>} the promise of an array of countries
+     */
+    static async loadCountriesFromJson(countriesJson) {
+
+        const countries = new Array();
+
+        for(let jsonPath of countriesJson) {
+
+            const country = await this._loadCountryFromJson(jsonPath);
+            countries.push(country);
+        }
+
+        return countries;
+    }
+
     /**
      * Load a data from a json file
      *
@@ -9,7 +27,8 @@ export class CountryLoader {
      *
      * @returns {Promise<Country>} the country
      */
-    static async loadCountryFromJson(jsonPath) {
+    static async _loadCountryFromJson(jsonPath) {
+
         const response = await fetch(jsonPath);
         const data = await response.json();
 

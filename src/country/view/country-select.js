@@ -1,12 +1,11 @@
 import { LitElement, html } from "lit-element";
 import { BaseElementMixin } from "../../base/base-element-mixin.js";
 import { Country } from "../model/country.js";
-import { CountryLoader } from "../control/country-loader.js";
 
 export class CountrySelect extends BaseElementMixin(LitElement) {
     static get properties() {
         return {
-            country: Country
+            countries: Array
         };
     }
 
@@ -16,23 +15,35 @@ export class CountrySelect extends BaseElementMixin(LitElement) {
         `;
     }
 
+    constructor() {
+        super();
+        this.countries = new Array();
+    }
+
     firstUpdated() {
         const selectElement = this.shadowRoot.querySelector("select");
         selectElement.addEventListener("input", event => this._handleChangeEvent(event));
-
         this._addCaptionOption(selectElement);
-        this._populateCountries(selectElement);
     }
 
     /**
-     * @param {HTMLSelectElement} selectElement
+     * @param {Map} changedProperties
      */
-    _populateCountries(selectElement) {
-        CountryLoader.loadCountryFromJson("../../../web_assets/data/cyprus.json")
-            .then(country => (this.country = country))
-            .then(country => this._createOptionItem(country))
-            .then(optionItem => selectElement.add(optionItem))
-            .catch(reason => console.log(reason.message));
+    updated(changedProperties) {
+
+        if(changedProperties.has("countries")) {
+            this._createItemsFromCountries();
+        }
+    }
+
+    _createItemsFromCountries() {
+
+        const selectElement = this.shadowRoot.querySelector("select");
+
+        for(let country of this.countries) {
+            const optionItem = this._createOptionItem(country);
+            selectElement.add(optionItem);
+        }
     }
 
     /**
@@ -55,10 +66,49 @@ export class CountrySelect extends BaseElementMixin(LitElement) {
      * @param {InputEvent} event
      */
     _handleChangeEvent(event) {
+
+        const selectElement = this.shadowRoot.querySelector("select");
+        const selectedOptions = selectElement.selectedOptions;
+
+        if(selectedOptions.length <= 0) {
+            console.error("selected countries option is empty");
+            return;
+        }
+
+        // only interested in first selection
+        const selectedOption = selectedOptions[0];
+        const countryId = Number(selectedOption.value);
+        const country = this._findCountryById(countryId);
+
+        if(!country) {
+            console.error("selected country not found");
+            return;
+        }
+
+        this._sendCountryChangeEvent(country);
+    }
+
+    /**
+     * @param {Number} countryId
+     */
+    _findCountryById(countryId) {
+
+        for(let country of this.countries) {
+            if(country.id === countryId) {
+                return country;
+            }
+        }
+    }
+
+    /**
+     * @param {Country} country
+     */
+    _sendCountryChangeEvent(country) {
+
         const countrySelectChangeEvent = new CustomEvent("country-select-change", {
             bubbles: true,
             composed: true,
-            detail: this.country
+            detail: country
         });
 
         this.dispatchEvent(countrySelectChangeEvent);

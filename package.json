@@ -28,7 +28,6 @@
     "build": "npm run build:clean && npm run build:genDeps && npm run build:copyAssets && npm run build:compile && npm run build:copyIndex && npm run build:sw:copy && npm run build:sw:gen"
   },
   "dependencies": {
-    "currency.js": "^1.2.2",
     "lit-element": "^2.2.1",
     "lit-html": "^1.1.2",
     "workbox-window": "^5.0.0"
@@ -62,7 +61,6 @@
   },
   "snowpack": {
     "webDependencies": [
-      "currency.js",
       "lit-element",
       "lit-html",
       "workbox-window"

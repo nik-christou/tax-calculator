@@ -5,6 +5,8 @@ import { SWRegistration } from "./sw-registration.js";
 import { TaxCalculator } from "./tax-calculator.js";
 import { SalaryTypes } from "./salary/control/salary-type-enum.js";
 import { TaxResults } from "./results/model/tax-results.js";
+import { CountriesLoader } from "./countries-loader.js";
+import { countriesJson } from "./countries-json-files.js";
 
 import "./country/view/country-select.js";
 import "./salary/view/salary-input.js";
@@ -27,10 +29,22 @@ export class TaxCalculatorApp extends BaseElementMixin(LitElement) {
     }
 
     firstUpdated() {
+
         SWRegistration.register();
+
+        this._loadCountries();
 
         this.addEventListener("country-select-change", event => this._handleCountryChange(event));
         this.addEventListener("salary-details-change", event => this._handleSalaryDetailsChange(event));
+    }
+
+    _loadCountries() {
+
+        const countrySelect = this.shadowRoot.querySelector("country-select");
+
+        CountriesLoader.loadCountriesFromJson(countriesJson)
+        .then(countries => countrySelect.countries = countries)
+        .catch(reason => console.error(reason.message));
     }
 
     /**
