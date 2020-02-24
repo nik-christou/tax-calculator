@@ -4,5 +4,5 @@
  */
 
 export const countriesJson = [
-    "../web_assets/data/cyprus.json"
+    "web_assets/data/cyprus.json"
 ];

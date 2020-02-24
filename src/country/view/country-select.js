@@ -1,6 +1,8 @@
 import { LitElement, html } from "lit-element";
 import { BaseElementMixin } from "../../base/base-element-mixin.js";
 import { Country } from "../model/country.js";
+import { CountriesLoader } from "../control/countries-loader.js";
+import { countriesJson } from "../../CountryJsonMapper.js";
 
 export class CountrySelect extends BaseElementMixin(LitElement) {
     static get properties() {
@@ -24,21 +26,24 @@ export class CountrySelect extends BaseElementMixin(LitElement) {
         const selectElement = this.shadowRoot.querySelector("select");
         selectElement.addEventListener("input", event => this._handleChangeEvent(event));
         this._addCaptionOption(selectElement);
+        this._loadCountries(selectElement);
     }
 
     /**
-     * @param {Map} changedProperties
+     * @param {HTMLSelectElement} selectElement
      */
-    updated(changedProperties) {
+    _loadCountries(selectElement) {
 
-        if(changedProperties.has("countries")) {
-            this._createItemsFromCountries();
-        }
+        CountriesLoader.loadCountriesFromJson(countriesJson)
+        .then(countries => this.countries = countries)
+        .then(_ => this._createItemsFromCountries(selectElement))
+        .catch(reason => console.error(reason.message));
     }
 
-    _createItemsFromCountries() {
-
-        const selectElement = this.shadowRoot.querySelector("select");
+    /**
+     * @param {HTMLSelectElement} selectElement
+     */
+    _createItemsFromCountries(selectElement) {
 
         for(let country of this.countries) {
             const optionItem = this._createOptionItem(country);
@@ -78,14 +83,14 @@ export class CountrySelect extends BaseElementMixin(LitElement) {
         // only interested in first selection
         const selectedOption = selectedOptions[0];
         const countryId = Number(selectedOption.value);
-        const country = this._findCountryById(countryId);
+        const matchedCountry = this._findCountryById(countryId);
 
-        if(!country) {
+        if(!matchedCountry) {
             console.error("selected country not found");
             return;
         }
 
-        this._sendCountryChangeEvent(country);
+        this._sendCountryChangeEvent(matchedCountry);
     }
 
     /**
