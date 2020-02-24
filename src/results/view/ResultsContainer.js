@@ -1,7 +1,7 @@
 import { LitElement, html, css } from "lit-element";
-import { BaseElementMixin } from "../../base/base-element-mixin.js";
-import { TaxResult } from "../model/tax-result.js";
-import { TaxResults } from "../model/tax-results.js";
+import { BaseElementMixin } from "../../base/BaseElementMixin.js";
+import { TaxResult } from "../model/TaxResult.js";
+import { TaxResults } from "../model/TaxResults.js";
 
 export class ResultsContainer extends BaseElementMixin(LitElement) {
 

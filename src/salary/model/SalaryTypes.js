@@ -1,4 +1,4 @@
-import { SalaryType } from "../model/salary-type.js";
+import { SalaryType } from "./SalaryType.js";
 
 /**
  * Enum for salary types

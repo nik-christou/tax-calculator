@@ -1,8 +1,8 @@
-import { TaxResult } from "../../../results/model/tax-result.js";
-import { TaxResults } from "../../../results/model/tax-results.js";
-import { SalaryDetails } from "../../../salary/model/salary-details.js";
+import { TaxResult } from "../../../results/model/TaxResult.js";
+import { TaxResults } from "../../../results/model/TaxResults.js";
+import { SalaryDetails } from "../../../salary/model/SalaryDetails.js";
 import { CyprusTaxDetails } from "../entity/CyprusTaxDetails.js";
-import { SalaryTypes } from "../../../salary/control/salary-type-enum.js";
+import { SalaryTypes } from "../../../salary/model/SalaryTypes.js";
 
 export class CyprusTaxCalculator {
 

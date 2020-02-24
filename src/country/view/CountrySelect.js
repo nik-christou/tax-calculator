@@ -1,7 +1,7 @@
 import { LitElement, html } from "lit-element";
-import { BaseElementMixin } from "../../base/base-element-mixin.js";
-import { Country } from "../model/country.js";
-import { CountriesLoader } from "../control/countries-loader.js";
+import { BaseElementMixin } from "../../base/BaseElementMixin.js";
+import { Country } from "../model/Country.js";
+import { CountriesLoader } from "../control/CountriesLoader.js";
 import { countriesJson } from "../../CountryJsonMapper.js";
 
 export class CountrySelect extends BaseElementMixin(LitElement) {

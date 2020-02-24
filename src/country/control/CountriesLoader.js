@@ -1,4 +1,4 @@
-import { Country } from "../model/country.js";
+import { Country } from "../model/Country.js";
 
 export class CountriesLoader {
 

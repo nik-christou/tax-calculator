@@ -1,6 +1,6 @@
-import { Country } from "./country/model/country.js";
-import { SalaryDetails } from "./salary/model/salary-details.js";
-import { TaxResults } from "./results/model/tax-results.js";
+import { Country } from "./country/model/Country.js";
+import { SalaryDetails } from "./salary/model/SalaryDetails.js";
+import { TaxResults } from "./results/model/TaxResults.js";
 import { getCountryJsonFilePath, getTaxLoaderFilePath, getTaxCalculatorFilePath } from "./CountryJsonMapper.js";
 
 export class CountryTaxDispatcher {

@@ -1,4 +1,4 @@
-import { TaxResult } from "./tax-result";
+import { TaxResult } from "./TaxResult.js";
 
 export class TaxResults {
 

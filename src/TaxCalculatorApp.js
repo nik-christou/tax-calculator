@@ -1,17 +1,17 @@
 import { LitElement, html } from "lit-element";
-import { BaseElementMixin } from "./base/base-element-mixin.js";
-import { TaxCalculatorCss } from "./tax-calculator-app.css.js";
-import { SWRegistration } from "./sw-registration.js";
-import { TaxResults } from "./results/model/tax-results.js";
+import { BaseElementMixin } from "./base/BaseElementMixin.js";
+import { TaxCalculatorAppCss } from "./TaxCalculatorAppCss.js";
+import { SWRegister } from "./SWRegister.js";
+import { TaxResults } from "./results/model/TaxResults.js";
 import { CountryTaxDispatcher } from "./CountryTaxDispatcher.js";
 
-import "./country/view/country-select.js";
-import "./salary/view/salary-input.js";
-import "./results/view/results-container.js";
+import "./country/view/CountrySelect.js";
+import "./salary/view/SalaryInput.js";
+import "./results/view/ResultsContainer.js";
 
 export class TaxCalculatorApp extends BaseElementMixin(LitElement) {
     static get styles() {
-        return [...super.styles, TaxCalculatorCss];
+        return [...super.styles, TaxCalculatorAppCss];
     }
 
     render() {
@@ -26,7 +26,7 @@ export class TaxCalculatorApp extends BaseElementMixin(LitElement) {
     }
 
     firstUpdated() {
-        SWRegistration.register();
+        SWRegister.register();
         this.addEventListener("country-select-change", event => this._handleCountryChange(event));
         this.addEventListener("salary-details-change", event => this._handleSalaryDetailsChange(event));
     }

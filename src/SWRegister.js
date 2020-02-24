@@ -1,6 +1,6 @@
 import { Workbox } from "workbox-window";
 
-export class SWRegistration {
+export class SWRegister {
     static register() {
         // only proceed with regisration if not in local development enviroment
         if (!("serviceWorker" in navigator) || location.hostname === "localhost") {

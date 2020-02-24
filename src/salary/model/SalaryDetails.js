@@ -1,4 +1,4 @@
-import { SalaryType } from "./salary-type.js";
+import { SalaryType } from "./SalaryType.js";
 
 export class SalaryDetails {
     /**

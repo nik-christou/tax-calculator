@@ -1,4 +1,4 @@
-import { BaseElementCss } from "./base-element.css.js";
+import { BaseElementCss } from "./BaseElementCss.js";
 
 export const BaseElementMixin = superclass =>
     class extends superclass {
