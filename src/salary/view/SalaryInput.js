@@ -1,7 +1,7 @@
 import { LitElement, html } from "lit-element";
-import { BaseElementMixin } from "../../base/base-element-mixin.js";
-import { SalaryTypes } from "../control/salary-type-enum.js";
-import { SalaryDetails } from "../model/salary-details.js";
+import { BaseElementMixin } from "../../base/BaseElementMixin.js";
+import { SalaryTypes } from "../model/SalaryTypes.js";
+import { SalaryDetails } from "../model/SalaryDetails.js";
 
 export class SalaryInput extends BaseElementMixin(LitElement) {
     render() {

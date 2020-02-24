@@ -1,20 +1,17 @@
 import { LitElement, html } from "lit-element";
-import { BaseElementMixin } from "./base/base-element-mixin.js";
-import { TaxCalculatorCss } from "./tax-calculator-app.css.js";
-import { SWRegistration } from "./sw-registration.js";
-import { TaxCalculator } from "./tax-calculator.js";
-import { SalaryTypes } from "./salary/control/salary-type-enum.js";
-import { TaxResults } from "./results/model/tax-results.js";
-import { CountriesLoader } from "./countries-loader.js";
-import { countriesJson } from "./countries-json-files.js";
+import { BaseElementMixin } from "./base/BaseElementMixin.js";
+import { TaxCalculatorAppCss } from "./TaxCalculatorAppCss.js";
+import { SWRegister } from "./SWRegister.js";
+import { TaxResults } from "./results/model/TaxResults.js";
+import { CountryTaxDispatcher } from "./CountryTaxDispatcher.js";
 
-import "./country/view/country-select.js";
-import "./salary/view/salary-input.js";
-import "./results/view/results-container.js";
+import "./country/view/CountrySelect.js";
+import "./salary/view/SalaryInput.js";
+import "./results/view/ResultsContainer.js";
 
 export class TaxCalculatorApp extends BaseElementMixin(LitElement) {
     static get styles() {
-        return [...super.styles, TaxCalculatorCss];
+        return [...super.styles, TaxCalculatorAppCss];
     }
 
     render() {
@@ -29,22 +26,9 @@ export class TaxCalculatorApp extends BaseElementMixin(LitElement) {
     }
 
     firstUpdated() {
-
-        SWRegistration.register();
-
-        this._loadCountries();
-
+        SWRegister.register();
         this.addEventListener("country-select-change", event => this._handleCountryChange(event));
         this.addEventListener("salary-details-change", event => this._handleSalaryDetailsChange(event));
-    }
-
-    _loadCountries() {
-
-        const countrySelect = this.shadowRoot.querySelector("country-select");
-
-        CountriesLoader.loadCountriesFromJson(countriesJson)
-        .then(countries => countrySelect.countries = countries)
-        .catch(reason => console.error(reason.message));
     }
 
     /**
@@ -52,7 +36,6 @@ export class TaxCalculatorApp extends BaseElementMixin(LitElement) {
      */
     _handleCountryChange(event) {
         this.selectedCountry = event.detail;
-
         this._updateCurrencyFormatter();
         this._calculateResults();
     }
@@ -66,9 +49,8 @@ export class TaxCalculatorApp extends BaseElementMixin(LitElement) {
     }
 
     _updateCurrencyFormatter() {
-
         const formatter = new Intl.NumberFormat(this.selectedCountry.locale, {
-            style: 'currency',
+            style: "currency",
             currency: this.selectedCountry.currency,
             minimumFractionDigits: 2
         });
@@ -78,28 +60,22 @@ export class TaxCalculatorApp extends BaseElementMixin(LitElement) {
     }
 
     /**
+     * Call the dispatcher to use the correct json loader
+     * and tax calculator that matches the country to produce
+     * tax results
+     */
+    _calculateResults() {
+        if (this.selectedCountry && this.salaryDetails) {
+            CountryTaxDispatcher.process(this.selectedCountry, this.salaryDetails).then(taxResults => this._populateResults(taxResults));
+        }
+    }
+
+    /**
      * @param {TaxResults} taxResults
      */
     _populateResults(taxResults) {
-
         const resultContainer = this.shadowRoot.querySelector("results-container");
         resultContainer.taxResults = taxResults;
-    }
-
-    _calculateResults() {
-
-        if (this.selectedCountry && this.salaryDetails) {
-
-            let taxTesults;
-
-            if(this.salaryDetails.type === SalaryTypes.ANNUAL) {
-                taxTesults = TaxCalculator.calculateTaxFromAnnualIncome(this.selectedCountry, this.salaryDetails);
-            } else {
-                taxTesults = TaxCalculator.calculateTaxFromMonthlyIncome(this.selectedCountry, this.salaryDetails);
-            }
-
-            this._populateResults(taxTesults);
-        }
     }
 }
 

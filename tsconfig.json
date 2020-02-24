@@ -6,19 +6,15 @@
       "lib": ["es2017", "dom"],
       "allowJs": true,
       "checkJs": true,
-      "declaration": true,
-      "noEmit": false,
-      "emitDeclarationOnly": true,
-      "declarationDir": "./types",
-      "strict": false,
-      "noImplicitAny": false,
-      "noImplicitReturns": true,
-      "noUnusedLocals": true
+      "noEmit": true
   },
   "include": ["src/**/*.js"],
   "exclude": [
-    "test/**/*.js",
+    "dist",
     "node_modules",
-    "**/node_modules/*"
+    "**/node_modules/*",
+    "web_assets",
+    "web_modules",
+    "es-dev-server.config.js"
   ]
 }

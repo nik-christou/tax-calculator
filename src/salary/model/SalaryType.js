@@ -1,5 +1,3 @@
-// @ts-check
-
 export class SalaryType {
     /**
      * @param {Number} id

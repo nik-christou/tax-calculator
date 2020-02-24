@@ -1,6 +1,8 @@
 import { LitElement, html } from "lit-element";
-import { BaseElementMixin } from "../../base/base-element-mixin.js";
-import { Country } from "../model/country.js";
+import { BaseElementMixin } from "../../base/BaseElementMixin.js";
+import { Country } from "../model/Country.js";
+import { CountriesLoader } from "../control/CountriesLoader.js";
+import { countriesJson } from "../../CountryJsonMapper.js";
 
 export class CountrySelect extends BaseElementMixin(LitElement) {
     static get properties() {
@@ -24,23 +26,24 @@ export class CountrySelect extends BaseElementMixin(LitElement) {
         const selectElement = this.shadowRoot.querySelector("select");
         selectElement.addEventListener("input", event => this._handleChangeEvent(event));
         this._addCaptionOption(selectElement);
+        this._loadCountries(selectElement);
     }
 
     /**
-     * @param {Map} changedProperties
+     * @param {HTMLSelectElement} selectElement
      */
-    updated(changedProperties) {
-
-        if(changedProperties.has("countries")) {
-            this._createItemsFromCountries();
-        }
+    _loadCountries(selectElement) {
+        CountriesLoader.loadCountriesFromJson(countriesJson)
+            .then(countries => (this.countries = countries))
+            .then(_ => this._createItemsFromCountries(selectElement))
+            .catch(reason => console.error(reason.message));
     }
 
-    _createItemsFromCountries() {
-
-        const selectElement = this.shadowRoot.querySelector("select");
-
-        for(let country of this.countries) {
+    /**
+     * @param {HTMLSelectElement} selectElement
+     */
+    _createItemsFromCountries(selectElement) {
+        for (let country of this.countries) {
             const optionItem = this._createOptionItem(country);
             selectElement.add(optionItem);
         }
@@ -66,11 +69,10 @@ export class CountrySelect extends BaseElementMixin(LitElement) {
      * @param {InputEvent} event
      */
     _handleChangeEvent(event) {
-
         const selectElement = this.shadowRoot.querySelector("select");
         const selectedOptions = selectElement.selectedOptions;
 
-        if(selectedOptions.length <= 0) {
+        if (selectedOptions.length <= 0) {
             console.error("selected countries option is empty");
             return;
         }
@@ -78,23 +80,22 @@ export class CountrySelect extends BaseElementMixin(LitElement) {
         // only interested in first selection
         const selectedOption = selectedOptions[0];
         const countryId = Number(selectedOption.value);
-        const country = this._findCountryById(countryId);
+        const matchedCountry = this._findCountryById(countryId);
 
-        if(!country) {
+        if (!matchedCountry) {
             console.error("selected country not found");
             return;
         }
 
-        this._sendCountryChangeEvent(country);
+        this._sendCountryChangeEvent(matchedCountry);
     }
 
     /**
      * @param {Number} countryId
      */
     _findCountryById(countryId) {
-
-        for(let country of this.countries) {
-            if(country.id === countryId) {
+        for (let country of this.countries) {
+            if (country.id === countryId) {
                 return country;
             }
         }
@@ -104,7 +105,6 @@ export class CountrySelect extends BaseElementMixin(LitElement) {
      * @param {Country} country
      */
     _sendCountryChangeEvent(country) {
-
         const countrySelectChangeEvent = new CustomEvent("country-select-change", {
             bubbles: true,
             composed: true,

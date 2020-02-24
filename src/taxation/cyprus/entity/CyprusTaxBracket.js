@@ -1,4 +1,4 @@
-export class TaxBracket {
+export class CyprusTaxBracket {
     /**
      * @param {Number} start
      * @param {Number} end
