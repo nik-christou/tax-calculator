@@ -33,19 +33,17 @@ export class CountrySelect extends BaseElementMixin(LitElement) {
      * @param {HTMLSelectElement} selectElement
      */
     _loadCountries(selectElement) {
-
         CountriesLoader.loadCountriesFromJson(countriesJson)
-        .then(countries => this.countries = countries)
-        .then(_ => this._createItemsFromCountries(selectElement))
-        .catch(reason => console.error(reason.message));
+            .then(countries => (this.countries = countries))
+            .then(_ => this._createItemsFromCountries(selectElement))
+            .catch(reason => console.error(reason.message));
     }
 
     /**
      * @param {HTMLSelectElement} selectElement
      */
     _createItemsFromCountries(selectElement) {
-
-        for(let country of this.countries) {
+        for (let country of this.countries) {
             const optionItem = this._createOptionItem(country);
             selectElement.add(optionItem);
         }
@@ -71,11 +69,10 @@ export class CountrySelect extends BaseElementMixin(LitElement) {
      * @param {InputEvent} event
      */
     _handleChangeEvent(event) {
-
         const selectElement = this.shadowRoot.querySelector("select");
         const selectedOptions = selectElement.selectedOptions;
 
-        if(selectedOptions.length <= 0) {
+        if (selectedOptions.length <= 0) {
             console.error("selected countries option is empty");
             return;
         }
@@ -85,7 +82,7 @@ export class CountrySelect extends BaseElementMixin(LitElement) {
         const countryId = Number(selectedOption.value);
         const matchedCountry = this._findCountryById(countryId);
 
-        if(!matchedCountry) {
+        if (!matchedCountry) {
             console.error("selected country not found");
             return;
         }
@@ -97,9 +94,8 @@ export class CountrySelect extends BaseElementMixin(LitElement) {
      * @param {Number} countryId
      */
     _findCountryById(countryId) {
-
-        for(let country of this.countries) {
-            if(country.id === countryId) {
+        for (let country of this.countries) {
+            if (country.id === countryId) {
                 return country;
             }
         }
@@ -109,7 +105,6 @@ export class CountrySelect extends BaseElementMixin(LitElement) {
      * @param {Country} country
      */
     _sendCountryChangeEvent(country) {
-
         const countrySelectChangeEvent = new CustomEvent("country-select-change", {
             bubbles: true,
             composed: true,

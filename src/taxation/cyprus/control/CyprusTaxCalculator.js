@@ -5,15 +5,13 @@ import { CyprusTaxDetails } from "../entity/CyprusTaxDetails.js";
 import { SalaryTypes } from "../../../salary/model/SalaryTypes.js";
 
 export class CyprusTaxCalculator {
-
     /**
      * @static
      * @param {CyprusTaxDetails} cyprusTaxDetails
      * @param {SalaryDetails} salaryDetails
      */
     static calculateTax(cyprusTaxDetails, salaryDetails) {
-
-        if(salaryDetails.type === SalaryTypes.ANNUAL) {
+        if (salaryDetails.type === SalaryTypes.ANNUAL) {
             return this._calculateTaxFromAnnualIncome(cyprusTaxDetails, salaryDetails);
         }
 
@@ -26,7 +24,6 @@ export class CyprusTaxCalculator {
      * @param {SalaryDetails} salaryDetails
      */
     static _calculateTaxFromMonthlyIncome(cyprusTaxDetails, salaryDetails) {
-
         const monthlyTaxResults = this._calculateTax(cyprusTaxDetails, salaryDetails);
         const annualTaxResults = this._convertMontlyToAnnualTax(monthlyTaxResults, salaryDetails.includesThirteen);
 
@@ -39,7 +36,6 @@ export class CyprusTaxCalculator {
      * @param {SalaryDetails} salaryDetails
      */
     static _calculateTaxFromAnnualIncome(cyprusTaxDetails, salaryDetails) {
-
         const annualTaxResults = this._calculateTax(cyprusTaxDetails, salaryDetails);
         const monthlyTaxResults = this._convertAnnualToMonthlyTax(annualTaxResults, salaryDetails.includesThirteen);
 
@@ -52,7 +48,6 @@ export class CyprusTaxCalculator {
      * @param {Boolean} includes13thSalary
      */
     static _convertMontlyToAnnualTax(monthlyTax, includes13thSalary) {
-
         const numMonths = includes13thSalary ? 13 : 12;
 
         return new TaxResult(
@@ -60,7 +55,8 @@ export class CyprusTaxCalculator {
             monthlyTax.taxAmount * numMonths,
             monthlyTax.socialAmount * numMonths,
             monthlyTax.healthContributionAmount * numMonths,
-            monthlyTax.netAmount * numMonths);
+            monthlyTax.netAmount * numMonths
+        );
     }
 
     /**
@@ -69,7 +65,6 @@ export class CyprusTaxCalculator {
      * @param {Boolean} includes13thSalary
      */
     static _convertAnnualToMonthlyTax(annualTax, includes13thSalary) {
-
         const numMonths = includes13thSalary ? 13 : 12;
 
         return new TaxResult(
@@ -77,7 +72,8 @@ export class CyprusTaxCalculator {
             annualTax.taxAmount / numMonths,
             annualTax.socialAmount / numMonths,
             annualTax.healthContributionAmount / numMonths,
-            annualTax.netAmount / numMonths);
+            annualTax.netAmount / numMonths
+        );
     }
 
     /**
@@ -88,7 +84,6 @@ export class CyprusTaxCalculator {
      * @returns {TaxResult} the tax result
      */
     static _calculateTax(cyprusTaxDetails, salaryDetails) {
-
         const gross = salaryDetails.amount;
         const lastTaxBracketIndex = cyprusTaxDetails.taxBrackets.length - 1;
 
@@ -96,11 +91,9 @@ export class CyprusTaxCalculator {
         let totalTax = 0;
 
         for (let index = lastTaxBracketIndex; index >= 0; index--) {
-
             const bracket = cyprusTaxDetails.taxBrackets[index];
 
             if (remainingAmount >= bracket.start && remainingAmount <= bracket.end) {
-
                 const tax = (remainingAmount - bracket.start) * bracket.ratePercent * 0.01;
                 totalTax += tax;
 
@@ -112,11 +105,6 @@ export class CyprusTaxCalculator {
         const nhs = gross * cyprusTaxDetails.healthContributionPercent * 0.01;
         const netAmount = gross - totalTax - socialInsurance - nhs;
 
-        return new TaxResult(
-            gross,
-            totalTax,
-            socialInsurance,
-            nhs,
-            netAmount);
+        return new TaxResult(gross, totalTax, socialInsurance, nhs, netAmount);
     }
 }

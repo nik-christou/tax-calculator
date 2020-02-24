@@ -1,7 +1,6 @@
 import { TaxResult } from "./TaxResult.js";
 
 export class TaxResults {
-
     /**
      * @param {TaxResult} monthlyTaxResult
      * @param {TaxResult} annualTaxResult

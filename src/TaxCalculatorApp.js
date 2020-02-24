@@ -49,9 +49,8 @@ export class TaxCalculatorApp extends BaseElementMixin(LitElement) {
     }
 
     _updateCurrencyFormatter() {
-
         const formatter = new Intl.NumberFormat(this.selectedCountry.locale, {
-            style: 'currency',
+            style: "currency",
             currency: this.selectedCountry.currency,
             minimumFractionDigits: 2
         });
@@ -66,11 +65,8 @@ export class TaxCalculatorApp extends BaseElementMixin(LitElement) {
      * tax results
      */
     _calculateResults() {
-
         if (this.selectedCountry && this.salaryDetails) {
-
-            CountryTaxDispatcher.process(this.selectedCountry, this.salaryDetails)
-            .then(taxResults => this._populateResults(taxResults));
+            CountryTaxDispatcher.process(this.selectedCountry, this.salaryDetails).then(taxResults => this._populateResults(taxResults));
         }
     }
 
@@ -78,7 +74,6 @@ export class TaxCalculatorApp extends BaseElementMixin(LitElement) {
      * @param {TaxResults} taxResults
      */
     _populateResults(taxResults) {
-
         const resultContainer = this.shadowRoot.querySelector("results-container");
         resultContainer.taxResults = taxResults;
     }

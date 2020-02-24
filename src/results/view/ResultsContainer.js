@@ -4,7 +4,6 @@ import { TaxResult } from "../model/TaxResult.js";
 import { TaxResults } from "../model/TaxResults.js";
 
 export class ResultsContainer extends BaseElementMixin(LitElement) {
-
     static get properties() {
         return {
             taxResults: TaxResults,
@@ -13,18 +12,21 @@ export class ResultsContainer extends BaseElementMixin(LitElement) {
     }
 
     static get styles() {
-        return [...super.styles, css`
-            .container {
-                display: flex;
-                flex-direction: row;
-                justify-content: flex-start;
-                margin-top: 30px;
-            }
+        return [
+            ...super.styles,
+            css`
+                .container {
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: flex-start;
+                    margin-top: 30px;
+                }
 
-            .monthlyContainer {
-                margin-left: 50px;
-            }
-        `];
+                .monthlyContainer {
+                    margin-left: 50px;
+                }
+            `
+        ];
     }
 
     render() {
@@ -34,19 +36,24 @@ export class ResultsContainer extends BaseElementMixin(LitElement) {
                     <h4>Annual</h4>
                     <table>
                         <tr>
-                            <td>Gross</td><td>${this._getAnnualGrossAmount()}</td>
+                            <td>Gross</td>
+                            <td>${this._getAnnualGrossAmount()}</td>
                         </tr>
                         <tr>
-                            <td>Tax</td><td>${this._getAnnualTaxAmount()}</td>
+                            <td>Tax</td>
+                            <td>${this._getAnnualTaxAmount()}</td>
                         </tr>
                         <tr>
-                            <td>Social</td><td>${this._getAnnualSocialAmount()}</td>
+                            <td>Social</td>
+                            <td>${this._getAnnualSocialAmount()}</td>
                         </tr>
                         <tr>
-                            <td>NHS (GESY)</td><td>${this._getAnnualHealthContribution()}</td>
+                            <td>NHS (GESY)</td>
+                            <td>${this._getAnnualHealthContribution()}</td>
                         </tr>
                         <tr>
-                            <td>Net</td><td>${this._getAnnualNetAmount()}</td>
+                            <td>Net</td>
+                            <td>${this._getAnnualNetAmount()}</td>
                         </tr>
                     </table>
                 </div>
@@ -55,19 +62,24 @@ export class ResultsContainer extends BaseElementMixin(LitElement) {
                     <h4>Monthly</h4>
                     <table>
                         <tr>
-                            <td>Gross</td><td>${this._getMonthlyGrossAmount()}</td>
+                            <td>Gross</td>
+                            <td>${this._getMonthlyGrossAmount()}</td>
                         </tr>
                         <tr>
-                            <td>Tax</td><td>${this._getMonthlyTaxAmount()}</td>
+                            <td>Tax</td>
+                            <td>${this._getMonthlyTaxAmount()}</td>
                         </tr>
                         <tr>
-                            <td>Social</td><td>${this._getMonthlySocialAmount()}</td>
+                            <td>Social</td>
+                            <td>${this._getMonthlySocialAmount()}</td>
                         </tr>
                         <tr>
-                            <td>NHS (GESY)</td><td>${this._getMonthlyHealthContribution()}</td>
+                            <td>NHS (GESY)</td>
+                            <td>${this._getMonthlyHealthContribution()}</td>
                         </tr>
                         <tr>
-                            <td>Net</td><td>${this._getMonthlyNetAmount()}</td>
+                            <td>Net</td>
+                            <td>${this._getMonthlyNetAmount()}</td>
                         </tr>
                     </table>
                 </div>
@@ -78,8 +90,8 @@ export class ResultsContainer extends BaseElementMixin(LitElement) {
     constructor() {
         super();
 
-        const monthlyTaxResults = new TaxResult(0,0,0,0,0);
-        const annualTaxResults = new TaxResult(0,0,0,0,0);
+        const monthlyTaxResults = new TaxResult(0, 0, 0, 0, 0);
+        const annualTaxResults = new TaxResult(0, 0, 0, 0, 0);
 
         this.taxResults = new TaxResults(monthlyTaxResults, annualTaxResults);
         this.formatter = new Intl.NumberFormat();

@@ -1,5 +1,4 @@
 export class TaxResult {
-
     /**
      * @param {Number} grossAmount
      * @param {Number} taxAmount
@@ -8,7 +7,6 @@ export class TaxResult {
      * @param {Number} netAmount
      */
     constructor(grossAmount, taxAmount, socialAmount, healthContributionAmount, netAmount) {
-
         this.grossAmount = grossAmount;
         this.taxAmount = taxAmount;
         this.socialAmount = socialAmount;

@@ -37,7 +37,7 @@ module.exports = config => {
 
     files: [
       require.resolve('axe-core/axe.min.js'),
-      { pattern: "test/**/*.test.js", type: "module", included: true },
+      { pattern: "test/**/*Test.js", type: "module", included: true },
       { pattern: "src/**/*.js", type: "module", included: false },
     ],
 

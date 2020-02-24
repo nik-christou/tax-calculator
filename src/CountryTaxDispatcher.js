@@ -4,7 +4,6 @@ import { TaxResults } from "./results/model/TaxResults.js";
 import { getCountryJsonFilePath, getTaxLoaderFilePath, getTaxCalculatorFilePath } from "./CountryJsonMapper.js";
 
 export class CountryTaxDispatcher {
-
     /**
      * @param {Country} country
      * @param {SalaryDetails} salaryDetails
@@ -12,10 +11,11 @@ export class CountryTaxDispatcher {
      * @returns {Promise<TaxResults>}
      */
     static process(country, salaryDetails) {
-
-        switch(country.id) {
-            case 1: return this._processCyprusTax(country, salaryDetails);
-            default: return Promise.resolve(null);
+        switch (country.id) {
+            case 1:
+                return this._processCyprusTax(country, salaryDetails);
+            default:
+                return Promise.resolve(null);
         }
     }
 
@@ -26,7 +26,6 @@ export class CountryTaxDispatcher {
      * @returns {Promise<TaxResults>}
      */
     static async _processCyprusTax(country, salaryDetails) {
-
         const countryJsonFilePath = getCountryJsonFilePath(country.id);
         const taxLoaderFilePath = getTaxLoaderFilePath(country.id);
         const taxCalculatorFilePath = getTaxCalculatorFilePath(country.id);
