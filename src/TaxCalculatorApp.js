@@ -3,7 +3,7 @@ import { BaseElementMixin } from "./base/BaseElementMixin.js";
 import { TaxCalculatorAppCss } from "./TaxCalculatorAppCss.js";
 import { SWRegister } from "./SWRegister.js";
 import { TaxResults } from "./results/model/TaxResults.js";
-import { CountryTaxDispatcher } from "./CountryTaxDispatcher.js";
+import { TaxProcessorDispatcher } from "./TaxProcessorDispatcher.js";
 
 import "./country/view/CountrySelect.js";
 import "./salary/view/SalaryInput.js";
@@ -17,10 +17,18 @@ export class TaxCalculatorApp extends BaseElementMixin(LitElement) {
     render() {
         return html`
             <div class="container">
-                <h2>Tax calculator</h2>
-                <country-select></country-select>
-                <salary-input></salary-input>
-                <results-container></results-container>
+                <header>
+                    <div class="headerContainer">
+                        <div id="title">
+                            <h3>Income Tax Calculator</h3>
+                        </div>
+                    </div>
+                </header>
+                <main>
+                    <country-select></country-select>
+                    <salary-input></salary-input>
+                    <results-container></results-container>
+                </main>
             </div>
         `;
     }
@@ -65,8 +73,11 @@ export class TaxCalculatorApp extends BaseElementMixin(LitElement) {
      * tax results
      */
     _calculateResults() {
+
         if (this.selectedCountry && this.salaryDetails) {
-            CountryTaxDispatcher.process(this.selectedCountry, this.salaryDetails).then(taxResults => this._populateResults(taxResults));
+
+            TaxProcessorDispatcher.dispatch(this.selectedCountry.id, this.salaryDetails)
+                .then(taxResults => this._populateResults(taxResults));
         }
     }
 

@@ -2,7 +2,6 @@ import { LitElement, html } from "lit-element";
 import { BaseElementMixin } from "../../base/BaseElementMixin.js";
 import { Country } from "../model/Country.js";
 import { CountriesLoader } from "../control/CountriesLoader.js";
-import { countriesJson } from "../../CountryJsonMapper.js";
 
 export class CountrySelect extends BaseElementMixin(LitElement) {
     static get properties() {
@@ -33,7 +32,7 @@ export class CountrySelect extends BaseElementMixin(LitElement) {
      * @param {HTMLSelectElement} selectElement
      */
     _loadCountries(selectElement) {
-        CountriesLoader.loadCountriesFromJson(countriesJson)
+        CountriesLoader.loadCountriesFromJson()
             .then(countries => (this.countries = countries))
             .then(_ => this._createItemsFromCountries(selectElement))
             .catch(reason => console.error(reason.message));

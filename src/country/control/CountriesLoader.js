@@ -1,11 +1,13 @@
 import { Country } from "../model/Country.js";
 
+const countriesJson = ["web_assets/data/cyprus.json"];
+
 export class CountriesLoader {
     /**
-     * @param {Array<String>} countriesJson JSON file paths
      * @returns {Promise<Array<Country>>} the promise of an array of countries
      */
-    static async loadCountriesFromJson(countriesJson) {
+    static async loadCountriesFromJson() {
+
         const countries = new Array();
 
         for (let jsonPath of countriesJson) {

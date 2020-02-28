@@ -1,5 +1,6 @@
 import { LitElement, html, css } from "lit-element";
 import { BaseElementMixin } from "../../base/BaseElementMixin.js";
+import { ResultsContainerCss } from "./ResultsContainerCss.js";
 import { TaxResult } from "../model/TaxResult.js";
 import { TaxResults } from "../model/TaxResults.js";
 
@@ -12,28 +13,14 @@ export class ResultsContainer extends BaseElementMixin(LitElement) {
     }
 
     static get styles() {
-        return [
-            ...super.styles,
-            css`
-                .container {
-                    display: flex;
-                    flex-direction: row;
-                    justify-content: flex-start;
-                    margin-top: 30px;
-                }
-
-                .monthlyContainer {
-                    margin-left: 50px;
-                }
-            `
-        ];
+        return [...super.styles, ResultsContainerCss];
     }
 
     render() {
         return html`
             <div class="container">
                 <div class="annualContainer">
-                    <h4>Annual</h4>
+                    <h2>Annual</h2>
                     <table>
                         <tr>
                             <td>Gross</td>
@@ -59,7 +46,7 @@ export class ResultsContainer extends BaseElementMixin(LitElement) {
                 </div>
 
                 <div class="monthlyContainer">
-                    <h4>Monthly</h4>
+                    <h2>Monthly</h2>
                     <table>
                         <tr>
                             <td>Gross</td>
