@@ -6,7 +6,7 @@ export const ResultsContainerCss = css`
         display: block;
     }
 
-    /* mobile-first */
+    /* mobile-first
     .container {
         display: grid;
         grid-template-areas:
@@ -26,8 +26,9 @@ export const ResultsContainerCss = css`
         grid-area: monthly;
         display: block;
     }
+    */
 
-    /* React to screens width more or equal to 768px */
+    /* React to screens width more or equal to 768px
     @media (min-width: 768px) {
 
         .container {
@@ -36,4 +37,5 @@ export const ResultsContainerCss = css`
             grid-template-rows: 1fr;
         }
     }
+    */
 `;

@@ -11,7 +11,7 @@
   "scripts": {
     "serve": "es-dev-server --config ./es-dev-server.config.js",
     "serve:watch": "es-dev-server --node-resolve --app-index index.html --watch",
-    "snowpack:deps": "npx snowpack",
+    "snowpack": "npx snowpack --clean",
     "lint:prettier": "prettier \"./src/**/*.js\" --tab-width 4 --list-different",
     "format:prettier": "prettier \"./src/**/*.js\" --tab-width 4 --print-width 150 --write",
     "test": "karma start; exit 0",
@@ -28,8 +28,10 @@
     "build": "npm run build:clean && npm run build:genDeps && npm run build:copyAssets && npm run build:compile && npm run build:copyIndex && npm run build:sw:copy && npm run build:sw:gen"
   },
   "dependencies": {
+    "blueprint-css": "^3.1.1",
     "lit-element": "^2.2.1",
     "lit-html": "^1.1.2",
+    "normalize.css": "^8.0.1",
     "workbox-window": "^5.0.0"
   },
   "devDependencies": {
@@ -63,7 +65,13 @@
     "webDependencies": [
       "lit-element",
       "lit-html",
-      "workbox-window"
+      "workbox-window",
+      "normalize.css/normalize.css",
+      "blueprint-css/dist/blueprint.min.css"
+    ],
+    "dedupe": [
+      "lit-element",
+      "lit-html"
     ]
   },
   "babel": {

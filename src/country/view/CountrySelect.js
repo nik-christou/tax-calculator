@@ -12,7 +12,8 @@ export class CountrySelect extends BaseElementMixin(LitElement) {
 
     render() {
         return html`
-            <select></select>
+            <label for="country-select">Choose a country:</label>
+            <select name="countries" id="country-select"></select>
         `;
     }
 

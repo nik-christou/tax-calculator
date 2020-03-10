@@ -1,9 +1,12 @@
 import { LitElement, html } from "lit-element";
 import { BaseElementMixin } from "./base/BaseElementMixin.js";
 import { TaxCalculatorAppCss } from "./TaxCalculatorAppCss.js";
+import { BlueprintCss } from "./base/BlueprintCss.js";
 import { SWRegister } from "./SWRegister.js";
 import { TaxResults } from "./results/model/TaxResults.js";
 import { TaxProcessorDispatcher } from "./TaxProcessorDispatcher.js";
+
+import "./navbar/Navbar.js";
 
 import "./country/view/CountrySelect.js";
 import "./salary/view/SalaryInput.js";
@@ -11,23 +14,19 @@ import "./results/view/ResultsContainer.js";
 
 export class TaxCalculatorApp extends BaseElementMixin(LitElement) {
     static get styles() {
-        return [...super.styles, TaxCalculatorAppCss];
+        return [...super.styles, TaxCalculatorAppCss, BlueprintCss];
     }
 
     render() {
         return html`
-            <div class="container">
-                <header>
-                    <div class="headerContainer">
-                        <div id="title">
-                            <h3>Income Tax Calculator</h3>
-                        </div>
+            <div bp="grid">
+                <nav-bar bp="12"></nav-bar>
+                <main bp="12">
+                    <div class="app-container">
+                        <country-select></country-select>
+                        <salary-input></salary-input>
+                        <results-container></results-container>
                     </div>
-                </header>
-                <main>
-                    <country-select></country-select>
-                    <salary-input></salary-input>
-                    <results-container></results-container>
                 </main>
             </div>
         `;
