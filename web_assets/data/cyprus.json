@@ -11,5 +11,6 @@
   "socialInsurancePercent": 8.3,
   "healthContributionPercent": 1.70,
   "locale": "el-GR",
-  "currency": "EUR"
+  "currency": "EUR",
+  "flag": "cyprus.png"
 }

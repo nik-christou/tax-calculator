@@ -38,6 +38,7 @@ export const TaxCalculatorAppCss = css`
         min-height: 100vh;
         width: 100%;
         padding-left: 1em;
+        padding-right: 1em;
     }
 
 `;

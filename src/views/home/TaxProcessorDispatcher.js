@@ -1,5 +1,5 @@
-import { SalaryDetails } from "./salary/model/SalaryDetails.js";
-import { TaxResults } from "./results/model/TaxResults.js";
+import { SalaryDetails } from "../../salary/model/SalaryDetails.js";
+import { TaxResults } from "../../results/model/TaxResults.js";
 
 export class TaxProcessorDispatcher {
     /**
@@ -25,7 +25,7 @@ export class TaxProcessorDispatcher {
      */
     static async _processCyprus(salaryDetails) {
 
-        const { CyprusProcessor } = await import("./taxation/cyprus/boundary/CyprusProcessor");
+        const { CyprusProcessor } = await import("../../taxation/cyprus/boundary/CyprusProcessor");
         return CyprusProcessor.processCyprusTax(salaryDetails);
     }
 }

@@ -10,5 +10,6 @@
   ],
   "healthContributionPercent": 2,
   "locale": "en-AU",
-  "currency": "AUD"
+  "currency": "AUD",
+  "flag": "australia.png"
 }
