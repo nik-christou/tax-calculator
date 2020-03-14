@@ -2,10 +2,6 @@ import { css } from "lit-element";
 
 export const NavbarCss = css`
 
-    :host {
-        font-family: Roboto;
-    }
-
     :host([sticky]) {
         position: fixed;
         z-index: 100;

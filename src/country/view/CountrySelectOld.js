@@ -2,27 +2,18 @@ import { LitElement, html } from "lit-element";
 import { BaseElementMixin } from "../../base/BaseElementMixin.js";
 import { Country } from "../model/Country.js";
 import { CountriesLoader } from "../control/CountriesLoader.js";
-import { ListGroupCss } from "../../base/ListGroupCss.js";
 
 export class CountrySelect extends BaseElementMixin(LitElement) {
-
     static get properties() {
         return {
             countries: Array
         };
     }
 
-    static get styles() {
-        return [...super.styles, ListGroupCss];
-    }
-
     render() {
         return html`
-            <div class="list-group">
-                <a class="list-group-item list-group-item-action country-item">
-
-                </a>
-            </div>
+            <label for="country-select">Choose a country:</label>
+            <select name="countries" id="country-select"></select>
         `;
     }
 
@@ -32,6 +23,46 @@ export class CountrySelect extends BaseElementMixin(LitElement) {
     }
 
     firstUpdated() {
+        const selectElement = this.shadowRoot.querySelector("select");
+        selectElement.addEventListener("input", event => this._handleChangeEvent(event));
+        this._addCaptionOption(selectElement);
+        this._loadCountries(selectElement);
+    }
+
+    /**
+     * @param {HTMLSelectElement} selectElement
+     */
+    _loadCountries(selectElement) {
+        CountriesLoader.loadCountriesFromJson()
+            .then(countries => (this.countries = countries))
+            .then(_ => this._createItemsFromCountries(selectElement))
+            .catch(reason => console.error(reason.message));
+    }
+
+    /**
+     * @param {HTMLSelectElement} selectElement
+     */
+    _createItemsFromCountries(selectElement) {
+        for (let country of this.countries) {
+            const optionItem = this._createOptionItem(country);
+            selectElement.add(optionItem);
+        }
+    }
+
+    /**
+     * @param {HTMLSelectElement} selectElement
+     */
+    _addCaptionOption(selectElement) {
+        const optionItem = new Option("Select a country:", "", true, true);
+        selectElement.add(optionItem);
+    }
+
+    /**
+     * @param {Country} country
+     * @returns {HTMLOptionElement}
+     */
+    _createOptionItem(country) {
+        return new Option(country.name, country.id.toString(), false, false);
     }
 
     /**

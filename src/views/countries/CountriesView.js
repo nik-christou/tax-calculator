@@ -2,7 +2,9 @@ import { LitElement, html, css } from "lit-element";
 import { BaseElementMixin } from "../../base/BaseElementMixin.js";
 import { Country } from "../../country/model/Country.js";
 import { CountriesLoader } from "./CountriesLoader.js";
+import { ListGroupCss } from "../../base/ListGroupCss.js";
 import { CountriesViewCss } from "./CountriesViewCss.js";
+import { Router } from '@vaadin/router';
 
 export class CountriesView extends BaseElementMixin(LitElement) {
 
@@ -14,7 +16,7 @@ export class CountriesView extends BaseElementMixin(LitElement) {
     }
 
     static get styles() {
-        return [...super.styles, CountriesViewCss];
+        return [...super.styles, ListGroupCss, CountriesViewCss];
     }
 
     render() {
@@ -27,11 +29,14 @@ export class CountriesView extends BaseElementMixin(LitElement) {
 
     constructor() {
         super();
-        this.selectedId = 1;
+        this.selectedId = 0;
         this.countries = new Array();
     }
 
-    firstUpdated() {
+    /**
+     * @param {Map} changedProperties
+     */
+    firstUpdated(changedProperties) {
         this._loadCountries();
     }
 
@@ -46,7 +51,7 @@ export class CountriesView extends BaseElementMixin(LitElement) {
      */
     _createListGroupItem(country) {
         return html`
-            <a @click=${event => this._handleSelectedCountry(event, country.id)} class="list-group-item list-group-item-action country-item">
+            <a @click=${event => this._handleSelectedCountry(event, country)} class="list-group-item list-group-item-action country-item">
                 <div class="item-container">
                     <div class="country-info">
                         <img src="/web_assets/data/${country.flag}" alt="" />
@@ -62,21 +67,6 @@ export class CountriesView extends BaseElementMixin(LitElement) {
     }
 
     /**
-     * @param {Event} event
-     * @param {Number} countryId
-     */
-    _handleSelectedCountry(event, countryId) {
-
-        event.preventDefault();
-        this.selectedId = countryId;
-
-        // what do we do about the new selection ?
-        // what do we include in the event ? just the country id ?
-        // it will require the whole country object
-        // send an event and then redirect ?
-    }
-
-    /**
      * @param {Number} countryId
      */
     _isSelectedCountry(countryId) {
@@ -86,6 +76,38 @@ export class CountriesView extends BaseElementMixin(LitElement) {
                 <img class="check" src="/web_assets/img/check.png" alt="" />
             `;
         }
+    }
+
+    /**
+     * @param {Event} event
+     * @param {Country} country
+     */
+    _handleSelectedCountry(event, country) {
+
+        event.preventDefault();
+
+        this.selectedId = country.id;
+
+        // send selected country event
+        // the TaxCalculatorApp captures and stores it
+        this._sendCountryChangeEvent(country);
+
+        // go to home view
+        Router.go("/");
+    }
+
+    /**
+     * @param {Country} country
+     */
+    _sendCountryChangeEvent(country) {
+
+        const countrySelectChangeEvent = new CustomEvent("country-select-change", {
+            bubbles: true,
+            composed: true,
+            detail: country
+        });
+
+        this.dispatchEvent(countrySelectChangeEvent);
     }
 }
 

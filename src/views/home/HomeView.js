@@ -2,6 +2,9 @@ import { LitElement, html } from "lit-element";
 import { BaseElementMixin } from "../../base/BaseElementMixin.js";
 import { TaxResults } from "../../results/model/TaxResults.js";
 import { TaxProcessorDispatcher } from "./TaxProcessorDispatcher.js";
+import { ListGroupCss } from "../../base/ListGroupCss.js";
+import { HomeViewCss } from "./HomeViewCss.js";
+import { Country } from "../../country/model/Country.js";
 
 import "../../country/view/CountrySelect.js";
 import "../../salary/view/SalaryInput.js";
@@ -11,35 +14,56 @@ export class HomeView extends BaseElementMixin(LitElement) {
 
     static get properties() {
         return {
-            countries: Array,
-            selectedId: Number
+            selectedCountry: Country
         };
     }
 
     static get styles() {
-        return [...super.styles];
+        return [...super.styles, ListGroupCss, HomeViewCss];
     }
 
     render() {
         return html`
-            <country-select></country-select>
+
+            <div class="list-group">
+                <a id="countryLink" href="/countries" class="list-group-item list-group-item-action">
+                    <div class="country-container">
+                        <h5>Country:</h5>
+                        <div class="selected-country">
+                            ${this._getSelectedCountryInfo()}
+                        </div>
+                    </div>
+                </a>
+            </div>
+
+            <br />
+
             <salary-input></salary-input>
             <results-container></results-container>
         `;
     }
 
+    constructor() {
+        super();
+        this.selectedCountry = null;
+    }
+
     firstUpdated() {
-        this.addEventListener("country-select-change", event => this._handleCountryChange(event));
         this.addEventListener("salary-details-change", event => this._handleSalaryDetailsChange(event));
     }
 
-    /**
-     * @param {CustomEvent} event
-     */
-    _handleCountryChange(event) {
-        this.selectedCountry = event.detail;
-        this._updateCurrencyFormatter();
-        this._calculateResults();
+    _getSelectedCountryInfo() {
+
+        if(this.selectedCountry) {
+            return html`
+                <h5>${this.selectedCountry.name}</h5>
+                <small class="text-muted">${this.selectedCountry.currency} / ${this.selectedCountry.locale}</small>
+            `;
+        }
+
+        return html`
+            <h5>None</h5>
+        `;
     }
 
     /**
