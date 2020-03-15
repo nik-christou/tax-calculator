@@ -29,8 +29,9 @@ export class HomeView extends BaseElementMixin(LitElement) {
                 <a id="countryLink" href="/countries" class="list-group-item list-group-item-action">
                     <div class="country-container">
                         <h5>Country:</h5>
-                        <div class="selected-country">
+                        <div class="selected-country-container">
                             ${this._getSelectedCountryInfo()}
+                            <img class="right-chevron" src="/web_assets/img/right-chevron.png" alt="" />
                         </div>
                     </div>
                 </a>
@@ -56,8 +57,13 @@ export class HomeView extends BaseElementMixin(LitElement) {
 
         if(this.selectedCountry) {
             return html`
-                <h5>${this.selectedCountry.name}</h5>
-                <small class="text-muted">${this.selectedCountry.currency} / ${this.selectedCountry.locale}</small>
+                <div class="country-info">
+                    <img src="/web_assets/data/${this.selectedCountry.flag}" alt="" />
+                    <div class="item-info">
+                        <h5>${this.selectedCountry.name}</h5>
+                        <small class="text-muted">${this.selectedCountry.currency} / ${this.selectedCountry.locale}</small>
+                    </div>
+                </div>
             `;
         }
 

@@ -25,10 +25,6 @@ export class TaxCalculatorApp extends BaseElementMixin(LitElement) {
         return html`
             <div bp="grid">
                 <nav-bar bp="12"></nav-bar>
-                <nav>
-                    <a href="/">Home</a>
-                    <a href="/countries">Countries</a>
-                </nav>
                 <main bp="12">
                     <div class="app-container">
                         <div id="outlet"></div>
