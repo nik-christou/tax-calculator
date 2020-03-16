@@ -1,7 +1,6 @@
 import { LitElement, html, css } from "lit-element";
 import { BaseElementMixin } from "../../base/BaseElementMixin.js";
 import { Country } from "../../country/model/Country.js";
-import { CountriesLoader } from "./CountriesLoader.js";
 import { ListGroupCss } from "../../base/ListGroupCss.js";
 import { CountriesViewCss } from "./CountriesViewCss.js";
 import { Router } from '@vaadin/router';
@@ -33,18 +32,18 @@ export class CountriesView extends BaseElementMixin(LitElement) {
         this.countries = new Array();
     }
 
-    /**
-     * @param {Map} changedProperties
-     */
-    firstUpdated(changedProperties) {
-        this._loadCountries();
-    }
+    // /**
+    //  * @param {Map} changedProperties
+    //  */
+    // firstUpdated(changedProperties) {
+    //     this.countries = this.datastore.countries;
+    // }
 
-    _loadCountries() {
-        CountriesLoader.loadCountriesFromJson()
-            .then(countries => (this.countries = countries))
-            .catch(reason => console.error(reason.message));
-    }
+    // _loadCountries() {
+    //     CountriesLoader.loadCountriesFromJson()
+    //         .then(countries => (this.countries = countries))
+    //         .catch(reason => console.error(reason.message));
+    // }
 
     /**
      * @param {Country} country
@@ -104,7 +103,9 @@ export class CountriesView extends BaseElementMixin(LitElement) {
         const countrySelectChangeEvent = new CustomEvent("country-select-change", {
             bubbles: true,
             composed: true,
-            detail: country
+            detail: {
+                selectedCountry: country
+            }
         });
 
         this.dispatchEvent(countrySelectChangeEvent);

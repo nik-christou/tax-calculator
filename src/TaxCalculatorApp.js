@@ -3,19 +3,14 @@ import { BaseElementMixin } from "./base/BaseElementMixin.js";
 import { SWRegister } from "./SWRegister.js";
 import { Router } from '@vaadin/router';
 import { routes } from "./Routes.js";
-import { Country } from "./country/model/Country.js";
+import { DataStore } from "./datastore/DataStore.js";
+import { CountriesLoader } from "./views/countries/CountriesLoader.js";
 import { BlueprintCss } from "./base/BlueprintCss.js";
 import { TaxCalculatorAppCss } from "./TaxCalculatorAppCss.js";
 
 import "./navbar/Navbar.js";
 
 export class TaxCalculatorApp extends BaseElementMixin(LitElement) {
-
-    static get properties() {
-        return {
-            selectedCountry: Country
-        };
-    }
 
     static get styles() {
         return [...super.styles, TaxCalculatorAppCss, BlueprintCss];
@@ -36,41 +31,39 @@ export class TaxCalculatorApp extends BaseElementMixin(LitElement) {
 
     constructor() {
         super();
-        this.selectedCountry = null;
+        this.datastore = new DataStore();
     }
 
     /**
      * @param {Map} changedProperties
      */
     firstUpdated(changedProperties) {
-        SWRegister.register();
-        this._prepareRouter();
 
+        SWRegister.register();
+        this._loadCountries();
+        this._prepareRouter();
         this.addEventListener("country-select-change", event => this._handleCountryChange(event));
+    }
+
+    _loadCountries() {
+        CountriesLoader.loadCountriesFromJson()
+            .then(countries => this.datastore.countries = countries)
+            .catch(reason => console.error(reason.message));
     }
 
     _prepareRouter() {
         const outletElement = this.shadowRoot.getElementById("outlet");
         const router = new Router(outletElement);
         router.setRoutes(routes);
-
         this._watchForRouterComponentChanges(outletElement);
     }
 
     /**
-     * Watches for the addition of new nodes under
-     * the router outlet element. When a matching
-     * element is loaded and added into DOM then
-     * we can update its properties using properties
-     * stored in this class. This is not ideal but
-     * using this way we avoid having to use a more
-     * complicated solution for storing state
-     *
      * @param {HTMLElement} outletElement
      */
     _watchForRouterComponentChanges(outletElement) {
 
-        const mutationObserver = new MutationObserver( mutations => {
+        const mutationObserver = new MutationObserver(mutations => {
             mutations.forEach(mutation => {
                 this._handleRouterMutation(mutation);
             })
@@ -99,14 +92,24 @@ export class TaxCalculatorApp extends BaseElementMixin(LitElement) {
 
     _updateHomeView() {
         const homeView = this.shadowRoot.querySelector("home-view");
-        homeView.selectedCountry = this.selectedCountry;
+
+        if(this.datastore && this.datastore.selectedCountry) {
+            homeView.selectedCountry = this.datastore.selectedCountry;
+        }
     }
 
     _updateCountriesView() {
         const countriesView = this.shadowRoot.querySelector("countries-view");
 
-        if(this.selectedCountry) {
-            countriesView.selectedId = this.selectedCountry.id;
+        if(this.datastore) {
+
+            if(this.datastore.countries) {
+                countriesView.countries = this.datastore.countries;
+            }
+
+            if(this.datastore.selectedCountry) {
+                countriesView.selectedId = this.datastore.selectedCountry.id;
+            }
         }
     }
 
@@ -114,8 +117,9 @@ export class TaxCalculatorApp extends BaseElementMixin(LitElement) {
      * @param {CustomEvent} event
      */
     _handleCountryChange(event) {
-        if(event.detail) {
-            this.selectedCountry = event.detail;
+
+        if(event.detail.selectedCountry) {
+            this.datastore.selectedCountry = event.detail.selectedCountry;
         }
     }
 }
