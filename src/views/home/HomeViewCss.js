@@ -38,4 +38,20 @@ export const HomeViewCss = css`
     .selected-country-container .country-info .item-info h5 {
         margin-top: 0;
     }
+
+    .salary-type-container {
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+    }
+
+    .salary-type-container .salary-type-values {
+        margin-top: 0;
+    }
+
+    .salary-input-container {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
 `;

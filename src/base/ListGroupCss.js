@@ -17,8 +17,7 @@ export const ListGroupCss = css`
         text-align: inherit;
     }
 
-    .list-group-item-action:hover,
-    .list-group-item-action:focus {
+    .list-group-item-action:hover, .list-group-item-action:focus {
         z-index: 1;
         color: #495057;
         text-decoration: none;
@@ -34,7 +33,6 @@ export const ListGroupCss = css`
         position: relative;
         display: block;
         padding: 0.75rem 1.25rem;
-        margin-bottom: -1px;
         background-color: #fff;
         border: 1px solid rgba(0, 0, 0, 0.125);
     }
@@ -45,13 +43,11 @@ export const ListGroupCss = css`
     }
 
     .list-group-item:last-child {
-        margin-bottom: 0;
         border-bottom-right-radius: 0.25rem;
         border-bottom-left-radius: 0.25rem;
     }
 
-    .list-group-item.disabled,
-    .list-group-item:disabled {
+    .list-group-item.disabled, .list-group-item:disabled {
         color: #6c757d;
         pointer-events: none;
         background-color: #fff;
@@ -62,6 +58,44 @@ export const ListGroupCss = css`
         color: #fff;
         background-color: #007bff;
         border-color: #007bff;
+    }
+
+    .list-group-item + .list-group-item {
+        border-top-width: 0;
+    }
+
+    .list-group-item + .list-group-item.active {
+        margin-top: -1px;
+        border-top-width: 1px;
+    }
+
+    .list-group-horizontal {
+        -ms-flex-direction: row;
+        flex-direction: row;
+    }
+
+    .list-group-horizontal .list-group-item:first-child {
+        border-bottom-left-radius: 0.25rem;
+        border-top-right-radius: 0;
+    }
+
+    .list-group-horizontal .list-group-item:last-child {
+        border-top-right-radius: 0.25rem;
+        border-bottom-left-radius: 0;
+    }
+
+    .list-group-horizontal .list-group-item.active {
+        margin-top: 0;
+    }
+
+    .list-group-horizontal .list-group-item + .list-group-item {
+        border-top-width: 1px;
+        border-left-width: 0;
+    }
+
+    .list-group-horizontal .list-group-item + .list-group-item.active {
+        margin-left: -1px;
+        border-left-width: 1px;
     }
 
     a.list-group-item {
