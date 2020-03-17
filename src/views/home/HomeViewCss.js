@@ -54,4 +54,9 @@ export const HomeViewCss = css`
         align-items: center;
         justify-content: space-between;
     }
+
+    .salary-input-group {
+        width: 40vw;
+        max-width: 50vw;
+    }
 `;

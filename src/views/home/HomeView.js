@@ -2,11 +2,12 @@ import { LitElement, html } from "lit-element";
 import { BaseElementMixin } from "../../base/BaseElementMixin.js";
 import { TaxResults } from "../../results/model/TaxResults.js";
 import { TaxProcessorDispatcher } from "./TaxProcessorDispatcher.js";
-import { ListGroupCss } from "../../base/ListGroupCss.js";
-import { HomeViewCss } from "./HomeViewCss.js";
 import { Country } from "../../country/model/Country.js";
 import { SalaryType } from "../../salary/model/SalaryType.js";
 import { SalaryTypes } from "../../salary/model/SalaryTypes.js";
+import { ListGroupCss } from "../../base/ListGroupCss.js";
+import { HomeViewCss } from "./HomeViewCss.js";
+import { InputGroupCss } from "../../base/InputGroupCss.js";
 
 import "../../country/view/CountrySelect.js";
 import "../../salary/view/SalaryInput.js";
@@ -22,7 +23,7 @@ export class HomeView extends BaseElementMixin(LitElement) {
     }
 
     static get styles() {
-        return [...super.styles, ListGroupCss, HomeViewCss];
+        return [...super.styles, ListGroupCss, InputGroupCss, HomeViewCss];
     }
 
     render() {
@@ -50,7 +51,12 @@ export class HomeView extends BaseElementMixin(LitElement) {
                 <div class="list-group-item">
                     <div class="salary-input-container">
                         <h5>Amount:</h5>
-                        <input inputmode="numeric" type="number" />
+                        <div class="input-group salary-input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon1">@</span>
+                            </div>
+                            <input type="number" class="form-control" placeholder="" />
+                        </div>
                     </div>
                 </div>
             </div>
