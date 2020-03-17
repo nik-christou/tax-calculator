@@ -8,6 +8,7 @@ import { SalaryTypes } from "../../salary/model/SalaryTypes.js";
 import { ListGroupCss } from "../../base/ListGroupCss.js";
 import { HomeViewCss } from "./HomeViewCss.js";
 import { InputGroupCss } from "../../base/InputGroupCss.js";
+import { SwitchCss } from "../../base/SwitchCss.js";
 
 import "../../country/view/CountrySelect.js";
 import "../../salary/view/SalaryInput.js";
@@ -18,12 +19,14 @@ export class HomeView extends BaseElementMixin(LitElement) {
     static get properties() {
         return {
             selectedCountry: Country,
-            selectedPeriod: SalaryType
+            selectedPeriod: SalaryType,
+            grossAmount: Number,
+            includesThirteen: Boolean
         };
     }
 
     static get styles() {
-        return [...super.styles, ListGroupCss, InputGroupCss, HomeViewCss];
+        return [...super.styles, ListGroupCss, InputGroupCss, SwitchCss, HomeViewCss];
     }
 
     render() {
@@ -51,11 +54,12 @@ export class HomeView extends BaseElementMixin(LitElement) {
                 <div class="list-group-item">
                     <div class="salary-input-container">
                         <h5>Amount:</h5>
-                        <div class="input-group salary-input-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text" id="basic-addon1">@</span>
+                        <div class="salary-input-group">
+                            <input type="number" id="grossAmountInput" .value=${this.grossAmount} min="0" class="form-control salary-input" placeholder="gross amount" />
+                            <div class="thirteen-input-group">
+                                <input type="checkbox" checked  id="includesThirteen" class="switch" name="includesThirteen">
+                                <label for="includesThirteen">Includes 13th salary</label>
                             </div>
-                            <input type="number" class="form-control" placeholder="" />
                         </div>
                     </div>
                 </div>
@@ -71,14 +75,30 @@ export class HomeView extends BaseElementMixin(LitElement) {
     constructor() {
         super();
         this.selectedCountry = null;
-        this.salaryType = SalaryTypes.ANNUAL;
+        this.selectedPeriod = SalaryTypes.ANNUAL;
+        this.grossAmount = 0;
     }
 
     firstUpdated() {
-        this.addEventListener("salary-details-change", event => this._handleSalaryDetailsChange(event));
-
         this._addSalaryTypeClickListeners();
-        this._updateSelectedSalaryTypeLinks(this.salaryType);
+        this._addGrossAmountInputListener();
+        this._updateSelectedSalaryTypeLinks();
+    }
+
+    /**
+     * @param {Map} changedProperties
+     */
+    updated(changedProperties) {
+
+        if(changedProperties.has("selectedCountry")) {
+            if(this.selectedCountry) {
+                this._updateCurrencyFormatter();
+            }
+        }
+
+        if(changedProperties.has("selectedPeriod")) {
+            this._updateSelectedSalaryTypeLinks();
+        }
     }
 
     _getSelectedCountryInfo() {
@@ -109,6 +129,20 @@ export class HomeView extends BaseElementMixin(LitElement) {
         monthlySalaryTypeLink.addEventListener("click", event => this._handleSelectedSalaryType(event, SalaryTypes.MONTHLY));
     }
 
+    _addGrossAmountInputListener() {
+
+        const grossAmountElement = this.shadowRoot.querySelector("input#grossAmountInput");
+        grossAmountElement.addEventListener("input", event => this._handleGrossAmountChange(event, grossAmountElement));
+    }
+
+    /**
+     * @param {Event} event
+     * @param {HTMLInputElement} grossAmountElement
+     */
+    _handleGrossAmountChange(event, grossAmountElement) {
+        this._sendGrossAmountChangeEvent(Number(grossAmountElement.value));
+    }
+
     /**
      * @param {Event} event
      * @param {SalaryType} salaryType
@@ -121,25 +155,54 @@ export class HomeView extends BaseElementMixin(LitElement) {
             return;
         }
 
-        this._updateSelectedSalaryTypeLinks(salaryType);
-
         this.selectedPeriod = salaryType;
+        this._updateSelectedSalaryTypeLinks();
+        this._sendSalaryTypeChangeEvent(salaryType);
+    }
+
+    /**
+     * @param {Number} grossAmount
+     */
+    _sendGrossAmountChangeEvent(grossAmount) {
+
+        const grossAmountChangeEvent = new CustomEvent("gross-amount-change", {
+            bubbles: true,
+            composed: true,
+            detail: {
+                grossAmount: grossAmount
+            }
+        });
+
+        this.dispatchEvent(grossAmountChangeEvent);
     }
 
     /**
      * @param {SalaryType} salaryType
      */
-    _updateSelectedSalaryTypeLinks(salaryType) {
+    _sendSalaryTypeChangeEvent(salaryType) {
+
+        const salaryTypeChangeEvent = new CustomEvent("salary-type-change", {
+            bubbles: true,
+            composed: true,
+            detail: {
+                selectedPeriod: salaryType
+            }
+        });
+
+        this.dispatchEvent(salaryTypeChangeEvent);
+    }
+
+    _updateSelectedSalaryTypeLinks() {
 
         const annualSalaryTypeLink = this.shadowRoot.querySelector("a#annual-salary-type");
         const monthlySalaryTypeLink = this.shadowRoot.querySelector("a#monthly-salary-type");
 
-        if(salaryType === SalaryTypes.ANNUAL) {
+        if(this.selectedPeriod === SalaryTypes.ANNUAL) {
             this._removeActiveClass(monthlySalaryTypeLink);
             this._addActiveClass(annualSalaryTypeLink);
         }
 
-        if(salaryType === SalaryTypes.MONTHLY) {
+        if(this.selectedPeriod === SalaryTypes.MONTHLY) {
             this._removeActiveClass(annualSalaryTypeLink);
             this._addActiveClass(monthlySalaryTypeLink);
         }
@@ -159,13 +222,13 @@ export class HomeView extends BaseElementMixin(LitElement) {
         element.classList.add("active");
     }
 
-    /**
-     * @param {CustomEvent} event
-     */
-    _handleSalaryDetailsChange(event) {
-        this.salaryDetails = event.detail;
-        this._calculateResults();
-    }
+    // /**
+    //  * @param {CustomEvent} event
+    //  */
+    // _handleSalaryDetailsChange(event) {
+    //     this.salaryDetails = event.detail;
+    //     this._calculateResults();
+    // }
 
     _updateCurrencyFormatter() {
         const formatter = new Intl.NumberFormat(this.selectedCountry.locale, {

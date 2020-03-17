@@ -1,48 +1,61 @@
-
 import { Country } from "../country/model/Country.js";
+import { SalaryType } from "../salary/model/SalaryType.js";
 
 export class DataStore {
 
-    /**
-     * @private
-     * @property {Country} selectedCountry
-    */
-    #selectedCountry;
-
-    /**
-     * @private
-     * @property {Array<Country>} countries
-    */
+    /** @type {Array<Country>} */
     #countries;
 
-    /**
-     * @readonly
-     * @returns {Array<Country>} countries
-     */
+    /** @type {Country} */
+    #selectedCountry;
+
+    /** @type {SalaryType} */
+    #selectedPeriod;
+
+    /** @type {Number} */
+    #grossAmount;
+
+    /** @type {Boolean} */
+    #includesThirteen
+
     get countries() {
-        return Object.freeze(this.#countries);
+        return this.#countries;
     }
 
-    /**
-     * @param {Array<Country>} countries to set
-     */
     set countries(countries) {
-        this.#countries = Object.freeze(countries);
+        this.#countries = countries;
     }
 
-    /**
-     * @readonly
-     * @returns {Country} selected country
-     */
     get selectedCountry() {
         return Object.freeze(this.#selectedCountry);
     }
 
-    /**
-     * @param {Country} selectedCountry
-     */
     set selectedCountry(selectedCountry) {
         this.#selectedCountry = selectedCountry;
+    }
+
+    get selectedPeriod() {
+        return this.#selectedPeriod;
+    }
+
+    set selectedPeriod(selectedPeriod) {
+        this.#selectedPeriod = selectedPeriod;
+    }
+
+    get grossAmount() {
+        return this.#grossAmount;
+    }
+
+    set grossAmount(grossAmount) {
+        this.#grossAmount = grossAmount;
+    }
+
+    get includesThirteen() {
+        return this.#includesThirteen;
+    }
+
+    set includesThirteen(includesThirteen) {
+        this.#includesThirteen = includesThirteen;
     }
 }
 

@@ -42,7 +42,10 @@ export class TaxCalculatorApp extends BaseElementMixin(LitElement) {
         SWRegister.register();
         this._loadCountries();
         this._prepareRouter();
+
         this.addEventListener("country-select-change", event => this._handleCountryChange(event));
+        this.addEventListener("salary-type-change", event => this._handleSalaryTypeChange(event));
+        this.addEventListener("gross-amount-change", event => this._handleGrossAmountChange(event));
     }
 
     _loadCountries() {
@@ -93,8 +96,20 @@ export class TaxCalculatorApp extends BaseElementMixin(LitElement) {
     _updateHomeView() {
         const homeView = this.shadowRoot.querySelector("home-view");
 
-        if(this.datastore && this.datastore.selectedCountry) {
-            homeView.selectedCountry = this.datastore.selectedCountry;
+        if(this.datastore) {
+
+            if(this.datastore.selectedCountry) {
+                homeView.selectedCountry = this.datastore.selectedCountry;
+            }
+
+            if(this.datastore.selectedPeriod) {
+                homeView.selectedPeriod = this.datastore.selectedPeriod;
+            }
+
+            if(this.datastore.grossAmount) {
+                console.log(homeView.grossAmount);
+                homeView.grossAmount = this.datastore.grossAmount;
+            }
         }
     }
 
@@ -120,6 +135,27 @@ export class TaxCalculatorApp extends BaseElementMixin(LitElement) {
 
         if(event.detail.selectedCountry) {
             this.datastore.selectedCountry = event.detail.selectedCountry;
+        }
+    }
+
+    /**
+     * @param {CustomEvent} event
+     */
+    _handleSalaryTypeChange(event) {
+
+        if(event.detail.selectedPeriod) {
+            this.datastore.selectedPeriod = event.detail.selectedPeriod;
+        }
+    }
+
+    /**
+     * @param {CustomEvent} event
+     */
+    _handleGrossAmountChange(event) {
+
+        if(event.detail.grossAmount) {
+            this.datastore.grossAmount = event.detail.grossAmount;
+            console.log(this.datastore.grossAmount);
         }
     }
 }

@@ -56,7 +56,16 @@ export const HomeViewCss = css`
     }
 
     .salary-input-group {
-        width: 40vw;
-        max-width: 50vw;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .salary-input-group .salary-input {
+        width: auto;
+    }
+
+    .thirteen-input-group {
+        display: flex;
+        margin-top: 10px;
     }
 `;

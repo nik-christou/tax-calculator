@@ -32,19 +32,6 @@ export class CountriesView extends BaseElementMixin(LitElement) {
         this.countries = new Array();
     }
 
-    // /**
-    //  * @param {Map} changedProperties
-    //  */
-    // firstUpdated(changedProperties) {
-    //     this.countries = this.datastore.countries;
-    // }
-
-    // _loadCountries() {
-    //     CountriesLoader.loadCountriesFromJson()
-    //         .then(countries => (this.countries = countries))
-    //         .catch(reason => console.error(reason.message));
-    // }
-
     /**
      * @param {Country} country
      */
