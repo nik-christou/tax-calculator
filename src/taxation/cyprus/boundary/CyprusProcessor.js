@@ -1,5 +1,5 @@
-import { SalaryDetails } from "../../../salary/model/SalaryDetails.js";
-import { TaxResults } from "../../../results/model/TaxResults.js";
+import { SalaryDetails } from "../../../model/SalaryDetails.js";
+import { TaxResults } from "../../../model/TaxResults.js";
 import { CyprusTaxLoader } from "../control/CyprusTaxLoader.js";
 import { CyprusTaxCalculator } from "../control/CyprusTaxCalculator.js";
 
