@@ -1,4 +1,4 @@
-import { Country } from "../../country/model/Country.js";
+import { Country } from "./model/Country.js";
 
 const countriesJson = [
     "web_assets/data/australia.json",

@@ -4,7 +4,7 @@ import { SWRegister } from "./SWRegister.js";
 import { Router } from '@vaadin/router';
 import { routes } from "./Routes.js";
 import { DataStore } from "./datastore/DataStore.js";
-import { CountriesLoader } from "./views/countries/CountriesLoader.js";
+import { CountriesLoader } from "./CountriesLoader.js";
 import { BlueprintCss } from "./base/BlueprintCss.js";
 import { TaxCalculatorAppCss } from "./TaxCalculatorAppCss.js";
 

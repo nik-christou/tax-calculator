@@ -13,7 +13,7 @@ export class Navbar extends BaseElementMixin(LitElement) {
             <div class="navbar">
                 <div class="title">
                     <a href="#" class="navbar-link">
-                        <img src="/web_assets/logo.svg" alt="" class="logo" />
+                        <img src="/web_assets/img/logo.svg" alt="" class="logo" />
                         Salary Tax Calculator
                     </a>
                 </div>

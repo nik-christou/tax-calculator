@@ -1,6 +1,6 @@
-import { LitElement, html, css } from "lit-element";
+import { LitElement, html } from "lit-element";
 import { BaseElementMixin } from "../../base/BaseElementMixin.js";
-import { Country } from "../../country/model/Country.js";
+import { Country } from "../../model/Country.js";
 import { ListGroupCss } from "../../base/ListGroupCss.js";
 import { CountriesViewCss } from "./CountriesViewCss.js";
 import { Router } from '@vaadin/router';

@@ -1,5 +1,5 @@
-import { Country } from "../country/model/Country.js";
-import { SalaryType } from "../salary/model/SalaryType.js";
+import { Country } from "../model/Country.js";
+import { SalaryType } from "../model/SalaryType.js";
 
 export class DataStore {
 
@@ -27,7 +27,7 @@ export class DataStore {
     }
 
     get selectedCountry() {
-        return Object.freeze(this.#selectedCountry);
+        return this.#selectedCountry;
     }
 
     set selectedCountry(selectedCountry) {

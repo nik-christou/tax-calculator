@@ -1,8 +1,9 @@
-import { LitElement, html, css } from "lit-element";
+import { LitElement, html } from "lit-element";
 import { BaseElementMixin } from "../../base/BaseElementMixin.js";
-import { ResultsContainerCss } from "./ResultsContainerCss.js";
-import { TaxResult } from "../model/TaxResult.js";
-import { TaxResults } from "../model/TaxResults.js";
+import { TaxResult } from "../../model/TaxResult.js";
+import { TaxResults } from "../../model/TaxResults.js";
+import { BlueprintCss } from "../../base/BlueprintCss.js";
+import { TableCss } from "../../base/TableCss.js";
 
 export class ResultsContainer extends BaseElementMixin(LitElement) {
     static get properties() {
@@ -13,15 +14,15 @@ export class ResultsContainer extends BaseElementMixin(LitElement) {
     }
 
     static get styles() {
-        return [...super.styles, ResultsContainerCss];
+        return [...super.styles, TableCss, BlueprintCss];
     }
 
     render() {
         return html`
-            <div class="container">
-                <div class="annualContainer">
+            <div bp="grid 6@md">
+                <div>
                     <h2>Annual</h2>
-                    <table>
+                    <table class="table">
                         <tr>
                             <td>Gross</td>
                             <td>${this._getAnnualGrossAmount()}</td>
@@ -45,9 +46,9 @@ export class ResultsContainer extends BaseElementMixin(LitElement) {
                     </table>
                 </div>
 
-                <div class="monthlyContainer">
+                <div>
                     <h2>Monthly</h2>
-                    <table>
+                    <table class="table">
                         <tr>
                             <td>Gross</td>
                             <td>${this._getMonthlyGrossAmount()}</td>

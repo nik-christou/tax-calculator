@@ -1,18 +1,17 @@
 import { LitElement, html } from "lit-element";
 import { BaseElementMixin } from "../../base/BaseElementMixin.js";
-import { TaxResults } from "../../results/model/TaxResults.js";
+import { TaxResults } from "../../model/TaxResults.js";
 import { TaxProcessorDispatcher } from "./TaxProcessorDispatcher.js";
-import { Country } from "../../country/model/Country.js";
-import { SalaryType } from "../../salary/model/SalaryType.js";
-import { SalaryTypes } from "../../salary/model/SalaryTypes.js";
+import { Country } from "../../model/Country.js";
+import { SalaryType } from "../../model/SalaryType.js";
+import { SalaryTypes } from "../../model/SalaryTypes.js";
+import { SalaryDetails } from "../../model/SalaryDetails.js";
 import { ListGroupCss } from "../../base/ListGroupCss.js";
 import { HomeViewCss } from "./HomeViewCss.js";
 import { InputGroupCss } from "../../base/InputGroupCss.js";
 import { SwitchCss } from "../../base/SwitchCss.js";
 
-import "../../country/view/CountrySelect.js";
-import "../../salary/view/SalaryInput.js";
-import "../../results/view/ResultsContainer.js";
+import "./ResultsContainer.js";
 
 export class HomeView extends BaseElementMixin(LitElement) {
 
@@ -82,7 +81,7 @@ export class HomeView extends BaseElementMixin(LitElement) {
     firstUpdated() {
         this._addSalaryTypeClickListeners();
         this._addGrossAmountInputListener();
-        this._addIncludesThirteenListener();
+        this._addIncludesThirteenInputListener();
         this._updateSelectedSalaryTypeLinks();
     }
 
@@ -134,7 +133,7 @@ export class HomeView extends BaseElementMixin(LitElement) {
         grossAmountElement.addEventListener("input", event => this._handleGrossAmountChange(event, grossAmountElement));
     }
 
-    _addIncludesThirteenListener() {
+    _addIncludesThirteenInputListener() {
         const includesThirteenElement = this.shadowRoot.querySelector("input#includesThirteen");
         includesThirteenElement.addEventListener("input", event => this._handleThirteenChange(event, includesThirteenElement));
     }
@@ -144,7 +143,9 @@ export class HomeView extends BaseElementMixin(LitElement) {
      * @param {HTMLInputElement} includesThirteenElement
      */
     _handleThirteenChange(event, includesThirteenElement) {
-        this._sendIncludesThirteenChangeEvent(includesThirteenElement.checked);
+        this.includesThirteen = includesThirteenElement.checked
+        this._sendIncludesThirteenChangeEvent(this.includesThirteen);
+        this._calculateResults();
     }
 
     /**
@@ -152,7 +153,9 @@ export class HomeView extends BaseElementMixin(LitElement) {
      * @param {HTMLInputElement} grossAmountElement
      */
     _handleGrossAmountChange(event, grossAmountElement) {
-        this._sendGrossAmountChangeEvent(Number(grossAmountElement.value));
+        this.grossAmount = Number(grossAmountElement.value);
+        this._sendGrossAmountChangeEvent(this.grossAmount);
+        this._calculateResults();
     }
 
     /**
@@ -170,6 +173,7 @@ export class HomeView extends BaseElementMixin(LitElement) {
         this.selectedPeriod = salaryType;
         this._updateSelectedSalaryTypeLinks();
         this._sendSalaryTypeChangeEvent(salaryType);
+        this._calculateResults();
     }
 
     /**
@@ -250,14 +254,6 @@ export class HomeView extends BaseElementMixin(LitElement) {
         element.classList.add("active");
     }
 
-    // /**
-    //  * @param {CustomEvent} event
-    //  */
-    // _handleSalaryDetailsChange(event) {
-    //     this.salaryDetails = event.detail;
-    //     this._calculateResults();
-    // }
-
     _updateCurrencyFormatter() {
         const formatter = new Intl.NumberFormat(this.selectedCountry.locale, {
             style: "currency",
@@ -269,16 +265,13 @@ export class HomeView extends BaseElementMixin(LitElement) {
         resultContainer.formatter = formatter;
     }
 
-    /**
-     * Call the dispatcher to use the correct json loader
-     * and tax calculator that matches the country to produce
-     * tax results
-     */
     _calculateResults() {
 
-        if (this.selectedCountry && this.salaryDetails) {
+        if (this.selectedCountry && this.selectedPeriod && this.grossAmount) {
 
-            TaxProcessorDispatcher.dispatch(this.selectedCountry.id, this.salaryDetails)
+            const salaryDetails = new SalaryDetails(this.grossAmount, this.selectedPeriod, this.includesThirteen);
+
+            TaxProcessorDispatcher.dispatch(this.selectedCountry.id, salaryDetails)
                 .then(taxResults => this._populateResults(taxResults));
         }
     }
