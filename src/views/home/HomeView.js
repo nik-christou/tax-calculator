@@ -57,7 +57,7 @@ export class HomeView extends BaseElementMixin(LitElement) {
                         <div class="salary-input-group">
                             <input type="number" id="grossAmountInput" .value=${this.grossAmount} min="0" class="form-control salary-input" placeholder="gross amount" />
                             <div class="thirteen-input-group">
-                                <input type="checkbox" checked  id="includesThirteen" class="switch" name="includesThirteen">
+                                <input type="checkbox" ?checked="${this.includesThirteen}" id="includesThirteen" class="switch" name="includesThirteen" />
                                 <label for="includesThirteen">Includes 13th salary</label>
                             </div>
                         </div>
@@ -67,7 +67,6 @@ export class HomeView extends BaseElementMixin(LitElement) {
 
             <br />
 
-            <salary-input></salary-input>
             <results-container></results-container>
         `;
     }
@@ -77,11 +76,13 @@ export class HomeView extends BaseElementMixin(LitElement) {
         this.selectedCountry = null;
         this.selectedPeriod = SalaryTypes.ANNUAL;
         this.grossAmount = 0;
+        this.includesThirteen = true;
     }
 
     firstUpdated() {
         this._addSalaryTypeClickListeners();
         this._addGrossAmountInputListener();
+        this._addIncludesThirteenListener();
         this._updateSelectedSalaryTypeLinks();
     }
 
@@ -121,7 +122,6 @@ export class HomeView extends BaseElementMixin(LitElement) {
     }
 
     _addSalaryTypeClickListeners() {
-
         const annualSalaryTypeLink = this.shadowRoot.querySelector("a#annual-salary-type");
         const monthlySalaryTypeLink = this.shadowRoot.querySelector("a#monthly-salary-type");
 
@@ -130,9 +130,21 @@ export class HomeView extends BaseElementMixin(LitElement) {
     }
 
     _addGrossAmountInputListener() {
-
         const grossAmountElement = this.shadowRoot.querySelector("input#grossAmountInput");
         grossAmountElement.addEventListener("input", event => this._handleGrossAmountChange(event, grossAmountElement));
+    }
+
+    _addIncludesThirteenListener() {
+        const includesThirteenElement = this.shadowRoot.querySelector("input#includesThirteen");
+        includesThirteenElement.addEventListener("input", event => this._handleThirteenChange(event, includesThirteenElement));
+    }
+
+    /**
+     * @param {Event} event
+     * @param {HTMLInputElement} includesThirteenElement
+     */
+    _handleThirteenChange(event, includesThirteenElement) {
+        this._sendIncludesThirteenChangeEvent(includesThirteenElement.checked);
     }
 
     /**
@@ -158,6 +170,22 @@ export class HomeView extends BaseElementMixin(LitElement) {
         this.selectedPeriod = salaryType;
         this._updateSelectedSalaryTypeLinks();
         this._sendSalaryTypeChangeEvent(salaryType);
+    }
+
+    /**
+     * @param {Boolean} includesThirteen
+     */
+    _sendIncludesThirteenChangeEvent(includesThirteen) {
+
+        const includesThirteenChangeEvent = new CustomEvent("includes-thirteen-change", {
+            bubbles: true,
+            composed: true,
+            detail: {
+                includesThirteen: includesThirteen
+            }
+        });
+
+        this.dispatchEvent(includesThirteenChangeEvent);
     }
 
     /**

@@ -46,6 +46,7 @@ export class TaxCalculatorApp extends BaseElementMixin(LitElement) {
         this.addEventListener("country-select-change", event => this._handleCountryChange(event));
         this.addEventListener("salary-type-change", event => this._handleSalaryTypeChange(event));
         this.addEventListener("gross-amount-change", event => this._handleGrossAmountChange(event));
+        this.addEventListener("includes-thirteen-change", event => this._handleIncludesThirteenChange(event));
     }
 
     _loadCountries() {
@@ -62,6 +63,16 @@ export class TaxCalculatorApp extends BaseElementMixin(LitElement) {
     }
 
     /**
+     * Because components do not pull data but
+     * rather data is pushed to them, we have to watch
+     * when the router changes the view component.
+     * All data is stored in the Datastore class.
+     * This will not be necessary if there is a datastore
+     * like a key-value database that components can query
+     *
+     * HomeView -> CountriesView -> push data from Datastore to CountriesView
+     * CountriesView -> HomeView -> push data from Datastore to HomeView
+     *
      * @param {HTMLElement} outletElement
      */
     _watchForRouterComponentChanges(outletElement) {
@@ -107,9 +118,10 @@ export class TaxCalculatorApp extends BaseElementMixin(LitElement) {
             }
 
             if(this.datastore.grossAmount) {
-                console.log(homeView.grossAmount);
                 homeView.grossAmount = this.datastore.grossAmount;
             }
+
+            homeView.includesThirteen = this.datastore.includesThirteen;
         }
     }
 
@@ -131,8 +143,14 @@ export class TaxCalculatorApp extends BaseElementMixin(LitElement) {
     /**
      * @param {CustomEvent} event
      */
-    _handleCountryChange(event) {
+    _handleIncludesThirteenChange(event) {
+        this.datastore.includesThirteen = event.detail.includesThirteen;
+    }
 
+    /**
+     * @param {CustomEvent} event
+     */
+    _handleCountryChange(event) {
         if(event.detail.selectedCountry) {
             this.datastore.selectedCountry = event.detail.selectedCountry;
         }
@@ -142,7 +160,6 @@ export class TaxCalculatorApp extends BaseElementMixin(LitElement) {
      * @param {CustomEvent} event
      */
     _handleSalaryTypeChange(event) {
-
         if(event.detail.selectedPeriod) {
             this.datastore.selectedPeriod = event.detail.selectedPeriod;
         }
@@ -152,10 +169,8 @@ export class TaxCalculatorApp extends BaseElementMixin(LitElement) {
      * @param {CustomEvent} event
      */
     _handleGrossAmountChange(event) {
-
         if(event.detail.grossAmount) {
             this.datastore.grossAmount = event.detail.grossAmount;
-            console.log(this.datastore.grossAmount);
         }
     }
 }
