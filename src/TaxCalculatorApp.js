@@ -59,6 +59,8 @@ export class TaxCalculatorApp extends BaseElementMixin(LitElement) {
         const outletElement = this.shadowRoot.getElementById("outlet");
         const router = new Router(outletElement);
         router.setRoutes(routes);
+
+        // check to get events from the router
         this._watchForRouterComponentChanges(outletElement);
     }
 

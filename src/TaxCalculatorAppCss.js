@@ -3,34 +3,7 @@ import { css } from "lit-element";
 export const TaxCalculatorAppCss = css`
 
     :host {
-        --li-common-color-white-100:  hsl(0, 0%, 100%);
-        --li-common-color-gray-50:  hsl(0, 0%, 97%);
-        --li-common-color-gray-100:  hsl(0, 0%, 95%);
-        --li-common-color-gray-200:  hsl(0, 0%, 89%);
-        --li-common-color-gray-300:  hsl(0, 0%, 80%);
-        --li-common-color-gray-400:  hsl(0, 0%, 24%);
-        --li-common-color-gray-500:  hsl(0, 0%, 18%);
-        --li-common-color-gray-600:  hsl(0, 0%, 16%);
-        --li-common-color-gray-700:  hsl(0, 0%, 12%);
-        --li-common-color-blue-10:  hsl(212, 100%, 97%);
-        --li-common-color-blue-25:  hsl(212, 100%, 93%);
-        --li-common-color-blue-50:  hsl(212, 83%, 59%);
-        --li-common-color-blue-100:  hsl(212, 66%, 48%);
-        --li-common-color-green-100:  hsl(120, 32%, 50%);
-        --li-common-color-orange-100:  hsl(44, 72%, 45%);
-        --li-common-color-red-50:  hsl(0, 78%, 53%);
-        --li-common-color-red-100:  hsl(0, 60%, 48%);
-        --li-common-padding-md:  2.4em;
-        --li-common-border-radius:  0.3em;
-        --li-common-outline:  1px solid hsl(212, 83%, 59%);
-        --li-common-outline-shadow:  0 0 0.6em 0 hsl(212, 66%, 48%);
-        --li-common-spacing-margin-bottom:  var(--li-global-spacing-margin-bottom, 2.4em);
-        --li-common-spacing-margin-bottom-small:  var(--li-global-spacing-margin-bottom-small, 1.2em);
-        --li-common-spacing-margin-bottom-large:  var(--li-global-spacing-margin-bottom-large, 3.6em);
-        --li-common-line-height:  2.4em;
-        --li-common-font-size:  1.6em;
-        --li-common-font-size-px:  16px;
-        --li-common-font-color:  hsl(0, 0%, 18%);
+        display: block;
     }
 
     .app-container {
@@ -41,4 +14,107 @@ export const TaxCalculatorAppCss = css`
         padding-right: 1em;
     }
 
+    #outlet {
+        display: block !important;
+        position: relative !important;
+    }
+
+    .home-leaving {
+        animation-duration: 0.5s;
+        animation-name: slideOutRight;
+        animation-timing-function: ease-in-out;
+        width: 100% !important;
+        height: 100% !important;
+    }
+
+    .home-entering {
+        animation-duration: 0.5s;
+        animation-name: slideInLeft;
+        animation-timing-function: ease-in-out;
+        width: 100% !important;
+        height: 100% !important;
+    }
+
+    .countries-leaving {
+        animation-duration: 0.5s;
+        animation-name: slideOutLeft;
+        animation-timing-function: ease-in-out;
+        width: 100% !important;
+        height: 100% !important;
+    }
+
+    .countries-entering {
+        animation-duration: 0.5s;
+        animation-name: slideInRight;
+        animation-timing-function: ease-in-out;
+        width: 100% !important;
+        height: 100% !important;
+    }
+
+    @keyframes slideOutLeft {
+        from {
+            transform: translate3d(0, 0, 0);
+        }
+
+        to {
+            visibility: hidden;
+            transform: translate3d(-100%, 0, 0);
+        }
+    }
+
+    @keyframes slideOutRight {
+        from {
+            transform: translate3d(0, 0, 0);
+        }
+
+        to {
+            visibility: hidden;
+            transform: translate3d(100%, 0, 0);
+        }
+    }
+
+    @keyframes slideInLeft {
+        from {
+            transform: translate3d(-100%, 0, 0);
+            visibility: visible;
+        }
+
+        to {
+            transform: translate3d(0, 0, 0);
+        }
+    }
+
+
+    @keyframes slideInRight {
+        from {
+            transform: translate3d(100%, 0, 0);
+            visibility: visible;
+        }
+
+        to {
+            transform: translate3d(0, 0, 0);
+        }
+    }
+
+    @keyframes slideInDown {
+        from {
+            transform: translate3d(0, -100%, 0);
+            visibility: visible;
+        }
+
+        to {
+            transform: translate3d(0, 0, 0);
+        }
+    }
+
+    @keyframes slideOutDown {
+        from {
+            transform: translate3d(0, 0, 0);
+        }
+
+        to {
+            visibility: hidden;
+            transform: translate3d(0, 100%, 0);
+        }
+    }
 `;

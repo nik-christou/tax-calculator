@@ -79,7 +79,7 @@ export class CountriesView extends BaseElementMixin(LitElement) {
         this._sendCountryChangeEvent(country);
 
         // go to home view
-        Router.go("/");
+        Router.go("/home");
     }
 
     /**

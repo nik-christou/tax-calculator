@@ -1,23 +1,39 @@
 export const routes = [
-    {
-        path: "/",
-        component: "home-view",
-        action: () => {
-            import("./views/home/HomeView.js");
+{
+    path: '/',
+    children: [
+        {
+            path: "/",
+            animate: {
+                enter: "home-entering",
+                leave: "home-leaving"
+            },
+            component: "home-view",
+            action: () => {
+                import("./views/home/HomeView.js");
+            }
+        },
+        {
+            path: "/home",
+            animate: {
+                enter: "home-entering",
+                leave: "home-leaving"
+            },
+            component: "home-view",
+            action: () => {
+                import("./views/home/HomeView.js");
+            }
+        },
+        {
+            path: "/countries",
+            animate: {
+                enter: "countries-entering",
+                leave: "countries-leaving"
+            },
+            component: "countries-view",
+            action: () => {
+                import("./views/countries/CountriesView.js");
+            }
         }
-    },
-    {
-        path: "/home",
-        component: "home-view",
-        action: () => {
-            import("./views/home/HomeView.js");
-        }
-    },
-    {
-        path: "/countries",
-        component: "countries-view",
-        action: () => {
-            import("./views/countries/CountriesView.js");
-        }
-    }
-];
+    ]
+}];

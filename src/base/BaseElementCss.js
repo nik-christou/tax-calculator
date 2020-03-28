@@ -8,10 +8,11 @@ export const BaseElementCss = css`
     }
 
     :host {
+        display: block;
         font-family: Roboto;
     }
 
-    h1,h2,h3,h4,h5,h6 {
+    h1, h2, h3, h4, h5, h6 {
         margin: 0.6em 0;
         font-weight: normal;
     }
@@ -37,7 +38,7 @@ export const BaseElementCss = css`
         line-height: 1.23;
     }
 
-    h5,h6 {
+    h5, h6 {
         font-size: 1em;
         font-weight:bold;
     }

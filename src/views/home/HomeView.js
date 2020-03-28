@@ -74,7 +74,6 @@ export class HomeView extends BaseElementMixin(LitElement) {
         super();
         this.selectedCountry = null;
         this.selectedPeriod = SalaryTypes.ANNUAL;
-        this.grossAmount = 0;
         this.includesThirteen = true;
     }
 
@@ -93,6 +92,7 @@ export class HomeView extends BaseElementMixin(LitElement) {
         if(changedProperties.has("selectedCountry")) {
             if(this.selectedCountry) {
                 this._updateCurrencyFormatter();
+                this._calculateResults();
             }
         }
 
