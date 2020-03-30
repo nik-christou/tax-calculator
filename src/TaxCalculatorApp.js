@@ -5,7 +5,6 @@ import { Router } from '@vaadin/router';
 import { routes } from "./Routes.js";
 import { DataStore } from "./datastore/DataStore.js";
 import { CountriesLoader } from "./CountriesLoader.js";
-import { BlueprintCss } from "./base/BlueprintCss.js";
 import { TaxCalculatorAppCss } from "./TaxCalculatorAppCss.js";
 
 import "./navbar/Navbar.js";
@@ -13,19 +12,12 @@ import "./navbar/Navbar.js";
 export class TaxCalculatorApp extends BaseElementMixin(LitElement) {
 
     static get styles() {
-        return [...super.styles, TaxCalculatorAppCss, BlueprintCss];
+        return [...super.styles, TaxCalculatorAppCss];
     }
 
     render() {
         return html`
-            <div bp="grid">
-                <nav-bar bp="12"></nav-bar>
-                <main bp="12">
-                    <div class="app-container">
-                        <div id="outlet"></div>
-                    </div>
-                </main>
-            </div>
+            <div id="outlet"></div>
         `;
     }
 

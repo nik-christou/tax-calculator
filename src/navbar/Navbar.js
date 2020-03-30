@@ -1,21 +1,22 @@
 import { LitElement, html } from "lit-element";
 import { BaseElementMixin } from "../base/BaseElementMixin.js";
 import { NavbarCss } from "./NavbarCss.js";
+import { BlueprintCss } from "../base/BlueprintCss.js";
 
 export class Navbar extends BaseElementMixin(LitElement) {
 
     static get styles() {
-        return [...super.styles, NavbarCss];
+        return [...super.styles, BlueprintCss, NavbarCss];
     }
 
     render() {
         return html`
-            <div class="navbar">
-                <div class="title">
-                    <a href="#" class="navbar-link">
-                        <img src="/web_assets/img/logo.svg" alt="" class="logo" />
-                        Salary Tax Calculator
-                    </a>
+            <div class="navbar" bp="grid 4">
+                <div>
+                    <slot name="left"></slot>
+                </div>
+                <div>
+                    <slot name="center"></slot>
                 </div>
             </div>
         `;

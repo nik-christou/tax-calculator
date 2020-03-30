@@ -10,8 +10,10 @@ import { ListGroupCss } from "../../base/ListGroupCss.js";
 import { HomeViewCss } from "./HomeViewCss.js";
 import { InputGroupCss } from "../../base/InputGroupCss.js";
 import { SwitchCss } from "../../base/SwitchCss.js";
+import { BlueprintCss } from "../../base/BlueprintCss.js";
 
 import "./ResultsContainer.js";
+import "../../navbar/Navbar.js";
 
 export class HomeView extends BaseElementMixin(LitElement) {
 
@@ -25,48 +27,64 @@ export class HomeView extends BaseElementMixin(LitElement) {
     }
 
     static get styles() {
-        return [...super.styles, ListGroupCss, InputGroupCss, SwitchCss, HomeViewCss];
+        return [
+            ...super.styles,
+            BlueprintCss,
+            ListGroupCss,
+            InputGroupCss,
+            SwitchCss,
+            HomeViewCss
+        ];
     }
 
     render() {
         return html`
-
-            <div class="list-group">
-                <a href="/countries" class="list-group-item list-group-item-action">
-                    <div class="country-container">
-                        <h5>Country:</h5>
-                        <div class="selected-country-container">
-                            ${this._getSelectedCountryInfo()}
-                            <img class="right-chevron" src="/web_assets/img/right-chevron.png" alt="" />
+            <div bp="grid">
+                <main bp="12">
+                    <nav-bar>
+                        <div slot="center" class="title">
+                            <img src="/web_assets/img/logo.svg" alt="" class="logo" />
+                            Salary Tax Calculator
                         </div>
-                    </div>
-                </a>
-                <div class="list-group-item">
-                    <div class="salary-type-container">
-                        <h5>Period:</h5>
-                        <ul class="list-group list-group-horizontal salary-type-values">
-                            <a id="annual-salary-type" class="list-group-item list-group-item-action">Annual</a>
-                            <a id="monthly-salary-type" class="list-group-item list-group-item-action">Monthly</a>
-                        </ul>
-                    </div>
-                </div>
-                <div class="list-group-item">
-                    <div class="salary-input-container">
-                        <h5>Amount:</h5>
-                        <div class="salary-input-group">
-                            <input type="number" id="grossAmountInput" .value=${this.grossAmount} min="0" class="form-control salary-input" placeholder="gross amount" />
-                            <div class="thirteen-input-group">
-                                <input type="checkbox" ?checked="${this.includesThirteen}" id="includesThirteen" class="switch" name="includesThirteen" />
-                                <label for="includesThirteen">Includes 13th salary</label>
+                    </nav-bar>
+                    <div class="main-container">
+                        <div class="list-group">
+                            <a href="/countries" class="list-group-item list-group-item-action">
+                                <div class="country-container">
+                                    <h5>Country:</h5>
+                                    <div class="selected-country-container">
+                                        ${this._getSelectedCountryInfo()}
+                                        <img class="right-chevron" src="/web_assets/img/right-chevron.png" alt="" />
+                                    </div>
+                                </div>
+                            </a>
+                            <div class="list-group-item">
+                                <div class="salary-type-container">
+                                    <h5>Period:</h5>
+                                    <ul class="list-group list-group-horizontal salary-type-values">
+                                        <a id="annual-salary-type" class="list-group-item list-group-item-action">Annual</a>
+                                        <a id="monthly-salary-type" class="list-group-item list-group-item-action">Monthly</a>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="list-group-item">
+                                <div class="salary-input-container">
+                                    <h5>Amount:</h5>
+                                    <div class="salary-input-group">
+                                        <input type="number" id="grossAmountInput" .value=${this.grossAmount} min="0" class="form-control salary-input" placeholder="gross amount" />
+                                        <div class="thirteen-input-group">
+                                            <input type="checkbox" ?checked="${this.includesThirteen}" id="includesThirteen" class="switch" name="includesThirteen" />
+                                            <label for="includesThirteen">Includes 13th salary</label>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
+                        <br />
+                        <results-container></results-container>
                     </div>
-                </div>
+                </main>
             </div>
-
-            <br />
-
-            <results-container></results-container>
         `;
     }
 
@@ -281,8 +299,10 @@ export class HomeView extends BaseElementMixin(LitElement) {
      */
     _populateResults(taxResults) {
 
-        const resultContainer = this.shadowRoot.querySelector("results-container");
-        resultContainer.taxResults = taxResults;
+        if(taxResults) {
+            const resultContainer = this.shadowRoot.querySelector("results-container");
+            resultContainer.taxResults = taxResults;
+        }
     }
 }
 

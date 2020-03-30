@@ -2,25 +2,13 @@ import { css } from "lit-element";
 
 export const TaxCalculatorAppCss = css`
 
-    :host {
-        display: block;
-    }
-
-    .app-container {
-        display: block;
-        min-height: 100vh;
-        width: 100%;
-        padding-left: 1em;
-        padding-right: 1em;
-    }
-
     #outlet {
         display: block !important;
         position: relative !important;
     }
 
     .home-leaving {
-        animation-duration: 0.5s;
+        animation-duration: 0.3s;
         animation-name: slideOutRight;
         animation-timing-function: ease-in-out;
         width: 100% !important;
@@ -28,7 +16,7 @@ export const TaxCalculatorAppCss = css`
     }
 
     .home-entering {
-        animation-duration: 0.5s;
+        animation-duration: 0.3s;
         animation-name: slideInLeft;
         animation-timing-function: ease-in-out;
         width: 100% !important;
@@ -36,7 +24,7 @@ export const TaxCalculatorAppCss = css`
     }
 
     .countries-leaving {
-        animation-duration: 0.5s;
+        animation-duration: 0.3s;
         animation-name: slideOutLeft;
         animation-timing-function: ease-in-out;
         width: 100% !important;
@@ -44,7 +32,7 @@ export const TaxCalculatorAppCss = css`
     }
 
     .countries-entering {
-        animation-duration: 0.5s;
+        animation-duration: 0.3s;
         animation-name: slideInRight;
         animation-timing-function: ease-in-out;
         width: 100% !important;
@@ -83,7 +71,6 @@ export const TaxCalculatorAppCss = css`
             transform: translate3d(0, 0, 0);
         }
     }
-
 
     @keyframes slideInRight {
         from {

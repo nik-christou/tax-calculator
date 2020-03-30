@@ -2,6 +2,40 @@ import { css } from "lit-element";
 
 export const HomeViewCss = css`
 
+    .main-container {
+        display: block;
+        min-height: 100vh;
+        width: 100%;
+        padding-left: 1em;
+        padding-right: 1em;
+    }
+
+    .logo {
+        width: 100%;
+        max-width: 24px;
+        margin-right: 10px;
+        float: left;
+        border-style: none;
+    }
+
+    .title {
+        display: flex;
+        height: 100%;
+        width: 100%;
+        min-width: max-content;
+        font-size: 1.4em;
+        align-items: center;
+        justify-content: center;
+        color: #fff;
+        line-height: 1.5;
+        padding-top: 1em;
+        padding-bottom: 1em;
+        padding-left: 0.6em;
+        padding-right: 1em;
+        border-width: 0px;
+        text-decoration: none;
+    }
+
     .country-container {
         display: flex;
         align-items: center;
