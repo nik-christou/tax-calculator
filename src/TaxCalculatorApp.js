@@ -1,81 +1,171 @@
 import { LitElement, html } from "lit-element";
 import { BaseElementMixin } from "./base/BaseElementMixin.js";
-import { TaxCalculatorAppCss } from "./TaxCalculatorAppCss.js";
 import { SWRegister } from "./SWRegister.js";
-import { TaxResults } from "./results/model/TaxResults.js";
-import { CountryTaxDispatcher } from "./CountryTaxDispatcher.js";
+import { Router } from '@vaadin/router';
+import { routes } from "./Routes.js";
+import { DataStore } from "./datastore/DataStore.js";
+import { CountriesLoader } from "./CountriesLoader.js";
+import { TaxCalculatorAppCss } from "./TaxCalculatorAppCss.js";
 
-import "./country/view/CountrySelect.js";
-import "./salary/view/SalaryInput.js";
-import "./results/view/ResultsContainer.js";
+import "./navbar/Navbar.js";
 
 export class TaxCalculatorApp extends BaseElementMixin(LitElement) {
+
     static get styles() {
         return [...super.styles, TaxCalculatorAppCss];
     }
 
     render() {
         return html`
-            <div class="container">
-                <h2>Tax calculator</h2>
-                <country-select></country-select>
-                <salary-input></salary-input>
-                <results-container></results-container>
-            </div>
+            <div id="outlet"></div>
         `;
     }
 
-    firstUpdated() {
+    constructor() {
+        super();
+        this.datastore = new DataStore();
+    }
+
+    /**
+     * @param {Map} changedProperties
+     */
+    firstUpdated(changedProperties) {
+
         SWRegister.register();
+        this._loadCountries();
+        this._prepareRouter();
+
         this.addEventListener("country-select-change", event => this._handleCountryChange(event));
-        this.addEventListener("salary-details-change", event => this._handleSalaryDetailsChange(event));
+        this.addEventListener("salary-type-change", event => this._handleSalaryTypeChange(event));
+        this.addEventListener("gross-amount-change", event => this._handleGrossAmountChange(event));
+        this.addEventListener("includes-thirteen-change", event => this._handleIncludesThirteenChange(event));
+    }
+
+    _loadCountries() {
+        CountriesLoader.loadCountriesFromJson()
+            .then(countries => this.datastore.countries = countries)
+            .catch(reason => console.error(reason.message));
+    }
+
+    _prepareRouter() {
+        const outletElement = this.shadowRoot.getElementById("outlet");
+        const router = new Router(outletElement);
+        router.setRoutes(routes);
+
+        // check to get events from the router
+        this._watchForRouterComponentChanges(outletElement);
+    }
+
+    /**
+     * Because components do not pull data but
+     * rather data is pushed to them, we have to watch
+     * when the router changes the view component.
+     * All data is stored in the Datastore class.
+     * This will not be necessary if there is a datastore
+     * like a key-value database that components can query
+     *
+     * HomeView -> CountriesView -> push data from Datastore to CountriesView
+     * CountriesView -> HomeView -> push data from Datastore to HomeView
+     *
+     * @param {HTMLElement} outletElement
+     */
+    _watchForRouterComponentChanges(outletElement) {
+
+        const mutationObserver = new MutationObserver(mutations => {
+            mutations.forEach(mutation => {
+                this._handleRouterMutation(mutation);
+            })
+        });
+
+        mutationObserver.observe(outletElement, {
+            childList: true
+        });
+    }
+
+    /**
+     * @param {MutationRecord} mutation
+     */
+    _handleRouterMutation(mutation) {
+
+        mutation.addedNodes.forEach(node => {
+            if(node.nodeName === "HOME-VIEW") {
+                this._updateHomeView();
+            }
+
+            if(node.nodeName === "COUNTRIES-VIEW") {
+                this._updateCountriesView();
+            }
+        });
+    }
+
+    _updateHomeView() {
+        const homeView = this.shadowRoot.querySelector("home-view");
+
+        if(this.datastore) {
+
+            if(this.datastore.selectedCountry) {
+                homeView.selectedCountry = this.datastore.selectedCountry;
+            }
+
+            if(this.datastore.selectedPeriod) {
+                homeView.selectedPeriod = this.datastore.selectedPeriod;
+            }
+
+            if(this.datastore.grossAmount) {
+                homeView.grossAmount = this.datastore.grossAmount;
+            }
+
+            homeView.includesThirteen = this.datastore.includesThirteen;
+        }
+    }
+
+    _updateCountriesView() {
+        const countriesView = this.shadowRoot.querySelector("countries-view");
+
+        if(this.datastore) {
+
+            if(this.datastore.countries) {
+                countriesView.countries = this.datastore.countries;
+            }
+
+            if(this.datastore.selectedCountry) {
+                countriesView.selectedId = this.datastore.selectedCountry.id;
+            }
+        }
+    }
+
+    /**
+     * @param {CustomEvent} event
+     */
+    _handleIncludesThirteenChange(event) {
+        this.datastore.includesThirteen = event.detail.includesThirteen;
     }
 
     /**
      * @param {CustomEvent} event
      */
     _handleCountryChange(event) {
-        this.selectedCountry = event.detail;
-        this._updateCurrencyFormatter();
-        this._calculateResults();
+        if(event.detail.selectedCountry) {
+            this.datastore.selectedCountry = event.detail.selectedCountry;
+        }
     }
 
     /**
      * @param {CustomEvent} event
      */
-    _handleSalaryDetailsChange(event) {
-        this.salaryDetails = event.detail;
-        this._calculateResults();
-    }
-
-    _updateCurrencyFormatter() {
-        const formatter = new Intl.NumberFormat(this.selectedCountry.locale, {
-            style: "currency",
-            currency: this.selectedCountry.currency,
-            minimumFractionDigits: 2
-        });
-
-        const resultContainer = this.shadowRoot.querySelector("results-container");
-        resultContainer.formatter = formatter;
-    }
-
-    /**
-     * Call the dispatcher to use the correct json loader
-     * and tax calculator that matches the country to produce
-     * tax results
-     */
-    _calculateResults() {
-        if (this.selectedCountry && this.salaryDetails) {
-            CountryTaxDispatcher.process(this.selectedCountry, this.salaryDetails).then(taxResults => this._populateResults(taxResults));
+    _handleSalaryTypeChange(event) {
+        if(event.detail.selectedPeriod) {
+            this.datastore.selectedPeriod = event.detail.selectedPeriod;
         }
     }
 
     /**
-     * @param {TaxResults} taxResults
+     * @param {CustomEvent} event
      */
-    _populateResults(taxResults) {
-        const resultContainer = this.shadowRoot.querySelector("results-container");
-        resultContainer.taxResults = taxResults;
+    _handleGrossAmountChange(event) {
+        if(event.detail.grossAmount) {
+            this.datastore.grossAmount = event.detail.grossAmount;
+        }
     }
 }
 

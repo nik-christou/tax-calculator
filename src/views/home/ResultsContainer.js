@@ -1,7 +1,9 @@
-import { LitElement, html, css } from "lit-element";
+import { LitElement, html } from "lit-element";
 import { BaseElementMixin } from "../../base/BaseElementMixin.js";
-import { TaxResult } from "../model/TaxResult.js";
-import { TaxResults } from "../model/TaxResults.js";
+import { TaxResult } from "../../model/TaxResult.js";
+import { TaxResults } from "../../model/TaxResults.js";
+import { BlueprintCss } from "../../base/BlueprintCss.js";
+import { TableCss } from "../../base/TableCss.js";
 
 export class ResultsContainer extends BaseElementMixin(LitElement) {
     static get properties() {
@@ -12,29 +14,15 @@ export class ResultsContainer extends BaseElementMixin(LitElement) {
     }
 
     static get styles() {
-        return [
-            ...super.styles,
-            css`
-                .container {
-                    display: flex;
-                    flex-direction: row;
-                    justify-content: flex-start;
-                    margin-top: 30px;
-                }
-
-                .monthlyContainer {
-                    margin-left: 50px;
-                }
-            `
-        ];
+        return [...super.styles, TableCss, BlueprintCss];
     }
 
     render() {
         return html`
-            <div class="container">
-                <div class="annualContainer">
-                    <h4>Annual</h4>
-                    <table>
+            <div bp="grid 6@md">
+                <div>
+                    <h2>Annual</h2>
+                    <table class="table">
                         <tr>
                             <td>Gross</td>
                             <td>${this._getAnnualGrossAmount()}</td>
@@ -58,9 +46,9 @@ export class ResultsContainer extends BaseElementMixin(LitElement) {
                     </table>
                 </div>
 
-                <div class="monthlyContainer">
-                    <h4>Monthly</h4>
-                    <table>
+                <div>
+                    <h2>Monthly</h2>
+                    <table class="table">
                         <tr>
                             <td>Gross</td>
                             <td>${this._getMonthlyGrossAmount()}</td>
