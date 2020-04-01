@@ -2,6 +2,16 @@ import { css } from "lit-element";
 
 export const CountriesViewCss = css`
 
+    :host {
+        will-change: transform, opacity;
+        transform-style: preserve-3d;
+        backface-visibility: hidden;
+        transform: translate3d(0,0,0);
+        -webkit-transform-style: preserve-3d;
+        -webkit-backface-visibility: hidden;
+        -webkit-transform: translate3d(0,0,0);
+    }
+
     .main-container {
         display: block;
         min-height: 100vh;
@@ -17,8 +27,8 @@ export const CountriesViewCss = css`
         line-height: 1.5;
         padding-top: 1em;
         padding-bottom: 1em;
-        padding-left: 1em;
-        padding-right: 1em;
+        padding-left: 0.5em;
+        padding-right: 0.5em;
         text-decoration: none;
     }
 

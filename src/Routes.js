@@ -1,3 +1,6 @@
+import "./views/home/HomeView.js";
+import "./views/countries/CountriesView.js";
+
 export const routes = [
 {
     path: '/',
@@ -8,10 +11,7 @@ export const routes = [
                 enter: "home-entering",
                 leave: "home-leaving"
             },
-            component: "home-view",
-            action: () => {
-                import("./views/home/HomeView.js");
-            }
+            component: "home-view"
         },
         {
             path: "/home",
@@ -19,10 +19,7 @@ export const routes = [
                 enter: "home-entering",
                 leave: "home-leaving"
             },
-            component: "home-view",
-            action: () => {
-                import("./views/home/HomeView.js");
-            }
+            component: "home-view"
         },
         {
             path: "/countries",
@@ -30,10 +27,7 @@ export const routes = [
                 enter: "countries-entering",
                 leave: "countries-leaving"
             },
-            component: "countries-view",
-            action: () => {
-                import("./views/countries/CountriesView.js");
-            }
+            component: "countries-view"
         }
     ]
 }];

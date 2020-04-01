@@ -8,6 +8,7 @@ export const TaxCalculatorAppCss = css`
     }
 
     .home-leaving {
+        animation-delay: 0s;
         animation-duration: 0.3s;
         animation-name: slideOutRight;
         animation-timing-function: ease-in-out;
@@ -16,6 +17,7 @@ export const TaxCalculatorAppCss = css`
     }
 
     .home-entering {
+        animation-delay: 0s;
         animation-duration: 0.3s;
         animation-name: slideInLeft;
         animation-timing-function: ease-in-out;
@@ -24,6 +26,7 @@ export const TaxCalculatorAppCss = css`
     }
 
     .countries-leaving {
+        animation-delay: 0s;
         animation-duration: 0.3s;
         animation-name: slideOutLeft;
         animation-timing-function: ease-in-out;
@@ -32,6 +35,7 @@ export const TaxCalculatorAppCss = css`
     }
 
     .countries-entering {
+        animation-delay: 0s;
         animation-duration: 0.3s;
         animation-name: slideInRight;
         animation-timing-function: ease-in-out;
