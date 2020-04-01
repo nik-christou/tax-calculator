@@ -11,11 +11,11 @@ export class Navbar extends BaseElementMixin(LitElement) {
 
     render() {
         return html`
-            <div class="navbar" bp="grid 4">
-                <div>
+            <div class="navbar">
+                <div class="left">
                     <slot name="left"></slot>
                 </div>
-                <div>
+                <div class="center">
                     <slot name="center"></slot>
                 </div>
             </div>

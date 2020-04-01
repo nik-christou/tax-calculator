@@ -41,7 +41,7 @@ export class HomeView extends BaseElementMixin(LitElement) {
         return html`
             <div bp="grid">
                 <main bp="12">
-                    <nav-bar>
+                    <nav-bar bp="12">
                         <div slot="center" class="title">
                             <img src="/web_assets/img/logo.svg" alt="" class="logo" />
                             Salary Tax Calculator

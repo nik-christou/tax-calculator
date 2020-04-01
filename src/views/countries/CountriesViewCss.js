@@ -17,13 +17,14 @@ export const CountriesViewCss = css`
         line-height: 1.5;
         padding-top: 1em;
         padding-bottom: 1em;
-        padding-left: 0.6em;
+        padding-left: 1em;
         padding-right: 1em;
         text-decoration: none;
     }
 
     .nav-back .icon-chevron-left {
         width: 100%;
+        height: 100%;
         max-width: 32px;
         fill: #fff;
     }

@@ -30,7 +30,7 @@ export const HomeViewCss = css`
         line-height: 1.5;
         padding-top: 1em;
         padding-bottom: 1em;
-        padding-left: 0.6em;
+        padding-left: 1em;
         padding-right: 1em;
         border-width: 0px;
         text-decoration: none;
