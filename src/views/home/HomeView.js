@@ -116,6 +116,7 @@ export class HomeView extends BaseElementMixin(LitElement) {
             .then(country => this._updateSelectedCountry(country));
 
         const salaryTypePromise = UserSelectionStore.retrieveSalaryType().then(salaryType => {
+            if(!salaryType) return;
             if(salaryType.id === SalaryTypes.ANNUAL.id) {
                 this._updateSelectedSalaryPeriod(SalaryTypes.ANNUAL);
             } else {
