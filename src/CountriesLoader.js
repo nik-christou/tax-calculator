@@ -1,4 +1,5 @@
 import { Country } from "./model/Country.js";
+import { CountryOptions } from "./model/CountryOptions.js";
 
 const countriesJson = [
     "web_assets/data/australia.json",
@@ -32,6 +33,18 @@ export class CountriesLoader {
         const response = await fetch(jsonPath);
         const data = await response.json();
 
-        return new Country(data.id, data.name, data.locale, data.currency, data.flag);
+        let countryOptions;
+
+        if(data.options) {
+
+            // options maybe different per country
+            // for now we use one CountryOptions to
+            // collect all of them
+
+            const options = data.options;
+            countryOptions = new CountryOptions(options.resident);
+        }
+
+        return new Country(data.id, data.name, data.locale, data.currency, data.flag, countryOptions);
     }
 }

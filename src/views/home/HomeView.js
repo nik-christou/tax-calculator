@@ -6,11 +6,14 @@ import { Country } from "../../model/Country.js";
 import { SalaryType } from "../../model/SalaryType.js";
 import { SalaryTypes } from "../../model/SalaryTypes.js";
 import { SalaryDetails } from "../../model/SalaryDetails.js";
+import { CountryOptions } from "../../model/CountryOptions.js";
 import { ListGroupCss } from "../../base/ListGroupCss.js";
 import { HomeViewCss } from "./HomeViewCss.js";
 import { InputGroupCss } from "../../base/InputGroupCss.js";
 import { SwitchCss } from "../../base/SwitchCss.js";
 import { BlueprintCss } from "../../base/BlueprintCss.js";
+import { CountryOptionsViewLoader } from "../../CountryOptionsViewLoader.js";
+import UserSelectionStore from "../../datastore/UserSelectionStore.js";
 
 import "./ResultsContainer.js";
 import "../../navbar/Navbar.js";
@@ -53,20 +56,14 @@ export class HomeView extends BaseElementMixin(LitElement) {
                                 <div class="country-container">
                                     <h5>Country:</h5>
                                     <div class="selected-country-container">
-                                        ${this._getSelectedCountryInfo()}
+                                        ${this._getSelectedCountryInfoTemplate()}
                                         <img class="right-chevron" src="/web_assets/img/right-chevron.png" alt="" />
                                     </div>
                                 </div>
                             </a>
-                            <div class="list-group-item">
-                                <div class="salary-type-container">
-                                    <h5>Period:</h5>
-                                    <ul class="list-group list-group-horizontal salary-type-values">
-                                        <a id="annual-salary-type" class="list-group-item list-group-item-action">Annual</a>
-                                        <a id="monthly-salary-type" class="list-group-item list-group-item-action">Monthly</a>
-                                    </ul>
-                                </div>
-                            </div>
+                        </div>
+                        <br />
+                        <div class="list-group">
                             <div class="list-group-item">
                                 <div class="salary-input-container">
                                     <h5>Amount:</h5>
@@ -77,6 +74,15 @@ export class HomeView extends BaseElementMixin(LitElement) {
                                             <label for="includesThirteen">Includes 13th salary</label>
                                         </div>
                                     </div>
+                                </div>
+                            </div>
+                            <div class="list-group-item">
+                                <div class="salary-type-container">
+                                    <h5>Period:</h5>
+                                    <ul class="list-group list-group-horizontal salary-type-values">
+                                        <a id="annual-salary-type" class="list-group-item list-group-item-action">Annual</a>
+                                        <a id="monthly-salary-type" class="list-group-item list-group-item-action">Monthly</a>
+                                    </ul>
                                 </div>
                             </div>
                         </div>
@@ -99,27 +105,110 @@ export class HomeView extends BaseElementMixin(LitElement) {
         this._addSalaryTypeClickListeners();
         this._addGrossAmountInputListener();
         this._addIncludesThirteenInputListener();
+        this._addIncludesThirteenInputListener();
         this._updateSelectedSalaryTypeLinks();
+        this._loadUserSelectionFromDatastore();
+    }
+
+    _loadUserSelectionFromDatastore() {
+
+        const countryPromise = UserSelectionStore.retrieveCountry()
+            .then(country => this._updateSelectedCountry(country));
+
+        const salaryTypePromise = UserSelectionStore.retrieveSalaryType().then(salaryType => {
+            if(salaryType.id === SalaryTypes.ANNUAL.id) {
+                this._updateSelectedSalaryPeriod(SalaryTypes.ANNUAL);
+            } else {
+                this._updateSelectedSalaryPeriod(SalaryTypes.MONTHLY);
+            }
+        });
+
+        const grossAmountPromise = UserSelectionStore.retrieveGrossAmount()
+            .then(grossAmount => this.grossAmount = grossAmount);
+
+        const includesThirteenOptionPromise = UserSelectionStore.retrieveIncludesThirteenOption()
+            .then(includesThirteenOption => this.includesThirteen = includesThirteenOption);
+
+        const promises = new Array(4);
+        promises.push(countryPromise);
+        promises.push(salaryTypePromise);
+        promises.push(grossAmountPromise);
+        promises.push(includesThirteenOptionPromise);
+
+        Promise.all(promises).then(_ => this._calculateResults());
     }
 
     /**
-     * @param {Map} changedProperties
+     * @param {Country} country
      */
-    updated(changedProperties) {
+    _updateSelectedCountry(country) {
 
-        if(changedProperties.has("selectedCountry")) {
-            if(this.selectedCountry) {
-                this._updateCurrencyFormatter();
-                this._calculateResults();
-            }
-        }
+        if(!country) return;
 
-        if(changedProperties.has("selectedPeriod")) {
-            this._updateSelectedSalaryTypeLinks();
-        }
+        this.selectedCountry = country;
+        this._updateCurrencyFormatter(country);
+        this._calculateResults();
     }
 
-    _getSelectedCountryInfo() {
+    /**
+     * @param {SalaryType} salaryPeriod
+     */
+    _updateSelectedSalaryPeriod(salaryPeriod) {
+        if(!salaryPeriod) return;
+        this.selectedPeriod = salaryPeriod;
+        this._updateSelectedSalaryTypeLinks();
+    }
+
+    _getCountryOptionsTemplate() {
+
+        // if selected country has options
+        if(this.selectedCountry && this.selectedCountry.options) {
+
+            const templateToLoad = CountryOptionsViewLoader
+                .getCountryViewTagToLoad(this.selectedCountry.id);
+
+            return templateToLoad;
+        }
+
+        return html``;
+    }
+
+    _getIsResidentTemplate() {
+
+        // selected country does not have
+        // additional options
+        if(!this.selectedCountry.options) {
+            return html``;
+        }
+
+        let isResident = undefined;
+
+        // if user has fired an event about resident selection at least once
+        // then use the selection value from that.
+        if(this.selectedCountryOptions && (this.selectedCountryOptions.resident != undefined)) {
+            isResident = this.selectedCountryOptions.resident;
+        } else {
+            // if the resident option was not selected before
+            // we failback to pre-selected option from the country
+            isResident = this.selectedCountry.options.resident;
+        }
+
+        return html`
+            <div class="list-group-item">
+                <div class="options-container">
+                    <div class="options-item">
+                        <span class="option-description">Resident</span>
+                        <div class="resident-input-group">
+                            <input type="checkbox" ?checked="${this.selectedCountry.options.resident}" id="resident" class="switch" name="resident" />
+                            <label for="resident">Resident</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
+    }
+
+    _getSelectedCountryInfoTemplate() {
 
         if(this.selectedCountry) {
             return html`
@@ -148,12 +237,16 @@ export class HomeView extends BaseElementMixin(LitElement) {
 
     _addGrossAmountInputListener() {
         const grossAmountElement = this.shadowRoot.querySelector("input#grossAmountInput");
-        grossAmountElement.addEventListener("input", event => this._handleGrossAmountChange(event, grossAmountElement));
+        grossAmountElement.addEventListener("input", event => {
+            this._handleGrossAmountChange(event, grossAmountElement);
+        });
     }
 
     _addIncludesThirteenInputListener() {
         const includesThirteenElement = this.shadowRoot.querySelector("input#includesThirteen");
-        includesThirteenElement.addEventListener("input", event => this._handleThirteenChange(event, includesThirteenElement));
+        includesThirteenElement.addEventListener("input", event => {
+            this._handleThirteenChange(event, includesThirteenElement);
+        });
     }
 
     /**
@@ -161,8 +254,8 @@ export class HomeView extends BaseElementMixin(LitElement) {
      * @param {HTMLInputElement} includesThirteenElement
      */
     _handleThirteenChange(event, includesThirteenElement) {
-        this.includesThirteen = includesThirteenElement.checked
-        this._sendIncludesThirteenChangeEvent(this.includesThirteen);
+        this.includesThirteen = includesThirteenElement.checked;
+        UserSelectionStore.updateIncludesThirteenOption(this.includesThirteen);
         this._calculateResults();
     }
 
@@ -172,7 +265,7 @@ export class HomeView extends BaseElementMixin(LitElement) {
      */
     _handleGrossAmountChange(event, grossAmountElement) {
         this.grossAmount = Number(grossAmountElement.value);
-        this._sendGrossAmountChangeEvent(this.grossAmount);
+        UserSelectionStore.updateGrossAmount(this.grossAmount);
         this._calculateResults();
     }
 
@@ -184,62 +277,12 @@ export class HomeView extends BaseElementMixin(LitElement) {
 
         event.preventDefault();
 
-        if(this.selectedPeriod === salaryType) {
-            return;
-        }
+        if(this.selectedPeriod === salaryType) return;
 
         this.selectedPeriod = salaryType;
         this._updateSelectedSalaryTypeLinks();
-        this._sendSalaryTypeChangeEvent(salaryType);
+        UserSelectionStore.updateSalaryType(salaryType);
         this._calculateResults();
-    }
-
-    /**
-     * @param {Boolean} includesThirteen
-     */
-    _sendIncludesThirteenChangeEvent(includesThirteen) {
-
-        const includesThirteenChangeEvent = new CustomEvent("includes-thirteen-change", {
-            bubbles: true,
-            composed: true,
-            detail: {
-                includesThirteen: includesThirteen
-            }
-        });
-
-        this.dispatchEvent(includesThirteenChangeEvent);
-    }
-
-    /**
-     * @param {Number} grossAmount
-     */
-    _sendGrossAmountChangeEvent(grossAmount) {
-
-        const grossAmountChangeEvent = new CustomEvent("gross-amount-change", {
-            bubbles: true,
-            composed: true,
-            detail: {
-                grossAmount: grossAmount
-            }
-        });
-
-        this.dispatchEvent(grossAmountChangeEvent);
-    }
-
-    /**
-     * @param {SalaryType} salaryType
-     */
-    _sendSalaryTypeChangeEvent(salaryType) {
-
-        const salaryTypeChangeEvent = new CustomEvent("salary-type-change", {
-            bubbles: true,
-            composed: true,
-            detail: {
-                selectedPeriod: salaryType
-            }
-        });
-
-        this.dispatchEvent(salaryTypeChangeEvent);
     }
 
     _updateSelectedSalaryTypeLinks() {
@@ -272,10 +315,13 @@ export class HomeView extends BaseElementMixin(LitElement) {
         element.classList.add("active");
     }
 
-    _updateCurrencyFormatter() {
-        const formatter = new Intl.NumberFormat(this.selectedCountry.locale, {
+    /**
+     * @param {Country} selectedCountry
+     */
+    _updateCurrencyFormatter(selectedCountry) {
+        const formatter = new Intl.NumberFormat(selectedCountry.locale, {
             style: "currency",
-            currency: this.selectedCountry.currency,
+            currency: selectedCountry.currency,
             minimumFractionDigits: 2
         });
 
