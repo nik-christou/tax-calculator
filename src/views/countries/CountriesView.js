@@ -4,7 +4,9 @@ import { Country } from "../../model/Country.js";
 import { ListGroupCss } from "../../base/ListGroupCss.js";
 import { CountriesViewCss } from "./CountriesViewCss.js";
 import { BlueprintCss } from "../../base/BlueprintCss.js";
-import { Router } from '@vaadin/router';
+import CountryStore from "../../datastore/CountryStore.js";
+import UserSelectionStore from "../../datastore/UserSelectionStore.js";
+import { Router } from "@vaadin/router";
 
 import "../../navbar/Navbar.js";
 
@@ -56,6 +58,29 @@ export class CountriesView extends BaseElementMixin(LitElement) {
 
     firstUpdated() {
         this._addNavBackListener();
+
+        CountryStore.retrieveCountries().then(countries => {
+            this._updateCountries(countries);
+        });
+
+        UserSelectionStore.retrieveCountry().then(country => {
+            this._updateSelectedCountry(country);
+        });
+    }
+
+    /**
+     * @param {Array<Country>} countries
+     */
+    _updateCountries(countries) {
+        this.countries = countries;
+    }
+
+    /**
+     * @param {Country} country
+     */
+    _updateSelectedCountry(country) {
+        if(!country) return;
+        this.selectedId = country.id;
     }
 
     /**
@@ -105,7 +130,15 @@ export class CountriesView extends BaseElementMixin(LitElement) {
     }
 
     _goToHome() {
-        Router.go("/");
+
+        // user navigated directly to Countries view
+        if(window.history.length === 1 || window.history.length === 2) {
+            history.pushState(null, "Home", "/");
+            history.go(1);
+            dispatchEvent(new PopStateEvent('popstate'));
+        } else {
+            history.back();
+        }
     }
 
     /**
@@ -116,25 +149,8 @@ export class CountriesView extends BaseElementMixin(LitElement) {
 
         event.preventDefault();
 
-        this.selectedId = country.id;
-        this._sendCountryChangeEvent(country);
-        this._goToHome();
-    }
-
-    /**
-     * @param {Country} country
-     */
-    _sendCountryChangeEvent(country) {
-
-        const countrySelectChangeEvent = new CustomEvent("country-select-change", {
-            bubbles: true,
-            composed: true,
-            detail: {
-                selectedCountry: country
-            }
-        });
-
-        this.dispatchEvent(countrySelectChangeEvent);
+        UserSelectionStore.updateCountry(country)
+        .then(_ => this._goToHome());
     }
 }
 

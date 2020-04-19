@@ -112,4 +112,15 @@ export const HomeViewCss = css`
         display: flex;
         margin-top: 10px;
     }
+
+    .options-item {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .options-item .resident-input-group {
+        display: flex;
+        margin-top: 10px;
+    }
 `;

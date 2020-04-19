@@ -1,8 +1,9 @@
 {
   "imports": {
+    "@vaadin/router": "./@vaadin/router.js",
+    "idb/build/esm/index.js": "./idb/build/esm/index.js",
     "lit-element": "./lit-element.js",
     "lit-html": "./lit-html.js",
-    "workbox-window": "./workbox-window.js",
-    "@vaadin/router": "./@vaadin/router.js"
+    "workbox-window": "./workbox-window.js"
   }
 }
