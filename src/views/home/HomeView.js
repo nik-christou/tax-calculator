@@ -112,8 +112,10 @@ export class HomeView extends BaseElementMixin(LitElement) {
 
     _loadUserSelectionFromDatastore() {
 
-        const countryPromise = UserSelectionStore.retrieveCountry()
-            .then(country => this._updateSelectedCountry(country));
+        const countryPromise = UserSelectionStore.retrieveCountry().then(country => {
+            if(!country) return;
+            this._updateSelectedCountry(country);
+        });
 
         const salaryTypePromise = UserSelectionStore.retrieveSalaryType().then(salaryType => {
             if(!salaryType) return;
