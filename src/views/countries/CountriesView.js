@@ -4,9 +4,9 @@ import { Country } from "../../model/Country.js";
 import { ListGroupCss } from "../../base/ListGroupCss.js";
 import { CountriesViewCss } from "./CountriesViewCss.js";
 import { BlueprintCss } from "../../base/BlueprintCss.js";
-import { Router } from '@vaadin/router';
 import CountryStore from "../../datastore/CountryStore.js";
 import UserSelectionStore from "../../datastore/UserSelectionStore.js";
+import { Router } from "@vaadin/router";
 
 import "../../navbar/Navbar.js";
 
@@ -130,7 +130,15 @@ export class CountriesView extends BaseElementMixin(LitElement) {
     }
 
     _goToHome() {
-        Router.go("/");
+
+        // user navigated directly to Countries view
+        if(window.history.length === 1 || window.history.length === 2) {
+            history.pushState(null, "Home", "/");
+            history.go(1);
+            dispatchEvent(new PopStateEvent('popstate'));
+        } else {
+            history.back();
+        }
     }
 
     /**

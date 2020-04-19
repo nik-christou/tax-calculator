@@ -6,7 +6,6 @@ import { Country } from "../../model/Country.js";
 import { SalaryType } from "../../model/SalaryType.js";
 import { SalaryTypes } from "../../model/SalaryTypes.js";
 import { SalaryDetails } from "../../model/SalaryDetails.js";
-import { CountryOptions } from "../../model/CountryOptions.js";
 import { ListGroupCss } from "../../base/ListGroupCss.js";
 import { HomeViewCss } from "./HomeViewCss.js";
 import { InputGroupCss } from "../../base/InputGroupCss.js";
