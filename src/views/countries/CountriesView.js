@@ -6,7 +6,6 @@ import { CountriesViewCss } from "./CountriesViewCss.js";
 import { BlueprintCss } from "../../base/BlueprintCss.js";
 import CountryStore from "../../datastore/CountryStore.js";
 import UserSelectionStore from "../../datastore/UserSelectionStore.js";
-import { Router } from "@vaadin/router";
 
 import "../../navbar/Navbar.js";
 

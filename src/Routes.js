@@ -1,5 +1,6 @@
 import "./views/home/HomeView.js";
 import "./views/countries/CountriesView.js";
+import "./views/results/ResultsView.js";
 
 export const routes = [
 {
@@ -28,6 +29,14 @@ export const routes = [
                 leave: "countries-leaving"
             },
             component: "countries-view"
+        },
+        {
+            path: "/results",
+            animate: {
+                enter: "results-entering",
+                leave: "results-leaving"
+            },
+            component: "results-view"
         }
     ]
 }];
