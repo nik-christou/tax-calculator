@@ -123,4 +123,8 @@ export const HomeViewCss = css`
         display: flex;
         margin-top: 10px;
     }
+
+    .calculate-btn {
+        font-size: 1.5em;
+    }
 `;

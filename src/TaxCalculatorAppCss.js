@@ -43,6 +43,24 @@ export const TaxCalculatorAppCss = css`
         height: 100% !important;
     }
 
+    .results-leaving {
+        animation-delay: 0s;
+        animation-duration: 0.3s;
+        animation-name: slideOutLeft;
+        animation-timing-function: ease-in-out;
+        width: 100% !important;
+        height: 100% !important;
+    }
+
+    .results-entering {
+        animation-delay: 0s;
+        animation-duration: 0.3s;
+        animation-name: slideInRight;
+        animation-timing-function: ease-in-out;
+        width: 100% !important;
+        height: 100% !important;
+    }
+
     @keyframes slideOutLeft {
         from {
             transform: translate3d(0, 0, 0);
