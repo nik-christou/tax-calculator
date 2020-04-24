@@ -1,5 +1,6 @@
 import { LitElement, html } from "lit-element";
 import { BaseElementMixin } from "../../base/BaseElementMixin.js";
+import { ResultsViewTemplate } from "./ResultsViewTemplate.js";
 import { BlueprintCss } from "../../base/BlueprintCss.js";
 import { ResultsViewCss } from "./ResultsViewCss.js";
 import { TableCss } from "../../base/TableCss.js";
@@ -30,72 +31,7 @@ export class ResultsView extends BaseElementMixin(LitElement) {
     }
 
     render() {
-        return html`
-            <div bp="grid">
-                <main bp="12">
-                    <nav-bar bp="12">
-                        <a href="#" slot="left" class="nav-back">
-                            <svg viewBox="0 0 32 32" class="icon icon-chevron-left" viewBox="0 0 32 32" aria-hidden="true">
-                                <path d="M14.19 16.005l7.869 7.868-2.129 2.129-9.996-9.997L19.937 6.002l2.127 2.129z"/>
-                            </svg>
-                            Home
-                        </a>
-                    </nav-bar>
-                    <div class="main-container" bp="grid 6@md">
-                        <div>
-                            <h2>Annual</h2>
-                            <table class="table">
-                                <tr>
-                                    <td>Gross</td>
-                                    <td>${this._formatAmount(this.taxResults.annualTaxResult.grossAmount)}</td>
-                                </tr>
-                                <tr>
-                                    <td>Tax</td>
-                                    <td>${this._formatAmount(this.taxResults.annualTaxResult.taxAmount)}</td>
-                                </tr>
-                                <tr>
-                                    <td>Social</td>
-                                    <td>${this._formatAmount(this.taxResults.annualTaxResult.socialAmount)}</td>
-                                </tr>
-                                <tr>
-                                    <td>NHS (GESY)</td>
-                                    <td>${this._formatAmount(this.taxResults.annualTaxResult.healthContributionAmount)}</td>
-                                </tr>
-                                <tr>
-                                    <td>Net</td>
-                                    <td>${this._formatAmount(this.taxResults.annualTaxResult.netAmount)}</td>
-                                </tr>
-                            </table>
-                        </div>
-                        <div>
-                            <h2>Monthly</h2>
-                            <table class="table">
-                                <tr>
-                                    <td>Gross</td>
-                                    <td>${this._formatAmount(this.taxResults.monthlyTaxResult.grossAmount)}</td>
-                                </tr>
-                                <tr>
-                                    <td>Tax</td>
-                                    <td>${this._formatAmount(this.taxResults.monthlyTaxResult.taxAmount)}</td>
-                                </tr>
-                                <tr>
-                                    <td>Social</td>
-                                    <td>${this._formatAmount(this.taxResults.monthlyTaxResult.socialAmount)}</td>
-                                </tr>
-                                <tr>
-                                    <td>NHS (GESY)</td>
-                                    <td>${this._formatAmount(this.taxResults.monthlyTaxResult.healthContributionAmount)}</td>
-                                </tr>
-                                <tr>
-                                    <td>Net</td>
-                                    <td>${this._formatAmount(this.taxResults.monthlyTaxResult.netAmount)}</td>
-                                </tr>
-                            </table>
-                        </div>
-                    </div>
-                </main>
-            </div>
-        `;
+        return ResultsViewTemplate(this.taxResults, this.formatter);
     }
 
     constructor() {
@@ -138,13 +74,6 @@ export class ResultsView extends BaseElementMixin(LitElement) {
     _addNavBackListener() {
         const navBackLink = this.shadowRoot.querySelector("a.nav-back");
         navBackLink.addEventListener("click", event => this._handleNavBackEvent(event));
-    }
-
-    /**
-     * @param {Number} amount
-     */
-    _formatAmount(amount) {
-        return this.formatter.format(amount);
     }
 
     /**
