@@ -1,6 +1,7 @@
 import { TemplateResult, html } from "lit-element";
 import { Country } from "../../model/Country.js";
 import { CyprusTaxDetailsViewTemplate } from "../../countries/cyprus/boundary/CyprusTaxDetailsViewTemplate.js";
+import { AustraliaTaxDetailsViewTemplate } from "../../countries/australia/boundary/AustraliaTaxDetailsViewTemplate.js";
 
 export class TaxDetailsViewTemplateLoader {
 
@@ -18,7 +19,7 @@ export class TaxDetailsViewTemplateLoader {
 
         switch(country.id) {
             case 1: return CyprusTaxDetailsViewTemplate(taxDetails, formatter);
-            case 2: return html`australia tax details view template`;
+            case 2: return AustraliaTaxDetailsViewTemplate(taxDetails, formatter);
         }
     }
 }
