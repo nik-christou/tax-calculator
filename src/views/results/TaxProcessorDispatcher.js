@@ -38,6 +38,6 @@ export class TaxProcessorDispatcher {
     static async _processAustraliaTax(countryId, salaryDetails) {
 
         const { AustraliaProcessor } = await import("../../countries/australia/boundary/AustraliaProcessor.js");
-        return AustraliaProcessor.processAustraliaTax(salaryDetails, true);
+        return AustraliaProcessor.processAustraliaTax(countryId, salaryDetails, true);
     }
 }
