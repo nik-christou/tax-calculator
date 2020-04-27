@@ -56,10 +56,6 @@ export class ResultsView extends BaseElementMixin(LitElement) {
         const grossAmount = await UserSelectionStore.retrieveGrossAmount();
         const includesThirteenOption = await UserSelectionStore.retrieveIncludesThirteenOption();
 
-        console.log(selectedCountry);
-        console.log(selectedPeriodType);
-        console.log(grossAmount);
-
         if (!selectedCountry || !selectedPeriodType || !grossAmount) {
             return;
         }
