@@ -1,18 +1,19 @@
 import { SalaryDetails } from "../../../model/SalaryDetails.js";
 import { TaxResults } from "../../../model/TaxResults.js";
-import { CyprusTaxLoader } from "../control/CyprusTaxLoader.js";
 import { CyprusTaxCalculator } from "../control/CyprusTaxCalculator.js";
+import TaxDetailsStore from "../../../datastore/TaxDetailsStore.js";
 
 export class CyprusProcessor {
 
     /**
+     * @param {Number} countryId
      * @param {SalaryDetails} salaryDetails
      *
      * @returns {Promise<TaxResults>}
      */
-    static async processCyprusTax(salaryDetails) {
+    static async processCyprusTax(countryId, salaryDetails) {
 
-        const cyprusTaxDetails = await CyprusTaxLoader.loadTaxDetailsFromJson("web_assets/data/cyprus.json");
+        const cyprusTaxDetails = await TaxDetailsStore.getTaxDetailsByCountryById(countryId);
         const taxResults = CyprusTaxCalculator.calculateTax(cyprusTaxDetails, salaryDetails);
 
         return taxResults;

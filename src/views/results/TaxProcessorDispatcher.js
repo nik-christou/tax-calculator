@@ -13,31 +13,31 @@ export class TaxProcessorDispatcher {
     static dispatch(countryId, salaryDetails) {
         switch (countryId) {
             case 1:
-                return this._processCyprus(salaryDetails);
+                return this._processCyprus(countryId, salaryDetails);
             case 2:
-                return this._processAustraliaTax(salaryDetails);
+                return this._processAustraliaTax(countryId, salaryDetails);
             default:
                 return Promise.resolve(null);
         }
     }
 
     /**
-     * @static
+     * @param {Number} countryId
      * @param {SalaryDetails} salaryDetails
      */
-    static async _processCyprus(salaryDetails) {
+    static async _processCyprus(countryId, salaryDetails) {
 
-        const { CyprusProcessor } = await import("../../taxation/cyprus/boundary/CyprusProcessor");
-        return CyprusProcessor.processCyprusTax(salaryDetails);
+        const { CyprusProcessor } = await import("../../countries/cyprus/boundary/CyprusProcessor");
+        return CyprusProcessor.processCyprusTax(countryId,salaryDetails);
     }
 
     /**
-     * @static
+     * @param {Number} countryId
      * @param {SalaryDetails} salaryDetails
      */
-    static async _processAustraliaTax(salaryDetails) {
+    static async _processAustraliaTax(countryId, salaryDetails) {
 
-        const { AustraliaProcessor } = await import("../../taxation/australia/boundary/AustraliaProcessor");
+        const { AustraliaProcessor } = await import("../../countries/australia/boundary/AustraliaProcessor");
         return AustraliaProcessor.processAustraliaTax(salaryDetails, true);
     }
 }

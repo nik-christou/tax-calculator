@@ -39,7 +39,7 @@ const countryItemTemplate = (country, selectedId, handleSelectedCountry) => html
  * @param {Number} selectedId
  * @param {Function} handleSelectedCountry
  */
-const CountryViewTemplate = (countries, selectedId, handleSelectedCountry) => html`
+const CountrySelectionViewTemplate = (countries, selectedId, handleSelectedCountry) => html`
 <div bp="grid">
     <main bp="12">
         <nav-bar bp="12">
@@ -59,4 +59,4 @@ const CountryViewTemplate = (countries, selectedId, handleSelectedCountry) => ht
 </div>
 `;
 
-export { CountryViewTemplate };
+export { CountrySelectionViewTemplate };

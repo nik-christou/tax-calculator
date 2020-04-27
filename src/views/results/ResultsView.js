@@ -8,7 +8,7 @@ import { TaxResults } from "../../model/TaxResults.js";
 import { TaxResult } from "../../model/TaxResult.js";
 import { SalaryDetails } from "../../model/SalaryDetails.js";
 import { TaxProcessorDispatcher } from "./TaxProcessorDispatcher.js";
-import UserSelectionStore from "../../datastore/UserSelectionStore.js";
+import { UserSelectionStore } from "../../datastore/UserSelectionStore.js";
 import { Country } from "../../model/Country.js";
 import { SalaryTypes } from "../../model/SalaryTypes.js";
 

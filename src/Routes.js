@@ -1,6 +1,7 @@
 import "./views/home/HomeView.js";
-import "./views/countries/CountriesView.js";
+import "./views/country_selection/CountrySelectionView.js";
 import "./views/results/ResultsView.js";
+import "./views/tax_details/TaxDetailsView.js";
 
 export const routes = [
 {
@@ -23,12 +24,12 @@ export const routes = [
             component: "home-view"
         },
         {
-            path: "/countries",
+            path: "/country-selection",
             animate: {
-                enter: "countries-entering",
-                leave: "countries-leaving"
+                enter: "country-selection-entering",
+                leave: "country-selection-leaving"
             },
-            component: "countries-view"
+            component: "country-selection-view"
         },
         {
             path: "/results",
@@ -37,6 +38,14 @@ export const routes = [
                 leave: "results-leaving"
             },
             component: "results-view"
+        },
+        {
+            path: "/tax-details",
+            animate: {
+                enter: "tax-details-entering",
+                leave: "tax-details-leaving"
+            },
+            component: "tax-details-view"
         }
     ]
 }];

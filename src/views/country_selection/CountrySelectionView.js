@@ -1,16 +1,16 @@
-import { LitElement, html } from "lit-element";
+import { LitElement } from "lit-element";
 import { BaseElementMixin } from "../../base/BaseElementMixin.js";
-import { CountryViewTemplate } from "./CountryViewTemplate.js";
+import { CountrySelectionViewTemplate } from "./CountrySelectionViewTemplate.js";
+import { CountryStore } from "../../datastore/CountryStore.js";
+import { UserSelectionStore } from "../../datastore/UserSelectionStore.js";
 import { Country } from "../../model/Country.js";
 import { ListGroupCss } from "../../base/ListGroupCss.js";
-import { CountriesViewCss } from "./CountriesViewCss.js";
+import { CountrySelectionViewCss } from "./CountrySelectionViewCss.js";
 import { BlueprintCss } from "../../base/BlueprintCss.js";
-import CountryStore from "../../datastore/CountryStore.js";
-import UserSelectionStore from "../../datastore/UserSelectionStore.js";
 
 import "../../navbar/Navbar.js";
 
-export class CountriesView extends BaseElementMixin(LitElement) {
+export class CountrySelectionView extends BaseElementMixin(LitElement) {
 
     static get properties() {
         return {
@@ -24,12 +24,15 @@ export class CountriesView extends BaseElementMixin(LitElement) {
             ...super.styles,
             BlueprintCss,
             ListGroupCss,
-            CountriesViewCss
+            CountrySelectionViewCss
         ];
     }
 
     render() {
-        return CountryViewTemplate(this.countries, this.selectedId, this._handleSelectedCountry.bind(this));
+        return CountrySelectionViewTemplate(
+            this.countries,
+            this.selectedId,
+            this._handleSelectedCountry.bind(this));
     }
 
     constructor() {
@@ -72,7 +75,7 @@ export class CountriesView extends BaseElementMixin(LitElement) {
     _handleSelectedCountry(event, country) {
 
         event.preventDefault();
-        console.log(country);
+
         UserSelectionStore.updateCountry(country)
         .then(_ => this._goToHome());
     }
@@ -90,4 +93,4 @@ export class CountriesView extends BaseElementMixin(LitElement) {
     }
 }
 
-window.customElements.define("countries-view", CountriesView);
+window.customElements.define("country-selection-view", CountrySelectionView);

@@ -1,6 +1,6 @@
-import { html, TemplateResult } from "lit-element";
+import { TemplateResult, html } from "lit-element";
 
-import "./views/countries/australia/AustraliaOptionsView.js";
+import "./countries/australia/boundary/AustraliaOptionsView.js";
 
 export class CountryOptionsViewLoader {
 

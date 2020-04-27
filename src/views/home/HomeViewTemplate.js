@@ -1,32 +1,45 @@
 import { html } from "lit-element";
 import { Country } from "../../model/Country.js";
 
-const noCountryInfoTemplate = html`<h5>None</h5>`;
-
 /**
  * @param {Country} selectedCountry
  */
-function _getSelectedCountryInfoTemplate(selectedCountry) {
+const taxDetailsTemplate = (selectedCountry) => {
 
     if(selectedCountry) {
-        return countryInfoTemplate(selectedCountry);
+        return html`
+            <a href="/tax-details" class="list-group-item list-group-item-action">
+                <div class="country-container">
+                    <h5>Tax details:</h5>
+                    <div class="selected-country-container">
+                        <img class="right-chevron" src="/web_assets/img/right-chevron.png" alt="" />
+                    </div>
+                </div>
+            </a>
+        `;
     }
-
-    return noCountryInfoTemplate;
-}
+    return html``;
+};
 
 /**
  * @param {Country} selectedCountry
  */
-const countryInfoTemplate = (selectedCountry) => html`
-<div class="country-info">
-    <img src="/web_assets/data/${selectedCountry.flag}" alt="" />
-    <div class="item-info">
-        <h5>${selectedCountry.name}</h5>
-        <small class="text-muted">${selectedCountry.currency} / ${selectedCountry.locale}</small>
-    </div>
-</div>
-`;
+const countryInfoTemplate = (selectedCountry) => {
+
+    if(selectedCountry) {
+        return html`
+            <div class="country-info">
+                <img src="/web_assets/data/${selectedCountry.flag}" alt="" />
+                <div class="item-info">
+                    <h5>${selectedCountry.name}</h5>
+                    <small class="text-muted">${selectedCountry.currency} / ${selectedCountry.locale}</small>
+                </div>
+            </div>
+        `
+    }
+
+    return html`<h5>None</h5>`
+};
 
 /**
  * @param {Country} selectedCountry
@@ -44,15 +57,16 @@ const HomeViewTemplate = (selectedCountry, includesThirteen, grossAmount) => htm
         </nav-bar>
         <div class="main-container">
             <div class="list-group">
-                <a href="/countries" class="list-group-item list-group-item-action">
+                <a href="/country-selection" class="list-group-item list-group-item-action">
                     <div class="country-container">
                         <h5>Country:</h5>
                         <div class="selected-country-container">
-                            ${_getSelectedCountryInfoTemplate(selectedCountry)}
+                            ${countryInfoTemplate(selectedCountry)}
                             <img class="right-chevron" src="/web_assets/img/right-chevron.png" alt="" />
                         </div>
                     </div>
                 </a>
+                ${taxDetailsTemplate(selectedCountry)}
             </div>
             <br />
             <div class="list-group">

@@ -6,18 +6,13 @@ import { AustraliaNonResidents } from "../entity/AustraliaNonResidents.js";
 export class AustraliaTaxLoader {
 
     /**
-     * Load a data from a json file
-     *
-     * @param {String} jsonPath
-     *
+     * @param {Object} jsonData
      * @returns {Promise<AustraliaTaxDetails>} the tax details
      */
-    static async loadTaxDetailsFromJson(jsonPath) {
-        const response = await fetch(jsonPath);
-        const data = await response.json();
+    static async loadTaxDetailsFromJsonData(jsonData) {
 
-        const residents = this._loadResidentsData(data);
-        const nonResidents = this._loadNonResidentsData(data);
+        const residents = this._loadResidentsData(jsonData);
+        const nonResidents = this._loadNonResidentsData(jsonData);
 
         return new AustraliaTaxDetails(residents, nonResidents);
     }
@@ -50,7 +45,7 @@ export class AustraliaTaxLoader {
 
         const taxBrackets = [];
 
-        taxBrackets.forEach(taxBracketJson => {
+        taxBracketsJson.forEach(taxBracketJson => {
             const end = taxBracketJson["end"] === -1 ? Number.POSITIVE_INFINITY : taxBracketJson["end"];
             const taxBracket = new AustraliaTaxBracket(
                 taxBracketJson["start"],

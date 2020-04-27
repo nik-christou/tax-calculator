@@ -1,13 +1,9 @@
-import DatabaseStore from "./DatabaseStore.js";
 import { Country } from "../model/Country.js";
+import { DatabaseManager } from "./DatabaseManager.js";
 
 const COUNTRIES_STORE_NAME = "country-store";
 
-class _CountryStore {
-
-    constructor() {
-        this.dbConnection = DatabaseStore.db;
-    }
+export class CountryStore {
 
     /**
      * Get a country with a matching id
@@ -15,8 +11,11 @@ class _CountryStore {
      * @param {IDBValidKey} id the country id
      * @returns {Promise<Country>}
      */
-    async getCountryById(id) {
-        return (await this.dbConnection).get(COUNTRIES_STORE_NAME, id);
+    static async getCountryById(id) {
+        if(DatabaseManager.dbConnection) {
+            const dbConnection = await DatabaseManager.dbConnection;
+            return dbConnection.get(COUNTRIES_STORE_NAME, id);
+        }
     }
 
     /**
@@ -24,9 +23,10 @@ class _CountryStore {
      *
      * @returns {Promise<Country[]>} array of stored countries
      */
-    async retrieveCountries() {
-        return (await this.dbConnection).getAll(COUNTRIES_STORE_NAME);
+    static async retrieveCountries() {
+        if(DatabaseManager.dbConnection) {
+            const dbConnection = await DatabaseManager.dbConnection;
+            return dbConnection.getAll(COUNTRIES_STORE_NAME);
+        }
     }
 }
-
-export default new _CountryStore();

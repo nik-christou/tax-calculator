@@ -1,7 +1,8 @@
 import { LitElement, html } from "lit-element";
 import { BaseElementMixin } from "../../base/BaseElementMixin.js";
-import { HomeViewCss } from "./HomeViewCss.js";
 import { HomeViewTemplate } from "./HomeViewTemplate.js";
+import { UserSelectionStore } from "../../datastore/UserSelectionStore.js";
+import { HomeViewCss } from "./HomeViewCss.js";
 import { Country } from "../../model/Country.js";
 import { SalaryType } from "../../model/SalaryType.js";
 import { SalaryTypes } from "../../model/SalaryTypes.js";
@@ -10,7 +11,6 @@ import { InputGroupCss } from "../../base/InputGroupCss.js";
 import { SwitchCss } from "../../base/SwitchCss.js";
 import { BlueprintCss } from "../../base/BlueprintCss.js";
 import { ButtonCss } from "../../base/ButtonCss.js";
-import UserSelectionStore from "../../datastore/UserSelectionStore.js";
 
 import "../../navbar/Navbar.js";
 
@@ -38,7 +38,10 @@ export class HomeView extends BaseElementMixin(LitElement) {
     }
 
     render() {
-        return html`${HomeViewTemplate(this.selectedCountry, this.includesThirteen, this.grossAmount)}`;
+        return HomeViewTemplate(
+            this.selectedCountry,
+            this.includesThirteen,
+            this.grossAmount);
     }
 
     constructor() {
@@ -58,7 +61,7 @@ export class HomeView extends BaseElementMixin(LitElement) {
         this._loadUserSelectionFromDatastore();
     }
 
-    _loadUserSelectionFromDatastore() {
+    async _loadUserSelectionFromDatastore() {
 
         UserSelectionStore.retrieveCountry().then(selectedCountry => {
             if(selectedCountry) this.selectedCountry = selectedCountry;
