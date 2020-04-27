@@ -1,4 +1,4 @@
-import { LitElement, html } from "lit-element";
+import { LitElement } from "lit-element";
 import { BaseElementMixin } from "../../base/BaseElementMixin.js";
 import { ResultsViewTemplate } from "./ResultsViewTemplate.js";
 import { BlueprintCss } from "../../base/BlueprintCss.js";
@@ -55,6 +55,10 @@ export class ResultsView extends BaseElementMixin(LitElement) {
         const selectedPeriodType = await UserSelectionStore.retrieveSalaryType();
         const grossAmount = await UserSelectionStore.retrieveGrossAmount();
         const includesThirteenOption = await UserSelectionStore.retrieveIncludesThirteenOption();
+
+        console.log(selectedCountry);
+        console.log(selectedPeriodType);
+        console.log(grossAmount);
 
         if (!selectedCountry || !selectedPeriodType || !grossAmount) {
             return;

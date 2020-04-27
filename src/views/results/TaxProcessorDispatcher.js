@@ -27,7 +27,7 @@ export class TaxProcessorDispatcher {
      */
     static async _processCyprus(countryId, salaryDetails) {
 
-        const { CyprusProcessor } = await import("../../countries/cyprus/boundary/CyprusProcessor");
+        const { CyprusProcessor } = await import("../../countries/cyprus/boundary/CyprusProcessor.js");
         return CyprusProcessor.processCyprusTax(countryId,salaryDetails);
     }
 
@@ -37,7 +37,7 @@ export class TaxProcessorDispatcher {
      */
     static async _processAustraliaTax(countryId, salaryDetails) {
 
-        const { AustraliaProcessor } = await import("../../countries/australia/boundary/AustraliaProcessor");
+        const { AustraliaProcessor } = await import("../../countries/australia/boundary/AustraliaProcessor.js");
         return AustraliaProcessor.processAustraliaTax(salaryDetails, true);
     }
 }
