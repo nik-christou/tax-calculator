@@ -38,4 +38,16 @@ export const TaxDetailsViewCss = css`
     max-width: 32px;
     fill: #fff;
 }
+
+.contribution-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.tax-bracket-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
 `;

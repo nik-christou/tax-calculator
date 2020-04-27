@@ -15,13 +15,13 @@ function formatAmount(formatter, amount) {
  * @param {Intl.NumberFormat} formatter
  */
 const taxBracketItemTemplate = (taxBracket, formatter) => html`
-<tr>
+<div class="list-group-item tax-bracket-item">
     ${taxBracket.end === Number.POSITIVE_INFINITY
-        ? html`<td>${formatAmount(formatter, taxBracket.start)} and over</td>`
-        : html`<td>${formatAmount(formatter, taxBracket.start)} - ${formatAmount(formatter, taxBracket.end)}</td>`
+        ? html`${formatAmount(formatter, taxBracket.start)} and over`
+        : html`<span>${formatAmount(formatter, taxBracket.start)} - ${formatAmount(formatter, taxBracket.end)}</span>`
     }
-    <td>${taxBracket.ratePercent}%</td>
-</tr>
+    <span>${taxBracket.ratePercent}%</span>
+</div>
 `;
 
 /**
@@ -29,36 +29,25 @@ const taxBracketItemTemplate = (taxBracket, formatter) => html`
  * @param {Intl.NumberFormat} formatter
  */
 const CyprusTaxDetailsViewTemplate = (taxDetails, formatter) => html`
-<table class="table table-bordered">
-<thead>
-        <tr>
-            <th scope="col">Contributions</th>
-            <th scope="col">Rate</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td>National health service</td>
-            <td>${taxDetails.healthContributionPercent}%</td>
-        </tr>
-        <tr>
-            <td>Social insurance contribution</td>
-            <td>${taxDetails.socialInsuranceContributionPercent}%</td>
-        </tr>
-    </tbody>
-</table>
+
+<h3>Contributions</h3>
+<div class="list-group">
+    <div class="list-group-item contribution-item">
+        <span>National Health Service:</span>
+        <span>${taxDetails.healthContributionPercent}%</span>
+    </div>
+    <div class="list-group-item contribution-item">
+        <span>Social insurance contribution:</span>
+        <span>${taxDetails.socialInsuranceContributionPercent}%</span>
+    </div>
+</div>
+
 <br />
-<table class="table table-bordered">
-    <thead>
-        <tr>
-            <th scope="col">Tax Brackets</th>
-            <th scope="col">Rate</th>
-        </tr>
-    </thead>
-    <tbody>
-        ${taxDetails.taxBrackets.map((taxBracket) => taxBracketItemTemplate(taxBracket, formatter))}
-    </tbody>
-</table>
+
+<h3>Tax brackets</h3>
+<div class="list-group">
+    ${taxDetails.taxBrackets.map((taxBracket) => taxBracketItemTemplate(taxBracket, formatter))}
+</div>
 `;
 
 export { CyprusTaxDetailsViewTemplate };
