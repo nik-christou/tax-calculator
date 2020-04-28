@@ -1,5 +1,5 @@
 import { openDB, deleteDB } from "idb";
-import { CountriesDataLoader } from "./CountriesLoader.js";
+import { CountriesDataLoader } from "../countries/CountriesDataLoader.js";
 
 const DB_VERSION = 1;
 const DB_NAME = "tax-calculator-db";

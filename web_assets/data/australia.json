@@ -1,6 +1,9 @@
 {
   "id": 2,
   "name": "Australia",
+  "locale": "en-AU",
+  "currency": "AUD",
+  "flag": "australia.png",
   "residents": {
     "taxBrackets": [
       {"start": 0, "end": 18200, "fixedCharge": 0, "ratePercent": 0},
@@ -20,8 +23,5 @@
   },
   "options": {
     "resident": true
-  },
-  "locale": "en-AU",
-  "currency": "AUD",
-  "flag": "australia.png"
+  }
 }

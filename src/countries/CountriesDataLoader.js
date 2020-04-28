@@ -1,8 +1,8 @@
 import { Country } from "../model/Country.js";
 import { CountryData } from "../model/CountryData.js";
-import { CountryOptions } from "../model/CountryOptions.js";
-import { CyprusTaxLoader } from "../countries/cyprus/control/CyprusTaxLoader.js";
-import { AustraliaTaxLoader } from "../countries/australia/control/AustraliaTaxLoader.js";
+import { CyprusTaxLoader } from "./cyprus/control/CyprusTaxLoader.js";
+import { AustraliaTaxLoader } from "./australia/control/AustraliaTaxLoader.js";
+import { AustraliaOptionsLoader } from "./australia/control/AustraliaOptionsLoader.js";
 
 const countriesJsonFilePaths = [
     "web_assets/data/australia.json",
@@ -44,12 +44,7 @@ export class CountriesDataLoader {
      */
     static async _retrieveCountryFromJsonData(jsonData) {
 
-        let countryOptions;
-
-        if(jsonData.options) {
-            const options = jsonData.options;
-            countryOptions = new CountryOptions(options.resident);
-        }
+        const countryOptions = await this._retrieveCountryOptions(jsonData);
 
         return new Country(
             jsonData.id,
@@ -70,6 +65,18 @@ export class CountriesDataLoader {
                 return CyprusTaxLoader.loadTaxDetailsFromJsonData(jsonData);
             case 2:
                 return AustraliaTaxLoader.loadTaxDetailsFromJsonData(jsonData);
+            default:
+                return Promise.resolve(null);
+        }
+    }
+
+    /**
+     * @param {Object} jsonData
+     */
+    static async _retrieveCountryOptions(jsonData) {
+        switch (jsonData.id) {
+            case 2:
+                return AustraliaOptionsLoader.loadOptionsFromJsonData(jsonData.options);
             default:
                 return Promise.resolve(null);
         }

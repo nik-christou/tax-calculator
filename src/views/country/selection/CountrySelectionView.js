@@ -1,14 +1,14 @@
 import { LitElement } from "lit-element";
-import { BaseElementMixin } from "../../base/BaseElementMixin.js";
+import { BaseElementMixin } from "../../../base/BaseElementMixin.js";
 import { CountrySelectionViewTemplate } from "./CountrySelectionViewTemplate.js";
-import { CountryStore } from "../../datastore/CountryStore.js";
-import { UserSelectionStore } from "../../datastore/UserSelectionStore.js";
-import { Country } from "../../model/Country.js";
-import { ListGroupCss } from "../../base/ListGroupCss.js";
+import { CountryStore } from "../../../datastore/CountryStore.js";
+import { UserSelectionStore } from "../../../datastore/UserSelectionStore.js";
+import { Country } from "../../../model/Country.js";
+import { ListGroupCss } from "../../../base/ListGroupCss.js";
 import { CountrySelectionViewCss } from "./CountrySelectionViewCss.js";
-import { BlueprintCss } from "../../base/BlueprintCss.js";
+import { BlueprintCss } from "../../../base/BlueprintCss.js";
 
-import "../../navbar/Navbar.js";
+import "../../../navbar/Navbar.js";
 
 export class CountrySelectionView extends BaseElementMixin(LitElement) {
 

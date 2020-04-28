@@ -3,7 +3,6 @@ import { BaseElementMixin } from "../../base/BaseElementMixin.js";
 import { UserSelectionStore } from "../../datastore/UserSelectionStore.js";
 import { TaxDetailsStore } from "../../datastore/TaxDetailsStore.js";
 import { TaxDetailsViewTemplate } from "./TaxDetailsViewTemplate.js";
-import { TableCss } from "../../base/TableCss.js";
 import { ListGroupCss } from "../../base/ListGroupCss.js";
 import { BlueprintCss } from "../../base/BlueprintCss.js";
 import { TaxDetailsViewCss } from "./TaxDetailsViewCss.js";
@@ -23,7 +22,6 @@ export class TaxDetailsView extends BaseElementMixin(LitElement) {
         return [
             ...super.styles,
             BlueprintCss,
-            TableCss,
             ListGroupCss,
             TaxDetailsViewCss
         ];

@@ -1,4 +1,3 @@
-import { CountryOptions } from "./CountryOptions";
 
 export class Country {
     /**
@@ -7,7 +6,7 @@ export class Country {
      * @param {String} locale
      * @param {String} currency
      * @param {String} flag
-     * @param {CountryOptions} options
+     * @param {Object} options
      */
     constructor(id, name, locale, currency, flag, options) {
         this.id = id;

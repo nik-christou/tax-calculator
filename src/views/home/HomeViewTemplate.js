@@ -4,6 +4,26 @@ import { Country } from "../../model/Country.js";
 /**
  * @param {Country} selectedCountry
  */
+const countryOptionsTemplate = (selectedCountry) => {
+
+    if(selectedCountry && selectedCountry.options) {
+        return html`
+            <a href="/country-options" class="list-group-item list-group-item-action">
+                <div class="country-container">
+                    <h5>Additional options:</h5>
+                    <div class="selected-country-container">
+                        <img class="right-chevron" src="/web_assets/img/right-chevron.png" alt="" />
+                    </div>
+                </div>
+            </a>
+        `;
+    }
+    return html``;
+};
+
+/**
+ * @param {Country} selectedCountry
+ */
 const taxDetailsTemplate = (selectedCountry) => {
 
     if(selectedCountry) {
@@ -29,7 +49,6 @@ const countryInfoTemplate = (selectedCountry) => {
     if(selectedCountry) {
         return html`
             <div class="country-info">
-                <img src="/web_assets/data/${selectedCountry.flag}" alt="" />
                 <div class="item-info">
                     <h5>${selectedCountry.name}</h5>
                     <small class="text-muted">${selectedCountry.currency} / ${selectedCountry.locale}</small>
@@ -56,6 +75,7 @@ const HomeViewTemplate = (selectedCountry, includesThirteen, grossAmount) => htm
             </div>
         </nav-bar>
         <div class="main-container">
+            <h3>Location</h3>
             <div class="list-group">
                 <a href="/country-selection" class="list-group-item list-group-item-action">
                     <div class="country-container">
@@ -67,8 +87,10 @@ const HomeViewTemplate = (selectedCountry, includesThirteen, grossAmount) => htm
                     </div>
                 </a>
                 ${taxDetailsTemplate(selectedCountry)}
+                ${countryOptionsTemplate(selectedCountry)}
             </div>
             <br />
+            <h3>Salary</h3>
             <div class="list-group">
                 <div class="list-group-item">
                     <div class="salary-input-container">
