@@ -1,6 +1,7 @@
 import { Country } from "../model/Country.js";
 import { SalaryType } from "../model/SalaryType.js";
 import { DatabaseManager } from "./DatabaseManager.js";
+import { CountryOptions } from "../model/CountryOptions.js";
 
 const STORE_NAME = "user-selection-store";
 
@@ -105,6 +106,26 @@ export class UserSelectionStore {
         if(DatabaseManager.dbConnection) {
             const dbConnection = await DatabaseManager.dbConnection;
             return dbConnection.get(STORE_NAME, "includesThirteenOption");
+        }
+    }
+
+    /**
+     * @param {CountryOptions} countryOptions
+     */
+    static async updateCountryOptions(countryOptions) {
+        if(DatabaseManager.dbConnection) {
+            const dbConnection = await DatabaseManager.dbConnection;
+            return dbConnection.put(STORE_NAME, countryOptions, "countryOptions");
+        }
+    }
+
+    /**
+     * @returns {Promise<CountryOptions>}
+     */
+    static async retrieveCountryOptions() {
+        if(DatabaseManager.dbConnection) {
+            const dbConnection = await DatabaseManager.dbConnection;
+            return dbConnection.get(STORE_NAME, "countryOptions");
         }
     }
 }

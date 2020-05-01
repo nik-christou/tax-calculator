@@ -1,21 +1,20 @@
-import { TemplateResult, html } from "lit-element";
+import { html } from "lit-element";
 import { Country } from "../../../model/Country.js";
-import { AustraliaOptionsViewTemplate } from "../../../countries/australia/boundary/AustraliaOptionsViewTemplate.js";
+
+import "../../../countries/australia/boundary/AustraliaOptionsView.js";
 
 export class CountryOptionsViewTemplateLoader {
 
     /**
      * @param {Country} country
-     * @returns {TemplateResult} the template for the tax details
      */
-    static getCountryOptionsViewTemplate(country) {
+    static getCountryOptionsViewTemplateTag(country) {
 
-        if(!country) {
-            return html`Not valid country selection found`;
-        }
+        if(!country) return;
 
         switch(country.id) {
-            case 2: return AustraliaOptionsViewTemplate(country.options);
+            case 2:
+                return html`<australia-options-view></australia-options-view>`;
         }
     }
 }

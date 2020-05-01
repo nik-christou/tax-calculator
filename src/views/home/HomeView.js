@@ -55,7 +55,6 @@ export class HomeView extends BaseElementMixin(LitElement) {
         this._addSalaryTypeClickListeners();
         this._addGrossAmountInputListener();
         this._addIncludesThirteenInputListener();
-        this._addIncludesThirteenInputListener();
         this._addCalculateButtonListener();
         this._updateSelectedSalaryTypeLinks();
         this._loadUserSelectionFromDatastore();

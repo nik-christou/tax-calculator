@@ -1,18 +1,18 @@
-import { LitElement } from "lit-element";
+import { LitElement, TemplateResult } from "lit-element";
 import { BaseElementMixin } from "../../../base/BaseElementMixin.js";
 import { CountryOptionsViewTemplate } from "./CountryOptionsViewTemplate.js";
 import { CountryOptionsViewCss } from "./CountryOptionsViewCss.js";
-import { Country } from "../../../model/Country.js";
 import { SwitchCss } from "../../../base/SwitchCss.js";
 import { ListGroupCss } from "../../../base/ListGroupCss.js";
 import { BlueprintCss } from "../../../base/BlueprintCss.js";
 import { UserSelectionStore } from "../../../datastore/UserSelectionStore.js";
+import { CountryOptionsViewTemplateLoader } from "./CountryOptionsViewTemplateLoader.js";
 
 export class CountryOptionsView extends BaseElementMixin(LitElement) {
 
     static get properties() {
         return {
-            selectedCountry: Country
+            viewTemplate: TemplateResult
         };
     }
 
@@ -27,12 +27,12 @@ export class CountryOptionsView extends BaseElementMixin(LitElement) {
     }
 
     render() {
-        return CountryOptionsViewTemplate(this.selectedCountry);
+        return CountryOptionsViewTemplate(this.viewTemplate);
     }
 
     constructor() {
         super();
-        this.selectedCountry = null;
+        this.viewTemplate = null;
     }
 
     firstUpdated() {
@@ -50,6 +50,8 @@ export class CountryOptionsView extends BaseElementMixin(LitElement) {
         UserSelectionStore.retrieveCountry().then(country => {
             if(!country) return;
             this.selectedCountry = country;
+            this.viewTemplate = CountryOptionsViewTemplateLoader
+                .getCountryOptionsViewTemplateTag(this.selectedCountry);
         });
     }
 

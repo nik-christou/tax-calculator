@@ -1,11 +1,9 @@
-import { html } from "lit-element";
-import { Country } from "../../../model/Country.js";
-import { CountryOptionsViewTemplateLoader } from "./CountryOptionsViewTemplateLoader.js";
+import { html, TemplateResult } from "lit-element";
 
 /**
- * @param {Country} country
+ * @param {TemplateResult} viewTemplate
  */
-const CountryOptionsViewTemplate = (country) => html`
+const CountryOptionsViewTemplate = (viewTemplate) => html`
 <div bp="grid">
     <main bp="12">
         <nav-bar bp="12">
@@ -17,7 +15,7 @@ const CountryOptionsViewTemplate = (country) => html`
             </a>
         </nav-bar>
         <div class="main-container">
-            ${CountryOptionsViewTemplateLoader.getCountryOptionsViewTemplate(country)}
+            ${viewTemplate}
         </div>
     </main>
 </div>
