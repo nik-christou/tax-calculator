@@ -1,7 +1,7 @@
 import { TemplateResult, html } from "lit-element";
 import { Country } from "../../model/Country.js";
-import { CyprusTaxDetailsViewTemplate } from "../../countries/cyprus/boundary/CyprusTaxDetailsViewTemplate.js";
-import { AustraliaTaxDetailsViewTemplate } from "../../countries/australia/boundary/AustraliaTaxDetailsViewTemplate.js";
+import { CyprusTaxDetailsViewTemplate } from "../../countries/cyprus/view/CyprusTaxDetailsViewTemplate.js";
+import { AustraliaTaxDetailsViewTemplate } from "../../countries/australia/view/AustraliaTaxDetailsViewTemplate.js";
 
 export class TaxDetailsViewTemplateLoader {
 

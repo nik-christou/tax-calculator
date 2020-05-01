@@ -127,4 +127,38 @@ export const HomeViewCss = css`
     .calculate-btn {
         font-size: 1.5em;
     }
+
+    .tax-details-container {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .tax-details-container .tax-details-container-img {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .tax-details-container .tax-details-container-img img.right-chevron {
+        height: 20px;
+        margin-left: 20px;
+    }
+
+    .tax-options-container {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .tax-options-container .tax-options-container-img {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .tax-options-container .tax-options-container-img img.right-chevron {
+        height: 20px;
+        margin-left: 20px;
+    }
 `;

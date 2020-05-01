@@ -1,6 +1,6 @@
 import { css } from "lit-element";
 
-export const CountryOptionsViewCss = css`
+export const TaxOptionsViewCss = css`
 
 :host {
     will-change: transform, opacity;

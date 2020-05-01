@@ -1,7 +1,7 @@
 import { Country } from "../model/Country.js";
 import { SalaryType } from "../model/SalaryType.js";
 import { DatabaseManager } from "./DatabaseManager.js";
-import { CountryOptions } from "../model/CountryOptions.js";
+import { TaxOptions } from "../model/TaxOptions.js";
 
 const STORE_NAME = "user-selection-store";
 
@@ -114,7 +114,7 @@ export class UserSelectionStore {
      * the given country options object.
      * Ovverides existing country options object.
      * 
-     * @param {CountryOptions} countryOptions
+     * @param {TaxOptions} countryOptions
      */
     static async updateCountryOptions(countryOptions) {
         if(DatabaseManager.dbConnection) {
@@ -129,7 +129,7 @@ export class UserSelectionStore {
     }
 
     /**
-     * @returns {Promise<Map<CountryOptions>>}
+     * @returns {Promise<Map<TaxOptions>>}
      */
     static async retrieveAllCountryOptions() {
         if(DatabaseManager.dbConnection) {
@@ -140,7 +140,7 @@ export class UserSelectionStore {
 
     /**
      * @param {Number} countryId
-     * @returns {Promise<CountryOptions>}
+     * @returns {Promise<TaxOptions>}
      */
     static async retrieveCountryOptionByCountryId(countryId) {
         if(DatabaseManager.dbConnection) {

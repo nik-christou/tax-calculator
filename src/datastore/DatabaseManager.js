@@ -1,5 +1,6 @@
 import { openDB, deleteDB } from "idb";
 import { CountriesDataLoader } from "../countries/CountriesDataLoader.js";
+import { SalaryTypes } from "../model/SalaryTypes.js";
 
 const DB_VERSION = 1;
 const DB_NAME = "tax-calculator-db";
@@ -54,9 +55,16 @@ export class DatabaseManager {
 
     static _addInitialData(transaction, countriesData) {
 
+        this._populateDefaultSelections(transaction);
         this._populateCountriesObjectStore(transaction, countriesData);
         this._populateTaxDetailsObjectStore(transaction, countriesData);
     }
+
+    static _populateDefaultSelections(transaction) {
+
+        const userSelectionObjectStore = transaction.objectStore(USER_SELECTION_STORE_NAME);
+        userSelectionObjectStore.add(SalaryTypes.ANNUAL, "salaryType");
+    } 
 
     static _populateCountriesObjectStore(transaction, countriesData) {
 

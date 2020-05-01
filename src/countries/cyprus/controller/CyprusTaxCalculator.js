@@ -1,7 +1,7 @@
 import { TaxResult } from "../../../model/TaxResult.js";
 import { TaxResults } from "../../../model/TaxResults.js";
 import { SalaryDetails } from "../../../model/SalaryDetails.js";
-import { CyprusTaxDetails } from "../entity/CyprusTaxDetails.js";
+import { CyprusTaxDetails } from "../model/CyprusTaxDetails.js";
 import { SalaryTypes } from "../../../model/SalaryTypes.js";
 
 export class CyprusTaxCalculator {

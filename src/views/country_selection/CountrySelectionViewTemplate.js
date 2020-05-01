@@ -1,5 +1,5 @@
 import { html } from "lit-element";
-import { Country } from "../../../model/Country.js";
+import { Country } from "../../model/Country.js";
 
 /**
  * @param {Number} selectedId

@@ -1,6 +1,6 @@
 import { SalaryDetails } from "../../../model/SalaryDetails.js";
 import { TaxResults } from "../../../model/TaxResults.js";
-import { CyprusTaxCalculator } from "../control/CyprusTaxCalculator.js";
+import { CyprusTaxCalculator } from "../controller/CyprusTaxCalculator.js";
 import { TaxDetailsStore } from "../../../datastore/TaxDetailsStore.js";
 
 export class CyprusProcessor {

@@ -21,7 +21,5 @@
       {"start": 180001, "end": -1, "fixedCharge": 62550, "ratePercent": 45}
     ]
   },
-  "options": {
-    "resident": true
-  }
+  "additionalOptions": true
 }

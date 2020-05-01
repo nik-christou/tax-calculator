@@ -3,7 +3,7 @@ import { html, TemplateResult } from "lit-element";
 /**
  * @param {TemplateResult} viewTemplate
  */
-const CountryOptionsViewTemplate = (viewTemplate) => html`
+const TaxOptionsViewTemplate = (viewTemplate) => html`
 <div bp="grid">
     <main bp="12">
         <nav-bar bp="12">
@@ -21,4 +21,4 @@ const CountryOptionsViewTemplate = (viewTemplate) => html`
 </div>
 `;
 
-export { CountryOptionsViewTemplate };
+export { TaxOptionsViewTemplate };

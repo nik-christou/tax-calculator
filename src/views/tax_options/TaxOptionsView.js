@@ -1,14 +1,14 @@
 import { LitElement, TemplateResult } from "lit-element";
-import { BaseElementMixin } from "../../../base/BaseElementMixin.js";
-import { CountryOptionsViewTemplate } from "./CountryOptionsViewTemplate.js";
-import { CountryOptionsViewCss } from "./CountryOptionsViewCss.js";
-import { SwitchCss } from "../../../base/SwitchCss.js";
-import { ListGroupCss } from "../../../base/ListGroupCss.js";
-import { BlueprintCss } from "../../../base/BlueprintCss.js";
-import { UserSelectionStore } from "../../../datastore/UserSelectionStore.js";
-import { CountryOptionsViewTemplateLoader } from "./CountryOptionsViewTemplateLoader.js";
+import { BaseElementMixin } from "../../base/BaseElementMixin.js";
+import { TaxOptionsViewTemplate } from "./TaxOptionsViewTemplate.js";
+import { TaxOptionsViewCss } from "./TaxOptionsViewCss.js";
+import { SwitchCss } from "../../base/SwitchCss.js";
+import { ListGroupCss } from "../../base/ListGroupCss.js";
+import { BlueprintCss } from "../../base/BlueprintCss.js";
+import { UserSelectionStore } from "../../datastore/UserSelectionStore.js";
+import { TaxOptionsViewTemplateLoader } from "./TaxOptionsViewTemplateLoader.js";
 
-export class CountryOptionsView extends BaseElementMixin(LitElement) {
+export class CountryTaxOptionsView extends BaseElementMixin(LitElement) {
 
     static get properties() {
         return {
@@ -22,12 +22,12 @@ export class CountryOptionsView extends BaseElementMixin(LitElement) {
             BlueprintCss,
             ListGroupCss,
             SwitchCss,
-            CountryOptionsViewCss
+            TaxOptionsViewCss
         ];
     }
 
     render() {
-        return CountryOptionsViewTemplate(this.viewTemplate);
+        return TaxOptionsViewTemplate(this.viewTemplate);
     }
 
     constructor() {
@@ -50,8 +50,8 @@ export class CountryOptionsView extends BaseElementMixin(LitElement) {
         UserSelectionStore.retrieveCountry().then(country => {
             if(!country) return;
             this.selectedCountry = country;
-            this.viewTemplate = CountryOptionsViewTemplateLoader
-                .getCountryOptionsViewTemplateTag(this.selectedCountry);
+            this.viewTemplate = TaxOptionsViewTemplateLoader
+                .getTaxOptionsViewTemplateTag(this.selectedCountry);
         });
     }
 
@@ -76,4 +76,5 @@ export class CountryOptionsView extends BaseElementMixin(LitElement) {
     }
 }
 
-window.customElements.define("country-options-view", CountryOptionsView);
+// @ts-ignore
+window.customElements.define("tax-options-view", CountryTaxOptionsView);

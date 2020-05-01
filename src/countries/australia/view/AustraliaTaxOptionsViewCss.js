@@ -1,6 +1,6 @@
 import { css } from "lit-element";
 
-export const AustraliaOptionsViewCss = css`
+export const AustraliaTaxOptionsViewCss = css`
 
 .options-item {
     display: flex;

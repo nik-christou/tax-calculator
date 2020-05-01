@@ -1,9 +1,9 @@
-import { AustraliaTaxDetails } from "../entity/AustraliaTaxDetails.js";
-import { AustraliaTaxBracket } from "../entity/AustraliaTaxBracket.js";
-import { AustraliaResidents } from "../entity/AustraliaResidents.js";
-import { AustraliaNonResidents } from "../entity/AustraliaNonResidents.js";
+import { AustraliaTaxDetails } from "../model/AustraliaTaxDetails.js";
+import { AustraliaTaxBracket } from "../model/AustraliaTaxBracket.js";
+import { AustraliaResidents } from "../model/AustraliaResidents.js";
+import { AustraliaNonResidents } from "../model/AustraliaNonResidents.js";
 
-export class AustraliaTaxLoader {
+export class AustraliaTaxDetailsLoader {
 
     /**
      * @param {Object} jsonData

@@ -1,4 +1,5 @@
-export class CountryOptions {
+
+export class TaxOptions {
 
     /**
      * @param {Number} countryId

@@ -1,10 +1,10 @@
 import { html } from "lit-element";
-import { AustraliaOptions } from "../entity/AustraliaOptions.js";
+import { AustraliaOptions } from "../model/AustraliaTaxOptions.js";
 
 /**
  * @param {AustraliaOptions} australiaOptions
  */
-const AustraliaOptionsViewTemplate = (australiaOptions) => html`
+const AustraliaTaxOptionsViewTemplate = (australiaOptions) => html`
 <div class="list-group">
     <div class="list-group-item">
         <div class="options-item">
@@ -23,4 +23,4 @@ const AustraliaOptionsViewTemplate = (australiaOptions) => html`
 </div>
 `;
 
-export { AustraliaOptionsViewTemplate };
+export { AustraliaTaxOptionsViewTemplate };

@@ -1,6 +1,6 @@
 import { html } from "lit-element";
-import { AustraliaTaxDetails } from "../entity/AustraliaTaxDetails.js";
-import { AustraliaTaxBracket } from "../entity/AustraliaTaxBracket.js";
+import { CyprusTaxDetails } from "../model/CyprusTaxDetails.js";
+import { CyprusTaxBracket } from "../model/CyprusTaxBracket.js";
 
 /**
  * @param {Number} amount
@@ -11,7 +11,7 @@ function formatAmount(formatter, amount) {
 }
 
 /**
- * @param {AustraliaTaxBracket} taxBracket
+ * @param {CyprusTaxBracket} taxBracket
  * @param {Intl.NumberFormat} formatter
  */
 const taxBracketItemTemplate = (taxBracket, formatter) => html`
@@ -25,32 +25,29 @@ const taxBracketItemTemplate = (taxBracket, formatter) => html`
 `;
 
 /**
- * @param {AustraliaTaxDetails} taxDetails
+ * @param {CyprusTaxDetails} taxDetails
  * @param {Intl.NumberFormat} formatter
  */
-const AustraliaTaxDetailsViewTemplate = (taxDetails, formatter) => html`
+const CyprusTaxDetailsViewTemplate = (taxDetails, formatter) => html`
 
-<h3>Contributions - Residents</h3>
+<h3>Contributions</h3>
 <div class="list-group">
     <div class="list-group-item contribution-item">
-        <span>Medicare:</span>
-        <span>${taxDetails.residents.medicarePercent}%</span>
+        <span>National Health Service:</span>
+        <span>${taxDetails.healthContributionPercent}%</span>
+    </div>
+    <div class="list-group-item contribution-item">
+        <span>Social insurance contribution:</span>
+        <span>${taxDetails.socialInsuranceContributionPercent}%</span>
     </div>
 </div>
 
 <br />
 
-<h3>Tax brackets - Residents</h3>
+<h3>Tax brackets</h3>
 <div class="list-group">
-    ${taxDetails.residents.taxBrackets.map((taxBracket) => taxBracketItemTemplate(taxBracket, formatter))}
-</div>
-
-<br />
-
-<h3>Tax brackets - Non-Residents</h3>
-<div class="list-group">
-    ${taxDetails.nonResidents.taxBrackets.map((taxBracket) => taxBracketItemTemplate(taxBracket, formatter))}
+    ${taxDetails.taxBrackets.map((taxBracket) => taxBracketItemTemplate(taxBracket, formatter))}
 </div>
 `;
 
-export { AustraliaTaxDetailsViewTemplate };
+export { CyprusTaxDetailsViewTemplate };

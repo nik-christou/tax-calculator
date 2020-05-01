@@ -79,7 +79,7 @@ export const TaxCalculatorAppCss = css`
         height: 100% !important;
     }
 
-    .country-options-leaving {
+    .tax-options-leaving {
         animation-delay: 0s;
         animation-duration: 0.3s;
         animation-name: slideOutLeft;
@@ -88,7 +88,7 @@ export const TaxCalculatorAppCss = css`
         height: 100% !important;
     }
 
-    .country-options-entering {
+    .tax-options-entering {
         animation-delay: 0s;
         animation-duration: 0.3s;
         animation-name: slideInRight;

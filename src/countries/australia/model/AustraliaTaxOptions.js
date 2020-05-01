@@ -1,8 +1,8 @@
-import { CountryOptions } from "../../../model/CountryOptions.js";
+import { TaxOptions } from "../../../model/TaxOptions.js";
 
 const COUNTRY_ID = 2;
 
-export class AustraliaOptions extends CountryOptions {
+export class AustraliaOptions extends TaxOptions {
 
     /**
      * @param {Boolean} isResident

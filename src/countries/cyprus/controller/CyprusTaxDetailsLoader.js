@@ -1,7 +1,7 @@
-import { CyprusTaxDetails } from "../entity/CyprusTaxDetails.js";
-import { CyprusTaxBracket } from "../entity/CyprusTaxBracket.js";
+import { CyprusTaxDetails } from "../model/CyprusTaxDetails.js";
+import { CyprusTaxBracket } from "../model/CyprusTaxBracket.js";
 
-export class CyprusTaxLoader {
+export class CyprusTaxDetailsLoader {
 
     /**
      * @param {Object} jsonData

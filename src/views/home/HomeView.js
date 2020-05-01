@@ -85,11 +85,20 @@ export class HomeView extends BaseElementMixin(LitElement) {
     }
 
     /**
-     * @param {SalaryType} salaryPeriod
+     * @param {Object} salaryPeriod
      */
     _updateSelectedSalaryPeriod(salaryPeriod) {
         if(!salaryPeriod) return;
-        this.selectedPeriod = salaryPeriod;
+
+        let salaryType = SalaryTypes.ANNUAL;
+
+        if(salaryPeriod.id === SalaryTypes.ANNUAL.id) {
+            salaryType = SalaryTypes.ANNUAL;
+        } else {
+            salaryType = SalaryTypes.MONTHLY;
+        }
+
+        this.selectedPeriod = salaryType;
         this._updateSelectedSalaryTypeLinks();
     }
 

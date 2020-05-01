@@ -1,16 +1,16 @@
 import { LitElement } from "lit-element";
 import { BaseElementMixin } from "../../../base/BaseElementMixin.js";
-import { AustraliaOptionsViewCss } from "./AustraliaOptionsViewCss.js";
-import { AustraliaOptionsViewTemplate } from "./AustraliaOptionsViewTemplate.js";
+import { AustraliaTaxOptionsViewCss } from "./AustraliaTaxOptionsViewCss.js";
+import { AustraliaTaxOptionsViewTemplate } from "./AustraliaTaxOptionsViewTemplate.js";
 import { SwitchCss } from "../../../base/SwitchCss.js";
 import { ListGroupCss } from "../../../base/ListGroupCss.js";
 import { BlueprintCss } from "../../../base/BlueprintCss.js";
-import { AustraliaOptions } from "../entity/AustraliaOptions.js";
+import { AustraliaOptions } from "../model/AustraliaTaxOptions.js";
 import { UserSelectionStore } from "../../../datastore/UserSelectionStore.js";
 
 const COUNTRY_ID = 2;
 
-export class AustraliaOptionsView extends BaseElementMixin(LitElement) {
+export class AustraliaTaxOptionsView extends BaseElementMixin(LitElement) {
 
     static get properties() {
         return {
@@ -24,12 +24,12 @@ export class AustraliaOptionsView extends BaseElementMixin(LitElement) {
             BlueprintCss,
             ListGroupCss,
             SwitchCss,
-            AustraliaOptionsViewCss
+            AustraliaTaxOptionsViewCss
         ];
     }
 
     render() {
-        return AustraliaOptionsViewTemplate(this.australiaOptions);
+        return AustraliaTaxOptionsViewTemplate(this.australiaOptions);
     }
 
     constructor() {
@@ -45,6 +45,7 @@ export class AustraliaOptionsView extends BaseElementMixin(LitElement) {
     _loadUserSelectionFromDatastore() {
 
         UserSelectionStore.retrieveCountryOptionByCountryId(COUNTRY_ID).then(countryOptions => {
+            
             if(!countryOptions || countryOptions.countryId !== COUNTRY_ID) return;
             this.australiaOptions = AustraliaOptions.createFromObject(countryOptions);
         });
@@ -67,4 +68,5 @@ export class AustraliaOptionsView extends BaseElementMixin(LitElement) {
     }
 }
 
-window.customElements.define("australia-options-view", AustraliaOptionsView);
+// @ts-ignore
+window.customElements.define("australia-tax-options-view", AustraliaTaxOptionsView);

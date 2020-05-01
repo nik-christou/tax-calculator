@@ -4,14 +4,14 @@ import { Country } from "../../model/Country.js";
 /**
  * @param {Country} selectedCountry
  */
-const countryOptionsTemplate = (selectedCountry) => {
+const taxOptionsTemplate = (selectedCountry) => {
 
-    if(selectedCountry && selectedCountry.options) {
+    if(selectedCountry && selectedCountry.additionalOptions) {
         return html`
-            <a href="/country-options" class="list-group-item list-group-item-action">
-                <div class="country-container">
+            <a href="/tax-options" class="list-group-item list-group-item-action">
+                <div class="tax-options-container">
                     <h5>Additional options:</h5>
-                    <div class="selected-country-container">
+                    <div class="tax-options-container-img">
                         <img class="right-chevron" src="/web_assets/img/right-chevron.png" alt="" />
                     </div>
                 </div>
@@ -29,9 +29,9 @@ const taxDetailsTemplate = (selectedCountry) => {
     if(selectedCountry) {
         return html`
             <a href="/tax-details" class="list-group-item list-group-item-action">
-                <div class="country-container">
+                <div class="tax-details-container">
                     <h5>Tax details:</h5>
-                    <div class="selected-country-container">
+                    <div class="tax-details-container-img">
                         <img class="right-chevron" src="/web_assets/img/right-chevron.png" alt="" />
                     </div>
                 </div>
@@ -87,7 +87,7 @@ const HomeViewTemplate = (selectedCountry, includesThirteen, grossAmount) => htm
                     </div>
                 </a>
                 ${taxDetailsTemplate(selectedCountry)}
-                ${countryOptionsTemplate(selectedCountry)}
+                ${taxOptionsTemplate(selectedCountry)}
             </div>
             <br />
             <h3>Salary</h3>

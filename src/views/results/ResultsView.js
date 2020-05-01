@@ -56,10 +56,6 @@ export class ResultsView extends BaseElementMixin(LitElement) {
         const grossAmount = await UserSelectionStore.retrieveGrossAmount();
         const includesThirteenOption = await UserSelectionStore.retrieveIncludesThirteenOption();
 
-        if (!selectedCountry || !selectedPeriodType || !grossAmount) {
-            return;
-        }
-
         this._updateCurrencyFormatter(selectedCountry);
 
         const selectedPeriod = selectedPeriodType.id === SalaryTypes.ANNUAL.id ?
@@ -67,7 +63,7 @@ export class ResultsView extends BaseElementMixin(LitElement) {
 
         const salaryDetails = new SalaryDetails(grossAmount, selectedPeriod, includesThirteenOption);
         const taxResults = await TaxProcessorDispatcher.dispatch(selectedCountry.id, salaryDetails);
-
+        
         this.taxResults = taxResults;
     }
 
