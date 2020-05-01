@@ -12,6 +12,10 @@ export const TaxDetailsViewCss = css`
     -webkit-transform: translate3d(0,0,0);
 }
 
+main {
+    background-color: #f2f2f2;
+}
+
 .main-container {
     display: block;
     min-height: 100vh;

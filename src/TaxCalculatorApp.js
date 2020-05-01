@@ -21,8 +21,8 @@ export class TaxCalculatorApp extends BaseElementMixin(LitElement) {
     constructor() {
         super();
         SWRegister.register();
-        DatabaseManager.resetDatabase();
-        // DatabaseManager.openConnection();
+        // DatabaseManager.resetDatabase();
+        DatabaseManager.openConnection();
     }
 
     firstUpdated() {

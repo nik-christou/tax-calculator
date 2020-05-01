@@ -75,7 +75,7 @@ const HomeViewTemplate = (selectedCountry, includesThirteen, grossAmount) => htm
             </div>
         </nav-bar>
         <div class="main-container">
-            <h3>Location</h3>
+            
             <div class="list-group">
                 <a href="/country-selection" class="list-group-item list-group-item-action">
                     <div class="country-container">
@@ -90,18 +90,25 @@ const HomeViewTemplate = (selectedCountry, includesThirteen, grossAmount) => htm
                 ${taxOptionsTemplate(selectedCountry)}
             </div>
             <br />
-            <h3>Salary</h3>
+            
             <div class="list-group">
                 <div class="list-group-item">
                     <div class="salary-input-container">
-                        <h5>Amount:</h5>
+                        <h5>Salary:</h5>
                         <div class="salary-input-group">
                             <input type="number" id="grossAmountInput" .value=${grossAmount} min="0" class="form-control salary-input" placeholder="gross amount" />
-                            <div class="thirteen-input-group">
-                                <input type="checkbox" ?checked="${includesThirteen}" id="includesThirteen" class="switch" name="includesThirteen" />
-                                <label for="includesThirteen">Includes 13th salary</label>
-                            </div>
+                            
                         </div>
+                    </div>
+                </div>
+                <div class="list-group-item">
+                    <div class="salary-type-container">
+                        <h5>Includes 13th:</h5>
+                        <ul class="list-group list-group-horizontal">
+                            <div>
+                                <input type="checkbox" ?checked="${includesThirteen}" id="includesThirteen" class="switch" name="includesThirteen" />
+                            </div>
+                        </ul>
                     </div>
                 </div>
                 <div class="list-group-item">

@@ -4,6 +4,7 @@ import { ResultsViewTemplate } from "./ResultsViewTemplate.js";
 import { BlueprintCss } from "../../base/BlueprintCss.js";
 import { ResultsViewCss } from "./ResultsViewCss.js";
 import { TableCss } from "../../base/TableCss.js";
+import { ListGroupCss } from "../../base/ListGroupCss.js";
 import { TaxResults } from "../../model/TaxResults.js";
 import { TaxResult } from "../../model/TaxResult.js";
 import { SalaryDetails } from "../../model/SalaryDetails.js";
@@ -25,6 +26,7 @@ export class ResultsView extends BaseElementMixin(LitElement) {
         return [
             ...super.styles,
             TableCss,
+            ListGroupCss,
             BlueprintCss,
             ResultsViewCss
         ];
@@ -55,6 +57,8 @@ export class ResultsView extends BaseElementMixin(LitElement) {
         const selectedPeriodType = await UserSelectionStore.retrieveSalaryType();
         const grossAmount = await UserSelectionStore.retrieveGrossAmount();
         const includesThirteenOption = await UserSelectionStore.retrieveIncludesThirteenOption();
+
+        if(!selectedCountry || !selectedPeriodType) return;
 
         this._updateCurrencyFormatter(selectedCountry);
 

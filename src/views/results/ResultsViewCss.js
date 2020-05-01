@@ -12,8 +12,13 @@ export const ResultsViewCss = css`
         -webkit-transform: translate3d(0,0,0);
     }
 
+    main {
+        background-color: #f2f2f2;
+    }
+
     .main-container {
         display: block;
+        min-height: 100vh;
         width: 100%;
         padding-left: 1em;
         padding-right: 1em;
@@ -36,5 +41,11 @@ export const ResultsViewCss = css`
         height: 100%;
         max-width: 32px;
         fill: #fff;
+    }
+
+    .result-item-container {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
     }
 `;

@@ -26,55 +26,77 @@ const ResultsViewTemplate = (taxResults, formatter) => html`
         </nav-bar>
         <div class="main-container" bp="grid 6@md">
             <div>
-                <h2>Annual</h2>
-                <table class="table">
-                    <tr>
-                        <td>Gross</td>
-                        <td>${formatAmount(formatter, taxResults.annualTaxResult.grossAmount)}</td>
-                    </tr>
-                    <tr>
-                        <td>Tax</td>
-                        <td>${formatAmount(formatter, taxResults.annualTaxResult.taxAmount)}</td>
-                    </tr>
-                    <tr>
-                        <td>Social</td>
-                        <td>${formatAmount(formatter, taxResults.annualTaxResult.socialAmount)}</td>
-                    </tr>
-                    <tr>
-                        <td>NHS (GESY)</td>
-                        <td>${formatAmount(formatter, taxResults.annualTaxResult.healthContributionAmount)}</td>
-                    </tr>
-                    <tr>
-                        <td>Net</td>
-                        <td>${formatAmount(formatter, taxResults.annualTaxResult.netAmount)}</td>
-                    </tr>
-                </table>
+                <h3>Annual</h3>
+                <div class="list-group">
+                    <div class="list-group-item">
+                        <div class="result-item-container">
+                            <h5>Gross:</h5>
+                            <span>${formatAmount(formatter, taxResults.annualTaxResult.grossAmount)}</span>
+                        </div>
+                    </div>
+                    <div class="list-group-item">
+                        <div class="result-item-container">
+                            <h5>Tax:</h5>
+                            <span>${formatAmount(formatter, taxResults.annualTaxResult.taxAmount)}</span>
+                        </div>
+                    </div>
+                    <div class="list-group-item">
+                        <div class="result-item-container">
+                            <h5>Social:</h5>
+                            <span>${formatAmount(formatter, taxResults.annualTaxResult.socialAmount)}</span>
+                        </div>
+                    </div>
+                    <div class="list-group-item">
+                        <div class="result-item-container">
+                            <h5>NHS:</h5>
+                            <span>${formatAmount(formatter, taxResults.annualTaxResult.healthContributionAmount)}</span>
+                        </div>
+                    </div>
+                    <div class="list-group-item">
+                        <div class="result-item-container">
+                            <h5>Net:</h5>
+                            <span>${formatAmount(formatter, taxResults.annualTaxResult.netAmount)}</span>
+                        </div>
+                    </div>
+                </div>
             </div>
+            
             <div>
-                <h2>Monthly</h2>
-                <table class="table">
-                    <tr>
-                        <td>Gross</td>
-                        <td>${formatAmount(formatter, taxResults.monthlyTaxResult.grossAmount)}</td>
-                    </tr>
-                    <tr>
-                        <td>Tax</td>
-                        <td>${formatAmount(formatter, taxResults.monthlyTaxResult.taxAmount)}</td>
-                    </tr>
-                    <tr>
-                        <td>Social</td>
-                        <td>${formatAmount(formatter, taxResults.monthlyTaxResult.socialAmount)}</td>
-                    </tr>
-                    <tr>
-                        <td>NHS (GESY)</td>
-                        <td>${formatAmount(formatter, taxResults.monthlyTaxResult.healthContributionAmount)}</td>
-                    </tr>
-                    <tr>
-                        <td>Net</td>
-                        <td>${formatAmount(formatter, taxResults.monthlyTaxResult.netAmount)}</td>
-                    </tr>
-                </table>
+                <h3>Monthly</h3>
+                <div class="list-group">
+                    <div class="list-group-item">
+                        <div class="result-item-container">
+                            <h5>Gross:</h5>
+                            <span>${formatAmount(formatter, taxResults.monthlyTaxResult.grossAmount)}</span>
+                        </div>
+                    </div>
+                    <div class="list-group-item">
+                        <div class="result-item-container">
+                            <h5>Tax:</h5>
+                            <span>${formatAmount(formatter, taxResults.monthlyTaxResult.taxAmount)}</span>
+                        </div>
+                    </div>
+                    <div class="list-group-item">
+                        <div class="result-item-container">
+                            <h5>Social:</h5>
+                            <span>${formatAmount(formatter, taxResults.monthlyTaxResult.socialAmount)}</span>
+                        </div>
+                    </div>
+                    <div class="list-group-item">
+                        <div class="result-item-container">
+                            <h5>NHS:</h5>
+                            <span>${formatAmount(formatter, taxResults.monthlyTaxResult.healthContributionAmount)}</span>
+                        </div>
+                    </div>
+                    <div class="list-group-item">
+                        <div class="result-item-container">
+                            <h5>Net:</h5>
+                            <span>${formatAmount(formatter, taxResults.monthlyTaxResult.netAmount)}</span>
+                        </div>
+                    </div>
+                </div>
             </div>
+            <br />
         </div>
     </main>
 </div>
