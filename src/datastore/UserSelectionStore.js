@@ -110,22 +110,44 @@ export class UserSelectionStore {
     }
 
     /**
+     * Updates the Map of country options by adding
+     * the given country options object.
+     * Ovverides existing country options object.
+     * 
      * @param {CountryOptions} countryOptions
      */
     static async updateCountryOptions(countryOptions) {
         if(DatabaseManager.dbConnection) {
             const dbConnection = await DatabaseManager.dbConnection;
-            return dbConnection.put(STORE_NAME, countryOptions, "countryOptions");
+            let countryOptionsMap = await dbConnection.get(STORE_NAME, "countryOptions");
+
+            if(!countryOptionsMap) countryOptionsMap = new Map();
+
+            countryOptionsMap.set(countryOptions.countryId, countryOptions);
+            return dbConnection.put(STORE_NAME, countryOptionsMap, "countryOptions");
         }
     }
 
     /**
-     * @returns {Promise<CountryOptions>}
+     * @returns {Promise<Map<CountryOptions>>}
      */
-    static async retrieveCountryOptions() {
+    static async retrieveAllCountryOptions() {
         if(DatabaseManager.dbConnection) {
             const dbConnection = await DatabaseManager.dbConnection;
             return dbConnection.get(STORE_NAME, "countryOptions");
+        }
+    }
+
+    /**
+     * @param {Number} countryId
+     * @returns {Promise<CountryOptions>}
+     */
+    static async retrieveCountryOptionByCountryId(countryId) {
+        if(DatabaseManager.dbConnection) {
+            const dbConnection = await DatabaseManager.dbConnection;
+            const countryOptionsMap = await dbConnection.get(STORE_NAME, "countryOptions");
+            if(countryOptionsMap) return countryOptionsMap.get(countryId);
+            return Promise.resolve(null);
         }
     }
 }

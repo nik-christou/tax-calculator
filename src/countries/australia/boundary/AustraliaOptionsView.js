@@ -34,7 +34,6 @@ export class AustraliaOptionsView extends BaseElementMixin(LitElement) {
 
     constructor() {
         super();
-        this.countryId = 2;
         this.australiaOptions = new AustraliaOptions();
     }
 
@@ -45,7 +44,7 @@ export class AustraliaOptionsView extends BaseElementMixin(LitElement) {
 
     _loadUserSelectionFromDatastore() {
 
-        UserSelectionStore.retrieveCountryOptions().then(countryOptions => {
+        UserSelectionStore.retrieveCountryOptionByCountryId(COUNTRY_ID).then(countryOptions => {
             if(!countryOptions || countryOptions.countryId !== COUNTRY_ID) return;
             this.australiaOptions = AustraliaOptions.createFromObject(countryOptions);
         });
@@ -65,7 +64,6 @@ export class AustraliaOptionsView extends BaseElementMixin(LitElement) {
     _handleIsResidentChange(event, isResidentElement) {
         this.australiaOptions.isResident = isResidentElement.checked;
         UserSelectionStore.updateCountryOptions(this.australiaOptions);
-        console.log(this.australiaOptions);
     }
 }
 
