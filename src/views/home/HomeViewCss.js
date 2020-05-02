@@ -87,9 +87,24 @@ export const HomeViewCss = css`
         margin-top: 0;
     }
 
+    .thirteen-container {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        --toggle-round-label-width: 65px;
+        --toggle-round-label-height: 35px;
+        --toggle-round-label-background-color: #dddddd;
+        --toggle-round-label-background-color-before: #f1f1f1;
+        --toggle-round-label-background-color-before-checked: #4e7ac7;
+        --toggle-round-label-width-after: 33px;
+        --toggle-round-label-background-color-after: #ffffff;
+        --toggle-round-label-margin-left-after-checked: 30px;
+    }
+
     .salary-type-container {
         display: flex;
-        align-items: baseline;
+        align-items: center;
         justify-content: space-between;
     }
 
@@ -112,11 +127,6 @@ export const HomeViewCss = css`
         width: auto;
     }
 
-    .thirteen-input-group {
-        display: flex;
-        margin-top: 10px;
-    }
-
     .options-item {
         display: flex;
         align-items: center;
@@ -126,10 +136,6 @@ export const HomeViewCss = css`
     .options-item .resident-input-group {
         display: flex;
         margin-top: 10px;
-    }
-
-    .calculate-btn {
-        font-size: 1.5em;
     }
 
     .tax-details-container {
@@ -164,5 +170,9 @@ export const HomeViewCss = css`
     .tax-options-container .tax-options-container-img img.right-chevron {
         height: 20px;
         margin-left: 20px;
+    }
+
+    .calculate-btn {
+        font-size: 1.5em;
     }
 `;

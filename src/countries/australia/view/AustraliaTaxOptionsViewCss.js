@@ -6,6 +6,15 @@ export const AustraliaTaxOptionsViewCss = css`
     display: flex;
     align-items: center;
     justify-content: space-between;
+
+    --toggle-round-label-width: 65px;
+    --toggle-round-label-height: 35px;
+    --toggle-round-label-background-color: #dddddd;
+    --toggle-round-label-background-color-before: #f1f1f1;
+    --toggle-round-label-background-color-before-checked: #4e7ac7;
+    --toggle-round-label-width-after: 33px;
+    --toggle-round-label-background-color-after: #ffffff;
+    --toggle-round-label-margin-left-after-checked: 30px;
 }
 
 .options-item .title-container {

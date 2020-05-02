@@ -8,7 +8,7 @@ import { SalaryType } from "../../model/SalaryType.js";
 import { SalaryTypes } from "../../model/SalaryTypes.js";
 import { ListGroupCss } from "../../base/ListGroupCss.js";
 import { InputGroupCss } from "../../base/InputGroupCss.js";
-import { SwitchCss } from "../../base/SwitchCss.js";
+import { ToggleCss } from "../../base/ToggleCss.js";
 import { BlueprintCss } from "../../base/BlueprintCss.js";
 import { ButtonCss } from "../../base/ButtonCss.js";
 
@@ -31,7 +31,7 @@ export class HomeView extends BaseElementMixin(LitElement) {
             BlueprintCss,
             ListGroupCss,
             InputGroupCss,
-            SwitchCss,
+            ToggleCss,
             ButtonCss,
             HomeViewCss
         ];

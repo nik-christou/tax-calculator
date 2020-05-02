@@ -2,7 +2,7 @@ import { LitElement } from "lit-element";
 import { BaseElementMixin } from "../../../base/BaseElementMixin.js";
 import { AustraliaTaxOptionsViewCss } from "./AustraliaTaxOptionsViewCss.js";
 import { AustraliaTaxOptionsViewTemplate } from "./AustraliaTaxOptionsViewTemplate.js";
-import { SwitchCss } from "../../../base/SwitchCss.js";
+import { ToggleCss } from "../../../base/ToggleCss.js";
 import { ListGroupCss } from "../../../base/ListGroupCss.js";
 import { BlueprintCss } from "../../../base/BlueprintCss.js";
 import { AustraliaOptions } from "../model/AustraliaTaxOptions.js";
@@ -23,7 +23,7 @@ export class AustraliaTaxOptionsView extends BaseElementMixin(LitElement) {
             ...super.styles,
             BlueprintCss,
             ListGroupCss,
-            SwitchCss,
+            ToggleCss,
             AustraliaTaxOptionsViewCss
         ];
     }

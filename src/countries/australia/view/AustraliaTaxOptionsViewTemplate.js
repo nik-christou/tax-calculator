@@ -15,8 +15,9 @@ const AustraliaTaxOptionsViewTemplate = (australiaOptions) => html`
                 may have a visa to enter Australia, but are not a resident for tax purposes
                 </small>
             </div>
-            <div class="checkbox-input-group">
-                <input type="checkbox" ?checked="${australiaOptions.isResident}" id="resident" class="switch" name="resident" />
+            <div>
+                <input id="resident" type="checkbox" name="resident" ?checked="${australiaOptions.isResident}" class="toggle toggle-round cmn-toggle cmn-toggle-round">
+                <label for="resident"></label>
             </div>
         </div>
     </div>
