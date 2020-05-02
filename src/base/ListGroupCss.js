@@ -56,8 +56,8 @@ export const ListGroupCss = css`
     .list-group-item.active {
         z-index: 2;
         color: #fff;
-        background-color: #007bff;
-        border-color: #007bff;
+        background-color: var(--list-group-item-active-background-color, #007bff);
+        border-color: var(--list-group-item-active-border-color, #007bff);
     }
 
     .list-group-item + .list-group-item {

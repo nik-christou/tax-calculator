@@ -106,6 +106,8 @@ export const HomeViewCss = css`
         display: flex;
         align-items: center;
         justify-content: space-between;
+
+        --list-group-item-active-background-color: #4e7ac7;
     }
 
     .salary-type-container .salary-type-values {
@@ -174,5 +176,15 @@ export const HomeViewCss = css`
 
     .calculate-btn {
         font-size: 1.5em;
+        --btn-primary-background-color: #4e7ac7;
+        --btn-primary-border-color: #4e7ac7;
+        --btn-primary-background-color-hover: #0069d9;
+        --btn-primary-border-color-hover: #0062cc;
+        --btn-primary-background-color-focus: #0069d9;
+        --btn-primary-border-color-focus: #0062cc;
+        --btn-primary-background-color-disabled: #007bff;
+        --btn-primary-border-color-disabled: #007bff;
+        --btn-primary-background-color-active: #0062cc;
+        --btn-primary-border-color-active: #005cbf;
     }
 `;
