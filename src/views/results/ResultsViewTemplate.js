@@ -14,7 +14,7 @@ function formatAmount(formatter, amount) {
  * @param {Intl.NumberFormat} formatter
  */
 const ResultsViewTemplate = (taxResults, formatter) => html`
-<div bp="grid">
+<div bp="grid" class="main-grid">
     <main bp="12">
         <nav-bar bp="12">
             <a href="#" slot="left" class="nav-back">
@@ -24,7 +24,7 @@ const ResultsViewTemplate = (taxResults, formatter) => html`
                 Home
             </a>
         </nav-bar>
-        <div class="main-container" bp="grid 6@md">
+        <div class="main-container" bp="grid 12@md">
             <div>
                 <h3>Annual</h3>
                 <div class="list-group">

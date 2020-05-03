@@ -37,16 +37,10 @@ const AustraliaTaxDetailsViewTemplate = (taxDetails, formatter) => html`
         <span>${taxDetails.residents.medicarePercent}%</span>
     </div>
 </div>
-
-<br />
-
 <h3>Tax brackets - Residents</h3>
 <div class="list-group">
     ${taxDetails.residents.taxBrackets.map((taxBracket) => taxBracketItemTemplate(taxBracket, formatter))}
 </div>
-
-<br />
-
 <h3>Tax brackets - Non-Residents</h3>
 <div class="list-group">
     ${taxDetails.nonResidents.taxBrackets.map((taxBracket) => taxBracketItemTemplate(taxBracket, formatter))}

@@ -4,7 +4,7 @@ import { html, TemplateResult } from "lit-element";
  * @param {TemplateResult} viewTemplate
  */
 const TaxOptionsViewTemplate = (viewTemplate) => html`
-<div bp="grid">
+<div bp="grid" class="main-grid">
     <main bp="12">
         <nav-bar bp="12">
             <a href="#" slot="left" class="nav-back">
@@ -14,7 +14,7 @@ const TaxOptionsViewTemplate = (viewTemplate) => html`
                 Home
             </a>
         </nav-bar>
-        <div class="main-container">
+        <div class="main-container" bp="12">
             ${viewTemplate}
         </div>
     </main>

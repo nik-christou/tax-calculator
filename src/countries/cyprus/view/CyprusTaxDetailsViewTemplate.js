@@ -41,9 +41,6 @@ const CyprusTaxDetailsViewTemplate = (taxDetails, formatter) => html`
         <span>${taxDetails.socialInsuranceContributionPercent}%</span>
     </div>
 </div>
-
-<br />
-
 <h3>Tax brackets</h3>
 <div class="list-group">
     ${taxDetails.taxBrackets.map((taxBracket) => taxBracketItemTemplate(taxBracket, formatter))}

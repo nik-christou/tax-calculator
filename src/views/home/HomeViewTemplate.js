@@ -74,7 +74,7 @@ const HomeViewTemplate = (selectedCountry, includesThirteen, grossAmount) => htm
                 Salary Tax Calculator
             </div>
         </nav-bar>
-        <div class="main-container">
+        <div class="main-container" bp="12">
             
             <div class="list-group">
                 <a href="/country-selection" class="list-group-item list-group-item-action">

@@ -8,7 +8,7 @@ import { TaxDetailsViewTemplateLoader } from "./TaxDetailsViewTemplateLoader.js"
  * @param {Intl.NumberFormat} formatter
  */
 const TaxDetailsViewTemplate = (country, taxDetails, formatter) => html`
-<div bp="grid">
+<div bp="grid" class="main-grid">
     <main bp="12">
         <nav-bar bp="12">
             <a href="#" slot="left" class="nav-back">
@@ -18,9 +18,10 @@ const TaxDetailsViewTemplate = (country, taxDetails, formatter) => html`
                 Home
             </a>
         </nav-bar>
-        <div class="main-container">
+        <div class="main-container" bp="12">
             ${TaxDetailsViewTemplateLoader._getCountryTaxDetailsViewTemplate(country, taxDetails, formatter)}
         </div>
+        <br />
     </main>
 </div>
 `;

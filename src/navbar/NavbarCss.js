@@ -1,11 +1,7 @@
 import { css } from "lit-element";
 
 export const NavbarCss = css`
-
-    :host {
-        margin-bottom: 10px;
-    }
-
+    
     :host([sticky]) {
         position: fixed;
         z-index: 100;

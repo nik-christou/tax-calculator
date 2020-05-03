@@ -50,7 +50,7 @@ const CountrySelectionViewTemplate = (countries, selectedId, handleSelectedCount
                 Home
             </a>
         </nav-bar>
-        <div class="main-container">
+        <div class="main-container" bp="12">
             <div class="list-group">
                 ${countries.map((country) => html`${countryItemTemplate(country, selectedId, handleSelectedCountry)}`)}
             </div>

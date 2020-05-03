@@ -14,12 +14,11 @@ export const CountrySelectionViewCss = css`
 
     main {
         background-color: #f2f2f2;
+        height: 100vh;
     }
 
     .main-container {
-        display: block;
-        min-height: 100vh;
-        width: 100%;
+        padding-top: 10px;
         padding-left: 1em;
         padding-right: 1em;
     }
