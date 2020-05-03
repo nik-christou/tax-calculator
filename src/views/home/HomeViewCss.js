@@ -12,6 +12,35 @@ export const HomeViewCss = css`
     -webkit-transform: translate3d(0,0,0);
 }
 
+.navbar {
+    display: flex;
+    flex-direction: row;
+    line-height: 2.4em;
+    overflow: hidden;
+    background-color: #4e7ac7;
+    color: #fff;
+    margin-bottom: 0px;
+    box-shadow: rgba(0, 0, 0, 0.2) 0px 1px 2px;
+}
+
+.navbar .title {
+    display: flex;
+    height: 100%;
+    width: 100%;
+    min-width: max-content;
+    font-size: 1.4em;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    line-height: 1.5;
+    padding-top: 0.7em;
+    padding-bottom: 0.7em;
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+    border-width: 0px;
+    text-decoration: none;
+}
+
 main {
     background-color: #f2f2f2;
     height: 100vh;
@@ -29,24 +58,6 @@ main {
     margin-right: 10px;
     float: left;
     border-style: none;
-}
-
-.title {
-    display: flex;
-    height: 100%;
-    width: 100%;
-    min-width: max-content;
-    font-size: 1.4em;
-    align-items: center;
-    justify-content: center;
-    color: #fff;
-    line-height: 1.5;
-    padding-top: 1em;
-    padding-bottom: 1em;
-    padding-left: 0.5em;
-    padding-right: 0.5em;
-    border-width: 0px;
-    text-decoration: none;
 }
 
 .country-container {

@@ -17,36 +17,59 @@ export const TaxDetailsViewCss = css`
     min-height: 100vh;
 }
 
-.main-container {
-    padding-top: 10px;
-    padding-left: 1em;
-    padding-right: 1em;
+.navbar {
+    line-height: 2.4em;
+    overflow: hidden;
+    background-color: #4e7ac7;
+    color: #fff;
+    margin-bottom: 0px;
+    box-shadow: rgba(0, 0, 0, 0.2) 0px 1px 2px;
+    padding-top: 0.7em;
+    padding-bottom: 0.7em;
+    padding-left: 0.5em;
+    padding-right: 0.5em;
 }
 
-.nav-back {
+.navbar .nav-back {
     display: flex;
+    align-items: center;
     cursor: pointer;
     user-select: none;
     -webkit-tap-highlight-color: transparent;
     font-size: 1.4em;
     color: #fff;
     line-height: 1.5;
-    padding-top: 1em;
-    padding-bottom: 1em;
-    padding-left: 0.5em;
-    padding-right: 0.5em;
     text-decoration: none;
 }
 
-.nav-back:focus {
+.navbar .nav-back:focus {
     outline: none;
 }
 
-.nav-back .icon-chevron-left {
-    width: 100%;
-    height: 100%;
-    max-width: 32px;
+.navbar .nav-back .icon-chevron-left {
+    max-height: 32px;
+    max-width: 25px;
     fill: #fff;
+}
+
+.navbar .title {
+    display: flex;
+    height: 100%;
+    width: 100%;
+    min-width: max-content;
+    font-size: 1.4em;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    line-height: 1.5;
+    border-width: 0px;
+    text-decoration: none;
+}
+
+.main-container {
+    padding-top: 10px;
+    padding-left: 1em;
+    padding-right: 1em;
 }
 
 .contribution-item {

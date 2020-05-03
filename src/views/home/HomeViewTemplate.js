@@ -68,12 +68,12 @@ const countryInfoTemplate = (selectedCountry) => {
 const HomeViewTemplate = (selectedCountry, includesThirteen, grossAmount) => html`
 <div bp="grid">
     <main bp="12">
-        <nav-bar bp="12">
-            <div slot="center" class="title">
+        <div class="navbar">
+            <div class="title">
                 <img src="/web_assets/img/logo.svg" alt="" class="logo" />
                 Salary Tax Calculator
             </div>
-        </nav-bar>
+        </div>
         <div class="main-container" bp="12">
             
             <div class="list-group">

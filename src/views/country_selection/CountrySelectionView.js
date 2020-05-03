@@ -8,8 +8,6 @@ import { ListGroupCss } from "../../base/ListGroupCss.js";
 import { CountrySelectionViewCss } from "./CountrySelectionViewCss.js";
 import { BlueprintCss } from "../../base/BlueprintCss.js";
 
-import "../../navbar/Navbar.js";
-
 export class CountrySelectionView extends BaseElementMixin(LitElement) {
 
     static get properties() {

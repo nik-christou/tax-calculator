@@ -1,4 +1,4 @@
-import { LitElement, html } from "lit-element";
+import { LitElement } from "lit-element";
 import { BaseElementMixin } from "../../base/BaseElementMixin.js";
 import { HomeViewTemplate } from "./HomeViewTemplate.js";
 import { UserSelectionStore } from "../../datastore/UserSelectionStore.js";
@@ -11,8 +11,6 @@ import { InputGroupCss } from "../../base/InputGroupCss.js";
 import { ToggleCss } from "../../base/ToggleCss.js";
 import { BlueprintCss } from "../../base/BlueprintCss.js";
 import { ButtonCss } from "../../base/ButtonCss.js";
-
-import "../../navbar/Navbar.js";
 
 export class HomeView extends BaseElementMixin(LitElement) {
 
