@@ -63,7 +63,7 @@ const countryInfoTemplate = (selectedCountry) => {
 /**
  * @param {Country} selectedCountry
  * @param {Boolean} includesThirteen
- * @param {Number} grossAmount
+ * @param {String} grossAmount
  */
 const HomeViewTemplate = (selectedCountry, includesThirteen, grossAmount) => html`
 <div bp="grid">
@@ -96,7 +96,14 @@ const HomeViewTemplate = (selectedCountry, includesThirteen, grossAmount) => htm
                     <div class="salary-input-container">
                         <h5>Salary:</h5>
                         <div class="salary-input-group">
-                            <input type="number" id="grossAmountInput" .value=${grossAmount} min="0" class="form-control salary-input" placeholder="gross amount" />
+                        <input 
+                            inputmode="numeric" 
+                            pattern="[0-9]*"
+                            type="text"
+                            id="grossAmountInput" 
+                            .value=${grossAmount}
+                            class="form-control salary-input" 
+                            placeholder="enter gross amount" />
                         </div>
                     </div>
                 </div>

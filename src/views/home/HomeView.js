@@ -18,8 +18,9 @@ export class HomeView extends BaseElementMixin(LitElement) {
         return {
             selectedCountry: Country,
             selectedPeriod: SalaryType,
-            grossAmount: Number,
-            includesThirteen: Boolean
+            grossAmount: String,
+            includesThirteen: Boolean,
+            formatter: Intl.NumberFormat
         };
     }
 
@@ -44,9 +45,11 @@ export class HomeView extends BaseElementMixin(LitElement) {
 
     constructor() {
         super();
+        this.grossAmount = "";
         this.selectedCountry = null;
         this.selectedPeriod = SalaryTypes.ANNUAL;
         this.includesThirteen = true;
+        this.formatter = new Intl.NumberFormat();
     }
 
     firstUpdated() {
@@ -61,7 +64,9 @@ export class HomeView extends BaseElementMixin(LitElement) {
     async _loadUserSelectionFromDatastore() {
 
         UserSelectionStore.retrieveCountry().then(selectedCountry => {
-            if(selectedCountry) this.selectedCountry = selectedCountry;
+            if(!selectedCountry) return;
+            this.selectedCountry = selectedCountry;
+            this._updateCurrencyFormatter(selectedCountry);
         });
 
         UserSelectionStore.retrieveSalaryType().then(selectedPeriod => {
@@ -72,9 +77,13 @@ export class HomeView extends BaseElementMixin(LitElement) {
                 this._updateSelectedSalaryPeriod(SalaryTypes.MONTHLY);
             }
         });
-
+        
         UserSelectionStore.retrieveGrossAmount().then(grossAmount => {
-            this.grossAmount = grossAmount;
+            if(!grossAmount) {
+                this.grossAmount = this.formatter.format(0);
+                return;
+            };
+            this.grossAmount = this.formatter.format(grossAmount);
         });
 
         UserSelectionStore.retrieveIncludesThirteenOption().then(includesThirteenOption => {
@@ -115,8 +124,18 @@ export class HomeView extends BaseElementMixin(LitElement) {
 
     _addGrossAmountInputListener() {
         const grossAmountElement = this.shadowRoot.querySelector("input#grossAmountInput");
+
         grossAmountElement.addEventListener("input", event => {
             this._handleGrossAmountChange(event, grossAmountElement);
+        });
+
+        // close numpad/keyboard on mobile browsers
+        grossAmountElement.addEventListener("keyup", event => {
+            this._handleGrossAmountEnterKey(event, grossAmountElement);
+        });
+
+        grossAmountElement.addEventListener("blur", event => {
+            this._handleGrossAmountBlur(event, grossAmountElement);
         });
     }
 
@@ -162,8 +181,85 @@ export class HomeView extends BaseElementMixin(LitElement) {
      * @param {HTMLInputElement} grossAmountElement
      */
     _handleGrossAmountChange(event, grossAmountElement) {
-        this.grossAmount = Number(grossAmountElement.value);
-        UserSelectionStore.updateGrossAmount(this.grossAmount);
+        
+        // convert from formatted salary value into a un-formatted value
+        const sanitizedAmount = this._sanitizeSalaryAmount(grossAmountElement.value);
+        // console.log("sanitizedAmount: "+sanitizedAmount);
+
+        let unformattedAmount = Number(sanitizedAmount);
+
+        if(!unformattedAmount) unformattedAmount = 0.00;
+
+        // console.log("unformattedAmount: "+unformattedAmount);
+
+        // update datastore
+        UserSelectionStore.updateGrossAmount(unformattedAmount);
+
+        // update property
+        this.grossAmount = this.formatter.format(unformattedAmount);
+        // console.log("this.grossAmount: "+this.grossAmount);
+    }
+
+    /**
+     * @param {FocusEvent} event
+     * @param {HTMLInputElement} grossAmountElement
+     */
+    _handleGrossAmountBlur(event, grossAmountElement) {
+        console.log(this.grossAmount);
+        console.log(grossAmountElement.value);
+        grossAmountElement.value = this.grossAmount;
+        console.log(grossAmountElement.value);
+    }
+
+    /**
+     * @param {String} formattedSalaryAmount
+     */
+    _sanitizeSalaryAmount(formattedSalaryAmount) {
+
+        const {currencySymbol, decimalSymbol} = this._extractCurrencyAndDecimalSymbolFromLocale();
+
+        // use case is missing is when user has a dot in front of the number
+        // need to improve regular expression
+
+        // catch all characters except the decimal for the currency
+        const regularExpression = `[^0-9${decimalSymbol}]+`;
+
+        return formattedSalaryAmount
+            .replace(currencySymbol, "")
+            .replace(regularExpression, "");
+    }
+
+    _extractCurrencyAndDecimalSymbolFromLocale() {
+
+        // const dotDecimalSymbol = ".";
+        // const commaDesimalSymbol = ",";
+
+        // workaround to get the currency symbol for the country locale
+        const parts = this.formatter.formatToParts(3.50);
+        const currencySymbol = parts[0].value;
+        const decimalSymbol = parts[2].value;
+
+        // return the decimal symbol that we need to remove
+        // if country locale currency is using "." as decimal 
+        // then return "," and vice versa
+        // let decimalSymbol;
+        // if(parts[2].value === commaDesimalSymbol) {
+        //     decimalSymbol = dotDecimalSymbol;
+        // } else if(parts[2].value === dotDecimalSymbol) {
+        //     decimalSymbol = commaDesimalSymbol;
+        // }
+
+        return { currencySymbol, decimalSymbol};
+    }
+
+    /**
+     * @param {KeyboardEvent} event 
+     * @param {HTMLInputElement} grossAmountElement 
+     */
+    _handleGrossAmountEnterKey(event, grossAmountElement) {
+        if(event.keyCode !== 13) return;
+        event.preventDefault();
+        grossAmountElement.blur();
     }
 
     /**
@@ -179,6 +275,19 @@ export class HomeView extends BaseElementMixin(LitElement) {
         this.selectedPeriod = salaryType;
         this._updateSelectedSalaryTypeLinks();
         UserSelectionStore.updateSalaryType(salaryType);
+    }
+
+    /**
+     * @param {Country} selectedCountry
+     */
+    _updateCurrencyFormatter(selectedCountry) {
+        const formatter = new Intl.NumberFormat(selectedCountry.locale, {
+            style: "currency",
+            currency: selectedCountry.currency,
+            minimumFractionDigits: 2
+        });
+
+        this.formatter = formatter;
     }
 
     _updateSelectedSalaryTypeLinks() {
@@ -212,4 +321,5 @@ export class HomeView extends BaseElementMixin(LitElement) {
     }
 }
 
+// @ts-ignore
 window.customElements.define("home-view", HomeView);

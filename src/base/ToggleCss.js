@@ -11,6 +11,8 @@ export const ToggleCss = css`
     position: relative;
     outline: none;
     user-select: none;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
 }
 
 .toggle-round + label {

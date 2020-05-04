@@ -139,6 +139,10 @@ main {
     width: auto;
 }
 
+.salary-input-group .salary-input:focus {
+    outline-color: #4e7ac7;
+}
+
 .options-item {
     display: flex;
     align-items: center;
