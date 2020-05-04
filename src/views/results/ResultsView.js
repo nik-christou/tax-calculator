@@ -1,14 +1,15 @@
-import { LitElement, html } from "lit-element";
+import { LitElement } from "lit-element";
 import { BaseElementMixin } from "../../base/BaseElementMixin.js";
 import { ResultsViewTemplate } from "./ResultsViewTemplate.js";
 import { BlueprintCss } from "../../base/BlueprintCss.js";
 import { ResultsViewCss } from "./ResultsViewCss.js";
 import { TableCss } from "../../base/TableCss.js";
+import { ListGroupCss } from "../../base/ListGroupCss.js";
 import { TaxResults } from "../../model/TaxResults.js";
 import { TaxResult } from "../../model/TaxResult.js";
 import { SalaryDetails } from "../../model/SalaryDetails.js";
 import { TaxProcessorDispatcher } from "./TaxProcessorDispatcher.js";
-import UserSelectionStore from "../../datastore/UserSelectionStore.js";
+import { UserSelectionStore } from "../../datastore/UserSelectionStore.js";
 import { Country } from "../../model/Country.js";
 import { SalaryTypes } from "../../model/SalaryTypes.js";
 
@@ -25,6 +26,7 @@ export class ResultsView extends BaseElementMixin(LitElement) {
         return [
             ...super.styles,
             TableCss,
+            ListGroupCss,
             BlueprintCss,
             ResultsViewCss
         ];
@@ -56,9 +58,7 @@ export class ResultsView extends BaseElementMixin(LitElement) {
         const grossAmount = await UserSelectionStore.retrieveGrossAmount();
         const includesThirteenOption = await UserSelectionStore.retrieveIncludesThirteenOption();
 
-        if (!selectedCountry || !selectedPeriodType || !grossAmount) {
-            return;
-        }
+        if(!selectedCountry || !selectedPeriodType) return;
 
         this._updateCurrencyFormatter(selectedCountry);
 
@@ -67,7 +67,7 @@ export class ResultsView extends BaseElementMixin(LitElement) {
 
         const salaryDetails = new SalaryDetails(grossAmount, selectedPeriod, includesThirteenOption);
         const taxResults = await TaxProcessorDispatcher.dispatch(selectedCountry.id, salaryDetails);
-
+        
         this.taxResults = taxResults;
     }
 

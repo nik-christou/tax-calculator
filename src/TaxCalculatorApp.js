@@ -1,5 +1,6 @@
 import { LitElement, html } from "lit-element";
 import { BaseElementMixin } from "./base/BaseElementMixin.js";
+import { DatabaseManager } from "./datastore/DatabaseManager.js";
 import { TaxCalculatorAppCss } from "./TaxCalculatorAppCss.js";
 import { SWRegister } from "./SWRegister.js";
 import { Router } from '@vaadin/router';
@@ -20,6 +21,8 @@ export class TaxCalculatorApp extends BaseElementMixin(LitElement) {
     constructor() {
         super();
         SWRegister.register();
+        // DatabaseManager.resetDatabase();
+        DatabaseManager.openConnection();
     }
 
     firstUpdated() {
@@ -33,4 +36,5 @@ export class TaxCalculatorApp extends BaseElementMixin(LitElement) {
     }
 }
 
+// @ts-ignore
 window.customElements.define("tax-calculator-app", TaxCalculatorApp);

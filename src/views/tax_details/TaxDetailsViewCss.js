@@ -1,6 +1,6 @@
 import { css } from "lit-element";
 
-export const ResultsViewCss = css`
+export const TaxDetailsViewCss = css`
 
 :host {
     will-change: transform, opacity;
@@ -72,7 +72,13 @@ export const ResultsViewCss = css`
     padding-right: 1em;
 }
 
-.result-item-container {
+.contribution-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.tax-bracket-item {
     display: flex;
     align-items: center;
     justify-content: space-between;

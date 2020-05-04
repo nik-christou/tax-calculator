@@ -1,4 +1,3 @@
-import { CountryOptions } from "./CountryOptions";
 
 export class Country {
     /**
@@ -7,22 +6,22 @@ export class Country {
      * @param {String} locale
      * @param {String} currency
      * @param {String} flag
-     * @param {CountryOptions} options
+     * @param {Boolean} additionalOptions
      */
-    constructor(id, name, locale, currency, flag, options) {
+    constructor(id, name, locale, currency, flag, additionalOptions) {
         this.id = id;
         this.name = name;
         this.locale = locale;
         this.currency = currency;
         this.flag = flag;
-        this.options = options;
+        this.additionalOptions = additionalOptions;
 
         Object.freeze(this.id);
         Object.freeze(this.name);
         Object.freeze(this.locale);
         Object.freeze(this.currency);
         Object.freeze(this.flag);
-        Object.freeze(this.options);
+        Object.freeze(this.additionalOptions);
         Object.freeze(this);
     }
 }

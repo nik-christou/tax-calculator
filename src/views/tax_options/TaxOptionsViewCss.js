@@ -1,6 +1,6 @@
 import { css } from "lit-element";
 
-export const ResultsViewCss = css`
+export const TaxOptionsViewCss = css`
 
 :host {
     will-change: transform, opacity;
@@ -72,9 +72,20 @@ export const ResultsViewCss = css`
     padding-right: 1em;
 }
 
-.result-item-container {
+.options-item {
     display: flex;
     align-items: center;
     justify-content: space-between;
 }
+
+.options-item .title-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.options-item .checkbox-input-group {
+    display: flex;
+    padding-left: 20px;
+}
+
 `;

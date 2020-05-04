@@ -1,6 +1,6 @@
 import { css } from "lit-element";
 
-export const ResultsViewCss = css`
+export const CountrySelectionViewCss = css`
 
 :host {
     will-change: transform, opacity;
@@ -12,9 +12,9 @@ export const ResultsViewCss = css`
     -webkit-transform: translate3d(0,0,0);
 }
 
-.main-grid {
+main {
     background-color: #f2f2f2;
-    min-height: 100vh;
+    height: 100vh;
 }
 
 .navbar {
@@ -46,7 +46,7 @@ export const ResultsViewCss = css`
     outline: none;
 }
 
-.navbar .nav-back .icon-chevron-left {
+.nav-back .icon-chevron-left {
     max-height: 32px;
     max-width: 25px;
     fill: #fff;
@@ -72,9 +72,39 @@ export const ResultsViewCss = css`
     padding-right: 1em;
 }
 
-.result-item-container {
+.country-item {
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+}
+
+.item-container {
     display: flex;
     align-items: center;
     justify-content: space-between;
+}
+
+.country-info {
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+}
+
+.country-info img {
+    height: 50px;
+}
+
+.country-info .item-info {
+    display: flex;
+    margin-left: 10px;
+    flex-direction: column;
+}
+
+.country-info .item-info h5 {
+    margin-top: 0;
+}
+
+img.check {
+    width: 25px;
+    height: 25px;
 }
 `;

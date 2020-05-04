@@ -1,14 +1,11 @@
-import DatabaseStore from "./DatabaseStore.js";
 import { Country } from "../model/Country.js";
 import { SalaryType } from "../model/SalaryType.js";
+import { DatabaseManager } from "./DatabaseManager.js";
+import { TaxOptions } from "../model/TaxOptions.js";
 
 const STORE_NAME = "user-selection-store";
 
-class _UserSelectionStore {
-
-    constructor() {
-        this.dbConnection = DatabaseStore.db;
-    }
+export class UserSelectionStore {
 
     /**
      * Updates selected country to store.
@@ -18,8 +15,11 @@ class _UserSelectionStore {
      *
      * @returns {Promise<IDBValidKey>}
      */
-    async updateCountry(country) {
-        return (await this.dbConnection).put(STORE_NAME, country, "selectedCountry");
+    static async updateCountry(country) {
+        if(DatabaseManager.dbConnection) {
+            const dbConnection = await DatabaseManager.dbConnection;
+            return dbConnection.put(STORE_NAME, country, "selectedCountry");
+        }
     }
 
     /**
@@ -27,8 +27,11 @@ class _UserSelectionStore {
      *
      * @returns {Promise<Country>}
      */
-    async retrieveCountry() {
-        return (await this.dbConnection).get(STORE_NAME, "selectedCountry");
+    static async retrieveCountry() {
+        if(DatabaseManager.dbConnection) {
+            const dbConnection = await DatabaseManager.dbConnection;
+            return dbConnection.get(STORE_NAME, "selectedCountry");
+        }
     }
 
     /**
@@ -37,8 +40,11 @@ class _UserSelectionStore {
      *
      * @param {SalaryType} salaryType
      */
-    async updateSalaryType(salaryType) {
-        return (await this.dbConnection).put(STORE_NAME, salaryType, "salaryType");
+    static async updateSalaryType(salaryType) {
+        if(DatabaseManager.dbConnection) {
+            const dbConnection = await DatabaseManager.dbConnection;
+            return dbConnection.put(STORE_NAME, salaryType, "salaryType");
+        }
     }
 
     /**
@@ -46,8 +52,11 @@ class _UserSelectionStore {
      *
      * @returns {Promise<SalaryType>}
      */
-    async retrieveSalaryType() {
-        return (await this.dbConnection).get(STORE_NAME, "salaryType");
+    static async retrieveSalaryType() {
+        if(DatabaseManager.dbConnection) {
+            const dbConnection = await DatabaseManager.dbConnection;
+            return dbConnection.get(STORE_NAME, "salaryType");
+        }
     }
 
     /**
@@ -56,8 +65,11 @@ class _UserSelectionStore {
      *
      * @param {Number} grossAmount
      */
-    async updateGrossAmount(grossAmount) {
-        return (await this.dbConnection).put(STORE_NAME, grossAmount, "grossAmount");
+    static async updateGrossAmount(grossAmount) {
+        if(DatabaseManager.dbConnection) {
+            const dbConnection = await DatabaseManager.dbConnection;
+            return dbConnection.put(STORE_NAME, grossAmount, "grossAmount");
+        }
     }
 
     /**
@@ -65,8 +77,11 @@ class _UserSelectionStore {
      *
      * @returns {Promise<Number>}
      */
-    async retrieveGrossAmount() {
-        return (await this.dbConnection).get(STORE_NAME, "grossAmount");
+    static async retrieveGrossAmount() {
+        if(DatabaseManager.dbConnection) {
+            const dbConnection = await DatabaseManager.dbConnection;
+            return dbConnection.get(STORE_NAME, "grossAmount");
+        }
     }
 
     /**
@@ -75,8 +90,11 @@ class _UserSelectionStore {
      *
      * @param {Boolean} includesThirteenOption
      */
-    async updateIncludesThirteenOption(includesThirteenOption) {
-        return (await this.dbConnection).put(STORE_NAME, includesThirteenOption, "includesThirteenOption");
+    static async updateIncludesThirteenOption(includesThirteenOption) {
+        if(DatabaseManager.dbConnection) {
+            const dbConnection = await DatabaseManager.dbConnection;
+            return dbConnection.put(STORE_NAME, includesThirteenOption, "includesThirteenOption");
+        }
     }
 
     /**
@@ -84,9 +102,52 @@ class _UserSelectionStore {
      *
      * @returns {Promise<Boolean>}
      */
-    async retrieveIncludesThirteenOption() {
-        return (await this.dbConnection).get(STORE_NAME, "includesThirteenOption");
+    static async retrieveIncludesThirteenOption() {
+        if(DatabaseManager.dbConnection) {
+            const dbConnection = await DatabaseManager.dbConnection;
+            return dbConnection.get(STORE_NAME, "includesThirteenOption");
+        }
+    }
+
+    /**
+     * Updates the Map of country options by adding
+     * the given country options object.
+     * Ovverides existing country options object.
+     * 
+     * @param {TaxOptions} countryOptions
+     */
+    static async updateCountryOptions(countryOptions) {
+        if(DatabaseManager.dbConnection) {
+            const dbConnection = await DatabaseManager.dbConnection;
+            let countryOptionsMap = await dbConnection.get(STORE_NAME, "countryOptions");
+
+            if(!countryOptionsMap) countryOptionsMap = new Map();
+
+            countryOptionsMap.set(countryOptions.countryId, countryOptions);
+            return dbConnection.put(STORE_NAME, countryOptionsMap, "countryOptions");
+        }
+    }
+
+    /**
+     * @returns {Promise<Map<TaxOptions>>}
+     */
+    static async retrieveAllCountryOptions() {
+        if(DatabaseManager.dbConnection) {
+            const dbConnection = await DatabaseManager.dbConnection;
+            return dbConnection.get(STORE_NAME, "countryOptions");
+        }
+    }
+
+    /**
+     * @param {Number} countryId
+     * @returns {Promise<TaxOptions>}
+     */
+    static async retrieveCountryOptionByCountryId(countryId) {
+        if(DatabaseManager.dbConnection) {
+            const dbConnection = await DatabaseManager.dbConnection;
+            const countryOptionsMap = await dbConnection.get(STORE_NAME, "countryOptions");
+            if(countryOptionsMap) return countryOptionsMap.get(countryId);
+            return Promise.resolve(null);
+        }
     }
 }
-
-export default new _UserSelectionStore();

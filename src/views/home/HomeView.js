@@ -1,18 +1,16 @@
-import { LitElement, html } from "lit-element";
+import { LitElement } from "lit-element";
 import { BaseElementMixin } from "../../base/BaseElementMixin.js";
-import { HomeViewCss } from "./HomeViewCss.js";
 import { HomeViewTemplate } from "./HomeViewTemplate.js";
+import { UserSelectionStore } from "../../datastore/UserSelectionStore.js";
+import { HomeViewCss } from "./HomeViewCss.js";
 import { Country } from "../../model/Country.js";
 import { SalaryType } from "../../model/SalaryType.js";
 import { SalaryTypes } from "../../model/SalaryTypes.js";
 import { ListGroupCss } from "../../base/ListGroupCss.js";
 import { InputGroupCss } from "../../base/InputGroupCss.js";
-import { SwitchCss } from "../../base/SwitchCss.js";
+import { ToggleCss } from "../../base/ToggleCss.js";
 import { BlueprintCss } from "../../base/BlueprintCss.js";
 import { ButtonCss } from "../../base/ButtonCss.js";
-import UserSelectionStore from "../../datastore/UserSelectionStore.js";
-
-import "../../navbar/Navbar.js";
 
 export class HomeView extends BaseElementMixin(LitElement) {
 
@@ -31,14 +29,17 @@ export class HomeView extends BaseElementMixin(LitElement) {
             BlueprintCss,
             ListGroupCss,
             InputGroupCss,
-            SwitchCss,
+            ToggleCss,
             ButtonCss,
             HomeViewCss
         ];
     }
 
     render() {
-        return html`${HomeViewTemplate(this.selectedCountry, this.includesThirteen, this.grossAmount)}`;
+        return HomeViewTemplate(
+            this.selectedCountry,
+            this.includesThirteen,
+            this.grossAmount);
     }
 
     constructor() {
@@ -52,13 +53,12 @@ export class HomeView extends BaseElementMixin(LitElement) {
         this._addSalaryTypeClickListeners();
         this._addGrossAmountInputListener();
         this._addIncludesThirteenInputListener();
-        this._addIncludesThirteenInputListener();
         this._addCalculateButtonListener();
         this._updateSelectedSalaryTypeLinks();
         this._loadUserSelectionFromDatastore();
     }
 
-    _loadUserSelectionFromDatastore() {
+    async _loadUserSelectionFromDatastore() {
 
         UserSelectionStore.retrieveCountry().then(selectedCountry => {
             if(selectedCountry) this.selectedCountry = selectedCountry;
@@ -83,11 +83,20 @@ export class HomeView extends BaseElementMixin(LitElement) {
     }
 
     /**
-     * @param {SalaryType} salaryPeriod
+     * @param {Object} salaryPeriod
      */
     _updateSelectedSalaryPeriod(salaryPeriod) {
         if(!salaryPeriod) return;
-        this.selectedPeriod = salaryPeriod;
+
+        let salaryType = SalaryTypes.ANNUAL;
+
+        if(salaryPeriod.id === SalaryTypes.ANNUAL.id) {
+            salaryType = SalaryTypes.ANNUAL;
+        } else {
+            salaryType = SalaryTypes.MONTHLY;
+        }
+
+        this.selectedPeriod = salaryType;
         this._updateSelectedSalaryTypeLinks();
     }
 
