@@ -37,7 +37,7 @@ export const ResultsViewCss = css`
     user-select: none;
     -webkit-tap-highlight-color: transparent;
     font-size: 1.4em;
-    color: #fff;
+    color: hsla(240, 100%, 100%, 0.7);
     line-height: 1.5;
     text-decoration: none;
 }
@@ -49,7 +49,7 @@ export const ResultsViewCss = css`
 .navbar .nav-back .icon-chevron-left {
     max-height: 32px;
     max-width: 25px;
-    fill: #fff;
+    fill: hsla(240, 100%, 100%, 0.7);
 }
 
 .navbar .title {
@@ -70,6 +70,16 @@ export const ResultsViewCss = css`
     padding-top: 10px;
     padding-left: 1em;
     padding-right: 1em;
+}
+
+.list-group-item:first-child {
+    border-top-left-radius: 1rem;
+    border-top-right-radius: 1rem;
+}
+
+.list-group-item:last-child {
+    border-bottom-right-radius: 1rem;
+    border-bottom-left-radius: 1rem;
 }
 
 .result-item-container {

@@ -2,6 +2,16 @@ import { css } from "lit-element";
 
 export const AustraliaTaxOptionsViewCss = css`
 
+.list-group-item:first-child {
+    border-top-left-radius: 1rem;
+    border-top-right-radius: 1rem;
+}
+
+.list-group-item:last-child {
+    border-bottom-right-radius: 1rem;
+    border-bottom-left-radius: 1rem;
+}
+
 .options-item {
     display: flex;
     align-items: center;

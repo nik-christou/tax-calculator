@@ -60,6 +60,21 @@ main {
     border-style: none;
 }
 
+.list-group-item:first-child {
+    border-top-left-radius: 1rem;
+    border-top-right-radius: 1rem;
+}
+
+.list-group-item:last-child {
+    border-bottom-right-radius: 1rem;
+    border-bottom-left-radius: 1rem;
+}
+
+.list-group-item.list-group-item-action {
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+}
+
 .country-container {
     display: flex;
     align-items: center;
@@ -116,30 +131,53 @@ main {
     display: flex;
     align-items: center;
     justify-content: space-between;
-
     --list-group-item-active-background-color: #4e7ac7;
 }
 
 .salary-type-container .salary-type-values {
     margin-top: 0;
+    width: 100%;
+    text-align: center;
+}
+
+.salary-type-container .item-label {
+    margin-right: 20px;
+}
+
+.salary-type-container .salary-type-values .list-group-item {
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.salary-type-container .salary-type-values #annual-salary-type {
+    border-bottom-left-radius: 1rem;
+    border-top-left-radius: 1rem;
+    padding: 0.6rem;
+}
+
+.salary-type-container .salary-type-values #monthly-salary-type {
+    border-top-right-radius: 1rem;
+    border-bottom-right-radius: 1rem;
+    padding: 0.6rem;
 }
 
 .salary-input-container {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    margin-top: 5px;
+    margin-bottom: 5px;
 }
 
-.salary-input-group {
-    display: flex;
-    flex-direction: column;
+.salary-input-container .item-label {
+    margin-right: 20px;
 }
 
-.salary-input-group .salary-input {
-    width: auto;
+.salary-input-container .salary-input {
+    width: 100;
 }
 
-.salary-input-group .salary-input:focus {
+.salary-input-container .salary-input:focus {
     outline-color: #4e7ac7;
 }
 
@@ -189,7 +227,8 @@ main {
 }
 
 .calculate-btn {
-    font-size: 1.5em;
+    --btn-font-size: 1.5em;
+    --btn-border-radius: 1em;
     --btn-primary-background-color: #4e7ac7;
     --btn-primary-border-color: #4e7ac7;
     --btn-primary-background-color-hover: #0069d9;

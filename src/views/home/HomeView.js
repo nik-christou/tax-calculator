@@ -80,7 +80,7 @@ export class HomeView extends BaseElementMixin(LitElement) {
         
         UserSelectionStore.retrieveGrossAmount().then(grossAmount => {
             if(!grossAmount) {
-                this.grossAmount = this.formatter.format(0);
+                this.grossAmount = "";
                 return;
             };
             this.grossAmount = this.formatter.format(grossAmount);
@@ -125,13 +125,13 @@ export class HomeView extends BaseElementMixin(LitElement) {
     _addGrossAmountInputListener() {
         const grossAmountElement = this.shadowRoot.querySelector("input#grossAmountInput");
 
-        grossAmountElement.addEventListener("input", event => {
-            this._handleGrossAmountChange(event, grossAmountElement);
-        });
-
         // close numpad/keyboard on mobile browsers
         grossAmountElement.addEventListener("keyup", event => {
             this._handleGrossAmountEnterKey(event, grossAmountElement);
+        });
+
+        grossAmountElement.addEventListener("focus", event => {
+            this._handleGrossAmountFocus(event, grossAmountElement);
         });
 
         grossAmountElement.addEventListener("blur", event => {
@@ -177,38 +177,63 @@ export class HomeView extends BaseElementMixin(LitElement) {
     }
 
     /**
-     * @param {Event} event
+     * @param {FocusEvent} event
      * @param {HTMLInputElement} grossAmountElement
      */
-    _handleGrossAmountChange(event, grossAmountElement) {
+    async _handleGrossAmountFocus(event, grossAmountElement) {
         
-        // convert from formatted salary value into a un-formatted value
+        if(grossAmountElement.value === "") {
+            return;
+        }
+
         const sanitizedAmount = this._sanitizeSalaryAmount(grossAmountElement.value);
-        // console.log("sanitizedAmount: "+sanitizedAmount);
+        const unformattedAmount = Number(sanitizedAmount);
 
-        let unformattedAmount = Number(sanitizedAmount);
+        if(!unformattedAmount) {
 
-        if(!unformattedAmount) unformattedAmount = 0.00;
+            const grossAmountFromStore = await UserSelectionStore.retrieveGrossAmount();
+            
+            if(!grossAmountFromStore) {
+                grossAmountElement.value = "";
+            }
 
-        // console.log("unformattedAmount: "+unformattedAmount);
+            grossAmountElement.value = `${grossAmountFromStore}`;
 
-        // update datastore
-        UserSelectionStore.updateGrossAmount(unformattedAmount);
+            return;
+        }
 
-        // update property
-        this.grossAmount = this.formatter.format(unformattedAmount);
-        // console.log("this.grossAmount: "+this.grossAmount);
+        grossAmountElement.value = `${unformattedAmount}`;
     }
 
     /**
      * @param {FocusEvent} event
      * @param {HTMLInputElement} grossAmountElement
      */
-    _handleGrossAmountBlur(event, grossAmountElement) {
-        console.log(this.grossAmount);
-        console.log(grossAmountElement.value);
+    async _handleGrossAmountBlur(event, grossAmountElement) {
+        
+        const sanitizedAmount = this._sanitizeSalaryAmount(grossAmountElement.value);
+        const unformattedAmount = Number(sanitizedAmount);
+        
+        if(!unformattedAmount) {
+
+            const grossAmountFromStore = await UserSelectionStore.retrieveGrossAmount();
+            
+            if(!grossAmountFromStore) {
+                this.grossAmount = this.formatter.format(0);
+                grossAmountElement.value = this.grossAmount;
+                return;
+            };
+            
+            this.grossAmount = this.formatter.format(grossAmountFromStore);
+            grossAmountElement.value = this.grossAmount;
+            
+            return;
+        }
+
+        UserSelectionStore.updateGrossAmount(unformattedAmount);
+
+        this.grossAmount = this.formatter.format(unformattedAmount);
         grossAmountElement.value = this.grossAmount;
-        console.log(grossAmountElement.value);
     }
 
     /**
@@ -218,12 +243,9 @@ export class HomeView extends BaseElementMixin(LitElement) {
 
         const {currencySymbol, decimalSymbol} = this._extractCurrencyAndDecimalSymbolFromLocale();
 
-        // use case is missing is when user has a dot in front of the number
-        // need to improve regular expression
-
-        // catch all characters except the decimal for the currency
-        const regularExpression = `[^0-9${decimalSymbol}]+`;
-
+        // match anything that does not match either number or the decimal character
+        const regularExpression = RegExp(`[^0-9${decimalSymbol}]+\g`);
+        
         return formattedSalaryAmount
             .replace(currencySymbol, "")
             .replace(regularExpression, "");
@@ -231,23 +253,23 @@ export class HomeView extends BaseElementMixin(LitElement) {
 
     _extractCurrencyAndDecimalSymbolFromLocale() {
 
-        // const dotDecimalSymbol = ".";
-        // const commaDesimalSymbol = ",";
+        const dotDecimalSymbol = ".";
+        const commaDesimalSymbol = ",";
 
         // workaround to get the currency symbol for the country locale
         const parts = this.formatter.formatToParts(3.50);
         const currencySymbol = parts[0].value;
-        const decimalSymbol = parts[2].value;
+        // const decimalSymbol = parts[2].value;
 
         // return the decimal symbol that we need to remove
         // if country locale currency is using "." as decimal 
         // then return "," and vice versa
-        // let decimalSymbol;
-        // if(parts[2].value === commaDesimalSymbol) {
-        //     decimalSymbol = dotDecimalSymbol;
-        // } else if(parts[2].value === dotDecimalSymbol) {
-        //     decimalSymbol = commaDesimalSymbol;
-        // }
+        let decimalSymbol;
+        if(parts[2].value === commaDesimalSymbol) {
+            decimalSymbol = dotDecimalSymbol;
+        } else if(parts[2].value === dotDecimalSymbol) {
+            decimalSymbol = commaDesimalSymbol;
+        }
 
         return { currencySymbol, decimalSymbol};
     }
