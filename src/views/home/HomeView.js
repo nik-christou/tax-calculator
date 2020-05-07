@@ -57,7 +57,6 @@ export class HomeView extends BaseElementMixin(LitElement) {
         this._addGrossAmountInputListener();
         this._addIncludesThirteenInputListener();
         this._addCalculateButtonListener();
-        this._updateSelectedSalaryTypeLinks();
         this._loadUserSelectionFromDatastore();
     }
 
@@ -82,10 +81,14 @@ export class HomeView extends BaseElementMixin(LitElement) {
         const selectedPeriod = await UserSelectionStore.retrieveSalaryType();
         if(!selectedPeriod) return;
         if(selectedPeriod.id === SalaryTypes.ANNUAL.id) {
-            this._updateSelectedSalaryPeriod(SalaryTypes.ANNUAL);
+            // this._updateSelectedSalaryPeriod(SalaryTypes.ANNUAL);
+            this.selectedPeriod = SalaryTypes.ANNUAL;
         } else {
-            this._updateSelectedSalaryPeriod(SalaryTypes.MONTHLY);
+            // this._updateSelectedSalaryPeriod(SalaryTypes.MONTHLY);
+            this.selectedPeriod = SalaryTypes.MONTHLY;
         }
+
+        this._updateSelectedSalaryTypeLinks();
     }
 
     async _loadGrossAmountFromStore() {
@@ -316,9 +319,7 @@ export class HomeView extends BaseElementMixin(LitElement) {
     _handleSelectedSalaryType(event, salaryType) {
 
         event.preventDefault();
-
-        if(this.selectedPeriod === salaryType) return;
-
+        
         this.selectedPeriod = salaryType;
         this._updateSelectedSalaryTypeLinks();
         UserSelectionStore.updateSalaryType(salaryType);
