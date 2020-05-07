@@ -49,7 +49,7 @@ export class HomeView extends BaseElementMixin(LitElement) {
         this.selectedCountry = null;
         this.selectedPeriod = SalaryTypes.ANNUAL;
         this.includesThirteen = true;
-        this.formatter = new Intl.NumberFormat();
+        this.formatter = null;
     }
 
     firstUpdated() {
@@ -63,32 +63,49 @@ export class HomeView extends BaseElementMixin(LitElement) {
 
     async _loadUserSelectionFromDatastore() {
 
-        UserSelectionStore.retrieveCountry().then(selectedCountry => {
-            if(!selectedCountry) return;
-            this.selectedCountry = selectedCountry;
-            this._updateCurrencyFormatter(selectedCountry);
-        });
+        await this._loadCountryFromStore();
+        await this._loadSelectedPeriodFromStore();
+        await this._loadGrossAmountFromStore();
+        await this._loadThirteenSalaryFromStore();
+    }
 
-        UserSelectionStore.retrieveSalaryType().then(selectedPeriod => {
-            if(!selectedPeriod) return;
-            if(selectedPeriod.id === SalaryTypes.ANNUAL.id) {
-                this._updateSelectedSalaryPeriod(SalaryTypes.ANNUAL);
-            } else {
-                this._updateSelectedSalaryPeriod(SalaryTypes.MONTHLY);
-            }
-        });
-        
-        UserSelectionStore.retrieveGrossAmount().then(grossAmount => {
-            if(!grossAmount) {
-                this.grossAmount = "";
-                return;
-            };
+    async _loadCountryFromStore() {
+
+        const selectedCountry = await UserSelectionStore.retrieveCountry();
+        if(!selectedCountry) return;
+        this.selectedCountry = selectedCountry;
+        this._updateCurrencyFormatter(selectedCountry);
+    }
+
+    async _loadSelectedPeriodFromStore() {
+
+        const selectedPeriod = await UserSelectionStore.retrieveSalaryType();
+        if(!selectedPeriod) return;
+        if(selectedPeriod.id === SalaryTypes.ANNUAL.id) {
+            this._updateSelectedSalaryPeriod(SalaryTypes.ANNUAL);
+        } else {
+            this._updateSelectedSalaryPeriod(SalaryTypes.MONTHLY);
+        }
+    }
+
+    async _loadGrossAmountFromStore() {
+
+        const grossAmount = await UserSelectionStore.retrieveGrossAmount();
+        if(!grossAmount) {
+            this.grossAmount = "";
+            return;
+        };
+
+        if(!this.formatter) {
+            this.grossAmount = `grossAmount`;
+        } else {
             this.grossAmount = this.formatter.format(grossAmount);
-        });
+        }
+    }
 
-        UserSelectionStore.retrieveIncludesThirteenOption().then(includesThirteenOption => {
-            this.includesThirteen = includesThirteenOption
-        });
+    async _loadThirteenSalaryFromStore() {
+        const includesThirteenOption = await UserSelectionStore.retrieveIncludesThirteenOption();
+        this.includesThirteen = includesThirteenOption;
     }
 
     /**
@@ -181,7 +198,7 @@ export class HomeView extends BaseElementMixin(LitElement) {
      * @param {HTMLInputElement} grossAmountElement
      */
     async _handleGrossAmountFocus(event, grossAmountElement) {
-        
+
         if(grossAmountElement.value === "") {
             return;
         }
@@ -192,7 +209,7 @@ export class HomeView extends BaseElementMixin(LitElement) {
         if(!unformattedAmount) {
 
             const grossAmountFromStore = await UserSelectionStore.retrieveGrossAmount();
-            
+
             if(!grossAmountFromStore) {
                 grossAmountElement.value = "";
             }
@@ -210,29 +227,34 @@ export class HomeView extends BaseElementMixin(LitElement) {
      * @param {HTMLInputElement} grossAmountElement
      */
     async _handleGrossAmountBlur(event, grossAmountElement) {
-        
+
         const sanitizedAmount = this._sanitizeSalaryAmount(grossAmountElement.value);
         const unformattedAmount = Number(sanitizedAmount);
-        
+
         if(!unformattedAmount) {
 
             const grossAmountFromStore = await UserSelectionStore.retrieveGrossAmount();
-            
+
             if(!grossAmountFromStore) {
                 this.grossAmount = this.formatter.format(0);
                 grossAmountElement.value = this.grossAmount;
                 return;
             };
-            
+
             this.grossAmount = this.formatter.format(grossAmountFromStore);
             grossAmountElement.value = this.grossAmount;
-            
+
             return;
         }
 
         UserSelectionStore.updateGrossAmount(unformattedAmount);
 
-        this.grossAmount = this.formatter.format(unformattedAmount);
+        if(!this.formatter) {
+            this.grossAmount = `${unformattedAmount}`;
+        } else {
+            this.grossAmount = this.formatter.format(unformattedAmount);
+        }
+
         grossAmountElement.value = this.grossAmount;
     }
 
@@ -241,11 +263,15 @@ export class HomeView extends BaseElementMixin(LitElement) {
      */
     _sanitizeSalaryAmount(formattedSalaryAmount) {
 
+        if(!this.formatter) {
+            return formattedSalaryAmount;
+        }
+
         const {currencySymbol, decimalSymbol} = this._extractCurrencyAndDecimalSymbolFromLocale();
 
         // match anything that does not match either number or the decimal character
         const regularExpression = RegExp(`[^0-9${decimalSymbol}]+\g`);
-        
+
         return formattedSalaryAmount
             .replace(currencySymbol, "")
             .replace(regularExpression, "");
@@ -259,10 +285,9 @@ export class HomeView extends BaseElementMixin(LitElement) {
         // workaround to get the currency symbol for the country locale
         const parts = this.formatter.formatToParts(3.50);
         const currencySymbol = parts[0].value;
-        // const decimalSymbol = parts[2].value;
 
         // return the decimal symbol that we need to remove
-        // if country locale currency is using "." as decimal 
+        // if country locale currency is using "." as decimal
         // then return "," and vice versa
         let decimalSymbol;
         if(parts[2].value === commaDesimalSymbol) {
@@ -275,8 +300,8 @@ export class HomeView extends BaseElementMixin(LitElement) {
     }
 
     /**
-     * @param {KeyboardEvent} event 
-     * @param {HTMLInputElement} grossAmountElement 
+     * @param {KeyboardEvent} event
+     * @param {HTMLInputElement} grossAmountElement
      */
     _handleGrossAmountEnterKey(event, grossAmountElement) {
         if(event.keyCode !== 13) return;

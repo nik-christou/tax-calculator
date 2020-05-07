@@ -44,7 +44,7 @@ export const HomeViewCss = css`
 main {
     background-color: #f2f2f2;
     height: 100vh;
-} 
+}
 
 .main-container {
     padding-top: 10px;
@@ -174,7 +174,12 @@ main {
 }
 
 .salary-input-container .salary-input {
-    width: 100;
+    width: 100%;
+}
+
+.salary-input-container .salary-input:invalid {
+    box-shadow: none;
+    -moz-box-shadow: none;
 }
 
 .salary-input-container .salary-input:focus {
