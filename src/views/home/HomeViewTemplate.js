@@ -63,7 +63,7 @@ const countryInfoTemplate = (selectedCountry) => {
 /**
  * @param {Country} selectedCountry
  * @param {Boolean} includesThirteen
- * @param {Number} grossAmount
+ * @param {String} grossAmount
  */
 const HomeViewTemplate = (selectedCountry, includesThirteen, grossAmount) => html`
 <div bp="grid">
@@ -94,28 +94,33 @@ const HomeViewTemplate = (selectedCountry, includesThirteen, grossAmount) => htm
             <div class="list-group">
                 <div class="list-group-item">
                     <div class="salary-input-container">
-                        <h5>Salary:</h5>
-                        <div class="salary-input-group">
-                            <input type="number" id="grossAmountInput" .value=${grossAmount} min="0" class="form-control salary-input" placeholder="gross amount" />
-                        </div>
-                    </div>
-                </div>
-                <div class="list-group-item">
-                    <div class="thirteen-container">
-                        <h5>Includes 13th:</h5>
-                        <div>
-                            <input id="includesThirteen" type="checkbox" name="includesThirteen" ?checked="${includesThirteen}" class="toggle toggle-round cmn-toggle cmn-toggle-round">
-                            <label for="includesThirteen"></label>
-                        </div>
+                        <h5 class="item-label">Salary:</h5>
+                        <input 
+                            inputmode="numeric" 
+                            pattern="[0-9]*"
+                            type="text"
+                            id="grossAmountInput" 
+                            .value=${grossAmount}
+                            class="form-control salary-input" 
+                            placeholder="enter gross amount" />
                     </div>
                 </div>
                 <div class="list-group-item">
                     <div class="salary-type-container">
-                        <h5>Period:</h5>
+                        <h5 class="item-label">Period:</h5>
                         <ul class="list-group list-group-horizontal salary-type-values">
                             <a id="annual-salary-type" class="list-group-item list-group-item-action">Annual</a>
                             <a id="monthly-salary-type" class="list-group-item list-group-item-action">Monthly</a>
                         </ul>
+                    </div>
+                </div>
+                <div class="list-group-item">
+                    <div class="thirteen-container">
+                        <h5 class="item-label">Includes 13th:</h5>
+                        <div>
+                            <input id="includesThirteen" type="checkbox" name="includesThirteen" ?checked="${includesThirteen}" class="toggle toggle-round cmn-toggle cmn-toggle-round">
+                            <label for="includesThirteen"></label>
+                        </div>
                     </div>
                 </div>
             </div>

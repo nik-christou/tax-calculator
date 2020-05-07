@@ -1185,7 +1185,7 @@ const defaultTemplateProcessor = new DefaultTemplateProcessor();
 // This line will be used in regexes to search for lit-html usage.
 // TODO(justinfagnani): inject version number at build time
 if (typeof window !== 'undefined') {
-    (window['litHtmlVersions'] || (window['litHtmlVersions'] = [])).push('1.2.0');
+    (window['litHtmlVersions'] || (window['litHtmlVersions'] = [])).push('1.2.1');
 }
 /**
  * Interprets a template literal as an HTML template that can efficiently
@@ -1198,4 +1198,4 @@ const html = (strings, ...values) => new TemplateResult(strings, values, 'html',
  */
 const svg = (strings, ...values) => new SVGTemplateResult(strings, values, 'svg', defaultTemplateProcessor);
 
-export { AttributeCommitter as A, BooleanAttributePart as B, DefaultTemplateProcessor as D, EventPart as E, NodePart as N, PropertyCommitter as P, SVGTemplateResult as S, TemplateInstance as T, directive as a, reparentNodes as b, nothing as c, defaultTemplateProcessor as d, AttributePart as e, isIterable as f, isPrimitive as g, html as h, isDirective as i, PropertyPart as j, render as k, templateFactory as l, TemplateResult as m, noChange as n, createMarker as o, parts as p, isTemplatePartActive as q, removeNodes as r, svg as s, templateCaches as t, Template as u, marker as v };
+export { AttributeCommitter as A, BooleanAttributePart as B, DefaultTemplateProcessor as D, EventPart as E, NodePart as N, PropertyCommitter as P, SVGTemplateResult as S, Template as T, TemplateInstance as a, removeNodes as b, TemplateResult as c, defaultTemplateProcessor as d, directive as e, isDirective as f, reparentNodes as g, html as h, isTemplatePartActive as i, nothing as j, AttributePart as k, isIterable as l, marker as m, noChange as n, isPrimitive as o, parts as p, PropertyPart as q, render as r, svg as s, templateCaches as t, templateFactory as u, createMarker as v };

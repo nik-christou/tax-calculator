@@ -27,7 +27,7 @@ const ResultsViewTemplate = (taxResults, formatter) => html`
                 Tax Results
             </div>
         </div>
-        <div class="main-container" bp="grid 12@md gap-none">
+        <div class="main-container" bp="grid 6@md">
             <div>
                 <h3>Annual</h3>
                 <div class="list-group">

@@ -1,5 +1,5 @@
-import { q as isTemplatePartActive, p as parts, k as render$1, t as templateCaches, v as marker, u as Template, T as TemplateInstance, r as removeNodes } from './common/lit-html-c0a8278e.js';
-export { S as SVGTemplateResult, m as TemplateResult, h as html, s as svg } from './common/lit-html-c0a8278e.js';
+import { i as isTemplatePartActive, p as parts, r as render$1, t as templateCaches, m as marker, T as Template, a as TemplateInstance, b as removeNodes } from './common/lit-html-99d404bd.js';
+export { S as SVGTemplateResult, c as TemplateResult, h as html, s as svg } from './common/lit-html-99d404bd.js';
 
 /**
  * @license
@@ -1496,7 +1496,7 @@ const css = (strings, ...values) => {
 // This line will be used in regexes to search for LitElement usage.
 // TODO(justinfagnani): inject version number at build time
 (window['litElementVersions'] || (window['litElementVersions'] = []))
-    .push('2.3.0');
+    .push('2.3.1');
 /**
  * Sentinal value used to avoid calling lit-html's render function when
  * subclasses do not implement `render`
