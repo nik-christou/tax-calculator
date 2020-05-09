@@ -94,15 +94,16 @@ export class HomeView extends BaseElementMixin(LitElement) {
     async _loadGrossAmountFromStore() {
 
         const grossAmount = await UserSelectionStore.retrieveGrossAmount();
+
         if(!grossAmount) {
             this.grossAmount = "";
             return;
         };
 
-        if(!this.formatter) {
-            this.grossAmount = `grossAmount`;
-        } else {
+        if(this.formatter) {
             this.grossAmount = this.formatter.format(grossAmount);
+        } else {
+            this.grossAmount = `${grossAmount}`;
         }
     }
 
@@ -218,15 +219,24 @@ export class HomeView extends BaseElementMixin(LitElement) {
 
         if(!unformattedAmount) {
 
+            // inputted amount could not be used
+            // reverting back to stored amount if present
+
             const grossAmountFromStore = await UserSelectionStore.retrieveGrossAmount();
 
+            // no stored amount was found
             if(!grossAmountFromStore) {
-                this.grossAmount = this.formatter.format(0);
-                grossAmountElement.value = this.grossAmount;
+                // this.grossAmount = this.formatter.format(0);
+                grossAmountElement.value = '';//this.formatter.format(0);//this.grossAmount;
                 return;
             };
 
-            this.grossAmount = this.formatter.format(grossAmountFromStore);
+            if(!this.formatter) {
+                this.grossAmount = `${unformattedAmount}`;
+            } else {
+                this.grossAmount = this.formatter.format(grossAmountFromStore);
+            }
+
             grossAmountElement.value = this.grossAmount;
 
             return;
@@ -234,10 +244,10 @@ export class HomeView extends BaseElementMixin(LitElement) {
 
         UserSelectionStore.updateGrossAmount(unformattedAmount);
 
-        if(!this.formatter) {
-            this.grossAmount = `${unformattedAmount}`;
-        } else {
+        if(this.formatter) {
             this.grossAmount = this.formatter.format(unformattedAmount);
+        } else {
+            this.grossAmount = `${unformattedAmount}`;
         }
 
         grossAmountElement.value = this.grossAmount;
