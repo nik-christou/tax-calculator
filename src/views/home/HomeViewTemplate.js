@@ -75,7 +75,7 @@ const HomeViewTemplate = (selectedCountry, includesThirteen, grossAmount) => htm
             </div>
         </div>
         <div class="main-container" bp="12">
-            
+
             <div class="list-group">
                 <a href="/country-selection" class="list-group-item list-group-item-action">
                     <div class="country-container">
@@ -90,18 +90,18 @@ const HomeViewTemplate = (selectedCountry, includesThirteen, grossAmount) => htm
                 ${taxOptionsTemplate(selectedCountry)}
             </div>
             <br />
-            
+
             <div class="list-group">
                 <div class="list-group-item">
                     <div class="salary-input-container">
                         <h5 class="item-label">Salary:</h5>
-                        <input 
-                            inputmode="numeric" 
+                        <input
+                            inputmode="numeric"
                             pattern="[0-9]*"
                             type="text"
-                            id="grossAmountInput" 
+                            id="grossAmountInput"
                             .value=${grossAmount}
-                            class="form-control salary-input" 
+                            class="form-control salary-input"
                             placeholder="enter gross amount" />
                     </div>
                 </div>
@@ -126,6 +126,7 @@ const HomeViewTemplate = (selectedCountry, includesThirteen, grossAmount) => htm
             </div>
             <br />
             <button class="btn btn-primary btn-lg btn-block calculate-btn">Calculate</button>
+            <br />
         </div>
     </main>
 </div>

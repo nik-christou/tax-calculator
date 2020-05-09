@@ -1,6 +1,6 @@
 import { openDB, deleteDB } from "idb";
 import { CountriesDataLoader } from "../countries/CountriesDataLoader.js";
-import { SalaryTypes } from "../model/SalaryTypes.js";
+import { CountryData } from "../model/CountryData.js";
 
 const DB_VERSION = 1;
 const DB_NAME = "tax-calculator-db";
@@ -17,6 +17,12 @@ export class DatabaseManager {
 
         const countriesData = await CountriesDataLoader.loadCountryDataFromJson();
 
+        /**
+         * @param {import("idb").IDBPDatabase<unknown>} db
+         * @param {Number} oldVersion
+         * @param {Number} newVersion
+         * @param {import("idb").IDBPTransaction<unknown, string[]>} transaction
+         */
         const upgrade = (db, oldVersion, newVersion, transaction) => {
             this._upgrade(db, oldVersion, newVersion, transaction, countriesData);
             this._addInitialData(transaction, countriesData);
@@ -27,17 +33,29 @@ export class DatabaseManager {
         return this.dbConnection;
     }
 
+    /**
+     * Attempts to close current connection
+     * then proceeds to delete the database
+     * in order to re-open the connection
+     * which will re-create the database
+     */
     static async resetDatabase() {
 
-        // close connection if present
-        // if(this.dbConnection) {
-        //     (await this.dbConnection).close();
-        // }
+        if(this.dbConnection) {
+            (await this.dbConnection).close();
+        }
 
         await deleteDB(DB_NAME);
         await this.openConnection();
     }
 
+    /**
+     * @param {import("idb").IDBPDatabase<unknown>} db
+     * @param {Number} oldVersion
+     * @param {Number} newVersion
+     * @param {import("idb").IDBPTransaction<unknown, string[]>} transaction
+     * @param {CountryData[]} countriesData
+     */
     static _upgrade(db, oldVersion, newVersion, transaction, countriesData) {
 
         switch (oldVersion) {
@@ -46,6 +64,9 @@ export class DatabaseManager {
         }
     }
 
+    /**
+     * @param {import("idb").IDBPDatabase<unknown>} dbConnection
+     */
     static async _createSchemaForV1(dbConnection) {
 
         dbConnection.createObjectStore(COUNTRIES_STORE_NAME);
@@ -53,19 +74,20 @@ export class DatabaseManager {
         dbConnection.createObjectStore(TAX_DETAILS_STORE_NAME);
     }
 
+    /**
+     * @param {import("idb").IDBPTransaction<unknown, string[]>} transaction
+     * @param {CountryData[]} countriesData
+     */
     static _addInitialData(transaction, countriesData) {
 
-        this._populateDefaultSelections(transaction);
         this._populateCountriesObjectStore(transaction, countriesData);
         this._populateTaxDetailsObjectStore(transaction, countriesData);
     }
 
-    static _populateDefaultSelections(transaction) {
-
-        const userSelectionObjectStore = transaction.objectStore(USER_SELECTION_STORE_NAME);
-        userSelectionObjectStore.add(SalaryTypes.ANNUAL, "salaryType");
-    } 
-
+    /**
+     * @param {import("idb").IDBPTransaction<unknown, string[]>} transaction
+     * @param {CountryData[]} countriesData
+     */
     static _populateCountriesObjectStore(transaction, countriesData) {
 
         const countriesObjectStore = transaction.objectStore(COUNTRIES_STORE_NAME);
@@ -75,6 +97,10 @@ export class DatabaseManager {
         }
     }
 
+    /**
+     * @param {import("idb").IDBPTransaction<unknown, string[]>} transaction
+     * @param {CountryData[]} countriesData
+     */
     static _populateTaxDetailsObjectStore(transaction, countriesData) {
 
         const taxDetailsObjectStore = transaction.objectStore(TAX_DETAILS_STORE_NAME);

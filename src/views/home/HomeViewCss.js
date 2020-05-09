@@ -175,6 +175,7 @@ main {
 
 .salary-input-container .salary-input {
     width: 100%;
+    border-radius: 1rem;
 }
 
 .salary-input-container .salary-input:invalid {
@@ -183,7 +184,8 @@ main {
 }
 
 .salary-input-container .salary-input:focus {
-    outline-color: #4e7ac7;
+    outline: none;
+    box-shadow: 0 0 3pt 2pt #4e7ac7;
 }
 
 .options-item {

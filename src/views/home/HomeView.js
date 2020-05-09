@@ -47,8 +47,8 @@ export class HomeView extends BaseElementMixin(LitElement) {
         super();
         this.grossAmount = "";
         this.selectedCountry = null;
-        this.selectedPeriod = SalaryTypes.ANNUAL;
-        this.includesThirteen = true;
+        this.selectedPeriod = null;
+        this.includesThirteen = false;
         this.formatter = null;
     }
 
@@ -79,12 +79,12 @@ export class HomeView extends BaseElementMixin(LitElement) {
     async _loadSelectedPeriodFromStore() {
 
         const selectedPeriod = await UserSelectionStore.retrieveSalaryType();
+
         if(!selectedPeriod) return;
+
         if(selectedPeriod.id === SalaryTypes.ANNUAL.id) {
-            // this._updateSelectedSalaryPeriod(SalaryTypes.ANNUAL);
             this.selectedPeriod = SalaryTypes.ANNUAL;
         } else {
-            // this._updateSelectedSalaryPeriod(SalaryTypes.MONTHLY);
             this.selectedPeriod = SalaryTypes.MONTHLY;
         }
 
@@ -109,24 +109,6 @@ export class HomeView extends BaseElementMixin(LitElement) {
     async _loadThirteenSalaryFromStore() {
         const includesThirteenOption = await UserSelectionStore.retrieveIncludesThirteenOption();
         this.includesThirteen = includesThirteenOption;
-    }
-
-    /**
-     * @param {Object} salaryPeriod
-     */
-    _updateSelectedSalaryPeriod(salaryPeriod) {
-        if(!salaryPeriod) return;
-
-        let salaryType = SalaryTypes.ANNUAL;
-
-        if(salaryPeriod.id === SalaryTypes.ANNUAL.id) {
-            salaryType = SalaryTypes.ANNUAL;
-        } else {
-            salaryType = SalaryTypes.MONTHLY;
-        }
-
-        this.selectedPeriod = salaryType;
-        this._updateSelectedSalaryTypeLinks();
     }
 
     _addSalaryTypeClickListeners() {
@@ -319,7 +301,7 @@ export class HomeView extends BaseElementMixin(LitElement) {
     _handleSelectedSalaryType(event, salaryType) {
 
         event.preventDefault();
-        
+
         this.selectedPeriod = salaryType;
         this._updateSelectedSalaryTypeLinks();
         UserSelectionStore.updateSalaryType(salaryType);
