@@ -3,7 +3,6 @@ import { TaxOptions } from "../../../model/TaxOptions.js";
 const COUNTRY_ID = 2;
 
 export class AustraliaOptions extends TaxOptions {
-
     /**
      * @param {Boolean} isResident
      */

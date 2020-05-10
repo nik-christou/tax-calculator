@@ -1,7 +1,6 @@
 import { css } from "lit-element";
 
 export const InputGroupCss = css`
-
     .input-group {
         position: relative;
         display: flex;
@@ -10,7 +9,7 @@ export const InputGroupCss = css`
         width: 100%;
     }
 
-    .input-group-append, 
+    .input-group-append,
     .input-group-prepend {
         display: flex;
     }
@@ -24,7 +23,7 @@ export const InputGroupCss = css`
         border-bottom-left-radius: 0;
     }
 
-    .input-group > .form-control, 
+    .input-group > .form-control,
     .input-group > .form-control-plaintext {
         position: relative;
         flex: 1 1 0%;
@@ -40,7 +39,7 @@ export const InputGroupCss = css`
     .input-group-text {
         display: flex;
         align-items: center;
-        padding: .375rem .75rem;
+        padding: 0.375rem 0.75rem;
         margin-bottom: 0;
         font-size: 1rem;
         font-weight: 400;
@@ -50,14 +49,14 @@ export const InputGroupCss = css`
         white-space: nowrap;
         background-color: #e9ecef;
         border: 1px solid #ced4da;
-        border-radius: .25rem;
+        border-radius: 0.25rem;
     }
 
     .form-control {
         display: block;
         width: 100%;
-        height: calc(1.5em + .75rem + 2px);
-        padding: .375rem .75rem;
+        height: calc(1.5em + 0.75rem + 2px);
+        padding: 0.375rem 0.75rem;
         font-size: 1rem;
         font-weight: 400;
         line-height: 1.5;
@@ -65,8 +64,8 @@ export const InputGroupCss = css`
         background-color: #fff;
         background-clip: padding-box;
         border: 1px solid #ced4da;
-        border-radius: .25rem;
-        transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+        border-radius: 0.25rem;
+        transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
     }
 
     input {

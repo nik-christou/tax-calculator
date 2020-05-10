@@ -6,7 +6,6 @@ import { UserSelectionStore } from "../../../datastore/UserSelectionStore.js";
 import { AustraliaOptions } from "../model/AustraliaTaxOptions.js";
 
 export class AustraliaProcessor {
-
     /**
      * @param {Number} countryId
      * @param {SalaryDetails} salaryDetails
@@ -14,7 +13,6 @@ export class AustraliaProcessor {
      * @returns {Promise<TaxResults>}
      */
     static async processAustraliaTax(countryId, salaryDetails) {
-
         const taxDetails = await TaxDetailsStore.getTaxDetailsByCountryById(countryId);
         const taxOptions = await UserSelectionStore.retrieveCountryOptionByCountryId(countryId);
         const australiaTaxOptions = AustraliaOptions.createFromObject(taxOptions);

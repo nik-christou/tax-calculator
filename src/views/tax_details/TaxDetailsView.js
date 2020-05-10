@@ -9,29 +9,20 @@ import { TaxDetailsViewCss } from "./TaxDetailsViewCss.js";
 import { Country } from "../../model/Country.js";
 
 export class TaxDetailsView extends BaseElementMixin(LitElement) {
-
     static get properties() {
         return {
             taxDetails: Object,
             selectedCountry: Country,
-            formatter: Intl.NumberFormat
+            formatter: Intl.NumberFormat,
         };
     }
 
     static get styles() {
-        return [
-            ...super.styles,
-            BlueprintCss,
-            ListGroupCss,
-            TaxDetailsViewCss
-        ];
+        return [...super.styles, BlueprintCss, ListGroupCss, TaxDetailsViewCss];
     }
 
     render() {
-        return TaxDetailsViewTemplate(
-            this.selectedCountry,
-            this.taxDetails,
-            this.formatter);
+        return TaxDetailsViewTemplate(this.selectedCountry, this.taxDetails, this.formatter);
     }
 
     constructor() {
@@ -48,18 +39,17 @@ export class TaxDetailsView extends BaseElementMixin(LitElement) {
 
     _addNavBackListener() {
         const navBackLink = this.shadowRoot.querySelector("a.nav-back");
-        navBackLink.addEventListener("click", event => this._handleNavBackEvent(event));
+        navBackLink.addEventListener("click", (event) => this._handleNavBackEvent(event));
     }
 
     async _loadUserSelectionFromDatastore() {
-
         const country = await UserSelectionStore.retrieveCountry();
 
-        if(!country) return;
+        if (!country) return;
 
         const taxDetails = await TaxDetailsStore.getTaxDetailsByCountryById(country.id);
 
-        if(!taxDetails) return;
+        if (!taxDetails) return;
 
         this.taxDetails = taxDetails;
         this.selectedCountry = country;
@@ -70,17 +60,15 @@ export class TaxDetailsView extends BaseElementMixin(LitElement) {
      * @param {Event} event
      */
     _handleNavBackEvent(event) {
-
         event.preventDefault();
         this._goToHome();
     }
 
     _goToHome() {
-
-        if(window.history.length === 1 || window.history.length === 2) {
+        if (window.history.length === 1 || window.history.length === 2) {
             history.pushState(null, "Home", "/");
             history.go(1);
-            dispatchEvent(new PopStateEvent('popstate'));
+            dispatchEvent(new PopStateEvent("popstate"));
         } else {
             history.back();
         }
@@ -93,7 +81,7 @@ export class TaxDetailsView extends BaseElementMixin(LitElement) {
         const formatter = new Intl.NumberFormat(selectedCountry.locale, {
             style: "currency",
             currency: selectedCountry.currency,
-            minimumFractionDigits: 2
+            minimumFractionDigits: 2,
         });
 
         this.formatter = formatter;

@@ -1,7 +1,6 @@
 import { css } from "lit-element";
 
 export const NormalizeCss = css`
-
     main {
         display: block;
     }

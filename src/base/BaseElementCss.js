@@ -12,7 +12,12 @@ export const BaseElementCss = css`
         font-family: Roboto;
     }
 
-    h1, h2, h3, h4, h5, h6 {
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
         margin: 0.6em 0;
         font-weight: normal;
     }
@@ -25,7 +30,6 @@ export const BaseElementCss = css`
     h2 {
         font-size: 1.625em;
         line-height: 1.2;
-
     }
 
     h3 {
@@ -38,9 +42,10 @@ export const BaseElementCss = css`
         line-height: 1.23;
     }
 
-    h5, h6 {
+    h5,
+    h6 {
         font-size: 1em;
-        font-weight:bold;
+        font-weight: bold;
     }
 
     table {
@@ -48,7 +53,8 @@ export const BaseElementCss = css`
         border-spacing: 0;
     }
 
-    th, td {
+    th,
+    td {
         text-align: left;
         vertical-align: top;
     }

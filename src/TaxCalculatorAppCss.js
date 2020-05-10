@@ -1,7 +1,6 @@
 import { css } from "lit-element";
 
 export const TaxCalculatorAppCss = css`
-
     #outlet {
         display: block !important;
         position: relative !important;

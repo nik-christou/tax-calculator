@@ -4,7 +4,6 @@ import { CyprusProcessor } from "../../countries/cyprus/controller/CyprusProcess
 import { AustraliaProcessor } from "../../countries/australia/controller/AustraliaProcessor.js";
 
 export class TaxProcessorDispatcher {
-    
     /**
      * @param {Number} countryId
      * @param {SalaryDetails} salaryDetails
@@ -12,10 +11,9 @@ export class TaxProcessorDispatcher {
      * @returns {Promise<TaxResults>}
      */
     static dispatch(countryId, salaryDetails) {
-        
         switch (countryId) {
             case 1:
-                return CyprusProcessor.processCyprusTax(countryId,salaryDetails);
+                return CyprusProcessor.processCyprusTax(countryId, salaryDetails);
             case 2:
                 return AustraliaProcessor.processAustraliaTax(countryId, salaryDetails);
             default:

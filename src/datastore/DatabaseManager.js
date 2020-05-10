@@ -9,12 +9,10 @@ const TAX_DETAILS_STORE_NAME = "tax-details-store";
 const USER_SELECTION_STORE_NAME = "user-selection-store";
 
 export class DatabaseManager {
-
     /**
      * @returns {Promise<import("idb").IDBPDatabase<unknown>>}
      */
     static async openConnection() {
-
         const countriesData = await CountriesDataLoader.loadCountryDataFromJson();
 
         /**
@@ -26,9 +24,9 @@ export class DatabaseManager {
         const upgrade = (db, oldVersion, newVersion, transaction) => {
             this._upgrade(db, oldVersion, newVersion, transaction, countriesData);
             this._addInitialData(transaction, countriesData);
-        }
+        };
 
-        this.dbConnection = openDB(DB_NAME, DB_VERSION, {upgrade});
+        this.dbConnection = openDB(DB_NAME, DB_VERSION, { upgrade });
 
         return this.dbConnection;
     }
@@ -40,8 +38,7 @@ export class DatabaseManager {
      * which will re-create the database
      */
     static async resetDatabase() {
-
-        if(this.dbConnection) {
+        if (this.dbConnection) {
             (await this.dbConnection).close();
         }
 
@@ -57,10 +54,10 @@ export class DatabaseManager {
      * @param {CountryData[]} countriesData
      */
     static _upgrade(db, oldVersion, newVersion, transaction, countriesData) {
-
         switch (oldVersion) {
-            case 0: this._createSchemaForV1(db);
-            break;
+            case 0:
+                this._createSchemaForV1(db);
+                break;
         }
     }
 
@@ -68,7 +65,6 @@ export class DatabaseManager {
      * @param {import("idb").IDBPDatabase<unknown>} dbConnection
      */
     static async _createSchemaForV1(dbConnection) {
-
         dbConnection.createObjectStore(COUNTRIES_STORE_NAME);
         dbConnection.createObjectStore(USER_SELECTION_STORE_NAME);
         dbConnection.createObjectStore(TAX_DETAILS_STORE_NAME);
@@ -79,7 +75,6 @@ export class DatabaseManager {
      * @param {CountryData[]} countriesData
      */
     static _addInitialData(transaction, countriesData) {
-
         this._populateCountriesObjectStore(transaction, countriesData);
         this._populateTaxDetailsObjectStore(transaction, countriesData);
     }
@@ -89,10 +84,9 @@ export class DatabaseManager {
      * @param {CountryData[]} countriesData
      */
     static _populateCountriesObjectStore(transaction, countriesData) {
-
         const countriesObjectStore = transaction.objectStore(COUNTRIES_STORE_NAME);
 
-        for(const countryData of countriesData) {
+        for (const countryData of countriesData) {
             countriesObjectStore.add(countryData.country, countryData.country.id);
         }
     }
@@ -102,14 +96,12 @@ export class DatabaseManager {
      * @param {CountryData[]} countriesData
      */
     static _populateTaxDetailsObjectStore(transaction, countriesData) {
-
         const taxDetailsObjectStore = transaction.objectStore(TAX_DETAILS_STORE_NAME);
 
-        for(const countryData of countriesData) {
+        for (const countryData of countriesData) {
             taxDetailsObjectStore.add(countryData.taxDetails, countryData.country.id);
         }
     }
 }
 
 DatabaseManager.dbConnection = DatabaseManager.openConnection();
-

@@ -6,7 +6,6 @@ import { TaxOptions } from "../model/TaxOptions.js";
 const STORE_NAME = "user-selection-store";
 
 export class UserSelectionStore {
-
     /**
      * Updates selected country to store.
      * Ovverides existing country.
@@ -16,7 +15,7 @@ export class UserSelectionStore {
      * @returns {Promise<IDBValidKey>}
      */
     static async updateCountry(country) {
-        if(DatabaseManager.dbConnection) {
+        if (DatabaseManager.dbConnection) {
             const dbConnection = await DatabaseManager.dbConnection;
             return dbConnection.put(STORE_NAME, country, "selectedCountry");
         }
@@ -28,7 +27,7 @@ export class UserSelectionStore {
      * @returns {Promise<Country>}
      */
     static async retrieveCountry() {
-        if(DatabaseManager.dbConnection) {
+        if (DatabaseManager.dbConnection) {
             const dbConnection = await DatabaseManager.dbConnection;
             return dbConnection.get(STORE_NAME, "selectedCountry");
         }
@@ -41,7 +40,7 @@ export class UserSelectionStore {
      * @param {SalaryType} salaryType
      */
     static async updateSalaryType(salaryType) {
-        if(DatabaseManager.dbConnection) {
+        if (DatabaseManager.dbConnection) {
             const dbConnection = await DatabaseManager.dbConnection;
             return dbConnection.put(STORE_NAME, salaryType, "salaryType");
         }
@@ -53,7 +52,7 @@ export class UserSelectionStore {
      * @returns {Promise<SalaryType>}
      */
     static async retrieveSalaryType() {
-        if(DatabaseManager.dbConnection) {
+        if (DatabaseManager.dbConnection) {
             const dbConnection = await DatabaseManager.dbConnection;
             return dbConnection.get(STORE_NAME, "salaryType");
         }
@@ -66,7 +65,7 @@ export class UserSelectionStore {
      * @param {Number} grossAmount
      */
     static async updateGrossAmount(grossAmount) {
-        if(DatabaseManager.dbConnection) {
+        if (DatabaseManager.dbConnection) {
             const dbConnection = await DatabaseManager.dbConnection;
             return dbConnection.put(STORE_NAME, grossAmount, "grossAmount");
         }
@@ -78,7 +77,7 @@ export class UserSelectionStore {
      * @returns {Promise<Number>}
      */
     static async retrieveGrossAmount() {
-        if(DatabaseManager.dbConnection) {
+        if (DatabaseManager.dbConnection) {
             const dbConnection = await DatabaseManager.dbConnection;
             return dbConnection.get(STORE_NAME, "grossAmount");
         }
@@ -91,7 +90,7 @@ export class UserSelectionStore {
      * @param {Boolean} includesThirteenOption
      */
     static async updateIncludesThirteenOption(includesThirteenOption) {
-        if(DatabaseManager.dbConnection) {
+        if (DatabaseManager.dbConnection) {
             const dbConnection = await DatabaseManager.dbConnection;
             return dbConnection.put(STORE_NAME, includesThirteenOption, "includesThirteenOption");
         }
@@ -103,7 +102,7 @@ export class UserSelectionStore {
      * @returns {Promise<Boolean>}
      */
     static async retrieveIncludesThirteenOption() {
-        if(DatabaseManager.dbConnection) {
+        if (DatabaseManager.dbConnection) {
             const dbConnection = await DatabaseManager.dbConnection;
             return dbConnection.get(STORE_NAME, "includesThirteenOption");
         }
@@ -113,15 +112,15 @@ export class UserSelectionStore {
      * Updates the Map of country options by adding
      * the given country options object.
      * Ovverides existing country options object.
-     * 
+     *
      * @param {TaxOptions} countryOptions
      */
     static async updateCountryOptions(countryOptions) {
-        if(DatabaseManager.dbConnection) {
+        if (DatabaseManager.dbConnection) {
             const dbConnection = await DatabaseManager.dbConnection;
             let countryOptionsMap = await dbConnection.get(STORE_NAME, "countryOptions");
 
-            if(!countryOptionsMap) countryOptionsMap = new Map();
+            if (!countryOptionsMap) countryOptionsMap = new Map();
 
             countryOptionsMap.set(countryOptions.countryId, countryOptions);
             return dbConnection.put(STORE_NAME, countryOptionsMap, "countryOptions");
@@ -132,7 +131,7 @@ export class UserSelectionStore {
      * @returns {Promise<Map<TaxOptions>>}
      */
     static async retrieveAllCountryOptions() {
-        if(DatabaseManager.dbConnection) {
+        if (DatabaseManager.dbConnection) {
             const dbConnection = await DatabaseManager.dbConnection;
             return dbConnection.get(STORE_NAME, "countryOptions");
         }
@@ -143,10 +142,10 @@ export class UserSelectionStore {
      * @returns {Promise<TaxOptions>}
      */
     static async retrieveCountryOptionByCountryId(countryId) {
-        if(DatabaseManager.dbConnection) {
+        if (DatabaseManager.dbConnection) {
             const dbConnection = await DatabaseManager.dbConnection;
             const countryOptionsMap = await dbConnection.get(STORE_NAME, "countryOptions");
-            if(countryOptionsMap) return countryOptionsMap.get(countryId);
+            if (countryOptionsMap) return countryOptionsMap.get(countryId);
             return Promise.resolve(null);
         }
     }

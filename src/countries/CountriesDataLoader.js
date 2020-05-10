@@ -3,21 +3,16 @@ import { CountryData } from "../model/CountryData.js";
 import { CyprusTaxDetailsLoader } from "./cyprus/controller/CyprusTaxDetailsLoader.js";
 import { AustraliaTaxDetailsLoader } from "./australia/controller/AustraliaTaxDetailsLoader.js";
 
-const countriesJsonFilePaths = [
-    "web_assets/data/australia.json",
-    "web_assets/data/cyprus.json"
-];
+const countriesJsonFilePaths = ["web_assets/data/australia.json", "web_assets/data/cyprus.json"];
 
 export class CountriesDataLoader {
     /**
      * @returns {Promise<Array<CountryData>>} the promise of an array of CountryData
      */
     static async loadCountryDataFromJson() {
-
         const countriesData = new Array();
 
         for (const countriesJsonFilePath of countriesJsonFilePaths) {
-
             const jsonData = await this._fetchJsonData(countriesJsonFilePath);
             const country = await this._retrieveCountryFromJsonData(jsonData);
             const taxDetails = await this._retrieveTaxDetailsFromJsonData(country.id, jsonData);
@@ -42,14 +37,7 @@ export class CountriesDataLoader {
      * @param {Object} jsonData
      */
     static async _retrieveCountryFromJsonData(jsonData) {
-
-        return new Country(
-            jsonData.id,
-            jsonData.name,
-            jsonData.locale,
-            jsonData.currency,
-            jsonData.flag,
-            jsonData.additionalOptions);
+        return new Country(jsonData.id, jsonData.name, jsonData.locale, jsonData.currency, jsonData.flag, jsonData.additionalOptions);
     }
 
     /**

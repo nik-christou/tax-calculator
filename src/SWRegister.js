@@ -11,9 +11,9 @@ export class SWRegister {
         console.log("Proceeding with service worker registration...");
         const wb = new Workbox("../service-worker.js");
 
-        wb.addEventListener("activated", event => this._handleActivationState(event));
+        wb.addEventListener("activated", (event) => this._handleActivationState(event));
 
-        wb.addEventListener("waiting", event => this._handleWaitingState(event));
+        wb.addEventListener("waiting", (event) => this._handleWaitingState(event));
 
         wb.register();
     }

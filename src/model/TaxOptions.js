@@ -1,6 +1,4 @@
-
 export class TaxOptions {
-
     /**
      * @param {Number} countryId
      */

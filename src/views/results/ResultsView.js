@@ -14,22 +14,15 @@ import { Country } from "../../model/Country.js";
 import { SalaryTypes } from "../../model/SalaryTypes.js";
 
 export class ResultsView extends BaseElementMixin(LitElement) {
-
     static get properties() {
         return {
             taxResults: TaxResults,
-            formatter: Intl.NumberFormat
+            formatter: Intl.NumberFormat,
         };
     }
 
     static get styles() {
-        return [
-            ...super.styles,
-            TableCss,
-            ListGroupCss,
-            BlueprintCss,
-            ResultsViewCss
-        ];
+        return [...super.styles, TableCss, ListGroupCss, BlueprintCss, ResultsViewCss];
     }
 
     render() {
@@ -52,28 +45,26 @@ export class ResultsView extends BaseElementMixin(LitElement) {
     }
 
     async _loadUserSelectionFromDatastore() {
-
         const selectedCountry = await UserSelectionStore.retrieveCountry();
         const selectedPeriodType = await UserSelectionStore.retrieveSalaryType();
         const grossAmount = await UserSelectionStore.retrieveGrossAmount();
         const includesThirteenOption = await UserSelectionStore.retrieveIncludesThirteenOption();
 
-        if(!selectedCountry || !selectedPeriodType) return;
+        if (!selectedCountry || !selectedPeriodType) return;
 
         this._updateCurrencyFormatter(selectedCountry);
 
-        const selectedPeriod = selectedPeriodType.id === SalaryTypes.ANNUAL.id ?
-            SalaryTypes.ANNUAL : SalaryTypes.MONTHLY;
+        const selectedPeriod = selectedPeriodType.id === SalaryTypes.ANNUAL.id ? SalaryTypes.ANNUAL : SalaryTypes.MONTHLY;
 
         const salaryDetails = new SalaryDetails(grossAmount, selectedPeriod, includesThirteenOption);
         const taxResults = await TaxProcessorDispatcher.dispatch(selectedCountry.id, salaryDetails);
-        
+
         this.taxResults = taxResults;
     }
 
     _addNavBackListener() {
         const navBackLink = this.shadowRoot.querySelector("a.nav-back");
-        navBackLink.addEventListener("click", event => this._handleNavBackEvent(event));
+        navBackLink.addEventListener("click", (event) => this._handleNavBackEvent(event));
     }
 
     /**
@@ -83,7 +74,7 @@ export class ResultsView extends BaseElementMixin(LitElement) {
         const formatter = new Intl.NumberFormat(selectedCountry.locale, {
             style: "currency",
             currency: selectedCountry.currency,
-            minimumFractionDigits: 2
+            minimumFractionDigits: 2,
         });
 
         this.formatter = formatter;
@@ -93,18 +84,16 @@ export class ResultsView extends BaseElementMixin(LitElement) {
      * @param {Event} event
      */
     _handleNavBackEvent(event) {
-
         event.preventDefault();
         this._goToHome();
     }
 
     _goToHome() {
-
         // user navigated directly to Countries view
-        if(window.history.length === 1 || window.history.length === 2) {
+        if (window.history.length === 1 || window.history.length === 2) {
             history.pushState(null, "Home", "/");
             history.go(1);
-            dispatchEvent(new PopStateEvent('popstate'));
+            dispatchEvent(new PopStateEvent("popstate"));
         } else {
             history.back();
         }

@@ -8,5 +8,5 @@ import { SalaryType } from "./SalaryType.js";
  */
 export const SalaryTypes = Object.freeze({
     ANNUAL: new SalaryType(1, "Annual"),
-    MONTHLY: new SalaryType(2, "Monthly")
+    MONTHLY: new SalaryType(2, "Monthly"),
 });

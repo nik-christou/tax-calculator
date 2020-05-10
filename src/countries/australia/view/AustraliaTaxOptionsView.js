@@ -11,21 +11,14 @@ import { UserSelectionStore } from "../../../datastore/UserSelectionStore.js";
 const COUNTRY_ID = 2;
 
 export class AustraliaTaxOptionsView extends BaseElementMixin(LitElement) {
-
     static get properties() {
         return {
-            australiaOptions: AustraliaOptions
+            australiaOptions: AustraliaOptions,
         };
     }
 
     static get styles() {
-        return [
-            ...super.styles,
-            BlueprintCss,
-            ListGroupCss,
-            ToggleCss,
-            AustraliaTaxOptionsViewCss
-        ];
+        return [...super.styles, BlueprintCss, ListGroupCss, ToggleCss, AustraliaTaxOptionsViewCss];
     }
 
     render() {
@@ -43,17 +36,15 @@ export class AustraliaTaxOptionsView extends BaseElementMixin(LitElement) {
     }
 
     _loadUserSelectionFromDatastore() {
-
-        UserSelectionStore.retrieveCountryOptionByCountryId(COUNTRY_ID).then(countryOptions => {
-            
-            if(!countryOptions || countryOptions.countryId !== COUNTRY_ID) return;
+        UserSelectionStore.retrieveCountryOptionByCountryId(COUNTRY_ID).then((countryOptions) => {
+            if (!countryOptions || countryOptions.countryId !== COUNTRY_ID) return;
             this.australiaOptions = AustraliaOptions.createFromObject(countryOptions);
         });
     }
 
     _addIsResidentListener() {
         const residentElement = this.shadowRoot.querySelector("input#resident");
-        residentElement.addEventListener("input", event => {
+        residentElement.addEventListener("input", (event) => {
             this._handleIsResidentChange(event, residentElement);
         });
     }

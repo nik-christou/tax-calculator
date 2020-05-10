@@ -1,7 +1,6 @@
 import { Country } from "../model/Country.js";
 
 export class CountryData {
-
     /**
      * @param {Country} country
      * @param {Object} taxDetails

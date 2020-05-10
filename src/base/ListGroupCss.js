@@ -1,7 +1,6 @@
 import { css } from "lit-element";
 
 export const ListGroupCss = css`
-
     .list-group {
         display: -ms-flexbox;
         display: flex;
@@ -17,7 +16,8 @@ export const ListGroupCss = css`
         text-align: inherit;
     }
 
-    .list-group-item-action:hover, .list-group-item-action:focus {
+    .list-group-item-action:hover,
+    .list-group-item-action:focus {
         z-index: 1;
         color: #495057;
         text-decoration: none;
@@ -47,7 +47,8 @@ export const ListGroupCss = css`
         border-bottom-left-radius: 0.25rem;
     }
 
-    .list-group-item.disabled, .list-group-item:disabled {
+    .list-group-item.disabled,
+    .list-group-item:disabled {
         color: #6c757d;
         pointer-events: none;
         background-color: #fff;
@@ -103,7 +104,7 @@ export const ListGroupCss = css`
     }
 
     .text-muted {
-        color: #6c757d!important;
+        color: #6c757d !important;
     }
 
     a {

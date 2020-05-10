@@ -9,21 +9,14 @@ import { UserSelectionStore } from "../../datastore/UserSelectionStore.js";
 import { TaxOptionsViewTemplateLoader } from "./TaxOptionsViewTemplateLoader.js";
 
 export class CountryTaxOptionsView extends BaseElementMixin(LitElement) {
-
     static get properties() {
         return {
-            viewTemplate: TemplateResult
+            viewTemplate: TemplateResult,
         };
     }
 
     static get styles() {
-        return [
-            ...super.styles,
-            BlueprintCss,
-            ListGroupCss,
-            SwitchCss,
-            TaxOptionsViewCss
-        ];
+        return [...super.styles, BlueprintCss, ListGroupCss, SwitchCss, TaxOptionsViewCss];
     }
 
     render() {
@@ -42,16 +35,14 @@ export class CountryTaxOptionsView extends BaseElementMixin(LitElement) {
 
     _addNavBackListener() {
         const navBackLink = this.shadowRoot.querySelector("a.nav-back");
-        navBackLink.addEventListener("click", event => this._handleNavBackEvent(event));
+        navBackLink.addEventListener("click", (event) => this._handleNavBackEvent(event));
     }
 
     _loadUserSelectionFromDatastore() {
-
-        UserSelectionStore.retrieveCountry().then(country => {
-            if(!country) return;
+        UserSelectionStore.retrieveCountry().then((country) => {
+            if (!country) return;
             this.selectedCountry = country;
-            this.viewTemplate = TaxOptionsViewTemplateLoader
-                .getTaxOptionsViewTemplateTag(this.selectedCountry);
+            this.viewTemplate = TaxOptionsViewTemplateLoader.getTaxOptionsViewTemplateTag(this.selectedCountry);
         });
     }
 
@@ -59,17 +50,15 @@ export class CountryTaxOptionsView extends BaseElementMixin(LitElement) {
      * @param {Event} event
      */
     _handleNavBackEvent(event) {
-
         event.preventDefault();
         this._goToHome();
     }
 
     _goToHome() {
-
-        if(window.history.length === 1 || window.history.length === 2) {
+        if (window.history.length === 1 || window.history.length === 2) {
             history.pushState(null, "Home", "/");
             history.go(1);
-            dispatchEvent(new PopStateEvent('popstate'));
+            dispatchEvent(new PopStateEvent("popstate"));
         } else {
             history.back();
         }
