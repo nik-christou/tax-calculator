@@ -1,5 +1,5 @@
-import { AustraliaResidents } from "./AustraliaResidents";
-import { AustraliaNonResidents } from "./AustraliaNonResidents";
+import { AustraliaResidents } from "./AustraliaResidents.js";
+import { AustraliaNonResidents } from "./AustraliaNonResidents.js";
 
 export class AustraliaTaxDetails {
     /**
