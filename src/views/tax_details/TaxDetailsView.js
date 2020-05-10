@@ -1,8 +1,9 @@
-import { LitElement } from "lit-element";
+import { LitElement, TemplateResult } from "lit-element";
 import { BaseElementMixin } from "../../base/BaseElementMixin.js";
 import { UserSelectionStore } from "../../datastore/UserSelectionStore.js";
 import { TaxDetailsStore } from "../../datastore/TaxDetailsStore.js";
 import { TaxDetailsViewTemplate } from "./TaxDetailsViewTemplate.js";
+import { TaxDetailsViewTemplateLoader } from "./TaxDetailsViewTemplateLoader.js";
 import { ListGroupCss } from "../../base/ListGroupCss.js";
 import { BlueprintCss } from "../../base/BlueprintCss.js";
 import { TaxDetailsViewCss } from "./TaxDetailsViewCss.js";
@@ -14,6 +15,7 @@ export class TaxDetailsView extends BaseElementMixin(LitElement) {
             taxDetails: Object,
             selectedCountry: Country,
             formatter: Intl.NumberFormat,
+            countryTaxDetailsView: TemplateResult
         };
     }
 
@@ -22,24 +24,32 @@ export class TaxDetailsView extends BaseElementMixin(LitElement) {
     }
 
     render() {
-        return TaxDetailsViewTemplate(this.selectedCountry, this.taxDetails, this.formatter);
+        return TaxDetailsViewTemplate(
+            this.selectedCountry,
+            this.taxDetails,
+            this.formatter,
+            this.countryTaxDetailsView);
     }
 
     constructor() {
         super();
-        this.selectedCountry = null;
-        this.taxDetails = null;
         this.formatter = null;
+        this.taxDetails = null;
+        this.selectedCountry = null;
+        this.countryTaxDetailsView = null;
     }
 
-    firstUpdated() {
+    async firstUpdated() {
         this._addNavBackListener();
-        this._loadUserSelectionFromDatastore();
+        await this._loadUserSelectionFromDatastore();
+        await this._loadCountrySpecificTemplate();
     }
 
     _addNavBackListener() {
         const navBackLink = this.shadowRoot.querySelector("a.nav-back");
-        navBackLink.addEventListener("click", (event) => this._handleNavBackEvent(event));
+        navBackLink.addEventListener("click", (event) => {
+            this._handleNavBackEvent(event);
+        });
     }
 
     async _loadUserSelectionFromDatastore() {
@@ -54,6 +64,14 @@ export class TaxDetailsView extends BaseElementMixin(LitElement) {
         this.taxDetails = taxDetails;
         this.selectedCountry = country;
         this._updateCurrencyFormatter(this.selectedCountry);
+    }
+
+    async _loadCountrySpecificTemplate() {
+
+        this.countryTaxDetailsView = TaxDetailsViewTemplateLoader
+            ._getCountryTaxDetailsViewTemplate(this.selectedCountry,
+                this.taxDetails,
+                this.formatter);
     }
 
     /**
@@ -88,4 +106,5 @@ export class TaxDetailsView extends BaseElementMixin(LitElement) {
     }
 }
 
+// @ts-ignore
 window.customElements.define("tax-details-view", TaxDetailsView);

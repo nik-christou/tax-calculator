@@ -81,7 +81,7 @@
   },
   "babel": {
     "presets": [
-      "minify",
+      ["minify",{ "builtIns": false, "evaluate": false, "mangle": false}],
       "@babel/preset-modules"
     ],
     "plugins": [

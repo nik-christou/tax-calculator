@@ -1,13 +1,12 @@
-import { html } from "lit-element";
+import { html, TemplateResult } from "lit-element";
 import { Country } from "../../model/Country.js";
-import { TaxDetailsViewTemplateLoader } from "./TaxDetailsViewTemplateLoader.js";
-
 /**
  * @param {Country} country
  * @param {Object} taxDetails country implemetation of tax details
  * @param {Intl.NumberFormat} formatter
+ * @param {TemplateResult} countryTaxDetailsView
  */
-const TaxDetailsViewTemplate = (country, taxDetails, formatter) => html`
+const TaxDetailsViewTemplate = (country, taxDetails, formatter, countryTaxDetailsView) => html`
     <div bp="grid" class="main-grid">
         <main bp="12">
             <div bp="grid 4" class="navbar">
@@ -22,7 +21,7 @@ const TaxDetailsViewTemplate = (country, taxDetails, formatter) => html`
                 </div>
             </div>
             <div class="main-container" bp="12">
-                ${TaxDetailsViewTemplateLoader._getCountryTaxDetailsViewTemplate(country, taxDetails, formatter)}
+                ${countryTaxDetailsView}
             </div>
             <br />
         </main>
