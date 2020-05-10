@@ -1,4 +1,4 @@
-import { openDB, deleteDB } from "idb";
+import { openDB, deleteDB } from "idb/build/esm/index.js";
 import { CountriesDataLoader } from "../countries/CountriesDataLoader.js";
 import { CountryData } from "../model/CountryData.js";
 
