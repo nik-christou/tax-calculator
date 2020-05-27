@@ -1,9 +1,26 @@
 import { css } from "lit-element";
 
 export const TaxCalculatorAppCss = css`
+
+    :host {
+        position: relative;
+        width: 100vw;
+        height: 100%;
+    }
+
     #outlet {
-        display: block !important;
-        position: relative !important;
+        display: block;
+        position: relative;
+    }
+
+    .snackbar-container {
+        display: none;
+        background-color: lightpink;
+        position: absolute;
+        width: 100%;
+        height: 50px;
+        bottom: 0;
+        top: 50px;
     }
 
     .home-leaving {
@@ -11,10 +28,12 @@ export const TaxCalculatorAppCss = css`
         -webkit-animation-duration: 0.3s;
         -webkit-animation-name: slideOutRight;
         -webkit-animation-timing-function: ease-in-out;
+        -webkit-animation-delay: 0.01s;
         animation-delay: 0s;
         animation-duration: 0.3s;
         animation-name: slideOutRight;
         animation-timing-function: ease-in-out;
+        animation-delay: 0.01s;
         width: 100% !important;
         height: 100% !important;
     }
@@ -24,10 +43,12 @@ export const TaxCalculatorAppCss = css`
         -webkit-animation-duration: 0.3s;
         -webkit-animation-name: slideInLeft;
         -webkit-animation-timing-function: ease-in-out;
+        -webkit-animation-delay: 0.01s;
         animation-delay: 0s;
         animation-duration: 0.3s;
         animation-name: slideInLeft;
         animation-timing-function: ease-in-out;
+        animation-delay: 0.01s;
         width: 100% !important;
         height: 100% !important;
     }
@@ -37,10 +58,12 @@ export const TaxCalculatorAppCss = css`
         -webkit-animation-duration: 0.3s;
         -webkit-animation-name: slideOutLeft;
         -webkit-animation-timing-function: ease-in-out;
+        -webkit-animation-delay: 0.01s;
         animation-delay: 0s;
         animation-duration: 0.3s;
         animation-name: slideOutLeft;
         animation-timing-function: ease-in-out;
+        animation-delay: 0.01s;
         width: 100% !important;
         height: 100% !important;
     }
@@ -50,10 +73,12 @@ export const TaxCalculatorAppCss = css`
         -webkit-animation-duration: 0.3s;
         -webkit-animation-name: slideInRight;
         -webkit-animation-timing-function: ease-in-out;
+        -webkit-animation-delay: 0.01s;
         animation-delay: 0s;
         animation-duration: 0.3s;
         animation-name: slideInRight;
         animation-timing-function: ease-in-out;
+        animation-delay: 0.01s;
         width: 100% !important;
         height: 100% !important;
     }
@@ -63,10 +88,12 @@ export const TaxCalculatorAppCss = css`
         -webkit-animation-duration: 0.3s;
         -webkit-animation-name: slideOutLeft;
         -webkit-animation-timing-function: ease-in-out;
+        -webkit-animation-delay: 0.01s;
         animation-delay: 0s;
         animation-duration: 0.3s;
         animation-name: slideOutLeft;
         animation-timing-function: ease-in-out;
+        animation-delay: 0.01s;
         width: 100% !important;
         height: 100% !important;
     }
@@ -76,10 +103,12 @@ export const TaxCalculatorAppCss = css`
         -webkit-animation-duration: 0.3s;
         -webkit-animation-name: slideInRight;
         -webkit-animation-timing-function: ease-in-out;
+        -webkit-animation-delay: 0.01s;
         animation-delay: 0s;
         animation-duration: 0.3s;
         animation-name: slideInRight;
         animation-timing-function: ease-in-out;
+        animation-delay: 0.01s;
         width: 100% !important;
         height: 100% !important;
     }
@@ -89,10 +118,12 @@ export const TaxCalculatorAppCss = css`
         -webkit-animation-duration: 0.3s;
         -webkit-animation-name: slideOutLeft;
         -webkit-animation-timing-function: ease-in-out;
+        -webkit-animation-delay: 0.01s;
         animation-delay: 0s;
         animation-duration: 0.3s;
         animation-name: slideOutLeft;
         animation-timing-function: ease-in-out;
+        animation-delay: 0.01s;
         width: 100% !important;
         height: 100% !important;
     }
@@ -102,10 +133,12 @@ export const TaxCalculatorAppCss = css`
         -webkit-animation-duration: 0.3s;
         -webkit-animation-name: slideInRight;
         -webkit-animation-timing-function: ease-in-out;
+        -webkit-animation-delay: 0.01s;
         animation-delay: 0s;
         animation-duration: 0.3s;
         animation-name: slideInRight;
         animation-timing-function: ease-in-out;
+        animation-delay: 0.01s;
         width: 100% !important;
         height: 100% !important;
     }
@@ -115,10 +148,12 @@ export const TaxCalculatorAppCss = css`
         -webkit-animation-duration: 0.3s;
         -webkit-animation-name: slideOutLeft;
         -webkit-animation-timing-function: ease-in-out;
+        -webkit-animation-delay: 0.01s;
         animation-delay: 0s;
         animation-duration: 0.3s;
         animation-name: slideOutLeft;
         animation-timing-function: ease-in-out;
+        animation-delay: 0.01s;
         width: 100% !important;
         height: 100% !important;
     }
@@ -128,10 +163,12 @@ export const TaxCalculatorAppCss = css`
         -webkit-animation-duration: 0.3s;
         -webkit-animation-name: slideInRight;
         -webkit-animation-timing-function: ease-in-out;
+        -webkit-animation-delay: 0.01s;
         animation-delay: 0s;
         animation-duration: 0.3s;
         animation-name: slideInRight;
         animation-timing-function: ease-in-out;
+        animation-delay: 0.01s;
         width: 100% !important;
         height: 100% !important;
     }
@@ -150,13 +187,11 @@ export const TaxCalculatorAppCss = css`
     @keyframes slideOutLeft {
         from {
             transform: translate3d(0, 0, 0);
-            -webkit-transform: translate3d(0, 0, 0);
         }
 
         to {
             visibility: hidden;
             transform: translate3d(-100%, 0, 0);
-            -webkit-transform: translate3d(-100%, 0, 0);
         }
     }
 
