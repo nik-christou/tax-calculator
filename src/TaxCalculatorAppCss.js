@@ -14,13 +14,12 @@ export const TaxCalculatorAppCss = css`
     }
 
     .snackbar-container {
-        display: none;
+        display: flex;
         background-color: lightpink;
-        position: absolute;
+        position: sticky;
         width: 100%;
         height: 50px;
         bottom: 0;
-        top: 50px;
     }
 
     .home-leaving {

@@ -2,9 +2,11 @@ import { LitElement, html } from "lit-element";
 import { BaseElementMixin } from "./base/BaseElementMixin.js";
 import { DatabaseManager } from "./datastore/DatabaseManager.js";
 import { TaxCalculatorAppCss } from "./TaxCalculatorAppCss.js";
-import { SWRegister } from "./SWRegister.js";
+import { ServiceWorkerHandler } from "./service-worker/ServiceWorkerHandler.js";
 import { Router } from "@vaadin/router";
 import { routes } from "./Routes.js";
+
+import "./service-worker/ServiceWorkerNotification.js";
 
 export class TaxCalculatorApp extends BaseElementMixin(LitElement) {
     static get styles() {
@@ -12,24 +14,36 @@ export class TaxCalculatorApp extends BaseElementMixin(LitElement) {
     }
 
     render() {
-        return html` <div id="outlet"></div> `;
+        return html`
+            <div id="outlet"></div>
+            <service-worker-notification></service-worker-notification>
+        `;
     }
 
     constructor() {
         super();
-        SWRegister.register();
-        // DatabaseManager.resetDatabase();
-        DatabaseManager.openConnection();
     }
 
     firstUpdated() {
+        this._prepareServiceWorker();
+        this._prepareDatabase();
         this._prepareRouter();
+    }
+
+    _prepareDatabase() {
+        // DatabaseManager.resetDatabase();
+        DatabaseManager.openConnection();
     }
 
     _prepareRouter() {
         const outletElement = this.shadowRoot.querySelector("#outlet");
         const router = new Router(outletElement);
         router.setRoutes(routes);
+    }
+
+    _prepareServiceWorker() {
+        const serviceWorkerNotification = this.shadowRoot.querySelector("service-worker-notification");
+        ServiceWorkerHandler.register(serviceWorkerNotification);
     }
 }
 
