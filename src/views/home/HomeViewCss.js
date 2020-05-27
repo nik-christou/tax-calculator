@@ -11,6 +11,11 @@ export const HomeViewCss = css`
         -webkit-transform: translate3d(0, 0, 0);
     }
 
+    .grid-container {
+        min-width: 100vw;
+        min-height: 100vh;
+    }
+
     .navbar {
         display: flex;
         flex-direction: row;
@@ -42,7 +47,6 @@ export const HomeViewCss = css`
 
     main {
         background-color: #f2f2f2;
-        height: 100vh;
     }
 
     .main-container {

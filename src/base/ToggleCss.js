@@ -3,6 +3,7 @@ import { css } from "lit-element";
 export const ToggleCss = css`
     .toggle {
         display: none;
+        pointer-events: none;
     }
 
     .toggle + label {
@@ -36,7 +37,12 @@ export const ToggleCss = css`
         right: 1px;
         background-color: var(--toggle-round-label-background-color-before, #f1f1f1);
         border-radius: 60px;
-        transition: background 0.2s;
+        -webkit-transition-property: background;
+        -webkit-transition-duration: 0.2s;
+        -webkit-transition-delay: 0.01s;
+        transition-property: background;
+        transition-duration: 0.2s;
+        transition-delay: 0.01s;
     }
 
     .toggle-round + label:after {
@@ -44,7 +50,12 @@ export const ToggleCss = css`
         background-color: var(--toggle-round-label-background-color-after, #fff);
         border-radius: 100%;
         box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
-        transition: margin 0.2s;
+        -webkit-transition-property: margin;
+        -webkit-transition-duration: 0.2s;
+        -webkit-transition-delay: 0.01s;
+        transition-property: margin;
+        transition-duration: 0.2s;
+        transition-delay: 0.01s;
     }
 
     .toggle-round:checked + label:before {

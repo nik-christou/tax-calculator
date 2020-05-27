@@ -10,6 +10,7 @@
   },
   "scripts": {
     "serve": "es-dev-server --config ./es-dev-server.config.js",
+    "serve:network": "es-dev-server --hostname 192.168.0.10 --config ./es-dev-server.config.js",
     "serve:watch": "es-dev-server --node-resolve --app-index index.html --watch",
     "snowpack": "npx snowpack --clean",
     "lint:prettier": "prettier \"./src/**/*.js\" --tab-width 4 --list-different",
@@ -34,7 +35,8 @@
     "lit-element": "^2.3.1",
     "lit-html": "^1.2.1",
     "normalize.css": "^8.0.1",
-    "workbox-window": "^5.1.3"
+    "workbox-window": "^5.1.3",
+    "es-module-shims": "^0.4.6"
   },
   "devDependencies": {
     "@babel/cli": "^7.8.4",

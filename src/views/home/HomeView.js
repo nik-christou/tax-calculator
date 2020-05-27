@@ -19,7 +19,7 @@ export class HomeView extends BaseElementMixin(LitElement) {
             selectedPeriod: SalaryType,
             grossAmount: String,
             includesThirteen: Boolean,
-            formatter: Intl.NumberFormat,
+            formatter: Intl.NumberFormat
         };
     }
 
@@ -121,14 +121,14 @@ export class HomeView extends BaseElementMixin(LitElement) {
             this._handleGrossAmountFocus(event, grossAmountElement);
         });
 
-        grossAmountElement.addEventListener("blur", (event) => {
+        grossAmountElement.addEventListener("change", (event) => {
             this._handleGrossAmountBlur(event, grossAmountElement);
         });
     }
 
     _addIncludesThirteenInputListener() {
         const includesThirteenElement = this.shadowRoot.querySelector("input#includesThirteen");
-        includesThirteenElement.addEventListener("input", (event) => {
+        includesThirteenElement.addEventListener("change", (event) => {
             this._handleThirteenChange(event, includesThirteenElement);
         });
     }
@@ -190,23 +190,23 @@ export class HomeView extends BaseElementMixin(LitElement) {
     }
 
     /**
-     * @param {FocusEvent} event
+     * @param {Event} event
      * @param {HTMLInputElement} grossAmountElement
      */
     async _handleGrossAmountBlur(event, grossAmountElement) {
         const sanitizedAmount = this._sanitizeSalaryAmount(grossAmountElement.value);
+
         const unformattedAmount = Number(sanitizedAmount);
 
         if (!unformattedAmount) {
+
             // inputted amount could not be used
             // reverting back to stored amount if present
-
             const grossAmountFromStore = await UserSelectionStore.retrieveGrossAmount();
 
             // no stored amount was found
             if (!grossAmountFromStore) {
-                // this.grossAmount = this.formatter.format(0);
-                grossAmountElement.value = ""; //this.formatter.format(0);//this.grossAmount;
+                grossAmountElement.value = "";
                 return;
             }
 
@@ -236,6 +236,7 @@ export class HomeView extends BaseElementMixin(LitElement) {
      * @param {String} formattedSalaryAmount
      */
     _sanitizeSalaryAmount(formattedSalaryAmount) {
+
         if (!this.formatter) {
             return formattedSalaryAmount;
         }
@@ -249,10 +250,20 @@ export class HomeView extends BaseElementMixin(LitElement) {
     }
 
     _extractCurrencyAndDecimalSymbolFromLocale() {
+
+        // workaround for iOS Safari 12 and below since
+        // formatToParts was not available until iOS Safari 13
+        if(!Intl.NumberFormat.prototype.formatToParts) {
+            return this._calculateCurrencyAndDecimalSymbolsForOlderBrowsers();
+        }
+
         const dotDecimalSymbol = ".";
         const commaDesimalSymbol = ",";
 
-        // workaround to get the currency symbol for the country locale
+        // Get the currency symbol for the country locale
+        // so we call the function with a random number
+        // in order to get the decimal and currency symbol
+        // for selected country locale
         const parts = this.formatter.formatToParts(3.5);
         const currencySymbol = parts[0].value;
 
@@ -267,6 +278,27 @@ export class HomeView extends BaseElementMixin(LitElement) {
         }
 
         return { currencySymbol, decimalSymbol };
+    }
+
+    _calculateCurrencyAndDecimalSymbolsForOlderBrowsers() {
+
+        const currencySymbol = this.selectedCountry.currency;
+        const decimalSymbol = this._getDecimalSeparator(this.selectedCountry.locale);
+
+        // return the currency symbol as it stored in the json
+        // and the decimal separator
+        return { currencySymbol, decimalSymbol };
+    }
+
+    /**
+     * @param {String} locale
+     */
+    _getDecimalSeparator(locale) {
+
+        const numberWithDecimalSeparator = 1.1;
+        return numberWithDecimalSeparator
+        .toLocaleString(locale)
+        .substring(1, 2);
     }
 
     /**

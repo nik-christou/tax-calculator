@@ -63,7 +63,7 @@ const countryInfoTemplate = (selectedCountry) => {
  * @param {String} grossAmount
  */
 const HomeViewTemplate = (selectedCountry, includesThirteen, grossAmount) => html`
-    <div bp="grid">
+    <div bp="grid" class="grid-container">
         <main bp="12">
             <div class="navbar">
                 <div class="title">
@@ -98,6 +98,7 @@ const HomeViewTemplate = (selectedCountry, includesThirteen, grossAmount) => htm
                                 .value=${grossAmount}
                                 class="form-control salary-input"
                                 placeholder="enter gross amount"
+                                novalidate
                             />
                         </div>
                     </div>
@@ -119,7 +120,7 @@ const HomeViewTemplate = (selectedCountry, includesThirteen, grossAmount) => htm
                                     type="checkbox"
                                     name="includesThirteen"
                                     ?checked="${includesThirteen}"
-                                    class="toggle toggle-round cmn-toggle cmn-toggle-round"
+                                    class="toggle toggle-round"
                                 />
                                 <label for="includesThirteen"></label>
                             </div>
