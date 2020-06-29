@@ -6,7 +6,8 @@ import { ServiceWorkerHandler } from "./service-worker/ServiceWorkerHandler.js";
 import { Router } from "@vaadin/router";
 import { routes } from "./Routes.js";
 
-import "./service-worker/ServiceWorkerNotification.js";
+import "./component/snackbar/SnackbarNotification.js";
+import "./service-worker/ServiceWorkerUpdateNotification.js";
 
 export class TaxCalculatorApp extends BaseElementMixin(LitElement) {
     static get styles() {
@@ -15,8 +16,12 @@ export class TaxCalculatorApp extends BaseElementMixin(LitElement) {
 
     render() {
         return html`
-            <div id="outlet"></div>
-            <service-worker-notification></service-worker-notification>
+            <main>
+                <div id="outlet"></div>
+                <snackbar-notification>
+                    <service-worker-update-notification></service-worker-update-notification>
+                </snackbar-notification>
+            </main>
         `;
     }
 
@@ -42,7 +47,7 @@ export class TaxCalculatorApp extends BaseElementMixin(LitElement) {
     }
 
     _prepareServiceWorker() {
-        const serviceWorkerNotification = this.shadowRoot.querySelector("service-worker-notification");
+        const serviceWorkerNotification = this.shadowRoot.querySelector("snackbar-notification");
         ServiceWorkerHandler.register(serviceWorkerNotification);
     }
 }
