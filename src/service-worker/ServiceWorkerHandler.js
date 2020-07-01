@@ -1,27 +1,23 @@
 import { Workbox } from "workbox-window";
-import { ServiceWorkerNotication } from "./ServiceWorkerNotification.js";
+import { SnackbarNotication } from "../component/snackbar/SnackbarNotification.js";
 
 export class ServiceWorkerHandler {
 
     /**
-     * @param {ServiceWorkerNotication} serviceWorkerNotification
+     * @param {SnackbarNotication} snackbarNotication
      */
-    static register(serviceWorkerNotification) {
+    static async register(snackbarNotication) {
 
         // only proceed with regisration if not in local development enviroment
         if (!("serviceWorker" in navigator) || location.hostname === "localhost") {
-
             console.debug("Skipping service worker registration in localhost...");
-
-            serviceWorkerNotification.show();
-
             return;
         }
 
         const wb = new Workbox("../service-worker.js");
 
         wb.addEventListener("activated", (event) => this._handleActivationState(event));
-        wb.addEventListener("waiting", (event) => this._handleWaitingState(event, serviceWorkerNotification));
+        wb.addEventListener("waiting", (event) => this._handleWaitingState(event, snackbarNotication));
 
         wb.register();
     }
@@ -38,9 +34,10 @@ export class ServiceWorkerHandler {
 
     /**
      * @param {import("workbox-window/utils/WorkboxEvent").WorkboxLifecycleWaitingEvent} event
-     * @param {ServiceWorkerNotication} serviceWorkerNotification
+     * @param {SnackbarNotication} snackbarNotication
      */
-    static _handleWaitingState(event, serviceWorkerNotification) {
-        serviceWorkerNotification.show();
+    static _handleWaitingState(event, snackbarNotication) {
+
+        snackbarNotication.show();
     }
 }
