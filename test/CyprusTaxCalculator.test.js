@@ -1,9 +1,10 @@
-import { TaxResult } from "../src/results/model/TaxResult.js";
-import { SalaryDetails } from "../src/salary/model/SalaryDetails.js";
-import { SalaryTypes } from "../src/salary/model/SalaryTypes.js";
-import { CyprusTaxBracket } from "../src/taxation/cyprus/entity/CyprusTaxBracket.js";
-import { CyprusTaxDetails } from "../src/taxation/cyprus/entity/CyprusTaxDetails.js";
-import { CyprusTaxCalculator } from "../src/taxation/cyprus/control/CyprusTaxCalculator.js";
+import { assert} from "@open-wc/testing";
+import { TaxResult } from "../src/model/TaxResult.js";
+import { SalaryDetails } from "../src/model/SalaryDetails.js";
+import { SalaryTypes } from "../src/model/SalaryTypes.js";
+import { CyprusTaxBracket } from "../src/countries/cyprus/model/CyprusTaxBracket.js";
+import { CyprusTaxDetails } from "../src/countries/cyprus/model/CyprusTaxDetails.js";
+import { CyprusTaxCalculator } from "../src/countries/cyprus/controller/CyprusTaxCalculator.js";
 
 describe("CyprusTaxCalculator tests", () => {
     it("cyprusAnnualIncomeTax_thirteenIncluded_correctResultsCalculated", () => {
@@ -32,8 +33,8 @@ describe("CyprusTaxCalculator tests", () => {
         );
         const expectedAnnualTaxResults = new TaxResult(20000.0, 99.8, 1660, 340, 17900.2);
 
-        chai.assert.deepEqual(taxResults.monthlyTaxResult, expectedMonthlyTaxResult, "monthly tax results do not match");
-        chai.assert.deepEqual(taxResults.annualTaxResult, expectedAnnualTaxResults, "annual tax results do not match");
+        assert.deepEqual(taxResults.monthlyTaxResult, expectedMonthlyTaxResult, "monthly tax results do not match");
+        assert.deepEqual(taxResults.annualTaxResult, expectedAnnualTaxResults, "annual tax results do not match");
     });
 
     it("cyprusMonthlyIncomeTax_thirteenIncluded_correctResultsCalculated", () => {
@@ -56,7 +57,7 @@ describe("CyprusTaxCalculator tests", () => {
         const expectedMonthlyTaxResult = new TaxResult(20000, 99.8, 1660, 340, 17900.2);
         const expectedAnnualTaxResults = new TaxResult(260000, 1297.3999999999999, 21580, 4420, 232702.6);
 
-        chai.assert.deepEqual(taxResults.monthlyTaxResult, expectedMonthlyTaxResult, "monthly tax results do not match");
-        chai.assert.deepEqual(taxResults.annualTaxResult, expectedAnnualTaxResults, "annual tax results do not match");
+        assert.deepEqual(taxResults.monthlyTaxResult, expectedMonthlyTaxResult, "monthly tax results do not match");
+        assert.deepEqual(taxResults.annualTaxResult, expectedAnnualTaxResults, "annual tax results do not match");
     });
 });

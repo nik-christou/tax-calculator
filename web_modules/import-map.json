@@ -1,9 +1,11 @@
 {
   "imports": {
     "@vaadin/router": "./@vaadin/router.js",
+    "blueprint-css/dist/blueprint.min.css": "./blueprint-css/dist/blueprint.min.css",
     "idb/build/esm/index.js": "./idb/build/esm/index.js",
     "lit-element": "./lit-element.js",
     "lit-html": "./lit-html.js",
+    "normalize.css/normalize.css": "./normalize.css/normalize.css",
     "workbox-window": "./workbox-window.js"
   }
 }
