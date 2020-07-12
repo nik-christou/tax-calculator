@@ -19,14 +19,16 @@ export const HomeViewCss = css`
     }
 
     .navbar {
-        display: flex;
-        flex-direction: row;
         line-height: 2.4em;
         overflow: hidden;
         background-color: #4e7ac7;
         color: #fff;
         margin-bottom: 0px;
         box-shadow: rgba(0, 0, 0, 0.2) 0px 1px 2px;
+        padding-top: 0.7em;
+        padding-bottom: 0.7em;
+        padding-left: 0.5em;
+        padding-right: 0.5em;
     }
 
     .navbar .title {
@@ -39,10 +41,6 @@ export const HomeViewCss = css`
         justify-content: center;
         color: #fff;
         line-height: 1.5;
-        padding-top: 0.7em;
-        padding-bottom: 0.7em;
-        padding-left: 0.5em;
-        padding-right: 0.5em;
         border-width: 0px;
         text-decoration: none;
     }

@@ -65,7 +65,7 @@ const countryInfoTemplate = (selectedCountry) => {
 const HomeViewTemplate = (selectedCountry, includesThirteen, grossAmount) => html`
     <div bp="grid" class="grid-container">
         <main bp="12">
-            <div class="navbar">
+            <div bp="grid 12" class="navbar">
                 <div class="title">
                     <img src="/web_assets/img/logo.svg" alt="" class="logo" />
                     Salary Tax Calculator
