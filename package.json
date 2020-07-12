@@ -22,7 +22,7 @@
     "build:sw:gen": "workbox generateSW workbox.config.js",
     "build:sw:copy": "workbox copyLibraries ./dist/web_assets",
     "build:clean": "rimraf dist && mkdir -p ./dist",
-    "build:genDeps": "npx snowpack -optimize --dest ./dist/web_modules/",
+    "build:genDeps": "npx snowpack install --treeshake --dest ./dist/web_modules/",
     "build:copyAssets": "cp -r ./web_assets ./dist",
     "build:copyIndex": "html-minifier -o ./dist/index.html --config-file ./minify.config.json index.html",
     "build:compile": "npx babel src --out-dir ./dist/src",
