@@ -2,6 +2,8 @@ import { css } from "lit-element";
 
 export const TaxDetailsViewCss = css`
     :host {
+        min-height: 100vh;
+        min-width: 100vw;
         will-change: transform, opacity;
         transform-style: preserve-3d;
         backface-visibility: hidden;

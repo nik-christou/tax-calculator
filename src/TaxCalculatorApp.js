@@ -16,12 +16,12 @@ export class TaxCalculatorApp extends BaseElementMixin(LitElement) {
 
     render() {
         return html`
-            <main>
+            <div class="main">
                 <div id="outlet"></div>
                 <snackbar-notification>
                     <service-worker-update-notification></service-worker-update-notification>
                 </snackbar-notification>
-            </main>
+            </div>
         `;
     }
 
