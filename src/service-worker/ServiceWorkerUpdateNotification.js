@@ -47,6 +47,8 @@ export class ServiceWorkerUpdateNotication extends BaseElementMixin(LitElement) 
      */
     _handleRefreshLink(event) {
         event.preventDefault();
+        event.stopPropagation();
+        
         window.location.reload();
     }
 
