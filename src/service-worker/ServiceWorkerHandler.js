@@ -43,7 +43,7 @@ export class ServiceWorkerHandler {
         // we only care if the user has selected the "Reload" button which will fire an event
 
         snackbarNotication.addEventListener("reloadServiceWorkerEvent", (event) => 
-            this._reloadServiceWorker(wb, registration);
+            this._reloadServiceWorker(wb, registration)
         );
     }
 
