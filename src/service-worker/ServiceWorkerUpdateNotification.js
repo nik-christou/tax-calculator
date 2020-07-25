@@ -46,18 +46,32 @@ export class ServiceWorkerUpdateNotication extends BaseElementMixin(LitElement) 
      * @param {MouseEvent} event
      */
     _handleRefreshLink(event) {
+
         event.preventDefault();
         event.stopPropagation();
-        
-        window.location.reload();
+       
+        this.fireReloadServiceWorkerEvent();
     }
 
     /**
      * @param {MouseEvent} event
      */
     _handleCloseLink(event) {
+        
         event.preventDefault();
+        event.stopPropagation();
+
         this.fireCloseNotificationEvent();
+    }
+
+    fireReloadServiceWorkerEvent() {
+
+        const reloadServiceWorkerEvent = new CustomEvent("reloadServiceWorkerEvent", {
+            bubbles: true,
+            composed: true
+        });
+
+        this.dispatchEvent(reloadServiceWorkerEvent);
     }
 
     fireCloseNotificationEvent() {
