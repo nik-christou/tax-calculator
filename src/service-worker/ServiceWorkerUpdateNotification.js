@@ -64,16 +64,31 @@ export class ServiceWorkerUpdateNotication extends BaseElementMixin(LitElement) 
         this.fireCloseNotificationEvent();
     }
 
+<<<<<<< HEAD
     fireReloadServiceWorkerEvent() {
 
         const reloadServiceWorkerEvent = new CustomEvent("reloadServiceWorkerEvent", {
+=======
+    fireRefreshNotificationEvent() {
+
+        const refreshNotificationEvent = new CustomEvent("refreshNotificationEvent", {
+>>>>>>> d4d710c... Updated dependencies to latest version
             bubbles: true,
             composed: true
         });
 
+<<<<<<< HEAD
         this.dispatchEvent(reloadServiceWorkerEvent);
     }
 
+=======
+        this.dispatchEvent(refreshNotificationEvent);
+    }
+
+    /**
+     * Fire the necessary event to close the notification component
+     */
+>>>>>>> d4d710c... Updated dependencies to latest version
     fireCloseNotificationEvent() {
 
         const closeNotificationEvent = new CustomEvent("hideNotificationEvent", {

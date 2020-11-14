@@ -1,4 +1,4 @@
-import { assert} from "@open-wc/testing";
+import { assert } from "@open-wc/testing";
 import { TaxResult } from "../src/model/TaxResult.js";
 import { SalaryDetails } from "../src/model/SalaryDetails.js";
 import { SalaryTypes } from "../src/model/SalaryTypes.js";

@@ -1,0 +1,21 @@
+{
+"install": [
+    "lit-element",
+    "lit-html",
+    "workbox-window",
+    "@vaadin/router",
+    "idb/build/esm/index.js",
+    "normalize.css/normalize.css",
+    "blueprint-css/dist/blueprint.min.css"
+  ],
+
+  "installOptions": {
+    "dest": "web_modules",
+    "rollup": {
+      "rollup.dedupe": [
+        "lit-element",
+        "lit-html"
+      ]
+    }
+  }
+}
