@@ -21,7 +21,6 @@ module.exports = {
         "workbox-window",
         "@vaadin/router",
         "idb/build/esm/index.js",
-        "es-module-shims",
         "normalize.css"
     ],
     installOptions: {
