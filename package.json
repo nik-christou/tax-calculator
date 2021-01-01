@@ -9,91 +9,37 @@
     "url": "https://github.com/nik-christou/tax-calculator"
   },
   "scripts": {
-    "snowpack": "snowpack install --config ./config/snowpack.config.json",
-    "serve": "web-dev-server --app-index index.html --node-resolve",
-    "serve:watch": "web-dev-server --app-index index.html --node-resolve --watch",
+    "snowpack:install": "snowpack install --config ./snowpack.config.js --reload",
+    "snowpack:serve": "snowpack dev --config ./snowpack.config.js",
+    "snowpack:serve:watch": "snowpack dev --config ./snowpack.config.js --hmr",
+    "snowpack:build": "snowpack build --config ./snowpack.config.js",
     "lint:prettier": "prettier \"./src/**/*.js\" --tab-width 4 --list-different",
     "format:prettier": "prettier \"./src/**/*.js\" --tab-width 4 --print-width 150 --write",
     "tests": "web-test-runner ./test/**/*.test.js --node-resolve; exit 0",
-    "tests:coverage": "web-test-runner test/**/*.test.js --coverage; exit 0",
-    "tests:watch": "web-test-runner test/**/*.test.js --watch; exit 0",
+    "tests:watch": "web-test-runner test/**/*.test.js --node-resolve --watch; exit 0",
+    "tests:coverage": "web-test-runner test/**/*.test.js --node-resolve --coverage; exit 0",
     "tests:browsers": "web-test-runner test/**/*.test.js --playwright --browsers chromium firefox webkit; exit 0",
-    "build:sw:gen": "workbox generateSW ./config/workbox.config.js",
-    "build:sw:copy": "workbox copyLibraries ./dist/web_assets",
-    "build:clean": "rimraf dist && mkdir -p ./dist",
-    "build:genDeps": "npx snowpack install --treeshake --dest ./dist/web_modules/",
-    "build:copyAssets": "cp -r ./web_assets ./dist",
-    "build:copyIndex": "html-minifier -o ./dist/index.html --config-file .config//minify.config.json index.html",
-    "build:compile": "npx babel src --out-dir ./dist/src",
-    "build": "npm run build:clean && npm run build:genDeps && npm run build:copyAssets && npm run build:compile && npm run build:copyIndex && npm run build:sw:copy && npm run build:sw:gen"
+    "sw:gen": "workbox generateSW ./workbox.config.js",
+    "sw:copy": "workbox copyLibraries ./dist/web_assets",
+    "build": "npm run snowpack:build && npm run sw:copy && npm run sw:gen"
   },
   "dependencies": {
     "@vaadin/router": "^1.7.2",
-    "blueprint-css": "^3.1.1",
-    "idb": "^5.0.7",
+    "es-module-shims": "^0.8.0",
+    "idb": "^5.0.8",
     "lit-element": "^2.4.0",
     "lit-html": "^1.3.0",
     "normalize.css": "^8.0.1",
-    "workbox-window": "^5.1.4",
-    "es-module-shims": "^0.7.1"
+    "workbox-window": "^6.0.2"
   },
   "devDependencies": {
-    "@babel/cli": "^7.12.1",
-    "@babel/core": "^7.12.3",
-    "@babel/preset-modules": "^0.1.4",
-    "@open-wc/testing": "^2.5.18",
-    "@web/test-runner": "^0.9.8",
-    "@web/dev-server": "^0.0.19",
+    "@open-wc/testing": "^2.5.32",
+    "@web/test-runner": "^0.11.7",
     "@esm-bundle/chai": "^4.1.5",
-    "axe-core": "^3.5.5",
-    "babel-plugin-template-html-minifier": "^4.1.0",
-    "babel-preset-minify": "^0.5.1",
-    "deepmerge": "^4.2.2",
-    "html-minifier": "^4.0.0",
-    "prettier": "^2.1.2",
-    "rimraf": "^3.0.2",
-    "snowpack": "^2.17.1",
-    "web-component-analyzer": "^1.1.6",
-    "workbox-cli": "^5.1.4",
-    "sinon": "^9.2.1"
-  },
-  "babel": {
-    "presets": [
-      [
-        "minify",
-        {
-          "builtIns": false,
-          "evaluate": false,
-          "mangle": false
-        }
-      ],
-      "@babel/preset-modules"
-    ],
-    "plugins": [
-      [
-        "template-html-minifier",
-        {
-          "modules": {
-            "lit-html": [
-              "html"
-            ],
-            "lit-element": [
-              "html",
-              {
-                "name": "css",
-                "encapsulation": "style"
-              }
-            ]
-          },
-          "strictCSS": true,
-          "htmlMinifier": {
-            "collapseWhitespace": true,
-            "conservativeCollapse": true,
-            "removeComments": true,
-            "caseSensitive": true
-          }
-        }
-      ]
-    ]
+    "@snowpack/plugin-optimize": "^0.2.10",
+    "prettier": "^2.2.1",
+    "snowpack": "^2.18.5",
+    "workbox-cli": "^6.0.2",
+    "sinon": "^9.2.2"
   }
 }

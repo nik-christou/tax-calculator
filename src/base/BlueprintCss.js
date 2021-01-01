@@ -1,5 +1,8 @@
 import { css } from "lit-element";
 
+// v3.1.1 Blueprint CSS copied as 
+// a JS modules so that it can be imported
+
 export const BlueprintCss = css`
     [bp~="container"] {
         width: 100%;

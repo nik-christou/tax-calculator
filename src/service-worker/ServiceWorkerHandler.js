@@ -16,7 +16,6 @@ export class ServiceWorkerHandler {
             return;
         }
 
-<<<<<<< HEAD
         const wb = new Workbox(serviceWorkerLocation);
         const registration = await wb.register();
 
@@ -27,17 +26,6 @@ export class ServiceWorkerHandler {
     /**
      * @param {Workbox} wb
      * @param {ServiceWorkerRegistration} registration
-=======
-        const wb = new Workbox("../service-worker.js");
-
-        wb.addEventListener("waiting", (event) => this._handleWaitingState(event, snackbarNotication));
-        wb.addEventListener("externalwaiting", (event) => this._handleWaitingState(event, snackbarNotication));
-
-        wb.register();
-    }
-
-    /**
->>>>>>> d4d710c... Updated dependencies to latest version
      * @param {import("workbox-window/utils/WorkboxEvent").WorkboxLifecycleWaitingEvent} event
      * @param {SnackbarNotication} snackbarNotication
      */

@@ -7,7 +7,6 @@ module.exports = {
     mode: 'production',
     cacheId: 'tax-calculator-pwa',
     navigateFallback: './index.html',
-    importScripts: ['./web_assets/workbox-v5.1.3/workbox-sw.js'],
     globDirectory: "./dist",
     globPatterns: [
         './index.html',
