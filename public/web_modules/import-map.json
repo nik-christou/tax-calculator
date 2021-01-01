@@ -1,11 +1,10 @@
 {
   "imports": {
     "@vaadin/router": "./@vaadin/router.js",
-    "es-module-shims": "./es-module-shims.js",
     "idb/build/esm/index.js": "./idb/build/esm/index.js",
     "lit-element": "./lit-element.js",
     "lit-html": "./lit-html.js",
-    "normalize.css": "./normalize.css",
+    "systemjs": "./systemjs.js",
     "workbox-window": "./workbox-window.js"
   }
 }

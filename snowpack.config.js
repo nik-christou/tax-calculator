@@ -1,8 +1,7 @@
 /** @type {import("snowpack").SnowpackUserConfig } */
 module.exports = {
     mount: {
-        public: "/",
-        src: "/src",
+        public: "/"
     },
     plugins: [
         ["@snowpack/plugin-optimize", { 
@@ -20,11 +19,13 @@ module.exports = {
         "lit-html",
         "workbox-window",
         "@vaadin/router",
-        "idb/build/esm/index.js"
+        "idb/build/esm/index.js",
+        "systemjs"
     ],
     installOptions: {
         dest: "./public/web_modules",
         clean: true,
+        treeshake: true,
         rollup: {
             dedupe: [
                 "lit-element",

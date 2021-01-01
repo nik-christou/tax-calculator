@@ -1,10 +1,10 @@
 import { assert } from "@esm-bundle/chai";
-import { TaxResult } from "../src/model/TaxResult.js";
-import { SalaryDetails } from "../src/model/SalaryDetails.js";
-import { SalaryTypes } from "../src/model/SalaryTypes.js";
-import { CyprusTaxBracket } from "../src/countries/cyprus/model/CyprusTaxBracket.js";
-import { CyprusTaxDetails } from "../src/countries/cyprus/model/CyprusTaxDetails.js";
-import { CyprusTaxCalculator } from "../src/countries/cyprus/controller/CyprusTaxCalculator.js";
+import { TaxResult } from "../public/src/model/TaxResult.js";
+import { SalaryDetails } from "../public/src/model/SalaryDetails.js";
+import { SalaryTypes } from "../public/src/model/SalaryTypes.js";
+import { CyprusTaxBracket } from "../public/src/countries/cyprus/model/CyprusTaxBracket.js";
+import { CyprusTaxDetails } from "../public/src/countries/cyprus/model/CyprusTaxDetails.js";
+import { CyprusTaxCalculator } from "../public/src/countries/cyprus/controller/CyprusTaxCalculator.js";
 
 describe("CyprusTaxCalculator tests", () => {
     
