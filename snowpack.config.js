@@ -20,8 +20,7 @@ module.exports = {
         "lit-html",
         "workbox-window",
         "@vaadin/router",
-        "idb/build/esm/index.js",
-        "normalize.css"
+        "idb/build/esm/index.js"
     ],
     installOptions: {
         dest: "./public/web_modules",
