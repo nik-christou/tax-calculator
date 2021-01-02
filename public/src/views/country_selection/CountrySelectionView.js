@@ -1,18 +1,17 @@
-import { LitElement } from "lit-element";
-import { BaseElementMixin } from "../../base/BaseElementMixin.js";
-import { CountrySelectionViewTemplate } from "./CountrySelectionViewTemplate.js";
-import { CountryStore } from "../../datastore/CountryStore.js";
-import { UserSelectionStore } from "../../datastore/UserSelectionStore.js";
-import { Country } from "../../model/Country.js";
-import { ListGroupCss } from "../../base/ListGroupCss.js";
-import { CountrySelectionViewCss } from "./CountrySelectionViewCss.js";
-import { BlueprintCss } from "../../base/BlueprintCss.js";
+import { LitElement } from 'lit-element';
+import { BaseElementMixin } from '../../base/BaseElementMixin.js';
+import { CountrySelectionViewTemplate } from './CountrySelectionViewTemplate.js';
+import { CountryStore } from '../../datastore/CountryStore.js';
+import { UserSelectionStore } from '../../datastore/UserSelectionStore.js';
+import { ListGroupCss } from '../../base/ListGroupCss.js';
+import { CountrySelectionViewCss } from './CountrySelectionViewCss.js';
+import { BlueprintCss } from '../../base/BlueprintCss.js';
 
 export class CountrySelectionView extends BaseElementMixin(LitElement) {
     static get properties() {
         return {
             countries: Array,
-            selectedId: Number,
+            selectedId: Number
         };
     }
 
@@ -27,7 +26,7 @@ export class CountrySelectionView extends BaseElementMixin(LitElement) {
     constructor() {
         super();
         this.selectedId = 0;
-        this.countries = new Array();
+        this.countries = [];
     }
 
     firstUpdated() {
@@ -44,8 +43,8 @@ export class CountrySelectionView extends BaseElementMixin(LitElement) {
     }
 
     _addNavBackListener() {
-        const navBackLink = this.shadowRoot.querySelector("a.nav-back");
-        navBackLink.addEventListener("click", (event) => this._handleNavBackEvent(event));
+        const navBackLink = this.shadowRoot.querySelector('a.nav-back');
+        navBackLink.addEventListener('click', (event) => this._handleNavBackEvent(event));
     }
 
     /**
@@ -58,7 +57,7 @@ export class CountrySelectionView extends BaseElementMixin(LitElement) {
 
     /**
      * @param {Event} event
-     * @param {Country} country
+     * @param {import('../../model/Country.js')Country} country
      */
     _handleSelectedCountry(event, country) {
         event.preventDefault();
@@ -69,14 +68,14 @@ export class CountrySelectionView extends BaseElementMixin(LitElement) {
     _goToHome() {
         // user navigated directly to Countries view
         if (window.history.length === 1 || window.history.length === 2) {
-            history.pushState(null, "Home", "/");
-            history.go(1);
-            dispatchEvent(new PopStateEvent("popstate"));
+            window.history.pushState(null, 'Home', '/');
+            window.history.go(1);
+            window.dispatchEvent(new window.PopStateEvent('popstate'));
         } else {
-            history.back();
+            window.history.back();
         }
     }
 }
 
 // @ts-ignore
-window.customElements.define("country-selection-view", CountrySelectionView);
+window.customElements.define('country-selection-view', CountrySelectionView);

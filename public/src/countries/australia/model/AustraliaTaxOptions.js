@@ -1,4 +1,4 @@
-import { TaxOptions } from "../../../model/TaxOptions.js";
+import { TaxOptions } from '../../../model/TaxOptions.js';
 
 const COUNTRY_ID = 2;
 

@@ -1,14 +1,13 @@
-import { TemplateResult, html } from "lit-element";
-import { Country } from "../../model/Country.js";
-import { CyprusTaxDetailsViewTemplate } from "../../countries/cyprus/view/CyprusTaxDetailsViewTemplate.js";
-import { AustraliaTaxDetailsViewTemplate } from "../../countries/australia/view/AustraliaTaxDetailsViewTemplate.js";
+import { html } from 'lit-element';
+import { CyprusTaxDetailsViewTemplate } from '../../countries/cyprus/view/CyprusTaxDetailsViewTemplate.js';
+import { AustraliaTaxDetailsViewTemplate } from '../../countries/australia/view/AustraliaTaxDetailsViewTemplate.js';
 
 export class TaxDetailsViewTemplateLoader {
     /**
-     * @param {Country} country
+     * @param {import('../../model/Country.js').Country} country
      * @param {Object} taxDetails each country has its own implementation
      * @param {Intl.NumberFormat} formatter
-     * @returns {TemplateResult} the template for the tax details
+     * @returns {import('lit-element').TemplateResult} the template for the tax details
      */
     static _getCountryTaxDetailsViewTemplate(country, taxDetails, formatter) {
         if (!country || !taxDetails || !formatter) {
@@ -16,10 +15,10 @@ export class TaxDetailsViewTemplateLoader {
         }
 
         switch (country.id) {
-            case 1:
-                return CyprusTaxDetailsViewTemplate(taxDetails, formatter);
-            case 2:
-                return AustraliaTaxDetailsViewTemplate(taxDetails, formatter);
+        case 1:
+            return CyprusTaxDetailsViewTemplate(taxDetails, formatter);
+        case 2:
+            return AustraliaTaxDetailsViewTemplate(taxDetails, formatter);
         }
     }
 }

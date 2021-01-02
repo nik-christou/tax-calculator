@@ -1,6 +1,4 @@
-import { html } from "lit-element";
-import { CyprusTaxDetails } from "../model/CyprusTaxDetails.js";
-import { CyprusTaxBracket } from "../model/CyprusTaxBracket.js";
+import { html } from 'lit-element';
 
 /**
  * @param {Number} amount
@@ -11,20 +9,20 @@ function formatAmount(formatter, amount) {
 }
 
 /**
- * @param {CyprusTaxBracket} taxBracket
+ * @param {import('../model/CyprusTaxBracket.js').CyprusTaxBracket} taxBracket
  * @param {Intl.NumberFormat} formatter
  */
 const taxBracketItemTemplate = (taxBracket, formatter) => html`
     <div class="list-group-item tax-bracket-item">
         ${taxBracket.end === Number.POSITIVE_INFINITY
-            ? html`${formatAmount(formatter, taxBracket.start)} and over`
-            : html`<span>${formatAmount(formatter, taxBracket.start)} - ${formatAmount(formatter, taxBracket.end)}</span>`}
+        ? html`${formatAmount(formatter, taxBracket.start)} and over`
+        : html`<span>${formatAmount(formatter, taxBracket.start)} - ${formatAmount(formatter, taxBracket.end)}</span>`}
         <span>${taxBracket.ratePercent}%</span>
     </div>
 `;
 
 /**
- * @param {CyprusTaxDetails} taxDetails
+ * @param {import('../model/CyprusTaxDetails.js').CyprusTaxDetails} taxDetails
  * @param {Intl.NumberFormat} formatter
  */
 const CyprusTaxDetailsViewTemplate = (taxDetails, formatter) => html`

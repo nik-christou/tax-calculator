@@ -1,13 +1,13 @@
-import { LitElement, html } from "lit-element";
-import { BaseElementMixin } from "./base/BaseElementMixin.js";
-import { DatabaseManager } from "./datastore/DatabaseManager.js";
-import { TaxCalculatorAppCss } from "./TaxCalculatorAppCss.js";
-import { ServiceWorkerHandler } from "./service-worker/ServiceWorkerHandler.js";
-import { Router } from "@vaadin/router";
-import { routes } from "./Routes.js";
+import { LitElement, html } from 'lit-element';
+import { BaseElementMixin } from './base/BaseElementMixin.js';
+import { DatabaseManager } from './datastore/DatabaseManager.js';
+import { TaxCalculatorAppCss } from './TaxCalculatorAppCss.js';
+import { ServiceWorkerHandler } from './service-worker/ServiceWorkerHandler.js';
+import { Router } from '@vaadin/router';
+import { routes } from './Routes.js';
 
-import "./component/snackbar/SnackbarNotification.js";
-import "./service-worker/ServiceWorkerUpdateNotification.js";
+import './component/snackbar/SnackbarNotification.js';
+import './service-worker/ServiceWorkerUpdateNotification.js';
 
 export class TaxCalculatorApp extends BaseElementMixin(LitElement) {
     static get styles() {
@@ -25,10 +25,6 @@ export class TaxCalculatorApp extends BaseElementMixin(LitElement) {
         `;
     }
 
-    constructor() {
-        super();
-    }
-
     firstUpdated() {
         this._prepareServiceWorker();
         this._prepareDatabase();
@@ -41,16 +37,15 @@ export class TaxCalculatorApp extends BaseElementMixin(LitElement) {
     }
 
     _prepareRouter() {
-        const outletElement = this.shadowRoot.querySelector("#outlet");
+        const outletElement = this.shadowRoot.querySelector('#outlet');
         const router = new Router(outletElement);
         router.setRoutes(routes);
     }
 
     _prepareServiceWorker() {
-        const serviceWorkerNotification = this.shadowRoot.querySelector("snackbar-notification");
+        const serviceWorkerNotification = this.shadowRoot.querySelector('snackbar-notification');
         ServiceWorkerHandler.register(serviceWorkerNotification);
     }
 }
 
-// @ts-ignore
-window.customElements.define("tax-calculator-app", TaxCalculatorApp);
+window.customElements.define('tax-calculator-app', TaxCalculatorApp);

@@ -1,5 +1,4 @@
-import { html } from "lit-element";
-import { TaxResults } from "../../model/TaxResults.js";
+import { html } from 'lit-element';
 
 /**
  * @param {Number} amount
@@ -10,7 +9,7 @@ function formatAmount(formatter, amount) {
 }
 
 /**
- * @param {TaxResults} taxResults
+ * @param {import('../../model/TaxResults.js').TaxResults} taxResults
  * @param {Intl.NumberFormat} formatter
  */
 const ResultsViewTemplate = (taxResults, formatter) => html`

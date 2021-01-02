@@ -1,13 +1,13 @@
-import { LitElement, html } from "lit-element";
-import { BaseElementMixin } from "../../base/BaseElementMixin.js";
-import { SnackbarNotificationCss } from "./SnackbarNotificationCss.js";
+import { LitElement, html } from 'lit-element';
+import { BaseElementMixin } from '../../base/BaseElementMixin.js';
+import { SnackbarNotificationCss } from './SnackbarNotificationCss.js';
 
 export class SnackbarNotication extends BaseElementMixin(LitElement) {
 
     static get properties() {
         return {
-            visible: {type: Boolean, reflect: true }
-        }
+            visible: { type: Boolean, reflect: true }
+        };
     }
 
     static get styles() {
@@ -28,11 +28,11 @@ export class SnackbarNotication extends BaseElementMixin(LitElement) {
     }
 
     firstUpdated() {
-        this.addEventListener("hideNotificationEvent", _ => this.hide());
-        this.addEventListener("showNotificationEvent", _ => this.show());
+        this.addEventListener('hideNotificationEvent', _ => this.hide());
+        this.addEventListener('showNotificationEvent', _ => this.show());
 
-        if(this.visible) {
-            requestAnimationFrame(() => this.show());
+        if (this.visible) {
+            window.requestAnimationFrame(() => this.show());
         }
     }
 
@@ -43,19 +43,19 @@ export class SnackbarNotication extends BaseElementMixin(LitElement) {
      */
     show() {
         const hostElement = this.shadowRoot.host;
-        const showAnimationCssClassName = "notification-entering";
-        const visibleCssClassName = "visible";
+        const showAnimationCssClassName = 'notification-entering';
+        const visibleCssClassName = 'visible';
 
         hostElement.classList.add(showAnimationCssClassName);
-        hostElement.style.opacity = `1`;
+        hostElement.style.opacity = '1';
         this._resetHeightAndPosition(hostElement);
 
         return new Promise(resolve => {
 
             this._waitForAnimation(hostElement, () => {
                 hostElement.classList.remove(showAnimationCssClassName);
-                hostElement.setAttribute(visibleCssClassName, "");
-                hostElement.style.bottom = `0`;
+                hostElement.setAttribute(visibleCssClassName, '');
+                hostElement.style.bottom = '0';
                 resolve();
             });
         });
@@ -69,8 +69,8 @@ export class SnackbarNotication extends BaseElementMixin(LitElement) {
     hide() {
 
         const hostElement = this.shadowRoot.host;
-        const hideAnimationCssClassName = "notification-leaving";
-        const visibleCssClassName = "visible";
+        const hideAnimationCssClassName = 'notification-leaving';
+        const visibleCssClassName = 'visible';
 
         hostElement.classList.add(hideAnimationCssClassName);
 
@@ -80,7 +80,7 @@ export class SnackbarNotication extends BaseElementMixin(LitElement) {
                 hostElement.classList.remove(hideAnimationCssClassName);
                 hostElement.removeAttribute(visibleCssClassName);
                 this._resetHeightAndPosition(hostElement);
-                hostElement.style.opacity = `0`;
+                hostElement.style.opacity = '0';
                 resolve();
             });
         });
@@ -92,7 +92,7 @@ export class SnackbarNotication extends BaseElementMixin(LitElement) {
      */
     _waitForAnimation(element, callback) {
 
-        const animationEndEvent = "animationend";
+        const animationEndEvent = 'animationend';
 
         const listener = () => {
             element.removeEventListener(animationEndEvent, listener);
@@ -118,11 +118,11 @@ export class SnackbarNotication extends BaseElementMixin(LitElement) {
 
         let totalHeight = 0;
 
-        for(let index = 0; index < slottedElements.length; index++) {
+        for (let index = 0; index < slottedElements.length; index++) {
 
             const slotElement = slottedElements[index];
 
-            if(slotElement.nodeType === Node.ELEMENT_NODE) {
+            if (slotElement.nodeType === window.Node.ELEMENT_NODE) {
 
                 const slotElementHeight = slotElement.offsetHeight;
 
@@ -130,8 +130,8 @@ export class SnackbarNotication extends BaseElementMixin(LitElement) {
                 const marginBottomValue = window.getComputedStyle(slotElement).marginBottom;
 
                 // remove px suffix - just extract the number
-                const marginTop = new Number(marginTopValue.slice(0, marginTopValue.length-2));
-                const marginBottom = new Number(marginBottomValue.slice(0, marginBottomValue.length-2));
+                const marginTop = Number(marginTopValue.slice(0, marginTopValue.length-2));
+                const marginBottom = Number(marginBottomValue.slice(0, marginBottomValue.length-2));
 
                 totalHeight += (slotElementHeight + marginTop + marginBottom);
             }
@@ -141,5 +141,4 @@ export class SnackbarNotication extends BaseElementMixin(LitElement) {
     }
 }
 
-// @ts-ignore
-window.customElements.define("snackbar-notification", SnackbarNotication);
+window.customElements.define('snackbar-notification', SnackbarNotication);

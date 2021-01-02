@@ -1,10 +1,9 @@
-import { html, TemplateResult } from "lit-element";
-import { Country } from "../../model/Country.js";
+
 /**
- * @param {Country} country
+ * @param {import('../../model/Country.js').Country} country
  * @param {Object} taxDetails country implemetation of tax details
  * @param {Intl.NumberFormat} formatter
- * @param {TemplateResult} countryTaxDetailsView
+ * @param {import('lit-element').TemplateResult} countryTaxDetailsView
  */
 const TaxDetailsViewTemplate = (country, taxDetails, formatter, countryTaxDetailsView) => html`
     <div bp="grid" class="main-grid">

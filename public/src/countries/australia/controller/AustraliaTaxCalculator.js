@@ -1,17 +1,12 @@
-import { TaxResult } from "../../../model/TaxResult.js";
-import { TaxResults } from "../../../model/TaxResults.js";
-import { SalaryDetails } from "../../../model/SalaryDetails.js";
-import { SalaryTypes } from "../../../model/SalaryTypes.js";
-import { AustraliaTaxDetails } from "../model/AustraliaTaxDetails.js";
-import { AustraliaResidents } from "../model/AustraliaResidents.js";
-import { AustraliaNonResidents } from "../model/AustraliaNonResidents.js";
-import { AustraliaOptions } from "../model/AustraliaTaxOptions.js";
+import { TaxResult } from '../../../model/TaxResult.js';
+import { TaxResults } from '../../../model/TaxResults.js';
+import { SalaryTypes } from '../../../model/SalaryTypes.js';
 
 export class AustraliaTaxCalculator {
     /**
-     * @param {AustraliaTaxDetails} australiaTaxDetails
-     * @param {AustraliaOptions} australiaTaxOptions
-     * @param {SalaryDetails} salaryDetails
+     * @param {import('../model/AustraliaTaxDetails.js').AustraliaTaxDetails} australiaTaxDetails
+     * @param {import('../model/AustraliaTaxOptions.js').AustraliaOptions} australiaTaxOptions
+     * @param {import('../../../model/SalaryDetails.js').SalaryDetails} salaryDetails
      */
     static calculateTax(australiaTaxDetails, australiaTaxOptions, salaryDetails) {
         if (salaryDetails.type === SalaryTypes.ANNUAL) {
@@ -22,9 +17,9 @@ export class AustraliaTaxCalculator {
     }
 
     /**
-     * @param {AustraliaTaxDetails} australiaTaxDetails
-     * @param {AustraliaOptions} australiaTaxOptions
-     * @param {SalaryDetails} salaryDetails
+     * @param {import('../model/AustraliaTaxDetails.js').AustraliaTaxDetails} australiaTaxDetails
+     * @param {import('../model/AustraliaTaxOptions.js').AustraliaOptions} australiaTaxOptions
+     * @param {import('../../../model/SalaryDetails.js').SalaryDetails} salaryDetails
      */
     static _calculateTaxFromMonthlyIncome(australiaTaxDetails, australiaTaxOptions, salaryDetails) {
         if (australiaTaxOptions.isResident) {
@@ -40,9 +35,9 @@ export class AustraliaTaxCalculator {
     }
 
     /**
-     * @param {AustraliaTaxDetails} australiaTaxDetails
-     * @param {AustraliaOptions} australiaTaxOptions
-     * @param {SalaryDetails} salaryDetails
+     * @param {import('../model/AustraliaTaxDetails.js').AustraliaTaxDetails} australiaTaxDetails
+     * @param {import('../model/AustraliaTaxOptions.js').AustraliaOptions} australiaTaxOptions
+     * @param {import('../../../model/SalaryDetails.js').SalaryDetails} salaryDetails
      */
     static _calculateTaxFromAnnualIncome(australiaTaxDetails, australiaTaxOptions, salaryDetails) {
         if (australiaTaxOptions.isResident) {
@@ -91,8 +86,8 @@ export class AustraliaTaxCalculator {
     }
 
     /**
-     * @param {AustraliaResidents} australiaResidents
-     * @param {SalaryDetails} salaryDetails
+     * @param {import('../model/AustraliaResidents.js').AustraliaResidents} australiaResidents
+     * @param {import('../../../model/SalaryDetails.js').SalaryDetails} salaryDetails
      *
      * @returns {TaxResult} the tax result
      */
@@ -121,8 +116,8 @@ export class AustraliaTaxCalculator {
     }
 
     /**
-     * @param {AustraliaNonResidents} australiaNonResidents
-     * @param {SalaryDetails} salaryDetails
+     * @param {import('../model/AustraliaNonResidents.js').AustraliaNonResidents} australiaNonResidents
+     * @param {import('../../../model/SalaryDetails.js').SalaryDetails} salaryDetails
      *
      * @returns {TaxResult} the tax result
      */

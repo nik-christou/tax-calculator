@@ -1,5 +1,5 @@
-import { CyprusTaxDetails } from "../model/CyprusTaxDetails.js";
-import { CyprusTaxBracket } from "../model/CyprusTaxBracket.js";
+import { CyprusTaxDetails } from '../model/CyprusTaxDetails.js';
+import { CyprusTaxBracket } from '../model/CyprusTaxBracket.js';
 
 export class CyprusTaxDetailsLoader {
     /**
@@ -10,8 +10,9 @@ export class CyprusTaxDetailsLoader {
         const taxBrackets = [];
 
         jsonData.taxBrackets.forEach((taxBracketJson) => {
-            const end = taxBracketJson["end"] === -1 ? Number.POSITIVE_INFINITY : taxBracketJson["end"];
-            const taxBracket = new CyprusTaxBracket(taxBracketJson["start"], end, taxBracketJson["ratePercent"]);
+            
+            const end = taxBracketJson.end === -1 ? Number.POSITIVE_INFINITY : taxBracketJson.end;
+            const taxBracket = new CyprusTaxBracket(taxBracketJson.start, end, taxBracketJson.ratePercent);
 
             taxBrackets.push(taxBracket);
         });

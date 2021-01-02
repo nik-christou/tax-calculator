@@ -1,8 +1,7 @@
-import { CyprusTaxBracket } from "./CyprusTaxBracket.js";
 
 export class CyprusTaxDetails {
     /**
-     * @param {Array<CyprusTaxBracket>} taxBrackets
+     * @param {Array<import('./CyprusTaxBracket.js').CyprusTaxBracket>} taxBrackets
      * @param {Number} socialInsuranceContributionPercent
      * @param {Number} healthContributionPercent
      */

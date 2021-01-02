@@ -1,61 +1,61 @@
-import "./views/home/HomeView.js";
-import "./views/results/ResultsView.js";
-import "./views/tax_details/TaxDetailsView.js";
-import "./views/tax_options/TaxOptionsView.js";
-import "./views/country_selection/CountrySelectionView.js";
+import './views/home/HomeView.js';
+import './views/results/ResultsView.js';
+import './views/tax_details/TaxDetailsView.js';
+import './views/tax_options/TaxOptionsView.js';
+import './views/country_selection/CountrySelectionView.js';
 
 export const routes = [
     {
-        path: "/",
+        path: '/',
         children: [
             {
-                path: "/",
+                path: '/',
                 animate: {
-                    enter: "home-entering",
-                    leave: "home-leaving",
+                    enter: 'home-entering',
+                    leave: 'home-leaving'
                 },
-                component: "home-view",
+                component: 'home-view'
             },
             {
-                path: "/home",
+                path: '/home',
                 animate: {
-                    enter: "home-entering",
-                    leave: "home-leaving",
+                    enter: 'home-entering',
+                    leave: 'home-leaving'
                 },
-                component: "home-view",
+                component: 'home-view'
             },
             {
-                path: "/country-selection",
+                path: '/country-selection',
                 animate: {
-                    enter: "country-selection-entering",
-                    leave: "country-selection-leaving",
+                    enter: 'country-selection-entering',
+                    leave: 'country-selection-leaving'
                 },
-                component: "country-selection-view",
+                component: 'country-selection-view'
             },
             {
-                path: "/results",
+                path: '/results',
                 animate: {
-                    enter: "results-entering",
-                    leave: "results-leaving",
+                    enter: 'results-entering',
+                    leave: 'results-leaving'
                 },
-                component: "results-view",
+                component: 'results-view'
             },
             {
-                path: "/tax-details",
+                path: '/tax-details',
                 animate: {
-                    enter: "tax-details-entering",
-                    leave: "tax-details-leaving",
+                    enter: 'tax-details-entering',
+                    leave: 'tax-details-leaving'
                 },
-                component: "tax-details-view",
+                component: 'tax-details-view'
             },
             {
-                path: "/tax-options",
+                path: '/tax-options',
                 animate: {
-                    enter: "tax-options-entering",
-                    leave: "tax-options-leaving",
+                    enter: 'tax-options-entering',
+                    leave: 'tax-options-leaving'
                 },
-                component: "tax-options-view",
-            },
-        ],
-    },
+                component: 'tax-options-view'
+            }
+        ]
+    }
 ];

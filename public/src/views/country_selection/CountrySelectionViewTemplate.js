@@ -1,5 +1,4 @@
-import { html } from "lit-element";
-import { Country } from "../../model/Country.js";
+import { html } from 'lit-element';
 
 /**
  * @param {Number} selectedId
@@ -12,7 +11,7 @@ function isSelectedCountry(selectedId, countryId) {
 }
 
 /**
- * @param {Country} country
+ * @param {import('../../model/Country.js').Country} country
  * @param {Number} selectedId
  * @param {Function} handleSelectedCountry
  */
@@ -32,7 +31,7 @@ const countryItemTemplate = (country, selectedId, handleSelectedCountry) => html
 `;
 
 /**
- * @param {Array<Country>} countries
+ * @param {Array<import('../../model/Country.js').Country>} countries
  * @param {Number} selectedId
  * @param {Function} handleSelectedCountry
  */

@@ -1,7 +1,7 @@
-import { html, TemplateResult } from "lit-element";
+import { html } from 'lit-element';
 
 /**
- * @param {TemplateResult} viewTemplate
+ * @param {import('lit-element').TemplateResult} viewTemplate
  */
 const TaxOptionsViewTemplate = (viewTemplate) => html`
     <div bp="grid" class="main-grid">

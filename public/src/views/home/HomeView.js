@@ -1,16 +1,16 @@
-import { LitElement } from "lit-element";
-import { BaseElementMixin } from "../../base/BaseElementMixin.js";
-import { HomeViewTemplate } from "./HomeViewTemplate.js";
-import { UserSelectionStore } from "../../datastore/UserSelectionStore.js";
-import { HomeViewCss } from "./HomeViewCss.js";
-import { Country } from "../../model/Country.js";
-import { SalaryType } from "../../model/SalaryType.js";
-import { SalaryTypes } from "../../model/SalaryTypes.js";
-import { ListGroupCss } from "../../base/ListGroupCss.js";
-import { InputGroupCss } from "../../base/InputGroupCss.js";
-import { ToggleCss } from "../../base/ToggleCss.js";
-import { BlueprintCss } from "../../base/BlueprintCss.js";
-import { ButtonCss } from "../../base/ButtonCss.js";
+import { LitElement } from 'lit-element';
+import { BaseElementMixin } from '../../base/BaseElementMixin.js';
+import { HomeViewTemplate } from './HomeViewTemplate.js';
+import { UserSelectionStore } from '../../datastore/UserSelectionStore.js';
+import { HomeViewCss } from './HomeViewCss.js';
+import { Country } from '../../model/Country.js';
+import { SalaryType } from '../../model/SalaryType.js';
+import { SalaryTypes } from '../../model/SalaryTypes.js';
+import { ListGroupCss } from '../../base/ListGroupCss.js';
+import { InputGroupCss } from '../../base/InputGroupCss.js';
+import { ToggleCss } from '../../base/ToggleCss.js';
+import { BlueprintCss } from '../../base/BlueprintCss.js';
+import { ButtonCss } from '../../base/ButtonCss.js';
 
 export class HomeView extends BaseElementMixin(LitElement) {
     static get properties() {
@@ -33,7 +33,7 @@ export class HomeView extends BaseElementMixin(LitElement) {
 
     constructor() {
         super();
-        this.grossAmount = "";
+        this.grossAmount = '';
         this.selectedCountry = null;
         this.selectedPeriod = null;
         this.includesThirteen = false;
@@ -80,7 +80,7 @@ export class HomeView extends BaseElementMixin(LitElement) {
         const grossAmount = await UserSelectionStore.retrieveGrossAmount();
 
         if (!grossAmount) {
-            this.grossAmount = "";
+            this.grossAmount = '';
             return;
         }
 
@@ -97,45 +97,45 @@ export class HomeView extends BaseElementMixin(LitElement) {
     }
 
     _addSalaryTypeClickListeners() {
-        const annualSalaryTypeLink = this.shadowRoot.querySelector("a#annual-salary-type");
-        const monthlySalaryTypeLink = this.shadowRoot.querySelector("a#monthly-salary-type");
+        const annualSalaryTypeLink = this.shadowRoot.querySelector('a#annual-salary-type');
+        const monthlySalaryTypeLink = this.shadowRoot.querySelector('a#monthly-salary-type');
 
-        annualSalaryTypeLink.addEventListener("click", (event) => {
+        annualSalaryTypeLink.addEventListener('click', (event) => {
             this._handleSelectedSalaryType(event, SalaryTypes.ANNUAL);
         });
 
-        monthlySalaryTypeLink.addEventListener("click", (event) => {
+        monthlySalaryTypeLink.addEventListener('click', (event) => {
             this._handleSelectedSalaryType(event, SalaryTypes.MONTHLY);
         });
     }
 
     _addGrossAmountInputListener() {
-        const grossAmountElement = this.shadowRoot.querySelector("input#grossAmountInput");
+        const grossAmountElement = this.shadowRoot.querySelector('input#grossAmountInput');
 
         // close numpad/keyboard on mobile browsers
-        grossAmountElement.addEventListener("keyup", (event) => {
+        grossAmountElement.addEventListener('keyup', (event) => {
             this._handleGrossAmountEnterKey(event, grossAmountElement);
         });
 
-        grossAmountElement.addEventListener("focus", (event) => {
+        grossAmountElement.addEventListener('focus', (event) => {
             this._handleGrossAmountFocus(event, grossAmountElement);
         });
 
-        grossAmountElement.addEventListener("change", (event) => {
+        grossAmountElement.addEventListener('change', (event) => {
             this._handleGrossAmountBlur(event, grossAmountElement);
         });
     }
 
     _addIncludesThirteenInputListener() {
-        const includesThirteenElement = this.shadowRoot.querySelector("input#includesThirteen");
-        includesThirteenElement.addEventListener("change", (event) => {
+        const includesThirteenElement = this.shadowRoot.querySelector('input#includesThirteen');
+        includesThirteenElement.addEventListener('change', (event) => {
             this._handleThirteenChange(event, includesThirteenElement);
         });
     }
 
     _addCalculateButtonListener() {
-        const calculateButton = this.shadowRoot.querySelector("button.calculate-btn");
-        calculateButton.addEventListener("click", (event) => {
+        const calculateButton = this.shadowRoot.querySelector('button.calculate-btn');
+        calculateButton.addEventListener('click', (event) => {
             this._handleCalculateClickEvent(event);
         });
     }
@@ -147,9 +147,9 @@ export class HomeView extends BaseElementMixin(LitElement) {
         event.preventDefault();
 
         if (this.selectedCountry && this.selectedPeriod && this.grossAmount) {
-            history.pushState(null, "Results", "/results");
-            history.go(1);
-            dispatchEvent(new PopStateEvent("popstate"));
+            window.history.pushState(null, 'Results', '/results');
+            window.history.go(1);
+            window.dispatchEvent(new window.PopStateEvent('popstate'));
         }
     }
 
@@ -167,7 +167,7 @@ export class HomeView extends BaseElementMixin(LitElement) {
      * @param {HTMLInputElement} grossAmountElement
      */
     async _handleGrossAmountFocus(event, grossAmountElement) {
-        if (grossAmountElement.value === "") {
+        if (grossAmountElement.value === '') {
             return;
         }
 
@@ -178,7 +178,7 @@ export class HomeView extends BaseElementMixin(LitElement) {
             const grossAmountFromStore = await UserSelectionStore.retrieveGrossAmount();
 
             if (!grossAmountFromStore) {
-                grossAmountElement.value = "";
+                grossAmountElement.value = '';
             }
 
             grossAmountElement.value = `${grossAmountFromStore}`;
@@ -206,7 +206,7 @@ export class HomeView extends BaseElementMixin(LitElement) {
 
             // no stored amount was found
             if (!grossAmountFromStore) {
-                grossAmountElement.value = "";
+                grossAmountElement.value = '';
                 return;
             }
 
@@ -244,21 +244,21 @@ export class HomeView extends BaseElementMixin(LitElement) {
         const { currencySymbol, decimalSymbol } = this._extractCurrencyAndDecimalSymbolFromLocale();
 
         // match anything that does not match either number or the decimal character
-        const regularExpression = RegExp(`[^0-9${decimalSymbol}]+\g`);
+        const regularExpression = RegExp(`[^0-9${decimalSymbol}]+\\g`);
 
-        return formattedSalaryAmount.replace(currencySymbol, "").replace(regularExpression, "");
+        return formattedSalaryAmount.replace(currencySymbol, '').replace(regularExpression, '');
     }
 
     _extractCurrencyAndDecimalSymbolFromLocale() {
 
         // workaround for iOS Safari 12 and below since
         // formatToParts was not available until iOS Safari 13
-        if(!Intl.NumberFormat.prototype.formatToParts) {
+        if (!Intl.NumberFormat.prototype.formatToParts) {
             return this._calculateCurrencyAndDecimalSymbolsForOlderBrowsers();
         }
 
-        const dotDecimalSymbol = ".";
-        const commaDesimalSymbol = ",";
+        const dotDecimalSymbol = '.';
+        const commaDesimalSymbol = ',';
 
         // Get the currency symbol for the country locale
         // so we call the function with a random number
@@ -296,9 +296,7 @@ export class HomeView extends BaseElementMixin(LitElement) {
     _getDecimalSeparator(locale) {
 
         const numberWithDecimalSeparator = 1.1;
-        return numberWithDecimalSeparator
-        .toLocaleString(locale)
-        .substring(1, 2);
+        return numberWithDecimalSeparator.toLocaleString(locale).substring(1, 2);
     }
 
     /**
@@ -328,17 +326,18 @@ export class HomeView extends BaseElementMixin(LitElement) {
      */
     _updateCurrencyFormatter(selectedCountry) {
         const formatter = new Intl.NumberFormat(selectedCountry.locale, {
-            style: "currency",
+            style: 'currency',
             currency: selectedCountry.currency,
-            minimumFractionDigits: 2,
+            minimumFractionDigits: 2
         });
 
         this.formatter = formatter;
     }
 
     _updateSelectedSalaryTypeLinks() {
-        const annualSalaryTypeLink = this.shadowRoot.querySelector("a#annual-salary-type");
-        const monthlySalaryTypeLink = this.shadowRoot.querySelector("a#monthly-salary-type");
+
+        const annualSalaryTypeLink = this.shadowRoot.querySelector('a#annual-salary-type');
+        const monthlySalaryTypeLink = this.shadowRoot.querySelector('a#monthly-salary-type');
 
         if (this.selectedPeriod === SalaryTypes.ANNUAL) {
             this._removeActiveClass(monthlySalaryTypeLink);
@@ -355,16 +354,15 @@ export class HomeView extends BaseElementMixin(LitElement) {
      * @param {Element} element
      */
     _removeActiveClass(element) {
-        element.classList.remove("active");
+        element.classList.remove('active');
     }
 
     /**
      * @param {Element} element
      */
     _addActiveClass(element) {
-        element.classList.add("active");
+        element.classList.add('active');
     }
 }
 
-// @ts-ignore
-window.customElements.define("home-view", HomeView);
+window.customElements.define('home-view', HomeView);

@@ -84,5 +84,4 @@ export class ServiceWorkerUpdateNotication extends BaseElementMixin(LitElement) 
     }
 }
 
-// @ts-ignore
 window.customElements.define('service-worker-update-notification', ServiceWorkerUpdateNotication);

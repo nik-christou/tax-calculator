@@ -1,7 +1,7 @@
-import { AustraliaTaxDetails } from "../model/AustraliaTaxDetails.js";
-import { AustraliaTaxBracket } from "../model/AustraliaTaxBracket.js";
-import { AustraliaResidents } from "../model/AustraliaResidents.js";
-import { AustraliaNonResidents } from "../model/AustraliaNonResidents.js";
+import { AustraliaTaxDetails } from '../model/AustraliaTaxDetails.js';
+import { AustraliaTaxBracket } from '../model/AustraliaTaxBracket.js';
+import { AustraliaResidents } from '../model/AustraliaResidents.js';
+import { AustraliaNonResidents } from '../model/AustraliaNonResidents.js';
 
 export class AustraliaTaxDetailsLoader {
     /**
@@ -21,7 +21,7 @@ export class AustraliaTaxDetailsLoader {
     static _loadResidentsData(data) {
         const residents = data.residents;
         const taxBrackets = this._loadTaxBrackets(residents.taxBrackets);
-        return new AustraliaResidents(taxBrackets, residents["medicarePercent"]);
+        return new AustraliaResidents(taxBrackets, residents.medicarePercent);
     }
 
     /**
@@ -41,8 +41,12 @@ export class AustraliaTaxDetailsLoader {
         const taxBrackets = [];
 
         taxBracketsJson.forEach((taxBracketJson) => {
-            const end = taxBracketJson["end"] === -1 ? Number.POSITIVE_INFINITY : taxBracketJson["end"];
-            const taxBracket = new AustraliaTaxBracket(taxBracketJson["start"], end, taxBracketJson["fixedCharge"], taxBracketJson["ratePercent"]);
+            const end = taxBracketJson.end === -1 ? Number.POSITIVE_INFINITY : taxBracketJson.end;
+            const taxBracket = new AustraliaTaxBracket(
+                taxBracketJson.start, 
+                end, 
+                taxBracketJson.fixedCharge, 
+                taxBracketJson.ratePercent);
 
             taxBrackets.push(taxBracket);
         });

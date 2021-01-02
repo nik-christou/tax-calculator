@@ -1,8 +1,7 @@
-import { html } from "lit-element";
-import { Country } from "../../model/Country.js";
+import { html } from 'lit-element';
 
 /**
- * @param {Country} selectedCountry
+ * @param {import('../../model/Country.js').Country} selectedCountry
  */
 const taxOptionsTemplate = (selectedCountry) => {
     if (selectedCountry && selectedCountry.additionalOptions) {
@@ -21,7 +20,7 @@ const taxOptionsTemplate = (selectedCountry) => {
 };
 
 /**
- * @param {Country} selectedCountry
+ * @param {import('../../model/Country.js').Country} selectedCountry
  */
 const taxDetailsTemplate = (selectedCountry) => {
     if (selectedCountry) {
@@ -40,7 +39,7 @@ const taxDetailsTemplate = (selectedCountry) => {
 };
 
 /**
- * @param {Country} selectedCountry
+ * @param {import('../../model/Country.js').Country} selectedCountry
  */
 const countryInfoTemplate = (selectedCountry) => {
     if (selectedCountry) {
@@ -58,7 +57,7 @@ const countryInfoTemplate = (selectedCountry) => {
 };
 
 /**
- * @param {Country} selectedCountry
+ * @param {import('../../model/Country.js').Country} selectedCountry
  * @param {Boolean} includesThirteen
  * @param {String} grossAmount
  */
