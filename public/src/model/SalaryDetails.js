@@ -1,9 +1,8 @@
-import { SalaryType } from "./SalaryType.js";
 
 export class SalaryDetails {
     /**
      * @param {Number} amount
-     * @param {SalaryType} type
+     * @param {import('../model/SalaryType.js').SalaryType} type
      * @param {Boolean} includesThirteen
      */
     constructor(amount, type, includesThirteen) {

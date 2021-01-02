@@ -1,8 +1,7 @@
-import { Country } from "../model/Country.js";
 
 export class CountryData {
     /**
-     * @param {Country} country
+     * @param {import('../model/Country.js').Country} country
      * @param {Object} taxDetails
      */
     constructor(country, taxDetails) {

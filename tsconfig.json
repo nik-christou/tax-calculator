@@ -13,8 +13,8 @@
     "dist",
     "node_modules",
     "**/node_modules/*",
-    "web_assets",
-    "web_modules",
-    "web-dev-server.config.js"
+    "./public/web_assets",
+    "./public/web_modules",
+    "web-dev-server.config.mjs"
   ]
 }

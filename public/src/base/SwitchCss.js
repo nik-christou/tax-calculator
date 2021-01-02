@@ -1,4 +1,4 @@
-import { css } from "lit-element";
+import { css } from 'lit-element';
 
 export const SwitchCss = css`
     @supports (-webkit-appearance: none) or (-moz-appearance: none) {

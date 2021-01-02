@@ -1,16 +1,16 @@
-import { Country } from "../model/Country.js";
-import { CountryData } from "../model/CountryData.js";
-import { CyprusTaxDetailsLoader } from "./cyprus/controller/CyprusTaxDetailsLoader.js";
-import { AustraliaTaxDetailsLoader } from "./australia/controller/AustraliaTaxDetailsLoader.js";
+import { Country } from '../model/Country.js';
+import { CountryData } from '../model/CountryData.js';
+import { CyprusTaxDetailsLoader } from './cyprus/controller/CyprusTaxDetailsLoader.js';
+import { AustraliaTaxDetailsLoader } from './australia/controller/AustraliaTaxDetailsLoader.js';
 
-const countriesJsonFilePaths = ["web_assets/data/australia.json", "web_assets/data/cyprus.json"];
+const countriesJsonFilePaths = ['web_assets/data/australia.json', 'web_assets/data/cyprus.json'];
 
 export class CountriesDataLoader {
     /**
      * @returns {Promise<Array<CountryData>>} the promise of an array of CountryData
      */
     static async loadCountryDataFromJson() {
-        const countriesData = new Array();
+        const countriesData = [];
 
         for (const countriesJsonFilePath of countriesJsonFilePaths) {
             const jsonData = await this._fetchJsonData(countriesJsonFilePath);
@@ -29,7 +29,7 @@ export class CountriesDataLoader {
      * @returns Object
      */
     static async _fetchJsonData(jsonPath) {
-        const response = await fetch(jsonPath);
+        const response = await window.fetch(jsonPath);
         return await response.json();
     }
 
@@ -46,12 +46,12 @@ export class CountriesDataLoader {
      */
     static async _retrieveTaxDetailsFromJsonData(countryId, jsonData) {
         switch (countryId) {
-            case 1:
-                return CyprusTaxDetailsLoader.loadTaxDetailsFromJsonData(jsonData);
-            case 2:
-                return AustraliaTaxDetailsLoader.loadTaxDetailsFromJsonData(jsonData);
-            default:
-                return Promise.resolve(null);
+        case 1:
+            return CyprusTaxDetailsLoader.loadTaxDetailsFromJsonData(jsonData);
+        case 2:
+            return AustraliaTaxDetailsLoader.loadTaxDetailsFromJsonData(jsonData);
+        default:
+            return Promise.resolve(null);
         }
     }
 }

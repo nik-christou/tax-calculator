@@ -1,9 +1,8 @@
-import { TaxResult } from "./TaxResult.js";
 
 export class TaxResults {
     /**
-     * @param {TaxResult} monthlyTaxResult
-     * @param {TaxResult} annualTaxResult
+     * @param {import('./TaxResult.js').TaxResult} TaxResultlt
+     * @param {import('./TaxResult.js').TaxResult} annualTaxResult
      */
     constructor(monthlyTaxResult, annualTaxResult) {
         this.monthlyTaxResult = monthlyTaxResult;

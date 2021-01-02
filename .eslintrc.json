@@ -1,0 +1,8 @@
+{
+    "rules": {
+        "indent": ["error", 4],
+        "space-before-function-paren": ["error", "never"],
+        "semi": ["error", "always", { "omitLastInOneLineBlock": true }],
+        "padded-blocks": "off"
+    }
+}

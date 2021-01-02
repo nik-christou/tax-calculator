@@ -1,14 +1,13 @@
-import { Country } from "../model/Country.js";
-import { DatabaseManager } from "./DatabaseManager.js";
+import { DatabaseManager } from './DatabaseManager.js';
 
-const COUNTRIES_STORE_NAME = "country-store";
+const COUNTRIES_STORE_NAME = 'country-store';
 
 export class CountryStore {
     /**
      * Get a country with a matching id
      *
      * @param {IDBValidKey} id the country id
-     * @returns {Promise<Country>}
+     * @returns {Promise<import('../model/Country.js').Country>}
      */
     static async getCountryById(id) {
         if (DatabaseManager.dbConnection) {

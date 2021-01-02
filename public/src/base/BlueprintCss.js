@@ -1,6 +1,6 @@
-import { css } from "lit-element";
+import { css } from 'lit-element';
 
-// v3.1.1 Blueprint CSS copied as 
+// v3.1.1 Blueprint CSS copied as
 // a JS modules so that it can be imported
 
 export const BlueprintCss = css`

@@ -1,12 +1,12 @@
-import { LitElement, html } from "lit-element";
-import { BaseElementMixin } from "../base/BaseElementMixin.js";
-import { ServiceWorkerUpdateNotificationCss } from "./ServiceWorkerUpdateNotificationCss.js";
+import { LitElement, html } from 'lit-element';
+import { BaseElementMixin } from '../base/BaseElementMixin.js';
+import { ServiceWorkerUpdateNotificationCss } from './ServiceWorkerUpdateNotificationCss.js';
 
 export class ServiceWorkerUpdateNotication extends BaseElementMixin(LitElement) {
 
     static get properties() {
         return {
-        }
+        };
     }
 
     static get styles() {
@@ -29,17 +29,13 @@ export class ServiceWorkerUpdateNotication extends BaseElementMixin(LitElement) 
         `;
     }
 
-    constructor() {
-        super();
-    }
-
     firstUpdated() {
 
-        const refreshLink = this.shadowRoot.querySelector("a.refresh-link");
-        const closeLink = this.shadowRoot.querySelector("button.close-link");
+        const refreshLink = this.shadowRoot.querySelector('a.refresh-link');
+        const closeLink = this.shadowRoot.querySelector('button.close-link');
 
-        refreshLink.addEventListener("click", event => this._handleRefreshLink(event));
-        closeLink.addEventListener("click", event => this._handleCloseLink(event));
+        refreshLink.addEventListener('click', event => this._handleRefreshLink(event));
+        closeLink.addEventListener('click', event => this._handleCloseLink(event));
     }
 
     /**
@@ -49,7 +45,7 @@ export class ServiceWorkerUpdateNotication extends BaseElementMixin(LitElement) 
 
         event.preventDefault();
         event.stopPropagation();
-       
+
         this.fireReloadServiceWorkerEvent();
     }
 
@@ -57,7 +53,7 @@ export class ServiceWorkerUpdateNotication extends BaseElementMixin(LitElement) 
      * @param {MouseEvent} event
      */
     _handleCloseLink(event) {
-        
+
         event.preventDefault();
         event.stopPropagation();
 
@@ -66,7 +62,7 @@ export class ServiceWorkerUpdateNotication extends BaseElementMixin(LitElement) 
 
     fireRefreshNotificationEvent() {
 
-        const refreshNotificationEvent = new CustomEvent("refreshNotificationEvent", {
+        const refreshNotificationEvent = new window.CustomEvent('refreshNotificationEvent', {
             bubbles: true,
             composed: true
         });
@@ -79,7 +75,7 @@ export class ServiceWorkerUpdateNotication extends BaseElementMixin(LitElement) 
      */
     fireCloseNotificationEvent() {
 
-        const closeNotificationEvent = new CustomEvent("hideNotificationEvent", {
+        const closeNotificationEvent = new window.CustomEvent('hideNotificationEvent', {
             bubbles: true,
             composed: true
         });
@@ -89,4 +85,4 @@ export class ServiceWorkerUpdateNotication extends BaseElementMixin(LitElement) 
 }
 
 // @ts-ignore
-window.customElements.define("service-worker-update-notification", ServiceWorkerUpdateNotication);
+window.customElements.define('service-worker-update-notification', ServiceWorkerUpdateNotication);

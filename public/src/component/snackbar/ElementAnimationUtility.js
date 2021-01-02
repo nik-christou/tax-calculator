@@ -3,7 +3,7 @@
  * @param {Element} elem
  */
 const willAnimate = elem => {
-    const name = getComputedStyle(elem).getPropertyValue('animation-name');
+    const name = window.getComputedStyle(elem).getPropertyValue('animation-name');
     return name && name !== 'none';
 };
 
@@ -14,8 +14,10 @@ const willAnimate = elem => {
 const waitForAnimation = (elem, callback) => {
 
     const listener = () => {
+
         elem.removeEventListener('animationend', listener);
         callback();
+
     };
 
     elem.addEventListener('animationend', listener);

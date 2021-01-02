@@ -1,12 +1,11 @@
-import { openDB, deleteDB } from "idb/build/esm/index.js";
-import { CountriesDataLoader } from "../countries/CountriesDataLoader.js";
-import { CountryData } from "../model/CountryData.js";
+import { openDB, deleteDB } from 'idb/build/esm/index.js';
+import { CountriesDataLoader } from '../countries/CountriesDataLoader.js';
 
 const DB_VERSION = 1;
-const DB_NAME = "tax-calculator-db";
-const COUNTRIES_STORE_NAME = "country-store";
-const TAX_DETAILS_STORE_NAME = "tax-details-store";
-const USER_SELECTION_STORE_NAME = "user-selection-store";
+const DB_NAME = 'tax-calculator-db';
+const COUNTRIES_STORE_NAME = 'country-store';
+const TAX_DETAILS_STORE_NAME = 'tax-details-store';
+const USER_SELECTION_STORE_NAME = 'user-selection-store';
 
 export class DatabaseManager {
     /**
@@ -51,13 +50,13 @@ export class DatabaseManager {
      * @param {Number} oldVersion
      * @param {Number} newVersion
      * @param {import("idb").IDBPTransaction<unknown, string[]>} transaction
-     * @param {CountryData[]} countriesData
+     * @param {import('../model/CountryData.js').CountryData[]} countriesData
      */
     static _upgrade(db, oldVersion, newVersion, transaction, countriesData) {
         switch (oldVersion) {
-            case 0:
-                this._createSchemaForV1(db);
-                break;
+        case 0:
+            this._createSchemaForV1(db);
+            break;
         }
     }
 

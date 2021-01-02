@@ -1,6 +1,6 @@
-import { DatabaseManager } from "./DatabaseManager.js";
+import { DatabaseManager } from './DatabaseManager.js';
 
-const STORE_NAME = "tax-details-store";
+const STORE_NAME = 'tax-details-store';
 
 export class TaxDetailsStore {
     /**
