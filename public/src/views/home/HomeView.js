@@ -257,27 +257,39 @@ export class HomeView extends BaseElementMixin(LitElement) {
             return this._calculateCurrencyAndDecimalSymbolsForOlderBrowsers();
         }
 
-        const dotDecimalSymbol = '.';
-        const commaDesimalSymbol = ',';
-
         // Get the currency symbol for the country locale
         // so we call the function with a random number
         // in order to get the decimal and currency symbol
         // for selected country locale
         const parts = this.formatter.formatToParts(3.5);
-        const currencySymbol = parts[0].value;
+        
+        const currencyPart = this._findCurrencyPart(parts);
+        const currencySymbol = currencyPart.value;
 
-        // return the decimal symbol that we need to remove
-        // if country locale currency is using "." as decimal
-        // then return "," and vice versa
-        let decimalSymbol;
-        if (parts[2].value === commaDesimalSymbol) {
-            decimalSymbol = dotDecimalSymbol;
-        } else if (parts[2].value === dotDecimalSymbol) {
-            decimalSymbol = commaDesimalSymbol;
-        }
+        const decimalPart = this._findDecimalPart(parts);
+        const decimalSymbol = decimalPart.value;
 
         return { currencySymbol, decimalSymbol };
+    }
+
+    /**
+     * @param {Array<Intl.NumberFormatPart>} parts 
+     */
+    _findCurrencyPart(parts) {
+        
+        const currencyIndex = parts.findIndex(part => part.type === 'currency');
+
+        return parts[currencyIndex];
+    }
+
+    /**
+     * @param {Array<Intl.NumberFormatPart>} parts 
+     */
+    _findDecimalPart(parts) {
+
+        const decimalIndex = parts.findIndex(part => part.type === 'decimal');
+
+        return parts[decimalIndex];
     }
 
     _calculateCurrencyAndDecimalSymbolsForOlderBrowsers() {
@@ -285,8 +297,7 @@ export class HomeView extends BaseElementMixin(LitElement) {
         const currencySymbol = this.selectedCountry.currency;
         const decimalSymbol = this._getDecimalSeparator(this.selectedCountry.locale);
 
-        // return the currency symbol as it stored in the json
-        // and the decimal separator
+        // return the currency & decimal symbols from json file
         return { currencySymbol, decimalSymbol };
     }
 

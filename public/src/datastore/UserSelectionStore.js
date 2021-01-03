@@ -46,7 +46,7 @@ export class UserSelectionStore {
     /**
      * Returns the selected salary type
      *
-     * @returns {Promise<import('../model/SalaryType.js')SalaryType>}
+     * @returns {Promise<import('../model/SalaryType.js').SalaryType>}
      */
     static async retrieveSalaryType() {
         if (DatabaseManager.dbConnection) {

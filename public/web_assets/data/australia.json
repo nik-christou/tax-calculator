@@ -4,6 +4,7 @@
   "locale": "en-AU",
   "currency": "AUD",
   "flag": "australia.png",
+  "additionalOptions": true,
   "residents": {
     "taxBrackets": [
       {"start": 0, "end": 18200, "fixedCharge": 0, "ratePercent": 0},
@@ -20,6 +21,5 @@
       {"start": 90001, "end": 180000, "fixedCharge": 29250, "ratePercent": 32.5},
       {"start": 180001, "end": -1, "fixedCharge": 62550, "ratePercent": 45}
     ]
-  },
-  "additionalOptions": true
+  }
 }

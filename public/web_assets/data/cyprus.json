@@ -1,6 +1,9 @@
 {
   "id": 1,
   "name": "Cyprus",
+  "locale": "el-GR",
+  "currency": "EUR",
+  "flag": "cyprus.png",
   "taxBrackets": [
     {"start": 0, "end": 19500, "ratePercent": 0},
     {"start": 19501, "end": 28000, "ratePercent": 20},
@@ -9,8 +12,5 @@
     {"start": 60000, "end": -1, "ratePercent": 35}
   ],
   "socialInsurancePercent": 8.3,
-  "healthContributionPercent": 2.65,
-  "locale": "el-GR",
-  "currency": "EUR",
-  "flag": "cyprus.png"
+  "healthContributionPercent": 2.65
 }
