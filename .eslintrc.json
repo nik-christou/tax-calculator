@@ -4,6 +4,7 @@
         "space-before-function-paren": ["error", "never"],
         "semi": ["error", "always", { "omitLastInOneLineBlock": true }],
         "padded-blocks": "off",
-        "no-trailing-spaces": "off"
+        "no-trailing-spaces": "off",
+        "eol-last": "off"
     }
 }

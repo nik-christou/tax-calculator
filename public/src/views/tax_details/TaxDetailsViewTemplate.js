@@ -1,3 +1,4 @@
+import { html } from 'lit-html';
 
 /**
  * @param {import('../../model/Country.js').Country} country

@@ -9,6 +9,7 @@ export class CyprusProcessor {
      * @returns {Promise<import('../../../model/TaxResults.js').TaxResults>}
      */
     static async processCyprusTax(countryId, salaryDetails) {
+        
         const cyprusTaxDetails = await TaxDetailsStore.getTaxDetailsByCountryById(countryId);
         const taxResults = CyprusTaxCalculator.calculateTax(cyprusTaxDetails, salaryDetails);
 
