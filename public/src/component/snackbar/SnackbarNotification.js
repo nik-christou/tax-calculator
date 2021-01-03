@@ -141,4 +141,5 @@ export class SnackbarNotication extends BaseElementMixin(LitElement) {
     }
 }
 
+// @ts-ignore
 window.customElements.define('snackbar-notification', SnackbarNotication);

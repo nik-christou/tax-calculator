@@ -1,12 +1,11 @@
 import { Workbox, messageSW } from 'workbox-window';
-// import { SnackbarNotication } from '../component/snackbar/SnackbarNotification.js';
 
 const serviceWorkerLocation = '../service-worker.js';
 
 export class ServiceWorkerHandler {
 
     /**
-     * @param {SnackbarNotication} snackbarNotication
+     * @param {import('../component/snackbar/SnackbarNotification.js').SnackbarNotication} snackbarNotication
      */
     static async register(snackbarNotication) {
 
@@ -19,30 +18,29 @@ export class ServiceWorkerHandler {
         const wb = new Workbox(serviceWorkerLocation);
         const registration = await wb.register();
 
-        wb.addEventListener('waiting', (event) => this._skipWaitingPrompt(wb, registration, event, snackbarNotication));
-        wb.addEventListener('externalwaiting', (event) => this._skipWaitingPrompt(wb, registration, event, snackbarNotication));
+        wb.addEventListener('waiting', (_) => this._skipWaitingPrompt(wb, registration, snackbarNotication));
     }
 
     /**
      * @param {Workbox} wb
      * @param {ServiceWorkerRegistration} registration
-     * @param {import("workbox-window/utils/WorkboxEvent").WorkboxLifecycleWaitingEvent} event
-     * @param {SnackbarNotication} snackbarNotication
+     * @param {import('../component/snackbar/SnackbarNotification.js').SnackbarNotication} snackbarNotication
      */
-    static _skipWaitingPrompt(wb, registration, event, snackbarNotication) {
+    static _skipWaitingPrompt(wb, registration, snackbarNotication) {
 
         // `event.wasWaitingBeforeRegister` === false:
         // if this is the first time the updated service worker is waiting
+
         // `event.wasWaitingBeforeRegister` === true:
         // a previously updated service worker is still waiting.
         // Need to keep this in mind
 
         snackbarNotication.show();
 
-        // SnackbarNotication is a wrapper component for the ServiceWorkerUpdateNotification component
+        // snackbarNotication is a wrapper component for the ServiceWorkerUpdateNotification component
         // we only care if the user has selected the "Reload" button which will fire an event
 
-        snackbarNotication.addEventListener('reloadServiceWorkerEvent', (event) =>
+        snackbarNotication.addEventListener('refreshNotificationEvent', (_) =>
             this._reloadServiceWorker(wb, registration)
         );
     }
@@ -61,10 +59,7 @@ export class ServiceWorkerHandler {
         });
 
         if (registration && registration.waiting) {
-            // Send a message to the waiting service worker,
-            // instructing it to activate.
-            // Note: for this to work, you have to add a message
-            // listener in your service worker
+            // Send a message to the waiting service worker, instructing it to activate.
             messageSW(registration.waiting, { type: 'SKIP_WAITING' });
         }
     }

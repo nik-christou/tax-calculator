@@ -4,11 +4,6 @@ import { ServiceWorkerUpdateNotificationCss } from './ServiceWorkerUpdateNotific
 
 export class ServiceWorkerUpdateNotication extends BaseElementMixin(LitElement) {
 
-    static get properties() {
-        return {
-        };
-    }
-
     static get styles() {
         return [...super.styles, ServiceWorkerUpdateNotificationCss];
     }
@@ -20,7 +15,7 @@ export class ServiceWorkerUpdateNotication extends BaseElementMixin(LitElement) 
                     <span>New version available</span>
                 </div>
                 <div class="actions-container">
-                    <a href="#" class="refresh-link">Reload</a>
+                    <a id="refreshButton" href="#" class="refresh-link">Reload</a>
                     <button type="button" class="close close-link">
                         <span>&times;</span>
                     </button>
@@ -31,7 +26,7 @@ export class ServiceWorkerUpdateNotication extends BaseElementMixin(LitElement) 
 
     firstUpdated() {
 
-        const refreshLink = this.shadowRoot.querySelector('a.refresh-link');
+        const refreshLink = this.shadowRoot.querySelector('a#refreshButton');
         const closeLink = this.shadowRoot.querySelector('button.close-link');
 
         refreshLink.addEventListener('click', event => this._handleRefreshLink(event));
@@ -46,7 +41,7 @@ export class ServiceWorkerUpdateNotication extends BaseElementMixin(LitElement) 
         event.preventDefault();
         event.stopPropagation();
 
-        this.fireReloadServiceWorkerEvent();
+        this._fireRefreshNotificationEvent();
     }
 
     /**
@@ -57,10 +52,10 @@ export class ServiceWorkerUpdateNotication extends BaseElementMixin(LitElement) 
         event.preventDefault();
         event.stopPropagation();
 
-        this.fireCloseNotificationEvent();
+        this._fireCloseNotificationEvent();
     }
 
-    fireRefreshNotificationEvent() {
+    _fireRefreshNotificationEvent() {
 
         const refreshNotificationEvent = new window.CustomEvent('refreshNotificationEvent', {
             bubbles: true,
@@ -73,7 +68,7 @@ export class ServiceWorkerUpdateNotication extends BaseElementMixin(LitElement) 
     /**
      * Fire the necessary event to close the notification component
      */
-    fireCloseNotificationEvent() {
+    _fireCloseNotificationEvent() {
 
         const closeNotificationEvent = new window.CustomEvent('hideNotificationEvent', {
             bubbles: true,
@@ -84,4 +79,5 @@ export class ServiceWorkerUpdateNotication extends BaseElementMixin(LitElement) 
     }
 }
 
+// @ts-ignore
 window.customElements.define('service-worker-update-notification', ServiceWorkerUpdateNotication);
