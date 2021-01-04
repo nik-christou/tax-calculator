@@ -376,4 +376,5 @@ export class HomeView extends BaseElementMixin(LitElement) {
     }
 }
 
+// @ts-ignore
 window.customElements.define('home-view', HomeView);

@@ -48,4 +48,5 @@ export class TaxCalculatorApp extends BaseElementMixin(LitElement) {
     }
 }
 
+// @ts-ignore
 window.customElements.define('tax-calculator-app', TaxCalculatorApp);

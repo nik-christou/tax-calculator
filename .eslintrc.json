@@ -1,6 +1,6 @@
 {
     "rules": {
-        "indent": ["error", 4],
+        "indent": ["error", 4, { "SwitchCase": 1 }],
         "space-before-function-paren": ["error", "never"],
         "semi": ["error", "always", { "omitLastInOneLineBlock": true }],
         "padded-blocks": "off",

@@ -110,7 +110,7 @@ export class UserSelectionStore {
      * the given country options object.
      * Ovverides existing country options object.
      *
-     * @param {import('../model/TaxOptions.js')TaxOptions} countryOptions
+     * @param {import('../model/TaxOptions.js').TaxOptions} countryOptions
      */
     static async updateCountryOptions(countryOptions) {
         if (DatabaseManager.dbConnection) {
@@ -125,7 +125,7 @@ export class UserSelectionStore {
     }
 
     /**
-     * @returns {Promise<Map<import('../model/TaxOptions.js')TaxOptions>>}
+     * @returns {Promise<Map<import('../model/TaxOptions.js').TaxOptions>>}
      */
     static async retrieveAllCountryOptions() {
         if (DatabaseManager.dbConnection) {
@@ -136,7 +136,7 @@ export class UserSelectionStore {
 
     /**
      * @param {Number} countryId
-     * @returns {Promise<TaxOptions>}
+     * @returns {Promise<import('../model/TaxOptions.js').TaxOptions>}
      */
     static async retrieveCountryOptionByCountryId(countryId) {
         if (DatabaseManager.dbConnection) {

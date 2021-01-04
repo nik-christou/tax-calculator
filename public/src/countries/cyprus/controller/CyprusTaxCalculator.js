@@ -7,24 +7,26 @@ export class CyprusTaxCalculator {
     /**
      * @static
      * @param {import('../model/CyprusTaxDetails.js').CyprusTaxDetails} cyprusTaxDetails
+     * @param {import('../model/CyprusTaxOptions.js').CyprusTaxOptions} cyprusTaxOptions
      * @param {import('../../../model/SalaryDetails.js').SalaryDetails} salaryDetails
      */
-    static calculateTax(cyprusTaxDetails, salaryDetails) {
+    static calculateTax(cyprusTaxDetails, cyprusTaxOptions, salaryDetails) {
         
         const annualGrossAmount = TaxCalculatorUtil.calculateAnnualGrossAmount(salaryDetails);
 
-        return this._calculateTaxFromAnnualIncome(cyprusTaxDetails, salaryDetails, annualGrossAmount);
+        return this._calculateTaxFromAnnualIncome(cyprusTaxDetails, cyprusTaxOptions, salaryDetails, annualGrossAmount);
     }
 
     /**
      * @static
      * @param {import('../model/CyprusTaxDetails.js').CyprusTaxDetails} cyprusTaxDetails
+     * @param {import('../model/CyprusTaxOptions.js').CyprusTaxOptions} cyprusTaxOptions
      * @param {import('../../../model/SalaryDetails.js').SalaryDetails} salaryDetails
      * @param {Number} annualGrossAmount
      */
-    static _calculateTaxFromAnnualIncome(cyprusTaxDetails, salaryDetails, annualGrossAmount) {
+    static _calculateTaxFromAnnualIncome(cyprusTaxDetails, cyprusTaxOptions, salaryDetails, annualGrossAmount) {
         
-        const annualTaxResults = this._calculateAnnualTaxResult(cyprusTaxDetails, annualGrossAmount);
+        const annualTaxResults = this._calculateAnnualTaxResult(cyprusTaxDetails, cyprusTaxOptions, annualGrossAmount);
         const monthlyTaxResults = TaxCalculatorUtil.convertAnnualToMonthlyTax(annualTaxResults, salaryDetails.includesThirteen);
 
         return new TaxResults(monthlyTaxResults, annualTaxResults);
@@ -32,13 +34,13 @@ export class CyprusTaxCalculator {
 
     /**
      * @static
-     * 
      * @param {import('../model/CyprusTaxDetails.js').CyprusTaxDetails} cyprusTaxDetails
+     * @param {import('../model/CyprusTaxOptions.js').CyprusTaxOptions} cyprusTaxOptions
      * @param {Number} annualGrossAmount
      *
      * @returns {TaxResult} the tax result
      */
-    static _calculateAnnualTaxResult(cyprusTaxDetails, annualGrossAmount) {
+    static _calculateAnnualTaxResult(cyprusTaxDetails, cyprusTaxOptions, annualGrossAmount) {
 
         const lastTaxBracketIndex = cyprusTaxDetails.taxBrackets.length - 1;
 
@@ -58,10 +60,45 @@ export class CyprusTaxCalculator {
             }
         }
 
-        const socialInsurance = annualGrossAmount * cyprusTaxDetails.socialInsuranceContributionPercent * 0.01;
-        const nhs = annualGrossAmount * cyprusTaxDetails.healthContributionPercent * 0.01;
+        const socialInsurancePercentage = this._calculateSocialInsurance(cyprusTaxDetails, cyprusTaxOptions);
+        const healthInsurancePercentage = this._calculateHealthInsurance(cyprusTaxDetails, cyprusTaxOptions);
+
+        const socialInsurance = annualGrossAmount * socialInsurancePercentage * 0.01;
+        const nhs = annualGrossAmount * healthInsurancePercentage * 0.01;
         const netAmount = annualGrossAmount - totalTax - socialInsurance - nhs;
 
         return new TaxResult(annualGrossAmount, totalTax, socialInsurance, nhs, netAmount);
+    }
+
+    /**
+     * @static
+     * @param {import('../model/CyprusTaxDetails.js').CyprusTaxDetails} cyprusTaxDetails
+     * @param {import('../model/CyprusTaxOptions.js').CyprusTaxOptions} cyprusTaxOptions
+     * 
+     * @returns the social insurance contribution
+     */
+    static _calculateSocialInsurance(cyprusTaxDetails, cyprusTaxOptions) {
+
+        if (cyprusTaxOptions.selfEmployed) {
+            return cyprusTaxDetails.selfEmployedContributions.socialInsurancePercent;
+        }
+
+        return cyprusTaxDetails.employedContributions.socialInsurancePercent;
+    }
+
+    /**
+     * @static
+     * @param {import('../model/CyprusTaxDetails.js').CyprusTaxDetails} cyprusTaxDetails
+     * @param {import('../model/CyprusTaxOptions.js').CyprusTaxOptions} cyprusTaxOptions
+     * 
+     * @returns the social insurance contribution
+     */
+    static _calculateHealthInsurance(cyprusTaxDetails, cyprusTaxOptions) {
+
+        if (cyprusTaxOptions.selfEmployed) {
+            return cyprusTaxDetails.selfEmployedContributions.healthContributionPercent;
+        }
+
+        return cyprusTaxDetails.employedContributions.healthContributionPercent;
     }
 }

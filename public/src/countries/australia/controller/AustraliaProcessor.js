@@ -11,6 +11,7 @@ export class AustraliaProcessor {
      * @returns {Promise<import('../../../model/TaxResults.js').TaxResults>}
      */
     static async processAustraliaTax(countryId, salaryDetails) {
+        
         const taxDetails = await TaxDetailsStore.getTaxDetailsByCountryById(countryId);
         const taxOptions = await UserSelectionStore.retrieveCountryOptionByCountryId(countryId);
         const australiaTaxOptions = AustraliaOptions.createFromObject(taxOptions);

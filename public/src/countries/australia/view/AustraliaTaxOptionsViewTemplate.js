@@ -1,8 +1,7 @@
-import { html } from "lit-element";
-import { AustraliaOptions } from "../model/AustraliaTaxOptions.js";
+import { html } from 'lit-element';
 
 /**
- * @param {AustraliaOptions} australiaOptions
+ * @param {import('../model/AustraliaTaxOptions.js').AustraliaOptions} australiaOptions
  */
 const AustraliaTaxOptionsViewTemplate = (australiaOptions) => html`
     <div class="list-group">

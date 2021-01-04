@@ -1,5 +1,7 @@
 import { CyprusTaxCalculator } from '../controller/CyprusTaxCalculator.js';
 import { TaxDetailsStore } from '../../../datastore/TaxDetailsStore.js';
+import { UserSelectionStore } from '../../../datastore/UserSelectionStore.js';
+import { CyprusTaxOptions } from '../model/CyprusTaxOptions.js';
 
 export class CyprusProcessor {
     /**
@@ -11,7 +13,10 @@ export class CyprusProcessor {
     static async processCyprusTax(countryId, salaryDetails) {
         
         const cyprusTaxDetails = await TaxDetailsStore.getTaxDetailsByCountryById(countryId);
-        const taxResults = CyprusTaxCalculator.calculateTax(cyprusTaxDetails, salaryDetails);
+        const taxOptions = await UserSelectionStore.retrieveCountryOptionByCountryId(countryId);
+        const cyprusTaxOptions = CyprusTaxOptions.createFromObject(taxOptions);
+
+        const taxResults = CyprusTaxCalculator.calculateTax(cyprusTaxDetails, cyprusTaxOptions, salaryDetails);
 
         return taxResults;
     }

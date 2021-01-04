@@ -1,7 +1,7 @@
 import { openDB, deleteDB } from 'idb/build/esm/index.js';
 import { CountriesDataLoader } from '../countries/CountriesDataLoader.js';
 
-const DB_VERSION = 1;
+const DB_VERSION = 2;
 const DB_NAME = 'tax-calculator-db';
 const COUNTRIES_STORE_NAME = 'country-store';
 const TAX_DETAILS_STORE_NAME = 'tax-details-store';
@@ -57,6 +57,9 @@ export class DatabaseManager {
         case 0:
             this._createSchemaForV1(db);
             break;
+        case 1:
+            this._createSchemaForV2(db);
+            break;
         }
     }
 
@@ -70,8 +73,22 @@ export class DatabaseManager {
     }
 
     /**
+     * @param {import("idb").IDBPDatabase<unknown>} dbConnection
+     */
+    static async _createSchemaForV2(dbConnection) {
+
+        dbConnection.deleteObjectStore(COUNTRIES_STORE_NAME);
+        dbConnection.deleteObjectStore(USER_SELECTION_STORE_NAME);
+        dbConnection.deleteObjectStore(TAX_DETAILS_STORE_NAME);
+
+        dbConnection.createObjectStore(COUNTRIES_STORE_NAME);
+        dbConnection.createObjectStore(USER_SELECTION_STORE_NAME);
+        dbConnection.createObjectStore(TAX_DETAILS_STORE_NAME);
+    }
+
+    /**
      * @param {import("idb").IDBPTransaction<unknown, string[]>} transaction
-     * @param {CountryData[]} countriesData
+     * @param {import('../model/CountryData.js').CountryData[]} countriesData
      */
     static _addInitialData(transaction, countriesData) {
         this._populateCountriesObjectStore(transaction, countriesData);
@@ -80,7 +97,7 @@ export class DatabaseManager {
 
     /**
      * @param {import("idb").IDBPTransaction<unknown, string[]>} transaction
-     * @param {CountryData[]} countriesData
+     * @param {import('../model/CountryData.js').CountryData[]} countriesData
      */
     static _populateCountriesObjectStore(transaction, countriesData) {
         const countriesObjectStore = transaction.objectStore(COUNTRIES_STORE_NAME);
@@ -92,7 +109,7 @@ export class DatabaseManager {
 
     /**
      * @param {import("idb").IDBPTransaction<unknown, string[]>} transaction
-     * @param {CountryData[]} countriesData
+     * @param {import('../model/CountryData.js').CountryData[]} countriesData
      */
     static _populateTaxDetailsObjectStore(transaction, countriesData) {
         const taxDetailsObjectStore = transaction.objectStore(TAX_DETAILS_STORE_NAME);

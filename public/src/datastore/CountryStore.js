@@ -19,7 +19,7 @@ export class CountryStore {
     /**
      * Retrieve all stored countries
      *
-     * @returns {Promise<Country[]>} array of stored countries
+     * @returns {Promise<import('../model/Country.js').Country[]>} array of stored countries
      */
     static async retrieveCountries() {
         if (DatabaseManager.dbConnection) {

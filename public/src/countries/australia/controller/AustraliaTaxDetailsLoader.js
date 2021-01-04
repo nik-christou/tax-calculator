@@ -4,11 +4,13 @@ import { AustraliaResidents } from '../model/AustraliaResidents.js';
 import { AustraliaNonResidents } from '../model/AustraliaNonResidents.js';
 
 export class AustraliaTaxDetailsLoader {
+
     /**
      * @param {Object} jsonData
      * @returns {Promise<AustraliaTaxDetails>} the tax details
      */
     static async loadTaxDetailsFromJsonData(jsonData) {
+        
         const residents = this._loadResidentsData(jsonData);
         const nonResidents = this._loadNonResidentsData(jsonData);
 

@@ -1,19 +1,20 @@
-import { LitElement } from "lit-element";
-import { BaseElementMixin } from "../../../base/BaseElementMixin.js";
-import { AustraliaTaxOptionsViewCss } from "./AustraliaTaxOptionsViewCss.js";
-import { AustraliaTaxOptionsViewTemplate } from "./AustraliaTaxOptionsViewTemplate.js";
-import { ToggleCss } from "../../../base/ToggleCss.js";
-import { ListGroupCss } from "../../../base/ListGroupCss.js";
-import { BlueprintCss } from "../../../base/BlueprintCss.js";
-import { AustraliaOptions } from "../model/AustraliaTaxOptions.js";
-import { UserSelectionStore } from "../../../datastore/UserSelectionStore.js";
+import { LitElement } from 'lit-element';
+import { BaseElementMixin } from '../../../base/BaseElementMixin.js';
+import { AustraliaTaxOptionsViewCss } from './AustraliaTaxOptionsViewCss.js';
+import { AustraliaTaxOptionsViewTemplate } from './AustraliaTaxOptionsViewTemplate.js';
+import { ToggleCss } from '../../../base/ToggleCss.js';
+import { ListGroupCss } from '../../../base/ListGroupCss.js';
+import { BlueprintCss } from '../../../base/BlueprintCss.js';
+import { AustraliaOptions } from '../model/AustraliaTaxOptions.js';
+import { UserSelectionStore } from '../../../datastore/UserSelectionStore.js';
 
 const COUNTRY_ID = 2;
 
 export class AustraliaTaxOptionsView extends BaseElementMixin(LitElement) {
+
     static get properties() {
         return {
-            australiaOptions: AustraliaOptions,
+            australiaOptions: AustraliaOptions
         };
     }
 
@@ -43,8 +44,8 @@ export class AustraliaTaxOptionsView extends BaseElementMixin(LitElement) {
     }
 
     _addIsResidentListener() {
-        const residentElement = this.shadowRoot.querySelector("input#resident");
-        residentElement.addEventListener("input", (event) => {
+        const residentElement = this.shadowRoot.querySelector('input#resident');
+        residentElement.addEventListener('input', (event) => {
             this._handleIsResidentChange(event, residentElement);
         });
     }
@@ -60,4 +61,4 @@ export class AustraliaTaxOptionsView extends BaseElementMixin(LitElement) {
 }
 
 // @ts-ignore
-window.customElements.define("australia-tax-options-view", AustraliaTaxOptionsView);
+window.customElements.define('australia-tax-options-view', AustraliaTaxOptionsView);
