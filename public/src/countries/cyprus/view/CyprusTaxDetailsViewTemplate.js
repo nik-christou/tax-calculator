@@ -26,15 +26,26 @@ const taxBracketItemTemplate = (taxBracket, formatter) => html`
  * @param {Intl.NumberFormat} formatter
  */
 const CyprusTaxDetailsViewTemplate = (taxDetails, formatter) => html`
-    <h3>Contributions</h3>
+    <h3>Employee Contributions</h3>
     <div class="list-group">
         <div class="list-group-item contribution-item">
             <span>National Health Service:</span>
-            <span>${taxDetails.healthContributionPercent}%</span>
+            <span>${taxDetails.employedContributions.healthContributionPercent}%</span>
         </div>
         <div class="list-group-item contribution-item">
             <span>Social insurance contribution:</span>
-            <span>${taxDetails.socialInsuranceContributionPercent}%</span>
+            <span>${taxDetails.employedContributions.socialInsurancePercent}%</span>
+        </div>
+    </div>
+    <h3>Self-employed Contributions</h3>
+    <div class="list-group">
+        <div class="list-group-item contribution-item">
+            <span>National Health Service:</span>
+            <span>${taxDetails.selfEmployedContributions.healthContributionPercent}%</span>
+        </div>
+        <div class="list-group-item contribution-item">
+            <span>Social insurance contribution:</span>
+            <span>${taxDetails.selfEmployedContributions.socialInsurancePercent}%</span>
         </div>
     </div>
     <h3>Tax brackets</h3>

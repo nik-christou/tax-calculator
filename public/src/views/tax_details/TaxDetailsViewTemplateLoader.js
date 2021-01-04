@@ -15,10 +15,10 @@ export class TaxDetailsViewTemplateLoader {
         }
 
         switch (country.id) {
-        case 1:
-            return CyprusTaxDetailsViewTemplate(taxDetails, formatter);
-        case 2:
-            return AustraliaTaxDetailsViewTemplate(taxDetails, formatter);
+            case 1:
+                return CyprusTaxDetailsViewTemplate(taxDetails, formatter);
+            case 2:
+                return AustraliaTaxDetailsViewTemplate(taxDetails, formatter);
         }
     }
 }
