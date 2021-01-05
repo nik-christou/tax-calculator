@@ -57,7 +57,7 @@ export class DatabaseManager {
             case 0:
                 this._createSchemaForV1(db);
                 break;
-            case 3:
+            case 2:
                 this._createSchemaForV3(db);
                 break;
         }
