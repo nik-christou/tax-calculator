@@ -3,8 +3,11 @@ import { CyprusTaxBracket } from '../model/CyprusTaxBracket.js';
 import { CyprusContributions } from '../model/CyprusContributions.js';
 
 export class CyprusTaxDetailsLoader {
+
     /**
+     * @static
      * @param {Object} jsonData
+     * 
      * @returns {Promise<CyprusTaxDetails>}
      */
     static async loadTaxDetailsFromJsonData(jsonData) {

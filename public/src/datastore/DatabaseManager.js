@@ -54,12 +54,12 @@ export class DatabaseManager {
      */
     static _upgrade(db, oldVersion, newVersion, transaction, countriesData) {
         switch (oldVersion) {
-        case 0:
-            this._createSchemaForV1(db);
-            break;
-        case 1:
-            this._createSchemaForV2(db);
-            break;
+            case 0:
+                this._createSchemaForV1(db);
+                break;
+            case 1:
+                this._createSchemaForV2(db);
+                break;
         }
     }
 

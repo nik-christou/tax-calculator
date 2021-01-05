@@ -7,8 +7,7 @@ import { ListGroupCss } from '../../../base/ListGroupCss.js';
 import { BlueprintCss } from '../../../base/BlueprintCss.js';
 import { CyprusTaxOptions } from '../model/CyprusTaxOptions.js';
 import { UserSelectionStore } from '../../../datastore/UserSelectionStore.js';
-
-const COUNTRY_ID = 1;
+import CountryIDsEnum from '../../CountryIDsEnum.js';
 
 export class CyprusTaxOptionsView extends BaseElementMixin(LitElement) {
 
@@ -38,8 +37,8 @@ export class CyprusTaxOptionsView extends BaseElementMixin(LitElement) {
 
     _loadUserSelectionFromDatastore() {
 
-        UserSelectionStore.retrieveCountryOptionByCountryId(COUNTRY_ID).then((countryOptions) => {
-            if (!countryOptions || countryOptions.countryId !== COUNTRY_ID) return;
+        UserSelectionStore.retrieveCountryOptionByCountryId(CountryIDsEnum.CYPRUS_ID).then((countryOptions) => {
+            if (!countryOptions || countryOptions.countryId !== CountryIDsEnum.CYPRUS_ID) return;
             this.cyprusTaxOptions = CyprusTaxOptions.createFromObject(countryOptions);
         });
     }

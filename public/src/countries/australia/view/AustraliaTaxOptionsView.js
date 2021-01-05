@@ -7,8 +7,7 @@ import { ListGroupCss } from '../../../base/ListGroupCss.js';
 import { BlueprintCss } from '../../../base/BlueprintCss.js';
 import { AustraliaOptions } from '../model/AustraliaTaxOptions.js';
 import { UserSelectionStore } from '../../../datastore/UserSelectionStore.js';
-
-const COUNTRY_ID = 2;
+import CountryIDsEnum from '../../CountryIDsEnum.js';
 
 export class AustraliaTaxOptionsView extends BaseElementMixin(LitElement) {
 
@@ -37,8 +36,8 @@ export class AustraliaTaxOptionsView extends BaseElementMixin(LitElement) {
     }
 
     _loadUserSelectionFromDatastore() {
-        UserSelectionStore.retrieveCountryOptionByCountryId(COUNTRY_ID).then((countryOptions) => {
-            if (!countryOptions || countryOptions.countryId !== COUNTRY_ID) return;
+        UserSelectionStore.retrieveCountryOptionByCountryId(CountryIDsEnum.AUSTRALIA_ID).then((countryOptions) => {
+            if (!countryOptions || countryOptions.countryId !== CountryIDsEnum.AUSTRALIA_ID) return;
             this.australiaOptions = AustraliaOptions.createFromObject(countryOptions);
         });
     }

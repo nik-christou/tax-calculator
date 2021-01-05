@@ -1,0 +1,40 @@
+{
+    "id": 3,
+    "name": "Germany",
+    "locale": "de-DE",
+    "currency": "EUR",
+    "flag": "germany.png",
+    "additionalOptions": true,
+    "pensionInsurance": {
+        "percent": 9.3,
+        "maxAmount": 41400
+    },
+    "unemploymentInsurance": {
+        "percent": 1.25,
+        "maxAmount": 41400
+    },
+    "healthInsurance": {
+        "percent": 7.3,
+        "maxAmount": 28125
+    },
+    "longTermCareInsurance": {
+        "childlessPercent": 1.55,
+        "withChildPercent": 1.525,
+        "maxAmount": 28125
+    },
+    "taxBrackets": {
+        "single": [
+            {"start": 0, "end": 9407, "ratePercent": 0},
+            {"start": 9408, "end": 57050, "ratePercent": 14},
+            {"start": 57051, "end": 270499, "ratePercent": 42},
+            {"start": 270500, "end": -1, "ratePercent": 45}
+        ],
+        "married": [
+            {"start": 0, "end": 18815, "ratePercent": 0},
+            {"start": 18816, "end": 114101, "ratePercent": 14},
+            {"start": 114102, "end": 540999, "ratePercent": 42},
+            {"start": 541000, "end": -1, "ratePercent": 45}
+        ]
+    }
+}
+  

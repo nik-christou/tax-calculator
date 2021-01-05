@@ -1,13 +1,12 @@
 import { TaxOptions } from '../../../model/TaxOptions.js';
-
-const COUNTRY_ID = 2;
+import CountryIDsEnum from '../../CountryIDsEnum.js';
 
 export class AustraliaOptions extends TaxOptions {
     /**
      * @param {Boolean} isResident
      */
     constructor(isResident = true) {
-        super(COUNTRY_ID);
+        super(CountryIDsEnum.AUSTRALIA_ID);
         this.isResident = isResident;
     }
 

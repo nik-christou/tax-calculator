@@ -1,6 +1,7 @@
 import { html } from 'lit-element';
 import { CyprusTaxDetailsViewTemplate } from '../../countries/cyprus/view/CyprusTaxDetailsViewTemplate.js';
 import { AustraliaTaxDetailsViewTemplate } from '../../countries/australia/view/AustraliaTaxDetailsViewTemplate.js';
+import { GermanTaxDetailsViewTemplate } from '../../countries/germany/view/GermanyTaxDetailsViewTemplate.js';
 
 export class TaxDetailsViewTemplateLoader {
     /**
@@ -19,6 +20,8 @@ export class TaxDetailsViewTemplateLoader {
                 return CyprusTaxDetailsViewTemplate(taxDetails, formatter);
             case 2:
                 return AustraliaTaxDetailsViewTemplate(taxDetails, formatter);
+            case 3:
+                return GermanTaxDetailsViewTemplate(taxDetails, formatter);
         }
     }
 }
