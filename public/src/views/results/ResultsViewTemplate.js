@@ -3,9 +3,23 @@ import { html } from 'lit-element';
 /**
  * @param {Number} amount
  * @param {Intl.NumberFormat} formatter
+ * 
+ * @retuns the amount as a formatted string
  */
 function formatAmount(formatter, amount) {
     return formatter.format(amount);
+}
+
+/**
+ * @param {Number} amount
+ */
+function isDeductableAmount(formatter, amount) {
+
+    if (amount === 0) {
+        return html` <span>${formatAmount(formatter, amount)}</span> `;
+    }
+
+    return html` <span class="deduction">${formatAmount(formatter, amount)}</span> `;
 }
 
 /**
@@ -39,19 +53,19 @@ const ResultsViewTemplate = (taxResults, formatter) => html`
                         <div class="list-group-item">
                             <div class="result-item-container">
                                 <h5>Tax:</h5>
-                                <span class="deduction">${formatAmount(formatter, taxResults.annualTaxResult.taxAmount)}</span>
+                                ${isDeductableAmount(formatter, taxResults.annualTaxResult.taxAmount)}
                             </div>
                         </div>
                         <div class="list-group-item">
                             <div class="result-item-container">
                                 <h5>Social contributions:</h5>
-                                <span class="deduction">${formatAmount(formatter, taxResults.annualTaxResult.socialAmount)}</span>
+                                ${isDeductableAmount(formatter, taxResults.annualTaxResult.socialAmount)}
                             </div>
                         </div>
                         <div class="list-group-item">
                             <div class="result-item-container">
                                 <h5>Health contributions:</h5>
-                                <span class="deduction">${formatAmount(formatter, taxResults.annualTaxResult.healthContributionAmount)}</span>
+                                ${isDeductableAmount(formatter, taxResults.annualTaxResult.healthContributionAmount)}
                             </div>
                         </div>
                         <div class="list-group-item">
@@ -75,19 +89,19 @@ const ResultsViewTemplate = (taxResults, formatter) => html`
                         <div class="list-group-item">
                             <div class="result-item-container">
                                 <h5>Tax:</h5>
-                                <span class="deduction">${formatAmount(formatter, taxResults.monthlyTaxResult.taxAmount)}</span>
+                                ${isDeductableAmount(formatter, taxResults.monthlyTaxResult.taxAmount)}
                             </div>
                         </div>
                         <div class="list-group-item">
                             <div class="result-item-container">
                                 <h5>Social contributions:</h5>
-                                <span class="deduction">${formatAmount(formatter, taxResults.monthlyTaxResult.socialAmount)}</span>
+                                ${isDeductableAmount(formatter, taxResults.monthlyTaxResult.socialAmount)}
                             </div>
                         </div>
                         <div class="list-group-item">
                             <div class="result-item-container">
                                 <h5>Health contributions:</h5>
-                                <span class="deduction">${formatAmount(formatter, taxResults.monthlyTaxResult.healthContributionAmount)}</span>
+                                ${isDeductableAmount(formatter, taxResults.monthlyTaxResult.healthContributionAmount)}
                             </div>
                         </div>
                         <div class="list-group-item">
