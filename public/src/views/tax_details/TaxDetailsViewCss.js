@@ -89,9 +89,21 @@ export const TaxDetailsViewCss = css`
         justify-content: space-between;
     }
 
+    .sub-contribution-item {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding-left: 2em;
+    }
+
     .tax-bracket-item {
         display: flex;
         align-items: center;
         justify-content: space-between;
+    }
+
+    contribution-item .title-container {
+        display: flex;
+        flex-direction: column;
     }
 `;

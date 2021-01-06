@@ -146,4 +146,15 @@ export class UserSelectionStore {
             return Promise.resolve(null);
         }
     }
+
+    /**
+     * @returns {Promise<void>}
+     */
+    static async deleteCountryOptions() {
+
+        if (DatabaseManager.dbConnection) {
+            const dbConnection = await DatabaseManager.dbConnection;
+            return await dbConnection.delete(STORE_NAME, 'countryOptions');
+        }
+    }
 }

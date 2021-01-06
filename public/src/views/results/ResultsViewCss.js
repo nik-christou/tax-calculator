@@ -88,4 +88,12 @@ export const ResultsViewCss = css`
         align-items: center;
         justify-content: space-between;
     }
+
+    .result-item-container span.deduction {
+        color: red;
+    }
+
+    .result-item-container span.netResult {
+        color: green;
+    }
 `;

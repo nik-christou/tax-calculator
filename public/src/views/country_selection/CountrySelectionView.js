@@ -57,12 +57,15 @@ export class CountrySelectionView extends BaseElementMixin(LitElement) {
 
     /**
      * @param {Event} event
-     * @param {import('../../model/Country.js')Country} country
+     * @param {import('../../model/Country.js').Country} country
      */
     _handleSelectedCountry(event, country) {
+        
         event.preventDefault();
 
-        UserSelectionStore.updateCountry(country).then((_) => this._goToHome());
+        UserSelectionStore.updateCountry(country)
+            .then((_) => UserSelectionStore.deleteCountryOptions())
+            .then((_) => this._goToHome());
     }
 
     _goToHome() {

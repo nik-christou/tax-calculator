@@ -1,39 +1,36 @@
 import { css } from 'lit-element';
 
-export const GermanTaxOptionsViewCss = css`
+export const GermanyTaxOptionsViewCss = css`
 
-    .list-group-item:first-child {
-        border-top-left-radius: 1rem;
-        border-top-right-radius: 1rem;
+    ul.marital-status-values,
+    ul.parental-status-values {
+        margin-top: 0;
+        width: 100%;
+        text-align: center;
+        --list-group-item-active-background-color: #4e7ac7;
     }
 
-    .list-group-item:last-child {
-        border-bottom-right-radius: 1rem;
+    ul.marital-status-values .list-group-item,
+    ul.parental-status-values .list-group-item {
+        user-select: none;
+        -webkit-tap-highlight-color: transparent;
+    }
+
+    ul.marital-status-values a#single-status,
+    ul.parental-status-values a#children {
         border-bottom-left-radius: 1rem;
+        border-top-left-radius: 1rem;
+        padding: 0.6rem;
     }
 
-    .options-item {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-
-        --toggle-round-label-width: 65px;
-        --toggle-round-label-height: 35px;
-        --toggle-round-label-background-color: #dddddd;
-        --toggle-round-label-background-color-before: #f1f1f1;
-        --toggle-round-label-background-color-before-checked: #4e7ac7;
-        --toggle-round-label-width-after: 33px;
-        --toggle-round-label-background-color-after: #ffffff;
-        --toggle-round-label-margin-left-after-checked: 30px;
+    ul.marital-status-values a#married-status,
+    ul.parental-status-values a#no-children {
+        border-top-right-radius: 1rem;
+        border-bottom-right-radius: 1rem;
+        padding: 0.6rem;
     }
 
-    .options-item .title-container {
-        display: flex;
-        flex-direction: column;
-    }
-
-    .options-item .checkbox-input-group {
-        display: flex;
-        padding-left: 20px;
+    ul.parental-status-values .list-group-item-action {
+        width: auto;
     }
 `;

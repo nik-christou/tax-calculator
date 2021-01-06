@@ -1,6 +1,7 @@
 import { css } from 'lit-element';
 
-export const AustraliaTaxOptionsViewCss = css`
+export const CommonTaxOptionsViewCss = css`
+
     .list-group-item:first-child {
         border-top-left-radius: 1rem;
         border-top-right-radius: 1rem;

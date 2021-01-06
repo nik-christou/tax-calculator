@@ -1,6 +1,5 @@
 import { LitElement } from 'lit-element';
 import { BaseElementMixin } from '../../../base/BaseElementMixin.js';
-import { AustraliaTaxOptionsViewCss } from './AustraliaTaxOptionsViewCss.js';
 import { AustraliaTaxOptionsViewTemplate } from './AustraliaTaxOptionsViewTemplate.js';
 import { ToggleCss } from '../../../base/ToggleCss.js';
 import { ListGroupCss } from '../../../base/ListGroupCss.js';
@@ -8,6 +7,7 @@ import { BlueprintCss } from '../../../base/BlueprintCss.js';
 import { AustraliaOptions } from '../model/AustraliaTaxOptions.js';
 import { UserSelectionStore } from '../../../datastore/UserSelectionStore.js';
 import CountryIDsEnum from '../../CountryIDsEnum.js';
+import { CommonTaxOptionsViewCss } from '../../CommonTaxOptionViewCss.js';
 
 export class AustraliaTaxOptionsView extends BaseElementMixin(LitElement) {
 
@@ -18,7 +18,7 @@ export class AustraliaTaxOptionsView extends BaseElementMixin(LitElement) {
     }
 
     static get styles() {
-        return [...super.styles, BlueprintCss, ListGroupCss, ToggleCss, AustraliaTaxOptionsViewCss];
+        return [...super.styles, BlueprintCss, ListGroupCss, ToggleCss, CommonTaxOptionsViewCss];
     }
 
     render() {

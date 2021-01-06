@@ -106,4 +106,5 @@ export class TaxDetailsView extends BaseElementMixin(LitElement) {
     }
 }
 
+// @ts-ignore
 window.customElements.define('tax-details-view', TaxDetailsView);

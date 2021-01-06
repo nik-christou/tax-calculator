@@ -39,25 +39,25 @@ const ResultsViewTemplate = (taxResults, formatter) => html`
                         <div class="list-group-item">
                             <div class="result-item-container">
                                 <h5>Tax:</h5>
-                                <span>${formatAmount(formatter, taxResults.annualTaxResult.taxAmount)}</span>
+                                <span class="deduction">${formatAmount(formatter, taxResults.annualTaxResult.taxAmount)}</span>
                             </div>
                         </div>
                         <div class="list-group-item">
                             <div class="result-item-container">
-                                <h5>Social:</h5>
-                                <span>${formatAmount(formatter, taxResults.annualTaxResult.socialAmount)}</span>
+                                <h5>Social contributions:</h5>
+                                <span class="deduction">${formatAmount(formatter, taxResults.annualTaxResult.socialAmount)}</span>
                             </div>
                         </div>
                         <div class="list-group-item">
                             <div class="result-item-container">
-                                <h5>NHS:</h5>
-                                <span>${formatAmount(formatter, taxResults.annualTaxResult.healthContributionAmount)}</span>
+                                <h5>Health contributions:</h5>
+                                <span class="deduction">${formatAmount(formatter, taxResults.annualTaxResult.healthContributionAmount)}</span>
                             </div>
                         </div>
                         <div class="list-group-item">
                             <div class="result-item-container">
                                 <h5>Net:</h5>
-                                <span>${formatAmount(formatter, taxResults.annualTaxResult.netAmount)}</span>
+                                <span class="netResult">${formatAmount(formatter, taxResults.annualTaxResult.netAmount)}</span>
                             </div>
                         </div>
                     </div>
@@ -75,25 +75,25 @@ const ResultsViewTemplate = (taxResults, formatter) => html`
                         <div class="list-group-item">
                             <div class="result-item-container">
                                 <h5>Tax:</h5>
-                                <span>${formatAmount(formatter, taxResults.monthlyTaxResult.taxAmount)}</span>
+                                <span class="deduction">${formatAmount(formatter, taxResults.monthlyTaxResult.taxAmount)}</span>
                             </div>
                         </div>
                         <div class="list-group-item">
                             <div class="result-item-container">
-                                <h5>Social:</h5>
-                                <span>${formatAmount(formatter, taxResults.monthlyTaxResult.socialAmount)}</span>
+                                <h5>Social contributions:</h5>
+                                <span class="deduction">${formatAmount(formatter, taxResults.monthlyTaxResult.socialAmount)}</span>
                             </div>
                         </div>
                         <div class="list-group-item">
                             <div class="result-item-container">
-                                <h5>NHS:</h5>
-                                <span>${formatAmount(formatter, taxResults.monthlyTaxResult.healthContributionAmount)}</span>
+                                <h5>Health contributions:</h5>
+                                <span class="deduction">${formatAmount(formatter, taxResults.monthlyTaxResult.healthContributionAmount)}</span>
                             </div>
                         </div>
                         <div class="list-group-item">
                             <div class="result-item-container">
                                 <h5>Net:</h5>
-                                <span>${formatAmount(formatter, taxResults.monthlyTaxResult.netAmount)}</span>
+                                <span class="netResult">${formatAmount(formatter, taxResults.monthlyTaxResult.netAmount)}</span>
                             </div>
                         </div>
                     </div>

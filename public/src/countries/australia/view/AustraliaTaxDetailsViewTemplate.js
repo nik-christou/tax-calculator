@@ -1,6 +1,4 @@
-import { html } from "lit-element";
-import { AustraliaTaxDetails } from "../model/AustraliaTaxDetails.js";
-import { AustraliaTaxBracket } from "../model/AustraliaTaxBracket.js";
+import { html } from 'lit-element';
 
 /**
  * @param {Number} amount
@@ -11,20 +9,20 @@ function formatAmount(formatter, amount) {
 }
 
 /**
- * @param {AustraliaTaxBracket} taxBracket
+ * @param {import('../model/AustraliaTaxBracket.js').AustraliaTaxBracket} taxBracket
  * @param {Intl.NumberFormat} formatter
  */
 const taxBracketItemTemplate = (taxBracket, formatter) => html`
     <div class="list-group-item tax-bracket-item">
         ${taxBracket.end === Number.POSITIVE_INFINITY
-            ? html`${formatAmount(formatter, taxBracket.start)} and over`
-            : html`<span>${formatAmount(formatter, taxBracket.start)} - ${formatAmount(formatter, taxBracket.end)}</span>`}
+        ? html`${formatAmount(formatter, taxBracket.start)} and over`
+        : html`<span>${formatAmount(formatter, taxBracket.start)} - ${formatAmount(formatter, taxBracket.end)}</span>`}
         <span>${taxBracket.ratePercent}%</span>
     </div>
 `;
 
 /**
- * @param {AustraliaTaxDetails} taxDetails
+ * @param {import('../model/AustraliaTaxDetails.js').AustraliaTaxDetails} taxDetails
  * @param {Intl.NumberFormat} formatter
  */
 const AustraliaTaxDetailsViewTemplate = (taxDetails, formatter) => html`

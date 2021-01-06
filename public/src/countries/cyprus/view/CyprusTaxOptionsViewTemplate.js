@@ -8,10 +8,7 @@ const CyprusTaxOptionsViewTemplate = (cyprusTaxOptions) => html`
         <div class="list-group-item">
             <div class="options-item">
                 <div class="title-container">
-                    <h5 class="option-description">Self-Employed</h5>
-                    <small>
-                        Self-employed resident in Cyprus
-                    </small>
+                    <h5 class="option-description">Self-employed</h5>
                 </div>
                 <div>
                     <input

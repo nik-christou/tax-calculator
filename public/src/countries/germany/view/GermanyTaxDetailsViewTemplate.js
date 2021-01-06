@@ -29,29 +29,56 @@ const GermanTaxDetailsViewTemplate = (taxDetails, formatter) => html`
     <h3>Contributions</h3>
     <div class="list-group">
         <div class="list-group-item contribution-item">
-            <span>Pension Insurance:</span>
+            <div class="title-container">
+                <span>Pension insurance:</span> <br />
+                <small>
+                    with maximum amount at ${formatAmount(formatter, taxDetails.pensionInsurance.maxAmount)}
+                </small>
+            </div>
             <span>
-                <span>${taxDetails.pensionInsurance.percent}% <br /> (max: ${formatAmount(formatter, taxDetails.pensionInsurance.maxAmount)})</span>
+                <span>${taxDetails.pensionInsurance.percent}%</span>
             </span>
         </div>
         <div class="list-group-item contribution-item">
-            <span>Unemployment Insurance:</span>
+            <div class="title-container">
+                <span>Unemployment insurance:</span> <br />
+                <small>
+                    with maximum amount at ${formatAmount(formatter, taxDetails.unemploymentInsurance.maxAmount)}
+                </small>
+            </div>
             <span>
-                <span>${taxDetails.unemploymentInsurance.percent}% <br /> (max: ${formatAmount(formatter, taxDetails.unemploymentInsurance.maxAmount)})</span>
+                <span>${taxDetails.unemploymentInsurance.percent}%</span>
             </span>
         </div>
         <div class="list-group-item contribution-item">
-            <span>Health Insurance:</span>
+            <div class="title-container">
+                <span>Health insurance:</span> <br />
+                <small>
+                    with maximum amount at ${formatAmount(formatter, taxDetails.healthInsurance.maxAmount)}
+                </small>
+            </div>
             <span>
-                <span>${taxDetails.healthInsurance.percent}% <br /> (max: ${formatAmount(formatter, taxDetails.healthInsurance.maxAmount)})</span>
+                <span>${taxDetails.healthInsurance.percent}%</span>
             </span>
         </div>
         <div class="list-group-item contribution-item">
-            <span>Long Term Care Insurance:</span>
+            <div class="title-container">
+                <span>Long Term Care Insurance:</span> <br />
+                <small>
+                    with maximum amount at ${formatAmount(formatter, taxDetails.longTermCareInsurance.maxAmount)}
+                </small>
+            </div>
+        </div>
+        <div class="list-group-item sub-contribution-item">
+            <span>No children:</span>
             <span>
-                <span>${taxDetails.longTermCareInsurance.childlessPercent}% (no child)</span> <br />
-                <span>${taxDetails.longTermCareInsurance.withChildPercent}% (with child)</span> <br />
-                <span>(max: ${formatAmount(formatter, taxDetails.longTermCareInsurance.maxAmount)})</span>
+                <span>${taxDetails.longTermCareInsurance.childlessPercent}%</span>
+            </span>
+        </div>
+        <div class="list-group-item sub-contribution-item">
+            <span>With children:</span>
+            <span>
+                <span>${taxDetails.longTermCareInsurance.withChildPercent}%</span>
             </span>
         </div>
     </div>
