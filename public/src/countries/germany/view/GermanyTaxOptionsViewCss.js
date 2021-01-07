@@ -1,13 +1,17 @@
 import { css } from 'lit-element';
 
-export const GermanyTaxOptionsViewCss = css`s
+export const GermanyTaxOptionsViewCss = css`
 
     ul.marital-status-values,
     ul.parental-status-values {
         margin-top: 0;
         width: 100%;
         text-align: center;
-        --list-group-item-active-background-color: #4e7ac7;
+    }
+
+    ul.marital-status-values .list-group-item-action.active,
+    ul.parental-status-values .list-group-item-action.active {
+        background-color: #4e7ac7;
     }
 
     ul.marital-status-values .list-group-item,
