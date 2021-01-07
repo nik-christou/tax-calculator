@@ -24,11 +24,7 @@ export class TaxDetailsView extends BaseElementMixin(LitElement) {
     }
 
     render() {
-        return TaxDetailsViewTemplate(
-            this.selectedCountry,
-            this.taxDetails,
-            this.formatter,
-            this.countryTaxDetailsView);
+        return TaxDetailsViewTemplate(this.countryTaxDetailsView);
     }
 
     constructor() {
@@ -40,12 +36,14 @@ export class TaxDetailsView extends BaseElementMixin(LitElement) {
     }
 
     async firstUpdated() {
+
         this._addNavBackListener();
         await this._loadUserSelectionFromDatastore();
         await this._loadCountrySpecificTemplate();
     }
 
     _addNavBackListener() {
+
         const navBackLink = this.shadowRoot.querySelector('a.nav-back');
         navBackLink.addEventListener('click', (event) => {
             this._handleNavBackEvent(event);
@@ -53,6 +51,7 @@ export class TaxDetailsView extends BaseElementMixin(LitElement) {
     }
 
     async _loadUserSelectionFromDatastore() {
+
         const country = await UserSelectionStore.retrieveCountry();
 
         if (!country) return;
@@ -78,17 +77,20 @@ export class TaxDetailsView extends BaseElementMixin(LitElement) {
      * @param {Event} event
      */
     _handleNavBackEvent(event) {
+
         event.preventDefault();
+        
         this._goToHome();
     }
 
     _goToHome() {
-        if (window.history.length === 1 || window.history.length === 2) {
-            window.history.pushState(null, 'Home', '/');
+
+        if (window.history.state) {
+            window.history.back();
+        } else {
+            window.history.replaceState(null, 'Home', '/');
             window.history.go(1);
             window.dispatchEvent(new window.PopStateEvent('popstate'));
-        } else {
-            window.history.back();
         }
     }
 

@@ -86,17 +86,18 @@ export class ResultsView extends BaseElementMixin(LitElement) {
         event.preventDefault();
         this._goToHome();
     }
-
+    
     _goToHome() {
-        // user navigated directly to Countries view
-        if (window.history.length === 1 || window.history.length === 2) {
-            window.history.pushState(null, 'Home', '/');
+
+        if (window.history.state) {
+            window.history.back();
+        } else {
+            window.history.replaceState(null, 'Home', '/');
             window.history.go(1);
             window.dispatchEvent(new window.PopStateEvent('popstate'));
-        } else {
-            window.history.back();
         }
     }
 }
 
+// @ts-ignore
 window.customElements.define('results-view', ResultsView);

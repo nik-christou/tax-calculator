@@ -20,7 +20,10 @@ export class CountrySelectionView extends BaseElementMixin(LitElement) {
     }
 
     render() {
-        return CountrySelectionViewTemplate(this.countries, this.selectedId, this._handleSelectedCountry.bind(this));
+        return CountrySelectionViewTemplate(
+            this.countries, 
+            this.selectedId, 
+            this._handleSelectedCountry.bind(this));
     }
 
     constructor() {
@@ -69,13 +72,13 @@ export class CountrySelectionView extends BaseElementMixin(LitElement) {
     }
 
     _goToHome() {
-        // user navigated directly to Countries view
-        if (window.history.length === 1 || window.history.length === 2) {
-            window.history.pushState(null, 'Home', '/');
+
+        if (window.history.state) {
+            window.history.back();
+        } else {
+            window.history.replaceState(null, 'Home', '/');
             window.history.go(1);
             window.dispatchEvent(new window.PopStateEvent('popstate'));
-        } else {
-            window.history.back();
         }
     }
 }

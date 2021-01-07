@@ -27,6 +27,10 @@ export const CommonTaxOptionsViewCss = css`
         --toggle-round-label-margin-left-after-checked: 30px;
     }
 
+    .option-description {
+        font-weight: normal;
+    }
+
     .options-item .title-container {
         display: flex;
         flex-direction: column;

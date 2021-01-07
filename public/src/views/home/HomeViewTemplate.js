@@ -6,7 +6,7 @@ import { html } from 'lit-element';
 const taxOptionsTemplate = (selectedCountry) => {
     if (selectedCountry && selectedCountry.additionalOptions) {
         return html`
-            <a href="/tax-options" class="list-group-item list-group-item-action">
+            <a id="taxOptionsLink" class="list-group-item list-group-item-action">
                 <div class="tax-options-container">
                     <h5>Additional options:</h5>
                     <div class="tax-options-container-img">
@@ -25,7 +25,7 @@ const taxOptionsTemplate = (selectedCountry) => {
 const taxDetailsTemplate = (selectedCountry) => {
     if (selectedCountry) {
         return html`
-            <a href="/tax-details" class="list-group-item list-group-item-action">
+            <a id="taxDetailsLink" class="list-group-item list-group-item-action">
                 <div class="tax-details-container">
                     <h5>Tax details:</h5>
                     <div class="tax-details-container-img">
@@ -72,7 +72,7 @@ const HomeViewTemplate = (selectedCountry, includesThirteen, grossAmount) => htm
             </div>
             <div class="main-container" bp="12">
                 <div class="list-group">
-                    <a href="/country-selection" class="list-group-item list-group-item-action">
+                    <a id="countrySelectionLink" class="list-group-item list-group-item-action">
                         <div class="country-container">
                             <h5>Country:</h5>
                             <div class="selected-country-container">
@@ -81,7 +81,8 @@ const HomeViewTemplate = (selectedCountry, includesThirteen, grossAmount) => htm
                             </div>
                         </div>
                     </a>
-                    ${taxDetailsTemplate(selectedCountry)} ${taxOptionsTemplate(selectedCountry)}
+                    ${taxDetailsTemplate(selectedCountry)} 
+                    ${taxOptionsTemplate(selectedCountry)}
                 </div>
                 <br />
 

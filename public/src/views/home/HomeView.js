@@ -19,7 +19,8 @@ export class HomeView extends BaseElementMixin(LitElement) {
             selectedPeriod: SalaryType,
             grossAmount: String,
             includesThirteen: Boolean,
-            formatter: Intl.NumberFormat
+            formatter: Intl.NumberFormat,
+            location: Object
         };
     }
 
@@ -46,6 +47,8 @@ export class HomeView extends BaseElementMixin(LitElement) {
         this._addIncludesThirteenInputListener();
         this._addCalculateButtonListener();
         this._loadUserSelectionFromDatastore();
+
+        this._addCountrySelectionListener();
     }
 
     async _loadUserSelectionFromDatastore() {
@@ -53,6 +56,9 @@ export class HomeView extends BaseElementMixin(LitElement) {
         await this._loadSelectedPeriodFromStore();
         await this._loadGrossAmountFromStore();
         await this._loadThirteenSalaryFromStore();
+
+        this._addTaxDetailsListener();
+        this._addTaxOptionsListener();
     }
 
     async _loadCountryFromStore() {
@@ -139,15 +145,71 @@ export class HomeView extends BaseElementMixin(LitElement) {
             this._handleCalculateClickEvent(event);
         });
     }
+    
+    _addCountrySelectionListener() {
+
+        const countrySelectionLink = this.shadowRoot.querySelector('a#countrySelectionLink');
+        countrySelectionLink.addEventListener('click', event => this._handleCountrySelectionClickEvent(event));
+    }
+
+    _addTaxDetailsListener() {
+
+        const taxDetailsLink = this.shadowRoot.querySelector('a#taxDetailsLink');
+        taxDetailsLink.addEventListener('click', event => this._handleTaxDetailsClickEvent(event));
+    }
+
+    _addTaxOptionsListener() {
+
+        const taxOptionsLink = this.shadowRoot.querySelector('a#taxOptionsLink');
+        taxOptionsLink.addEventListener('click', event => this._handleTaxOptionsClickEvent(event));
+    }
+
+    /**
+     * @param {MouseEvent} event 
+     */
+    _handleTaxOptionsClickEvent(event) {
+
+        event.preventDefault();
+
+        window.history.pushState(this.location.pathname, 'Tax Options', '/tax-options');
+        window.history.go(1);
+        window.dispatchEvent(new window.PopStateEvent('popstate'));
+    }
+
+    /**
+     * @param {MouseEvent} event 
+     */
+    _handleTaxDetailsClickEvent(event) {
+
+        event.preventDefault();
+
+        window.history.pushState(this.location.pathname, 'Tax Details', '/tax-details');
+        window.history.go(1);
+        window.dispatchEvent(new window.PopStateEvent('popstate'));
+    }
+
+    /**
+     * @param {MouseEvent} event 
+     */
+    _handleCountrySelectionClickEvent(event) {
+        
+        event.preventDefault();
+
+        window.history.pushState(this.location.pathname, 'Country Selection', '/country-selection');
+        window.history.go(1);
+        window.dispatchEvent(new window.PopStateEvent('popstate'));
+    }
 
     /**
      * @param {Event} event
      */
     _handleCalculateClickEvent(event) {
+        
         event.preventDefault();
 
         if (this.selectedCountry && this.selectedPeriod && this.grossAmount) {
-            window.history.pushState(null, 'Results', '/results');
+
+            window.history.pushState(this.location.pathname, 'Tax Results', '/results');
             window.history.go(1);
             window.dispatchEvent(new window.PopStateEvent('popstate'));
         }

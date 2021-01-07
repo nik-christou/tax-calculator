@@ -1,6 +1,6 @@
 import { css } from 'lit-element';
 
-export const GermanyTaxOptionsViewCss = css`
+export const GermanyTaxOptionsViewCss = css`s
 
     ul.marital-status-values,
     ul.parental-status-values {
