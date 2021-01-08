@@ -25,7 +25,7 @@ export class CountrySelectionView extends BaseElementMixin(LitElement) {
             this.selectedId, 
             this._handleSelectedCountry.bind(this));
     }
-
+    
     constructor() {
         super();
         this.selectedId = 0;
@@ -36,7 +36,9 @@ export class CountrySelectionView extends BaseElementMixin(LitElement) {
         this._addNavBackListener();
 
         CountryStore.retrieveCountries().then((countries) => {
-            this.countries = countries;
+            this.countries = countries.sort((a, b) => {
+                return a.name.localeCompare(b.name);
+            });
         });
 
         UserSelectionStore.retrieveCountry().then((country) => {

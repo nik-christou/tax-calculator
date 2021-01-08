@@ -123,4 +123,10 @@ export const CountrySelectionViewCss = css`
         width: 25px;
         height: 25px;
     }
+
+    svg.checkMark {
+        width: 25px;
+        height: 25px;
+        fill: #4e7ac7;
+    }
 `;
