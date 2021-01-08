@@ -3,11 +3,13 @@ import { CountryData } from '../model/CountryData.js';
 import { CyprusTaxDetailsLoader } from './cyprus/controller/CyprusTaxDetailsLoader.js';
 import { AustraliaTaxDetailsLoader } from './australia/controller/AustraliaTaxDetailsLoader.js';
 import { GermanyTaxDetailsLoader } from './germany/control/GermanTaxDetailsLoader.js';
+import { GreeceTaxDetailsLoader } from './greece/control/GreeceTaxDetailsLoader.js';
 
 const countriesJsonFilePaths = [
     'web_assets/data/australia.json', 
     'web_assets/data/cyprus.json',
-    'web_assets/data/germany.json'
+    'web_assets/data/germany.json',
+    'web_assets/data/greece.json'
 ];
 
 export class CountriesDataLoader {
@@ -67,6 +69,8 @@ export class CountriesDataLoader {
                 return AustraliaTaxDetailsLoader.loadTaxDetailsFromJsonData(jsonData);
             case 3:
                 return GermanyTaxDetailsLoader.loadTaxDetailsFromJsonData(jsonData);
+            case 4:
+                return GreeceTaxDetailsLoader.loadTaxDetailsFromJsonData(jsonData);
             default:
                 return Promise.resolve(null);
         }

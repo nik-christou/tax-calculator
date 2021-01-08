@@ -56,16 +56,21 @@ export class HomeView extends BaseElementMixin(LitElement) {
         await this._loadSelectedPeriodFromStore();
         await this._loadGrossAmountFromStore();
         await this._loadThirteenSalaryFromStore();
-
-        this._addTaxDetailsListener();
-        this._addTaxOptionsListener();
     }
 
     async _loadCountryFromStore() {
+        
         const selectedCountry = await UserSelectionStore.retrieveCountry();
         if (!selectedCountry) return;
         this.selectedCountry = selectedCountry;
         this._updateCurrencyFormatter(selectedCountry);
+
+        super.requestUpdate();
+        await this.updateComplete;
+
+        // templates are loaded depending on which country was loaded
+        this._addTaxDetailsListener();
+        this._addTaxOptionsListener();
     }
 
     async _loadSelectedPeriodFromStore() {
@@ -161,7 +166,11 @@ export class HomeView extends BaseElementMixin(LitElement) {
     _addTaxOptionsListener() {
 
         const taxOptionsLink = this.shadowRoot.querySelector('a#taxOptionsLink');
-        taxOptionsLink.addEventListener('click', event => this._handleTaxOptionsClickEvent(event));
+        
+        // some countries do not have additional options
+        if (taxOptionsLink) {
+            taxOptionsLink.addEventListener('click', event => this._handleTaxOptionsClickEvent(event));
+        }
     }
 
     /**

@@ -1,7 +1,7 @@
 import { openDB, deleteDB } from 'idb/build/esm/index.js';
 import { CountriesDataLoader } from '../countries/CountriesDataLoader.js';
 
-const DB_VERSION = 3;
+const DB_VERSION = 4;
 const DB_NAME = 'tax-calculator-db';
 const COUNTRIES_STORE_NAME = 'country-store';
 const TAX_DETAILS_STORE_NAME = 'tax-details-store';
@@ -57,8 +57,8 @@ export class DatabaseManager {
             case 0:
                 this._createSchemaForV1(db);
                 break;
-            case 2:
-                this._createSchemaForV3(db);
+            case 3:
+                this._reCreateSchema(db);
                 break;
         }
     }
@@ -75,7 +75,7 @@ export class DatabaseManager {
     /**
      * @param {import("idb").IDBPDatabase<unknown>} dbConnection
      */
-    static async _createSchemaForV3(dbConnection) {
+    static async _reCreateSchema(dbConnection) {
 
         dbConnection.deleteObjectStore(COUNTRIES_STORE_NAME);
         dbConnection.deleteObjectStore(USER_SELECTION_STORE_NAME);

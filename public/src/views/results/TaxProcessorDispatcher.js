@@ -1,6 +1,7 @@
 import { CyprusProcessor } from '../../countries/cyprus/controller/CyprusProcessor.js';
 import { AustraliaProcessor } from '../../countries/australia/controller/AustraliaProcessor.js';
 import { GermanProcessor } from '../../countries/germany/control/GermanProcessor.js';
+import { GreeceProcessor } from '../../countries/greece/control/GreeceProcessor.js';
 
 export class TaxProcessorDispatcher {
     
@@ -18,6 +19,8 @@ export class TaxProcessorDispatcher {
                 return AustraliaProcessor.processAustraliaTax(countryId, salaryDetails);
             case 3:
                 return GermanProcessor.processGermanTax(countryId, salaryDetails);
+            case 4:
+                return GreeceProcessor.processGreeceTax(countryId, salaryDetails);
             default:
                 return Promise.resolve(null);
         }

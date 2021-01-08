@@ -1,4 +1,4 @@
-import { html, svg } from 'lit-element';
+import { html } from 'lit-element';
 
 /**
  * @param {Number} selectedId
