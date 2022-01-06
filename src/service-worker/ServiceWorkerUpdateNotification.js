@@ -41,7 +41,7 @@ export class ServiceWorkerUpdateNotication extends BaseElementMixin(LitElement) 
 
         event.preventDefault();
         event.stopPropagation();
-
+        
         this._fireRefreshNotificationEvent();
     }
 
