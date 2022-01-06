@@ -55,13 +55,13 @@ const vitePWAOptions = {
 export default defineConfig({
   root: '.',
   publicDir: 'public',
-  preview: {
-    // add certificates to test service worker locally
-    https: {
-      key: fs.readFileSync('./cert/localhost-key.pem'),
-      cert: fs.readFileSync('./cert/localhost.pem')
-    }
-  },
+  // preview: {
+  //   // add certificates to test service worker locally
+  //   https: {
+  //     key: fs.readFileSync('./cert/localhost-key.pem'),
+  //     cert: fs.readFileSync('./cert/localhost.pem')
+  //   }
+  // },
   plugins: [
     VitePWA(vitePWAOptions)
   ]
