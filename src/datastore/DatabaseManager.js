@@ -1,7 +1,7 @@
 import { openDB, deleteDB } from 'idb';
 import { CountriesDataLoader } from '../countries/CountriesDataLoader.js';
 
-const DB_VERSION = 4;
+const DB_VERSION = 5;
 const DB_NAME = 'tax-calculator-db';
 const COUNTRIES_STORE_NAME = 'country-store';
 const TAX_DETAILS_STORE_NAME = 'tax-details-store';
