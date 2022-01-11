@@ -45,7 +45,7 @@ export class TaxCalculatorApp extends BaseElementMixin(LitElement) {
     }
 
     _prepareDatabase() {
-        // DatabaseManager.resetDatabase();
+        DatabaseManager.resetDatabase();
         DatabaseManager.openConnection();
     }
 
