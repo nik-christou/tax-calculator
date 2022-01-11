@@ -4,21 +4,10 @@ import { CyprusTaxDetailsLoader } from './cyprus/controller/CyprusTaxDetailsLoad
 import { AustraliaTaxDetailsLoader } from './australia/controller/AustraliaTaxDetailsLoader.js';
 import { GermanyTaxDetailsLoader } from './germany/control/GermanTaxDetailsLoader.js';
 import { GreeceTaxDetailsLoader } from './greece/control/GreeceTaxDetailsLoader.js';
-
-// This type of imports are not supported natively by browsers
-// ViteJS needs this imports so it can include the json files
-// in the final dist build
-import CyprusJson from  './data/cyprus.json';
-import AustraliaJson from  './data/australia.json';
-import GermanyJson from  './data/germany.json';
-import GreeceJson from  './data/greece.json';
-
-const countriesJsons = [
-    AustraliaJson, 
-    CyprusJson,
-    GermanyJson,
-    GreeceJson
-];
+import { CyprusTaxData } from './data/CyprusTaxData.js';
+import { AustraliaTaxData } from './data/AustraliaTaxData.js';
+import { GermanyTaxData } from './data/GermanyTaxData.js';
+import { GreeceTaxData } from './data/GreeceTaxData.js';
 
 export class CountriesDataLoader {
 
@@ -29,12 +18,19 @@ export class CountriesDataLoader {
      */
     static async loadCountryDataFromJson() {
 
+        const countryObjects = [
+            CyprusTaxData,
+            AustraliaTaxData,
+            GermanyTaxData,
+            GreeceTaxData
+        ];
+
         const countriesData = [];
 
-        for (const countryJson of countriesJsons) {
+        for (const countryObj of countryObjects) {
 
-            const country = await this._retrieveCountryFromJsonData(countryJson);
-            const taxDetails = await this._retrieveTaxDetailsFromJsonData(country.id, countryJson);
+            const country = await this._convertIntoCountry(countryObj);
+            const taxDetails = await this._retrieveTaxDetailsFromCountryData(country.id, countryObj);
             const countryData = new CountryData(country, taxDetails);
 
             countriesData.push(countryData);
@@ -43,14 +39,15 @@ export class CountriesDataLoader {
         return countriesData;
     }
 
-    // static async _fetchJsonData(jsonPath) {
-    //     const response = await window.fetch(jsonPath);
-    //     return await response.json();
-    // }
-
-    // static _retrieveJsonUrl(jsonPath) {
-    //     return new URL(jsonPath, import.meta.url).href;
-    // }
+    static async _convertIntoCountry(countryObj) {
+        return new Country(countryObj.id, 
+            countryObj.name, 
+            countryObj.locale, 
+            countryObj.currency, 
+            countryObj.flag, 
+            countryObj.additionalOptions
+        );
+    }
 
     /**
      * @static
@@ -65,16 +62,16 @@ export class CountriesDataLoader {
      * @param {Number} countryId
      * @param {Object} jsonData
      */
-    static async _retrieveTaxDetailsFromJsonData(countryId, jsonData) {
+    static async _retrieveTaxDetailsFromCountryData(countryId, countryData) {
         switch (countryId) {
             case 1:
-                return CyprusTaxDetailsLoader.loadTaxDetailsFromJsonData(jsonData);
+                return CyprusTaxDetailsLoader.loadTaxDetailsFromJsonData(countryData);
             case 2:
-                return AustraliaTaxDetailsLoader.loadTaxDetailsFromJsonData(jsonData);
+                return AustraliaTaxDetailsLoader.loadTaxDetailsFromJsonData(countryData);
             case 3:
-                return GermanyTaxDetailsLoader.loadTaxDetailsFromJsonData(jsonData);
+                return GermanyTaxDetailsLoader.loadTaxDetailsFromJsonData(countryData);
             case 4:
-                return GreeceTaxDetailsLoader.loadTaxDetailsFromJsonData(jsonData);
+                return GreeceTaxDetailsLoader.loadTaxDetailsFromJsonData(countryData);
             default:
                 return Promise.resolve(null);
         }
