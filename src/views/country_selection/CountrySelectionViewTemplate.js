@@ -30,7 +30,6 @@ const countryItemTemplate = (country, selectedId, handleSelectedCountry) => html
                 <img src="/img/countries/${country.flag}" alt="" />
                 <div class="item-info">
                     <h5>${country.name}</h5>
-                    <small class="text-muted">${country.currency} / ${country.locale}</small>
                 </div>
             </div>
             ${html`${isSelectedCountry(selectedId, country.id)}`}

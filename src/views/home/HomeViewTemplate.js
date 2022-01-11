@@ -47,7 +47,6 @@ const countryInfoTemplate = (selectedCountry) => {
             <div class="country-info">
                 <div class="item-info">
                     <h5>${selectedCountry.name}</h5>
-                    <small class="text-muted">${selectedCountry.currency} / ${selectedCountry.locale}</small>
                 </div>
             </div>
         `;

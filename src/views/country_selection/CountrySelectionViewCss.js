@@ -101,7 +101,7 @@ export const CountrySelectionViewCss = css`
 
     .country-info {
         display: flex;
-        align-items: flex-start;
+        align-items: center;
         justify-content: flex-start;
     }
 
@@ -114,11 +114,7 @@ export const CountrySelectionViewCss = css`
         margin-left: 10px;
         flex-direction: column;
     }
-
-    .country-info .item-info h5 {
-        margin-top: 0;
-    }
-
+    
     img.check {
         width: 25px;
         height: 25px;
