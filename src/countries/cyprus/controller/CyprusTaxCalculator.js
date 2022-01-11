@@ -44,7 +44,15 @@ export class CyprusTaxCalculator {
 
         const lastTaxBracketIndex = cyprusTaxDetails.taxBrackets.length - 1;
 
-        let remainingAmount = annualGrossAmount;
+        const socialInsurancePercentage = this._calculateSocialInsurance(cyprusTaxDetails, cyprusTaxOptions);
+        const healthInsurancePercentage = this._calculateHealthInsurance(cyprusTaxDetails, cyprusTaxOptions);
+
+        const socialInsurance = annualGrossAmount * socialInsurancePercentage * 0.01;
+        const nhs = annualGrossAmount * healthInsurancePercentage * 0.01;
+
+        const annualGrossAfterDeductions = annualGrossAmount - socialInsurance - nhs;
+
+        let remainingAmount = annualGrossAfterDeductions;
         let totalTax = 0;
         
         for (let index = lastTaxBracketIndex; index >= 0; index--) {
@@ -60,12 +68,7 @@ export class CyprusTaxCalculator {
             }
         }
 
-        const socialInsurancePercentage = this._calculateSocialInsurance(cyprusTaxDetails, cyprusTaxOptions);
-        const healthInsurancePercentage = this._calculateHealthInsurance(cyprusTaxDetails, cyprusTaxOptions);
-
-        const socialInsurance = annualGrossAmount * socialInsurancePercentage * 0.01;
-        const nhs = annualGrossAmount * healthInsurancePercentage * 0.01;
-        const netAmount = annualGrossAmount - totalTax - socialInsurance - nhs;
+        const netAmount = annualGrossAfterDeductions - totalTax;
 
         return new TaxResult(annualGrossAmount, totalTax, socialInsurance, nhs, netAmount);
     }

@@ -10,7 +10,7 @@ import { CyprusTaxCalculator } from "../src/countries/cyprus/controller/CyprusTa
 
 describe("CyprusTaxCalculator tests", () => {
     
-    it("cyprusAnnualIncomeTax_thirteenIncluded_correctResultsCalculated", () => {
+    it("cyprusAnnualIncomeTax_correctResultsCalculated", () => {
 
         // given
         const annualSalaryAmount = 20000;
@@ -35,10 +35,10 @@ describe("CyprusTaxCalculator tests", () => {
         const salaryDetails = new SalaryDetails(annualSalaryAmount, SalaryTypes.ANNUAL, includesThirteen);
 
         const expectedMonthlyGrossAmount = 1538.4615384615386;
-        const expectedMonthlyTaxAmount = 7.676923076923076;
+        const expectedMonthlyTaxAmount = 0;
         const expectedMonthlySocialAmount = 127.6923076923077;
         const expectedMonthlyHealthContributionAmount = 40.76923076923077;
-        const expectedMonthlyNetAmount = 1362.323076923077;
+        const expectedMonthlyNetAmount = 1370;
         
         const expectedAnnuallyGrossAmount = expectedMonthlyGrossAmount * 13;
         const expectedAnnuallyTaxAmount = expectedMonthlyTaxAmount * 13;
@@ -70,7 +70,7 @@ describe("CyprusTaxCalculator tests", () => {
         assert.deepEqual(taxResults.annualTaxResult, expectedAnnualTaxResults, "annual tax results do not match");
     });
 
-    it("cyprusMonthlyIncomeTax_thirteenIncluded_correctResultsCalculated", () => {
+    it("cyprusMonthlyIncomeTax_correctResultsCalculated", () => {
 
         // given
         const monthlySalaryAmount = 20000;
@@ -95,10 +95,10 @@ describe("CyprusTaxCalculator tests", () => {
         const salaryDetails = new SalaryDetails(monthlySalaryAmount, SalaryTypes.MONTHLY, includesThirteen);
 
         const expectedMonthlyGrossAmount = monthlySalaryAmount;
-        const expectedMonthlyTaxAmount = 6221.842307692307;
+        const expectedMonthlyTaxAmount = 5455.342307692307;
         const expectedMonthlySocialAmount = 1660;
         const expectedMonthlyHealthContributionAmount = 530;
-        const expectedMonthlyNetAmount = 11588.157692307692;
+        const expectedMonthlyNetAmount = 12354.657692307692;
         
         const expectedAnnuallyGrossAmount = monthlySalaryAmount * 13;
         const expectedAnnuallyTaxAmount = expectedMonthlyTaxAmount * 13;
