@@ -5,6 +5,8 @@ export const CyprusTaxData = {
     currency: "EUR",
     flag: "cyprus.png",
     additionalOptions: true,
+    maximumAnnualHealthContributionCap: 180_000,
+    maximumAnnualSocialContributionCap: 58_080,
     taxBrackets: [
         {start: 0, end: 19500, ratePercent: 0},
         {start: 19501, end: 28000, ratePercent: 20},

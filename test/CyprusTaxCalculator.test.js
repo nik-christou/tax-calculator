@@ -19,6 +19,8 @@ describe("CyprusTaxCalculator tests", () => {
         const employerHealthContribution = 2.65;
         const selfEmployedSocialInsurance = 15.6;
         const selfEmployedHealthContribution = 4.00;
+        const maximumAnnualHealthInsuranceCap = 180_000;
+        const maximumAnnutalSocialInsuranceCap = 58_080;
 
         const taxBrackets = [
             new CyprusTaxBracket(0, 19500, 0),
@@ -30,7 +32,8 @@ describe("CyprusTaxCalculator tests", () => {
 
         const employerContributions = new CyprusContributions(employerSocialInsurance, employerHealthContribution);
         const selftEmployedContributions = new CyprusContributions(selfEmployedSocialInsurance, selfEmployedHealthContribution);
-        const cyprusTaxDetails = new CyprusTaxDetails(taxBrackets, employerContributions, selftEmployedContributions);
+        const cyprusTaxDetails = new CyprusTaxDetails(taxBrackets, 
+            employerContributions, selftEmployedContributions, maximumAnnualHealthInsuranceCap, maximumAnnutalSocialInsuranceCap);
         const cyprusTaxOptions = new CyprusTaxOptions(false);
         const salaryDetails = new SalaryDetails(annualSalaryAmount, SalaryTypes.ANNUAL, includesThirteen);
 
@@ -79,6 +82,8 @@ describe("CyprusTaxCalculator tests", () => {
         const employerHealthContribution = 2.65;
         const selfEmployedSocialInsurance = 15.6;
         const selfEmployedHealthContribution = 4.00;
+        const maximumAnnualHealthInsuranceCap = 180_000;
+        const maximumAnnutalSocialInsuranceCap = 58_080;
 
         const taxBrackets = [
             new CyprusTaxBracket(0, 19500, 0),
@@ -90,15 +95,16 @@ describe("CyprusTaxCalculator tests", () => {
 
         const employerContributions = new CyprusContributions(employerSocialInsurance, employerHealthContribution);
         const selftEmployedContributions = new CyprusContributions(selfEmployedSocialInsurance, selfEmployedHealthContribution);
-        const cyprusTaxDetails = new CyprusTaxDetails(taxBrackets, employerContributions, selftEmployedContributions);
+        const cyprusTaxDetails = new CyprusTaxDetails(taxBrackets, employerContributions, selftEmployedContributions, 
+            maximumAnnualHealthInsuranceCap, maximumAnnutalSocialInsuranceCap);
         const cyprusTaxOptions = new CyprusTaxOptions(false);
         const salaryDetails = new SalaryDetails(monthlySalaryAmount, SalaryTypes.MONTHLY, includesThirteen);
 
         const expectedMonthlyGrossAmount = monthlySalaryAmount;
-        const expectedMonthlyTaxAmount = 5455.342307692307;
-        const expectedMonthlySocialAmount = 1660;
-        const expectedMonthlyHealthContributionAmount = 530;
-        const expectedMonthlyNetAmount = 12354.657692307692;
+        const expectedMonthlyTaxAmount = 5963.632769230769;
+        const expectedMonthlySocialAmount = 370.8184615384616;
+        const expectedMonthlyHealthContributionAmount = 366.9230769230769;
+        const expectedMonthlyNetAmount = 13298.62569230769;
         
         const expectedAnnuallyGrossAmount = monthlySalaryAmount * 13;
         const expectedAnnuallyTaxAmount = expectedMonthlyTaxAmount * 13;

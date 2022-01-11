@@ -1,13 +1,13 @@
 import { Country } from '../model/Country.js';
 import { CountryData } from '../model/CountryData.js';
-import { CyprusTaxDetailsLoader } from './cyprus/controller/CyprusTaxDetailsLoader.js';
-import { AustraliaTaxDetailsLoader } from './australia/controller/AustraliaTaxDetailsLoader.js';
-import { GermanyTaxDetailsLoader } from './germany/control/GermanTaxDetailsLoader.js';
-import { GreeceTaxDetailsLoader } from './greece/control/GreeceTaxDetailsLoader.js';
 import { CyprusTaxData } from './data/CyprusTaxData.js';
+import { CyprusTaxDetailsLoader } from './cyprus/controller/CyprusTaxDetailsLoader.js';
 import { AustraliaTaxData } from './data/AustraliaTaxData.js';
+import { AustraliaTaxDetailsLoader } from './australia/controller/AustraliaTaxDetailsLoader.js';
 import { GermanyTaxData } from './data/GermanyTaxData.js';
+import { GermanyTaxDetailsLoader } from './germany/control/GermanTaxDetailsLoader.js';
 import { GreeceTaxData } from './data/GreeceTaxData.js';
+import { GreeceTaxDetailsLoader } from './greece/control/GreeceTaxDetailsLoader.js';
 
 export class CountriesDataLoader {
 
@@ -65,7 +65,7 @@ export class CountriesDataLoader {
     static async _retrieveTaxDetailsFromCountryData(countryId, countryData) {
         switch (countryId) {
             case 1:
-                return CyprusTaxDetailsLoader.loadTaxDetailsFromJsonData(countryData);
+                return CyprusTaxDetailsLoader.loadTaxDetailsFromCountryData(countryData);
             case 2:
                 return AustraliaTaxDetailsLoader.loadTaxDetailsFromJsonData(countryData);
             case 3:

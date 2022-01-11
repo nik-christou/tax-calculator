@@ -44,11 +44,18 @@ export class CyprusTaxCalculator {
 
         const lastTaxBracketIndex = cyprusTaxDetails.taxBrackets.length - 1;
 
-        const socialInsurancePercentage = this._calculateSocialInsurance(cyprusTaxDetails, cyprusTaxOptions);
-        const healthInsurancePercentage = this._calculateHealthInsurance(cyprusTaxDetails, cyprusTaxOptions);
+        const socialInsurancePercentage = this._calculateSocialInsurancePercentage(cyprusTaxDetails, cyprusTaxOptions);
+        const healthInsurancePercentage = this._calculateHealthInsurancePercentage(cyprusTaxDetails, cyprusTaxOptions);
 
-        const socialInsurance = annualGrossAmount * socialInsurancePercentage * 0.01;
-        const nhs = annualGrossAmount * healthInsurancePercentage * 0.01;
+        const socialInsurance = this._calculateAnnualSocialInsuranceAmount(
+            annualGrossAmount,
+            socialInsurancePercentage,
+            cyprusTaxDetails.maximumAnnualSocialContributionCap);
+         
+        const nhs = this._calculateAnnualHealthServiceAmount(
+            annualGrossAmount, 
+            healthInsurancePercentage, 
+            cyprusTaxDetails.maximumAnnualHealthContributionCap);
 
         const annualGrossAfterDeductions = annualGrossAmount - socialInsurance - nhs;
 
@@ -80,7 +87,7 @@ export class CyprusTaxCalculator {
      * 
      * @returns the social insurance contribution
      */
-    static _calculateSocialInsurance(cyprusTaxDetails, cyprusTaxOptions) {
+    static _calculateSocialInsurancePercentage(cyprusTaxDetails, cyprusTaxOptions) {
 
         if (cyprusTaxOptions.selfEmployed) {
             return cyprusTaxDetails.selfEmployedContributions.socialInsurancePercent;
@@ -96,12 +103,36 @@ export class CyprusTaxCalculator {
      * 
      * @returns the social insurance contribution
      */
-    static _calculateHealthInsurance(cyprusTaxDetails, cyprusTaxOptions) {
+    static _calculateHealthInsurancePercentage(cyprusTaxDetails, cyprusTaxOptions) {
 
         if (cyprusTaxOptions.selfEmployed) {
             return cyprusTaxDetails.selfEmployedContributions.healthContributionPercent;
         }
 
         return cyprusTaxDetails.employedContributions.healthContributionPercent;
+    }
+
+    static _calculateAnnualHealthServiceAmount(
+        annualGrossAmount, 
+        healthInsurancePercentage, 
+        maximumAnnualHealthContributionCap) {
+        
+        const annualGrossForHealthService = annualGrossAmount > maximumAnnualHealthContributionCap 
+            ? maximumAnnualHealthContributionCap 
+            : annualGrossAmount;
+
+        return annualGrossForHealthService * healthInsurancePercentage * 0.01;
+    }
+
+    static _calculateAnnualSocialInsuranceAmount(
+        annualGrossAmount,
+        socialInsurancePercentage,
+        maximumAnnualSocialContributionCap) {
+        
+        const annualGrossForSocialInsurance = annualGrossAmount > maximumAnnualSocialContributionCap 
+            ? maximumAnnualSocialContributionCap 
+            : annualGrossAmount;
+
+        return annualGrossForSocialInsurance * socialInsurancePercentage * 0.01
     }
 }

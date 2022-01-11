@@ -33,8 +33,16 @@ const CyprusTaxDetailsViewTemplate = (taxDetails, formatter) => html`
             <span>${taxDetails.employedContributions.healthContributionPercent}%</span>
         </div>
         <div class="list-group-item contribution-item">
+            <span>Maximum annual health service cap:</span>
+            <span>${formatAmount(formatter, taxDetails.maximumAnnualHealthContributionCap)}</span>
+        </div>
+        <div class="list-group-item contribution-item">
             <span>Social insurance:</span>
             <span>${taxDetails.employedContributions.socialInsurancePercent}%</span>
+        </div>
+        <div class="list-group-item contribution-item">
+            <span>Maximum annual social insurance cap:</span>
+            <span>${formatAmount(formatter, taxDetails.maximumAnnualSocialContributionCap)}</span>
         </div>
     </div>
     <h3>Self-employed Contributions</h3>
@@ -44,8 +52,16 @@ const CyprusTaxDetailsViewTemplate = (taxDetails, formatter) => html`
             <span>${taxDetails.selfEmployedContributions.healthContributionPercent}%</span>
         </div>
         <div class="list-group-item contribution-item">
+            <span>Maximum annual health service cap:</span>
+            <span>${formatAmount(formatter, taxDetails.maximumAnnualHealthContributionCap)}</span>
+        </div>
+        <div class="list-group-item contribution-item">
             <span>Social insurance:</span>
             <span>${taxDetails.selfEmployedContributions.socialInsurancePercent}%</span>
+        </div>
+        <div class="list-group-item contribution-item">
+            <span>Maximum annual social insurance cap:</span>
+            <span>${formatAmount(formatter, taxDetails.maximumAnnualSocialContributionCap)}</span>
         </div>
     </div>
     <h3>Tax brackets</h3>
