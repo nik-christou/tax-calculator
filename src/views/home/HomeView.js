@@ -47,7 +47,6 @@ export class HomeView extends BaseElementMixin(LitElement) {
         this._addIncludesThirteenInputListener();
         this._addCalculateButtonListener();
         this._loadUserSelectionFromDatastore();
-
         this._addCountrySelectionListener();
     }
 

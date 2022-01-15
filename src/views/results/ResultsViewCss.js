@@ -96,4 +96,20 @@ export const ResultsViewCss = css`
     .result-item-container span.netResult {
         color: green;
     }
+
+    .tax-breakdown-item-container {
+        display: grid;
+        grid-auto-columns: 1fr;
+        grid-auto-flow: column;
+    }
+
+    .tax-breakdown-item-container .tax-breakdown-rate {
+        display: flex;
+        justify-content: center;
+    }
+
+    .tax-breakdown-item-container .tax-breakdown-amount {
+        display: flex;
+        justify-content: right;
+    }
 `;

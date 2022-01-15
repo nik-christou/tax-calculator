@@ -14,13 +14,54 @@ function formatAmount(formatter, amount) {
  * @param {Number} amount
  */
 function isDeductableAmount(formatter, amount) {
-
     if (amount === 0) {
         return html` <span>${formatAmount(formatter, amount)}</span> `;
     }
-
     return html` <span class="deduction">${formatAmount(formatter, amount)}</span> `;
 }
+
+/**
+ * @param {import('../../model/TaxBreakdownBracket.js').TaxBreakdownBracket} taxBreakdownBracket
+ * @param {Intl.NumberFormat} formatter
+ */
+ const taxBreakdownBracketTemplate = (taxBreakdownBracket, formatter) => html`
+ <div class="list-group-item">
+     <div class="tax-breakdown-item-container">
+        ${taxBreakdownBracket.end === Number.POSITIVE_INFINITY
+        ? html`<div class="tax-breakdown-item"><span>${formatAmount(formatter, taxBreakdownBracket.start)} and over</span></div>`
+        : html`<div><span>${formatAmount(formatter, taxBreakdownBracket.start)} - ${formatAmount(formatter, taxBreakdownBracket.end)}</span></div>`}
+        <div class="tax-breakdown-rate"><span>${taxBreakdownBracket.ratePercent}%</span></div>
+        <div class="tax-breakdown-amount"><span>${formatAmount(formatter, taxBreakdownBracket.taxAmount)}</span></div>
+     </div>
+ </div>
+`;
+
+/**
+ * @param {import('../../model/TaxResults.js').TaxResults} taxResults
+ * @param {Intl.NumberFormat} formatter
+ */
+const taxBreakdownTemplate = (taxResults, formatter) => {
+    if(!taxResults.annualTaxResult.taxBreakdownBrackets) {
+        return html``;
+    }
+    return html`
+        <div class="main-container" bp="grid 6@md">
+            <div>
+                <h3>Annual tax breakdown</h3>
+                <div class="list-group">
+                    ${taxResults.annualTaxResult.taxBreakdownBrackets.map((taxBreakdownBracket) => taxBreakdownBracketTemplate(taxBreakdownBracket, formatter))}
+                </div>
+            </div>
+            <div>
+                <h3>Monthly tax breakdown</h3>
+                <div class="list-group">
+                    ${taxResults.monthlyTaxResult.taxBreakdownBrackets.map((taxBreakdownBracket) => taxBreakdownBracketTemplate(taxBreakdownBracket, formatter))}
+                </div>
+            </div>
+        </div>
+        <br>
+    `
+};
 
 /**
  * @param {import('../../model/TaxResults.js').TaxResults} taxResults
@@ -112,8 +153,8 @@ const ResultsViewTemplate = (taxResults, formatter) => html`
                         </div>
                     </div>
                 </div>
-                <br />
             </div>
+            ${taxBreakdownTemplate(taxResults, formatter)}
         </main>
     </div>
 `;

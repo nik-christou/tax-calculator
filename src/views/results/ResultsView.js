@@ -31,8 +31,8 @@ export class ResultsView extends BaseElementMixin(LitElement) {
     constructor() {
         super();
 
-        const monthlyTaxResults = new TaxResult(0, 0, 0, 0, 0);
-        const annualTaxResults = new TaxResult(0, 0, 0, 0, 0);
+        const monthlyTaxResults = new TaxResult(0, 0, 0, 0, 0, []);
+        const annualTaxResults = new TaxResult(0, 0, 0, 0, 0, []);
 
         this.taxResults = new TaxResults(monthlyTaxResults, annualTaxResults);
         this.formatter = new Intl.NumberFormat();

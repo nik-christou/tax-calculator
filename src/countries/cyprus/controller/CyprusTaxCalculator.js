@@ -1,5 +1,6 @@
 import { TaxResult } from '../../../model/TaxResult.js';
 import { TaxResults } from '../../../model/TaxResults.js';
+import { TaxBreakdownBracket } from '../../../model/TaxBreakdownBracket.js';
 import { TaxCalculatorUtil } from '../../TaxCalculatorUtil.js';
 
 export class CyprusTaxCalculator {
@@ -42,8 +43,6 @@ export class CyprusTaxCalculator {
      */
     static _calculateAnnualTaxResult(cyprusTaxDetails, cyprusTaxOptions, annualGrossAmount) {
 
-        const lastTaxBracketIndex = cyprusTaxDetails.taxBrackets.length - 1;
-
         const socialInsurancePercentage = this._calculateSocialInsurancePercentage(cyprusTaxDetails, cyprusTaxOptions);
         const healthInsurancePercentage = this._calculateHealthInsurancePercentage(cyprusTaxDetails, cyprusTaxOptions);
 
@@ -59,8 +58,11 @@ export class CyprusTaxCalculator {
 
         const annualGrossAfterDeductions = annualGrossAmount - socialInsurance - nhs;
 
-        let remainingAmount = annualGrossAfterDeductions;
+        const lastTaxBracketIndex = cyprusTaxDetails.taxBrackets.length - 1;
+        
         let totalTax = 0;
+        let remainingAmount = annualGrossAfterDeductions;
+        let taxBreakdownBrackets = [cyprusTaxDetails.taxBrackets.length];
         
         for (let index = lastTaxBracketIndex; index >= 0; index--) {
 
@@ -72,12 +74,13 @@ export class CyprusTaxCalculator {
                 totalTax += tax;
                 
                 remainingAmount = bracket.start - 1;
+                taxBreakdownBrackets[index] = new TaxBreakdownBracket(bracket.start, bracket.end, bracket.ratePercent, tax);
             }
         }
 
         const netAmount = annualGrossAfterDeductions - totalTax;
 
-        return new TaxResult(annualGrossAmount, totalTax, socialInsurance, nhs, netAmount);
+        return new TaxResult(annualGrossAmount, totalTax, socialInsurance, nhs, netAmount, taxBreakdownBrackets);
     }
 
     /**
