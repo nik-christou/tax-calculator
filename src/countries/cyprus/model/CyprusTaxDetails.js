@@ -1,9 +1,11 @@
 
 export class CyprusTaxDetails {
     /**
-     * @param {Array<import('./CyprusTaxBracket.js').CyprusTaxBracket>} taxBrackets
-     * @param {import('./CyprusContributions.js').CyprusContributions} employedContributions
-     * @param {import('./CyprusContributions.js').CyprusContributions} selfEmployedContributions
+     * @param {CyprusTaxBracket[]} taxBrackets
+     * @param {CyprusContributions} employedContributions
+     * @param {CyprusContributions} selfEmployedContributions
+     * @param {Number} maximumAnnualHealthContributionCap
+     * @param {Number} maximumAnnualSocialContributionCap
      */
     constructor(taxBrackets, 
         employedContributions, 

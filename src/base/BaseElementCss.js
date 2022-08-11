@@ -1,4 +1,4 @@
-import { css } from 'lit-element/lit-element.js';
+import { css } from 'lit';
 
 export const BaseElementCss = css`
     *,
@@ -9,7 +9,7 @@ export const BaseElementCss = css`
 
     :host {
         display: block;
-        font-family: Roboto;
+        font-family: 'Roboto', 'serif';
     }
 
     h1,

@@ -5,8 +5,8 @@ import { TaxOptionsViewCss } from './TaxOptionsViewCss.js';
 import { SwitchCss } from '../../base/SwitchCss.js';
 import { ListGroupCss } from '../../base/ListGroupCss.js';
 import { BlueprintCss } from '../../base/BlueprintCss.js';
-import { UserSelectionStore } from '../../datastore/UserSelectionStore.js';
-import { TaxOptionsViewTemplateLoader } from './TaxOptionsViewTemplateLoader.js';
+import { userSelectionsStore } from "../../datastore/UserSelectionsStore.js";
+import { taxOptionsViewTemplateLoader } from './TaxOptionsViewTemplateLoader.js';
 import { Country } from '../../model/Country.js';
 
 export class CountryTaxOptionsView extends BaseElementMixin(LitElement) {
@@ -20,46 +20,36 @@ export class CountryTaxOptionsView extends BaseElementMixin(LitElement) {
     }
 
     render() {
-        return TaxOptionsViewTemplate(() => this._loadCountrySpecificTaxOptionsViewTemplate());
+        return TaxOptionsViewTemplate(() => this.#loadCountrySpecificTaxOptionsViewTemplate());
     }
 
     constructor() {
         super();
-        this.selectedCountry = null;
+        this.selectedCountry = userSelectionsStore.retrieveSelectedCountry();
     }
 
     async firstUpdated() {
-        this._addNavBackListener();
-        await this._loadUserSelectionFromDatastore();
+        this.#addNavBackListener();
     }
 
-    _addNavBackListener() {
+    #addNavBackListener() {
         const navBackLink = this.shadowRoot.querySelector('a.nav-back');
-        navBackLink.addEventListener('click', (event) => this._handleNavBackEvent(event));
+        navBackLink.addEventListener('click', (event) => this.#handleNavBackEvent(event));
     }
 
-    async _loadUserSelectionFromDatastore() {
-
-        UserSelectionStore.retrieveCountry().then((country) => {
-            if (!country) return;
-            this.selectedCountry = country;
-        });
-    }
-
-    _loadCountrySpecificTaxOptionsViewTemplate() {
-        return TaxOptionsViewTemplateLoader.getTaxOptionsViewTemplateTag(this.selectedCountry);
+    #loadCountrySpecificTaxOptionsViewTemplate() {
+        return taxOptionsViewTemplateLoader.retrieveTaxOptionsViewTemplateTag(this.selectedCountry);
     }
 
     /**
      * @param {Event} event
      */
-    _handleNavBackEvent(event) {
+    #handleNavBackEvent(event) {
         event.preventDefault();
-        this._goToHome();
+        this.#goToHome();
     }
 
-    _goToHome() {
-
+    #goToHome() {
         if (window.history.state) {
             window.history.back();
         } else {
@@ -70,5 +60,4 @@ export class CountryTaxOptionsView extends BaseElementMixin(LitElement) {
     }
 }
 
-// @ts-ignore
 window.customElements.define('tax-options-view', CountryTaxOptionsView);

@@ -5,15 +5,16 @@ import { CyprusContributions } from '../model/CyprusContributions.js';
 export class CyprusTaxDetailsLoader {
 
     /**
-     * @static
-     * @param {import('../../data/CyprusTaxData.js').CyprusTaxData} countryData
-     * 
+     * @param {JSON} countryObj
      * @returns {Promise<CyprusTaxDetails>}
      */
-    static async loadTaxDetailsFromCountryData(countryData) {
+    loadTaxDetailsFromCountryObject(countryObj) {
+
+        const {taxDetails} = countryObj;
+
         const taxBrackets = [];
 
-        countryData.taxBrackets.forEach((taxBracketData) => {
+        taxDetails.taxBrackets.forEach((taxBracketData) => {
             
             const end = taxBracketData.end === -1 ? Number.POSITIVE_INFINITY : taxBracketData.end;
             const taxBracket = new CyprusTaxBracket(taxBracketData.start, end, taxBracketData.ratePercent);
@@ -21,38 +22,38 @@ export class CyprusTaxDetailsLoader {
             taxBrackets.push(taxBracket);
         });
 
-        const employedContributions = this._loadEmployedContributionData(countryData);
-        const selfEmployedContributions = this._loadSelfEmployedContributionData(countryData);
+        const employedContributions = this.#loadEmployedContributionData(taxDetails);
+        const selfEmployedContributions = this.#loadSelfEmployedContributionData(taxDetails);
 
         return new CyprusTaxDetails(
             taxBrackets, 
             employedContributions, 
-            selfEmployedContributions, 
-            countryData.maximumAnnualHealthContributionCap,
-            countryData.maximumAnnualSocialContributionCap);
+            selfEmployedContributions,
+            taxDetails.maximumAnnualHealthContributionCap,
+            taxDetails.maximumAnnualSocialContributionCap);
     }
 
     /**
-     * @param {{ employed: any; }} countryData
-     * 
+     * @param {Object} cyprusTaxDetails
      * @returns {CyprusContributions} for employed
      */
-    static _loadEmployedContributionData(countryData) {
-        const employedContributions = countryData.employed;
+    #loadEmployedContributionData(cyprusTaxDetails) {
+        const {employed} = cyprusTaxDetails;
         return new CyprusContributions(
-            employedContributions.socialInsurancePercent, 
-            employedContributions.healthContributionPercent);
+            employed.socialInsurancePercent,
+            employed.healthContributionPercent);
     }
 
     /**
-     * @param {{ selfEmployed: any; }} countryData
-     * 
+     * @param {JSON} cyprusTaxDetails
      * @returns {CyprusContributions} for self-employed
      */
-    static _loadSelfEmployedContributionData(countryData) {
-        const selfEmployedContributions = countryData.selfEmployed;
+    #loadSelfEmployedContributionData(cyprusTaxDetails) {
+        const {selfEmployed} = cyprusTaxDetails;
         return new CyprusContributions(
-            selfEmployedContributions.socialInsurancePercent, 
-            selfEmployedContributions.healthContributionPercent);
+            selfEmployed.socialInsurancePercent,
+            selfEmployed.healthContributionPercent);
     }
 }
+
+export const cyprusTaxDetailsLoader = Object.freeze(new CyprusTaxDetailsLoader());

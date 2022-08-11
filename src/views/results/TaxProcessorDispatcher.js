@@ -1,4 +1,4 @@
-import { CyprusProcessor } from '../../countries/cyprus/controller/CyprusProcessor.js';
+import { cyprusProcessor } from '../../countries/cyprus/controller/CyprusProcessor.js';
 import { AustraliaProcessor } from '../../countries/australia/controller/AustraliaProcessor.js';
 import { GermanProcessor } from '../../countries/germany/control/GermanProcessor.js';
 import { GreeceProcessor } from '../../countries/greece/control/GreeceProcessor.js';
@@ -12,9 +12,10 @@ export class TaxProcessorDispatcher {
      * @returns {Promise<import('../../model/TaxResults.js').TaxResults>}
      */
     static dispatch(countryId, salaryDetails) {
+
         switch (countryId) {
             case 1:
-                return CyprusProcessor.processCyprusTax(countryId, salaryDetails);
+                return cyprusProcessor.processCyprusTax(countryId, salaryDetails);
             case 2:
                 return AustraliaProcessor.processAustraliaTax(countryId, salaryDetails);
             case 3:
@@ -22,7 +23,7 @@ export class TaxProcessorDispatcher {
             case 4:
                 return GreeceProcessor.processGreeceTax(countryId, salaryDetails);
             default:
-                return Promise.resolve(null);
+                return null;
         }
     }
 }

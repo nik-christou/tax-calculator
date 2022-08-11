@@ -1,14 +1,12 @@
-import { LitElement } from 'lit';
-import { html } from 'lit-html';
+import { LitElement, html } from 'lit';
 import { BaseElementMixin } from './base/BaseElementMixin.js';
-import { DatabaseManager } from './datastore/DatabaseManager.js';
 import { TaxCalculatorAppCss } from './TaxCalculatorAppCss.js';
-import { ServiceWorkerHandler } from './service-worker/ServiceWorkerHandler.js';
+// import { ServiceWorkerHandler } from './service-worker/ServiceWorkerHandler.js';
 import { Router } from '@vaadin/router';
 import { routes } from './Routes.js';
-
 import './component/snackbar/SnackbarNotification.js';
 import './service-worker/ServiceWorkerUpdateNotification.js';
+import { countriesCacheHandler } from './datastore/CountriesCacheHandler.js';
 
 export class TaxCalculatorApp extends BaseElementMixin(LitElement) {
 
@@ -18,7 +16,7 @@ export class TaxCalculatorApp extends BaseElementMixin(LitElement) {
             TaxCalculatorAppCss
         ];
     }
-
+    
     render() {
         return html`
             <div class="main">
@@ -30,10 +28,14 @@ export class TaxCalculatorApp extends BaseElementMixin(LitElement) {
         `;
     }
 
-    firstUpdated() {
-        this._prepareServiceWorker();
-        this._prepareDatabase();
-        this._prepareRouter();
+    async firstUpdated() {
+        // this._prepareServiceWorker();
+        await this.prepareCaching();
+        this.#prepareRouter();
+    }
+
+    async prepareCaching() {
+        await countriesCacheHandler.updateCountriesJsonDataCache();
     }
 
     getRouterOutlet() {
@@ -44,23 +46,16 @@ export class TaxCalculatorApp extends BaseElementMixin(LitElement) {
         return this.shadowRoot.querySelector('snackbar-notification');
     }
 
-    _prepareDatabase() {
-        // in case you want to reload data into the 
-        // database just increment the version in DatabaseManager
-        DatabaseManager.openConnection();
-    }
-
-    _prepareRouter() {
+    #prepareRouter() {
         const outletElement = this.shadowRoot.querySelector('#outlet');
         const router = new Router(outletElement);
-        router.setRoutes(routes);
+        void router.setRoutes(routes);
     }
 
-    _prepareServiceWorker() {
-        const serviceWorkerNotification = this.shadowRoot.querySelector('snackbar-notification');
-        ServiceWorkerHandler.register(serviceWorkerNotification);
-    }
+    // _prepareServiceWorker() {
+    //     const serviceWorkerNotification = this.shadowRoot.querySelector('snackbar-notification');
+    //     void ServiceWorkerHandler.register(serviceWorkerNotification);
+    // }
 }
 
-// @ts-ignore
 window.customElements.define('tax-calculator-app', TaxCalculatorApp);

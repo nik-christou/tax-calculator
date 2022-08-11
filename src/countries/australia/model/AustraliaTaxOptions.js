@@ -1,5 +1,5 @@
 import { TaxOptions } from '../../../model/TaxOptions.js';
-import CountryIDsEnum from '../../CountryIDsEnum.js';
+import CountryIDsEnum from '../../../datastore/CountryIDsEnum.js';
 
 export class AustraliaOptions extends TaxOptions {
     /**

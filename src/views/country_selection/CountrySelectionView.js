@@ -1,8 +1,8 @@
 import { LitElement } from 'lit';
 import { BaseElementMixin } from '../../base/BaseElementMixin.js';
 import { CountrySelectionViewTemplate } from './CountrySelectionViewTemplate.js';
-import { CountryStore } from '../../datastore/CountryStore.js';
-import { UserSelectionStore } from '../../datastore/UserSelectionStore.js';
+import { countryStore } from "../../datastore/CountryStore.js";
+import { userSelectionsStore } from "../../datastore/UserSelectionsStore.js";
 import { ListGroupCss } from '../../base/ListGroupCss.js';
 import { CountrySelectionViewCss } from './CountrySelectionViewCss.js';
 import { BlueprintCss } from '../../base/BlueprintCss.js';
@@ -16,65 +16,64 @@ export class CountrySelectionView extends BaseElementMixin(LitElement) {
     }
 
     static get styles() {
-        return [...super.styles, BlueprintCss, ListGroupCss, CountrySelectionViewCss];
+        return [...super.styles,
+            BlueprintCss,
+            ListGroupCss,
+            CountrySelectionViewCss];
     }
 
     render() {
         return CountrySelectionViewTemplate(
             this.countries, 
             this.selectedId, 
-            this._handleSelectedCountry.bind(this));
+            this.#handleSelectedCountry.bind(this));
     }
     
     constructor() {
         super();
-        this.selectedId = 0;
-        this.countries = [];
+        this.#loadCountries();
+        this.#loadSelectedCountry();
     }
 
     firstUpdated() {
-        this._addNavBackListener();
+        this.#addNavBackListener();
 
-        CountryStore.retrieveCountries().then((countries) => {
-            this.countries = countries.sort((a, b) => {
-                return a.name.localeCompare(b.name);
-            });
-        });
+    }
 
-        UserSelectionStore.retrieveCountry().then((country) => {
-            if (!country) return;
-            this.selectedId = country.id;
+    #loadSelectedCountry() {
+        this.selectedId = userSelectionsStore.retrieveSelectedCountry()?.id;
+    }
+
+    #loadCountries() {
+        this.countries = countryStore.retrieveCountries().sort((a, b) => {
+            return a.name.localeCompare(b.name);
         });
     }
 
-    _addNavBackListener() {
+    #addNavBackListener() {
         const navBackLink = this.shadowRoot.querySelector('a.nav-back');
-        navBackLink.addEventListener('click', (event) => this._handleNavBackEvent(event));
+        navBackLink.addEventListener('click', (event) => this.#handleNavBackEvent(event));
     }
 
     /**
      * @param {Event} event
      */
-    _handleNavBackEvent(event) {
+    #handleNavBackEvent(event) {
         event.preventDefault();
-        this._goToHome();
+        this.#goToHome();
     }
 
     /**
      * @param {Event} event
-     * @param {import('../../model/Country.js').Country} country
+     * @param {Country} country
      */
-    _handleSelectedCountry(event, country) {
-        
+    #handleSelectedCountry(event, country) {
         event.preventDefault();
-
-        UserSelectionStore.updateCountry(country)
-            .then((_) => UserSelectionStore.deleteCountryOptions())
-            .then((_) => this._goToHome());
+        userSelectionsStore.updateSelectedCountry(country);
+        this.#goToHome();
     }
 
-    _goToHome() {
-
+    #goToHome() {
         if (window.history.state) {
             window.history.back();
         } else {
@@ -85,5 +84,4 @@ export class CountrySelectionView extends BaseElementMixin(LitElement) {
     }
 }
 
-// @ts-ignore
 window.customElements.define('country-selection-view', CountrySelectionView);

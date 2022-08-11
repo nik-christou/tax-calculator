@@ -1,9 +1,9 @@
 import { LitElement } from 'lit';
 import { BaseElementMixin } from '../../base/BaseElementMixin.js';
-import { UserSelectionStore } from '../../datastore/UserSelectionStore.js';
-import { TaxDetailsStore } from '../../datastore/TaxDetailsStore.js';
+import { userSelectionsStore } from "../../datastore/UserSelectionsStore.js";
+import { taxDetailsStore } from '../../datastore/TaxDetailsStore.js';
 import { TaxDetailsViewTemplate } from './TaxDetailsViewTemplate.js';
-import { TaxDetailsViewTemplateLoader } from './TaxDetailsViewTemplateLoader.js';
+import { taxDetailsViewTemplateLoader } from './TaxDetailsViewTemplateLoader.js';
 import { ListGroupCss } from '../../base/ListGroupCss.js';
 import { BlueprintCss } from '../../base/BlueprintCss.js';
 import { TaxDetailsViewCss } from './TaxDetailsViewCss.js';
@@ -24,7 +24,7 @@ export class TaxDetailsView extends BaseElementMixin(LitElement) {
     }
 
     render() {
-        return TaxDetailsViewTemplate(() => this._loadCountrySpecificTemplate());
+        return TaxDetailsViewTemplate(() => this.#loadCountrySpecificTemplate());
     }
 
     constructor() {
@@ -33,39 +33,35 @@ export class TaxDetailsView extends BaseElementMixin(LitElement) {
         this.taxDetails = null;
         this.selectedCountry = null;
         this.countryTaxDetailsView = null;
+        this.#loadUserSelectionFromDatastore();
     }
 
-    async firstUpdated() {
-
-        this._addNavBackListener();
-        await this._loadUserSelectionFromDatastore();
+    firstUpdated() {
+        this.#addNavBackListener();
     }
 
-    _addNavBackListener() {
-
+    #addNavBackListener() {
         const navBackLink = this.shadowRoot.querySelector('a.nav-back');
         navBackLink.addEventListener('click', (event) => {
-            this._handleNavBackEvent(event);
+            this.#handleNavBackEvent(event);
         });
     }
 
-    async _loadUserSelectionFromDatastore() {
+    #loadUserSelectionFromDatastore() {
 
-        const country = await UserSelectionStore.retrieveCountry();
-
+        const country = userSelectionsStore.retrieveSelectedCountry();
         if (!country) return;
 
-        const taxDetails = await TaxDetailsStore.getTaxDetailsByCountryById(country.id);
-
+        const taxDetails = taxDetailsStore.retrieveTaxDetailsByCountryById(country.id);
         if (!taxDetails) return;
 
-        this.taxDetails = taxDetails;
+        this.taxDetails = taxDetails.details;
         this.selectedCountry = country;
-        this._updateCurrencyFormatter(this.selectedCountry);
+        this.#updateCurrencyFormatter(this.selectedCountry);
     }
 
-    _loadCountrySpecificTemplate() {
-        return TaxDetailsViewTemplateLoader._getCountryTaxDetailsViewTemplate(
+    #loadCountrySpecificTemplate() {
+        return taxDetailsViewTemplateLoader.retrieveCountryTaxDetailsViewTemplate(
             this.selectedCountry,
             this.taxDetails,
             this.formatter);
@@ -74,15 +70,12 @@ export class TaxDetailsView extends BaseElementMixin(LitElement) {
     /**
      * @param {Event} event
      */
-    _handleNavBackEvent(event) {
-
+    #handleNavBackEvent(event) {
         event.preventDefault();
-        
-        this._goToHome();
+        this.#goToHome();
     }
 
-    _goToHome() {
-
+    #goToHome() {
         if (window.history.state) {
             window.history.back();
         } else {
@@ -95,7 +88,7 @@ export class TaxDetailsView extends BaseElementMixin(LitElement) {
     /**
      * @param {Country} selectedCountry
      */
-    _updateCurrencyFormatter(selectedCountry) {
+    #updateCurrencyFormatter(selectedCountry) {
         const formatter = new Intl.NumberFormat(selectedCountry.locale, {
             style: 'currency',
             currency: selectedCountry.currency,
@@ -106,5 +99,4 @@ export class TaxDetailsView extends BaseElementMixin(LitElement) {
     }
 }
 
-// @ts-ignore
 window.customElements.define('tax-details-view', TaxDetailsView);

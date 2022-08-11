@@ -1,4 +1,4 @@
-import { html } from 'lit-html';
+import { html } from 'lit';
 
 const TaxDetailsViewTemplate = (countryTaxDetailsView) => html`
     <div bp="grid" class="main-grid">

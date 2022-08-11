@@ -1,4 +1,4 @@
-import { css } from 'lit-element/lit-element.js';
+import { css } from 'lit';
 
 export const TaxCalculatorAppCss = css`
 
@@ -19,138 +19,118 @@ export const TaxCalculatorAppCss = css`
     }
 
     .home-leaving {
-        -webkit-animation-delay: 0s;
+        -webkit-animation-delay: 0.01s;
         -webkit-animation-duration: 0.3s;
         -webkit-animation-name: slideOutRight;
         -webkit-animation-timing-function: ease-in-out;
-        -webkit-animation-delay: 0.01s;
-        animation-delay: 0s;
+        animation-delay: 0.01s;
         animation-duration: 0.3s;
         animation-name: slideOutRight;
         animation-timing-function: ease-in-out;
-        animation-delay: 0.01s;
     }
 
     .home-entering {
         visibility: hidden;
-        -webkit-animation-delay: 0s;
+        -webkit-animation-delay: 0.01s;
         -webkit-animation-duration: 0.3s;
         -webkit-animation-name: slideInLeft;
         -webkit-animation-timing-function: ease-in-out;
-        -webkit-animation-delay: 0.01s;
-        animation-delay: 0s;
+        animation-delay: 0.01s;
         animation-duration: 0.3s;
         animation-name: slideInLeft;
         animation-timing-function: ease-in-out;
-        animation-delay: 0.01s;
     }
 
     .country-selection-leaving {
-        -webkit-animation-delay: 0s;
+        -webkit-animation-delay: 0.01s;
         -webkit-animation-duration: 0.3s;
         -webkit-animation-name: slideOutLeft;
         -webkit-animation-timing-function: ease-in-out;
-        -webkit-animation-delay: 0.01s;
-        animation-delay: 0s;
+        animation-delay: 0.01s;
         animation-duration: 0.3s;
         animation-name: slideOutLeft;
         animation-timing-function: ease-in-out;
-        animation-delay: 0.01s;
     }
 
     .country-selection-entering {
         visibility: hidden;
-        -webkit-animation-delay: 0s;
+        -webkit-animation-delay: 0.01s;
         -webkit-animation-duration: 0.3s;
         -webkit-animation-name: slideInRight;
         -webkit-animation-timing-function: ease-in-out;
-        -webkit-animation-delay: 0.01s;
-        animation-delay: 0s;
+        animation-delay: 0.01s;
         animation-duration: 0.3s;
         animation-name: slideInRight;
         animation-timing-function: ease-in-out;
-        animation-delay: 0.01s;
     }
 
     .results-leaving {
-        -webkit-animation-delay: 0s;
+        -webkit-animation-delay: 0.01s;
         -webkit-animation-duration: 0.3s;
         -webkit-animation-name: slideOutLeft;
         -webkit-animation-timing-function: ease-in-out;
-        -webkit-animation-delay: 0.01s;
-        animation-delay: 0s;
+        animation-delay: 0.01s;
         animation-duration: 0.3s;
         animation-name: slideOutLeft;
         animation-timing-function: ease-in-out;
-        animation-delay: 0.01s;
     }
 
     .results-entering {
         visibility: hidden;
-        -webkit-animation-delay: 0s;
+        -webkit-animation-delay: 0.01s;
         -webkit-animation-duration: 0.3s;
         -webkit-animation-name: slideInRight;
         -webkit-animation-timing-function: ease-in-out;
-        -webkit-animation-delay: 0.01s;
-        animation-delay: 0s;
+        animation-delay: 0.01s;
         animation-duration: 0.3s;
         animation-name: slideInRight;
         animation-timing-function: ease-in-out;
-        animation-delay: 0.01s;
     }
 
     .tax-details-leaving {
-        -webkit-animation-delay: 0s;
+        -webkit-animation-delay: 0.01s;
         -webkit-animation-duration: 0.3s;
         -webkit-animation-name: slideOutLeft;
         -webkit-animation-timing-function: ease-in-out;
-        -webkit-animation-delay: 0.01s;
-        animation-delay: 0s;
+        animation-delay: 0.01s;
         animation-duration: 0.3s;
         animation-name: slideOutLeft;
         animation-timing-function: ease-in-out;
-        animation-delay: 0.01s;
     }
 
     .tax-details-entering {
         visibility: hidden;
-        -webkit-animation-delay: 0s;
+        -webkit-animation-delay: 0.01s;
         -webkit-animation-duration: 0.3s;
         -webkit-animation-name: slideInRight;
         -webkit-animation-timing-function: ease-in-out;
-        -webkit-animation-delay: 0.01s;
-        animation-delay: 0s;
+        animation-delay: 0.01s;
         animation-duration: 0.3s;
         animation-name: slideInRight;
         animation-timing-function: ease-in-out;
-        animation-delay: 0.01s;
     }
 
     .tax-options-leaving {
-        -webkit-animation-delay: 0s;
+        -webkit-animation-delay: 0.01s;
         -webkit-animation-duration: 0.3s;
         -webkit-animation-name: slideOutLeft;
         -webkit-animation-timing-function: ease-in-out;
-        -webkit-animation-delay: 0.01s;
-        animation-delay: 0s;
+        animation-delay: 0.01s;s
         animation-duration: 0.3s;
         animation-name: slideOutLeft;
         animation-timing-function: ease-in-out;
-        animation-delay: 0.01s;
     }
 
     .tax-options-entering {
         visibility: hidden;
-        -webkit-animation-delay: 0s;
+        -webkit-animation-delay: 0.01s;
         -webkit-animation-duration: 0.3s;
         -webkit-animation-name: slideInRight;
         -webkit-animation-timing-function: ease-in-out;
-        -webkit-animation-delay: 0.01s;
-        animation-delay: 0s;
+        animation-delay: 0.01s;
         animation-duration: 0.3s;
         animation-name: slideInRight;
         animation-timing-function: ease-in-out;
-        animation-delay: 0.01s;
     }
 
     @-webkit-keyframes slideOutLeft {

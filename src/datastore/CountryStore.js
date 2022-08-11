@@ -1,30 +1,66 @@
-import { DatabaseManager } from './DatabaseManager.js';
+import { dataLoaderUtil } from "./DataLoaderUtil.js";
 
-const COUNTRIES_STORE_NAME = 'country-store';
+const COUNTRY_KEY_PREFIX = "country_id_";
 
-export class CountryStore {
+class CountryStore {
+
     /**
-     * Get a country with a matching id
-     *
-     * @param {IDBValidKey} id the country id
-     * @returns {Promise<import('../model/Country.js').Country>}
+     * @param {Number} id
+     * @returns {Country}
      */
-    static async getCountryById(id) {
-        if (DatabaseManager.dbConnection) {
-            const dbConnection = await DatabaseManager.dbConnection;
-            return dbConnection.get(COUNTRIES_STORE_NAME, id);
-        }
+    retrieveCountryById(id) {
+        const countryKey = this.#calculateCountryKey(id);
+        const countryItem = window.localStorage.getItem(countryKey);
+        const countryObj = JSON.parse(countryItem);
+        return dataLoaderUtil.convertCountryFromJson(countryObj);
     }
 
     /**
-     * Retrieve all stored countries
-     *
-     * @returns {Promise<import('../model/Country.js').Country[]>} array of stored countries
+     * @param {Country} country
      */
-    static async retrieveCountries() {
-        if (DatabaseManager.dbConnection) {
-            const dbConnection = await DatabaseManager.dbConnection;
-            return dbConnection.getAll(COUNTRIES_STORE_NAME);
+    addOrReplaceCountry(country) {
+        const countryKey = this.#calculateCountryKey(country.id);
+        window.localStorage.setItem(countryKey, JSON.stringify(country));
+    }
+
+    /**
+     * @param {Number} id
+     */
+    deleteCountryById(id) {
+        const countryKey = this.#calculateCountryKey(id);
+        window.localStorage.removeItem(countryKey);
+    }
+
+    /**
+     * @returns {Country[]}
+     */
+    retrieveCountries() {
+
+        const countries = [];
+
+        for(let index = 0; index < window.localStorage.length; index++) {
+            const countryKey = this.#calculateCountryKey(index);
+            const countryItem = window.localStorage.getItem(countryKey);
+            if(countryItem === null) {
+                continue;
+            }
+            const countryObj = JSON.parse(countryItem);
+            const country = dataLoaderUtil.convertCountryFromJson(countryObj);
+            countries.push(country);
         }
+
+        return countries;
+    }
+
+    /**
+     * @param {Number} id
+     * @returns {string}
+     */
+    #calculateCountryKey(id) {
+        return `${COUNTRY_KEY_PREFIX}${id}`;
     }
 }
+
+export const countryStore = Object.freeze(new CountryStore());
+
+

@@ -25,10 +25,7 @@ export const HomeViewCss = css`
         color: #fff;
         margin-bottom: 0px;
         box-shadow: rgba(0, 0, 0, 0.2) 0px 1px 2px;
-        padding-top: 0.7em;
-        padding-bottom: 0.7em;
-        padding-left: 0.5em;
-        padding-right: 0.5em;
+        padding: 0.7em 0.5em;
     }
 
     .navbar .title {

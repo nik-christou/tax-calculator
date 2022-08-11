@@ -5,8 +5,8 @@ import { ToggleCss } from '../../../base/ToggleCss.js';
 import { ListGroupCss } from '../../../base/ListGroupCss.js';
 import { BlueprintCss } from '../../../base/BlueprintCss.js';
 import { AustraliaOptions } from '../model/AustraliaTaxOptions.js';
-import { UserSelectionStore } from '../../../datastore/UserSelectionStore.js';
-import CountryIDsEnum from '../../CountryIDsEnum.js';
+// import { UserSelectionStore } from '../../../datastore/UserSelectionStore.js';
+import CountryIDsEnum from '../../../datastore/CountryIDsEnum.js';
 import { CommonTaxOptionsViewCss } from '../../CommonTaxOptionViewCss.js';
 
 export class AustraliaTaxOptionsView extends BaseElementMixin(LitElement) {
@@ -36,7 +36,7 @@ export class AustraliaTaxOptionsView extends BaseElementMixin(LitElement) {
     }
 
     _loadUserSelectionFromDatastore() {
-        UserSelectionStore.retrieveCountryOptionByCountryId(CountryIDsEnum.AUSTRALIA_ID).then((countryOptions) => {
+        UserSelectionStore.retrieveCountryOptions().then((countryOptions) => {
             if (!countryOptions || countryOptions.countryId !== CountryIDsEnum.AUSTRALIA_ID) return;
             this.australiaOptions = AustraliaOptions.createFromObject(countryOptions);
         });

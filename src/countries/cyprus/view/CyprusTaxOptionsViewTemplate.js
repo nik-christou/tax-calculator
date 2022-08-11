@@ -1,9 +1,9 @@
-import { html } from 'lit-html';
+import { html } from 'lit';
 
 /**
- * @param {import('../model/CyprusTaxOptions.js').CyprusTaxOptions} cyprusTaxOptions
+ * @param {Boolean} employmentStatus
  */
-const CyprusTaxOptionsViewTemplate = (cyprusTaxOptions) => html`
+const CyprusTaxOptionsViewTemplate = (employmentStatus) => html`
     <div class="list-group">
         <div class="list-group-item">
             <div class="options-item">
@@ -12,13 +12,13 @@ const CyprusTaxOptionsViewTemplate = (cyprusTaxOptions) => html`
                 </div>
                 <div>
                     <input
-                        id="selfEmployed"
+                        id="employmentTypeStatus"
                         type="checkbox"
-                        name="selfEmployed"
-                        ?checked="${cyprusTaxOptions.selfEmployed}"
+                        name="employmentTypeStatus"
+                        ?checked=${employmentStatus}
                         class="toggle toggle-round cmn-toggle cmn-toggle-round"
                     />
-                    <label for="selfEmployed"></label>
+                    <label for="employmentTypeStatus"></label>
                 </div>
             </div>
         </div>

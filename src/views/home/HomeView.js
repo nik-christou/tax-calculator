@@ -1,7 +1,7 @@
 import { LitElement } from 'lit';
 import { BaseElementMixin } from '../../base/BaseElementMixin.js';
 import { HomeViewTemplate } from './HomeViewTemplate.js';
-import { UserSelectionStore } from '../../datastore/UserSelectionStore.js';
+import { userSelectionsStore } from "../../datastore/UserSelectionsStore.js";
 import { HomeViewCss } from './HomeViewCss.js';
 import { Country } from '../../model/Country.js';
 import { SalaryType } from '../../model/SalaryType.js';
@@ -13,6 +13,7 @@ import { BlueprintCss } from '../../base/BlueprintCss.js';
 import { ButtonCss } from '../../base/ButtonCss.js';
 
 export class HomeView extends BaseElementMixin(LitElement) {
+
     static get properties() {
         return {
             selectedCountry: Country,
@@ -25,7 +26,13 @@ export class HomeView extends BaseElementMixin(LitElement) {
     }
 
     static get styles() {
-        return [...super.styles, BlueprintCss, ListGroupCss, InputGroupCss, ToggleCss, ButtonCss, HomeViewCss];
+        return [...super.styles,
+            BlueprintCss,
+            ListGroupCss,
+            InputGroupCss,
+            ToggleCss,
+            ButtonCss,
+            HomeViewCss];
     }
 
     render() {
@@ -39,55 +46,52 @@ export class HomeView extends BaseElementMixin(LitElement) {
         this.selectedPeriod = null;
         this.includesThirteen = false;
         this.formatter = null;
+        this.#loadUserSelectionFromDatastore();
     }
 
     firstUpdated() {
-        this._addSalaryTypeClickListeners();
-        this._addGrossAmountInputListener();
-        this._addIncludesThirteenInputListener();
-        this._addCalculateButtonListener();
-        this._loadUserSelectionFromDatastore();
-        this._addCountrySelectionListener();
+        this.#addSalaryTypeClickListeners();
+        this.#addGrossAmountInputListener();
+        this.#addIncludesThirteenInputListener();
+        this.#addCalculateButtonListener();
+        this.#addCountrySelectionListener();
+        this.#addTaxDetailsListener();
+        this.#addTaxOptionsListener();
+        this.#updateSelectedSalaryTypeLinks();
     }
 
-    async _loadUserSelectionFromDatastore() {
-        await this._loadCountryFromStore();
-        await this._loadSelectedPeriodFromStore();
-        await this._loadGrossAmountFromStore();
-        await this._loadThirteenSalaryFromStore();
+    #loadUserSelectionFromDatastore() {
+        this.#loadCountryFromStore();
+        this.#loadSelectedPeriodFromStore();
+        this.#loadGrossAmountFromStore();
+        this.#loadThirteenSalaryFromStore();
     }
 
-    async _loadCountryFromStore() {
-        
-        const selectedCountry = await UserSelectionStore.retrieveCountry();
+    #loadCountryFromStore() {
+        const selectedCountry = userSelectionsStore.retrieveSelectedCountry();
         if (!selectedCountry) return;
         this.selectedCountry = selectedCountry;
-        this._updateCurrencyFormatter(selectedCountry);
-
-        super.requestUpdate();
-        await this.updateComplete;
-
-        // templates are loaded depending on which country was loaded
-        this._addTaxDetailsListener();
-        this._addTaxOptionsListener();
+        this.#updateCurrencyFormatter(selectedCountry);
     }
 
-    async _loadSelectedPeriodFromStore() {
-        const selectedPeriod = await UserSelectionStore.retrieveSalaryType();
+    #loadSelectedPeriodFromStore() {
 
-        if (!selectedPeriod) return;
+        const selectedSalaryTypeId = userSelectionsStore.retrieveSalaryType();
+        if(!selectedSalaryTypeId) return;
 
-        if (selectedPeriod.id === SalaryTypes.ANNUAL.id) {
+        const selectedSalaryType = userSelectionsStore.retrieveSalaryType();
+        if (!selectedSalaryType) return;
+
+        if (selectedSalaryType.id === SalaryTypes.ANNUAL.id) {
             this.selectedPeriod = SalaryTypes.ANNUAL;
         } else {
             this.selectedPeriod = SalaryTypes.MONTHLY;
         }
-
-        this._updateSelectedSalaryTypeLinks();
     }
 
-    async _loadGrossAmountFromStore() {
-        const grossAmount = await UserSelectionStore.retrieveGrossAmount();
+    #loadGrossAmountFromStore() {
+
+        const grossAmount = userSelectionsStore.retrieveSelectedGrossAmount();
 
         if (!grossAmount) {
             this.grossAmount = '';
@@ -101,81 +105,80 @@ export class HomeView extends BaseElementMixin(LitElement) {
         }
     }
 
-    async _loadThirteenSalaryFromStore() {
-        const includesThirteenOption = await UserSelectionStore.retrieveIncludesThirteenOption();
+    #loadThirteenSalaryFromStore() {
+        const includesThirteenOption = userSelectionsStore.retrieveIncludesThirteenSalaryOption();
         this.includesThirteen = includesThirteenOption;
     }
 
-    _addSalaryTypeClickListeners() {
+    #addSalaryTypeClickListeners() {
         const annualSalaryTypeLink = this.shadowRoot.querySelector('a#annual-salary-type');
         const monthlySalaryTypeLink = this.shadowRoot.querySelector('a#monthly-salary-type');
 
         annualSalaryTypeLink.addEventListener('click', (event) => {
-            this._handleSelectedSalaryType(event, SalaryTypes.ANNUAL);
+            this.#handleSelectedSalaryType(event, SalaryTypes.ANNUAL);
         });
 
         monthlySalaryTypeLink.addEventListener('click', (event) => {
-            this._handleSelectedSalaryType(event, SalaryTypes.MONTHLY);
+            this.#handleSelectedSalaryType(event, SalaryTypes.MONTHLY);
         });
     }
 
-    _addGrossAmountInputListener() {
+    #addGrossAmountInputListener() {
         const grossAmountElement = this.shadowRoot.querySelector('input#grossAmountInput');
 
         // close numpad/keyboard on mobile browsers
         grossAmountElement.addEventListener('keyup', (event) => {
-            this._handleGrossAmountEnterKey(event, grossAmountElement);
+            this.#handleGrossAmountEnterKey(event, grossAmountElement);
         });
 
-        grossAmountElement.addEventListener('focus', (event) => {
-            this._handleGrossAmountFocus(event, grossAmountElement);
+        grossAmountElement.addEventListener('focus', async (event) => {
+            await this.#handleGrossAmountFocus(event, grossAmountElement);
         });
 
-        grossAmountElement.addEventListener('change', (event) => {
-            this._handleGrossAmountBlur(event, grossAmountElement);
+        grossAmountElement.addEventListener('change', async (event) => {
+            await this.#handleGrossAmountBlur(event, grossAmountElement);
         });
     }
 
-    _addIncludesThirteenInputListener() {
+    #addIncludesThirteenInputListener() {
         const includesThirteenElement = this.shadowRoot.querySelector('input#includesThirteen');
         includesThirteenElement.addEventListener('change', (event) => {
-            this._handleThirteenChange(event, includesThirteenElement);
+            this.#handleThirteenChange(event, includesThirteenElement);
         });
     }
 
-    _addCalculateButtonListener() {
+    #addCalculateButtonListener() {
         const calculateButton = this.shadowRoot.querySelector('button.calculate-btn');
         calculateButton.addEventListener('click', (event) => {
-            this._handleCalculateClickEvent(event);
+            this.#handleCalculateClickEvent(event);
         });
     }
     
-    _addCountrySelectionListener() {
+    #addCountrySelectionListener() {
 
         const countrySelectionLink = this.shadowRoot.querySelector('a#countrySelectionLink');
-        countrySelectionLink.addEventListener('click', event => this._handleCountrySelectionClickEvent(event));
+        countrySelectionLink.addEventListener('click', event => this.#handleCountrySelectionClickEvent(event));
     }
 
-    _addTaxDetailsListener() {
-
+    #addTaxDetailsListener() {
         const taxDetailsLink = this.shadowRoot.querySelector('a#taxDetailsLink');
-        taxDetailsLink.addEventListener('click', event => this._handleTaxDetailsClickEvent(event));
+        taxDetailsLink?.addEventListener('click', event => this.#handleTaxDetailsClickEvent(event));
     }
 
-    _addTaxOptionsListener() {
+    #addTaxOptionsListener() {
 
         const taxOptionsLink = this.shadowRoot.querySelector('a#taxOptionsLink');
         
         // some countries do not have additional options
         if (taxOptionsLink) {
-            taxOptionsLink.addEventListener('click', event => this._handleTaxOptionsClickEvent(event));
+            taxOptionsLink.addEventListener('click', event => this.#handleTaxOptionsClickEvent(event));
         }
     }
 
     /**
      * @param {MouseEvent} event 
      */
-    _handleTaxOptionsClickEvent(event) {
+    #handleTaxOptionsClickEvent(event) {
 
         event.preventDefault();
 
@@ -187,7 +190,7 @@ export class HomeView extends BaseElementMixin(LitElement) {
     /**
      * @param {MouseEvent} event 
      */
-    _handleTaxDetailsClickEvent(event) {
+    #handleTaxDetailsClickEvent(event) {
 
         event.preventDefault();
 
@@ -199,7 +202,7 @@ export class HomeView extends BaseElementMixin(LitElement) {
     /**
      * @param {MouseEvent} event 
      */
-    _handleCountrySelectionClickEvent(event) {
+    #handleCountrySelectionClickEvent(event) {
         
         event.preventDefault();
 
@@ -211,7 +214,7 @@ export class HomeView extends BaseElementMixin(LitElement) {
     /**
      * @param {Event} event
      */
-    _handleCalculateClickEvent(event) {
+    #handleCalculateClickEvent(event) {
         
         event.preventDefault();
 
@@ -227,25 +230,25 @@ export class HomeView extends BaseElementMixin(LitElement) {
      * @param {Event} event
      * @param {HTMLInputElement} includesThirteenElement
      */
-    _handleThirteenChange(event, includesThirteenElement) {
+    #handleThirteenChange(event, includesThirteenElement) {
         this.includesThirteen = includesThirteenElement.checked;
-        UserSelectionStore.updateIncludesThirteenOption(this.includesThirteen);
+        userSelectionsStore.updateIncludesThirteenSalaryOption(this.includesThirteen);
     }
 
     /**
      * @param {FocusEvent} event
      * @param {HTMLInputElement} grossAmountElement
      */
-    async _handleGrossAmountFocus(event, grossAmountElement) {
+    #handleGrossAmountFocus(event, grossAmountElement) {
         if (grossAmountElement.value === '') {
             return;
         }
 
-        const sanitizedAmount = this._sanitizeSalaryAmount(grossAmountElement.value);
+        const sanitizedAmount = this.#sanitizeSalaryAmount(grossAmountElement.value);
         const unformattedAmount = Number(sanitizedAmount);
 
         if (!unformattedAmount) {
-            const grossAmountFromStore = await UserSelectionStore.retrieveGrossAmount();
+            const grossAmountFromStore = userSelectionsStore.retrieveSelectedGrossAmount();
 
             if (!grossAmountFromStore) {
                 grossAmountElement.value = '';
@@ -263,8 +266,8 @@ export class HomeView extends BaseElementMixin(LitElement) {
      * @param {Event} event
      * @param {HTMLInputElement} grossAmountElement
      */
-    async _handleGrossAmountBlur(event, grossAmountElement) {
-        const sanitizedAmount = this._sanitizeSalaryAmount(grossAmountElement.value);
+    #handleGrossAmountBlur(event, grossAmountElement) {
+        const sanitizedAmount = this.#sanitizeSalaryAmount(grossAmountElement.value);
 
         const unformattedAmount = Number(sanitizedAmount);
 
@@ -272,7 +275,7 @@ export class HomeView extends BaseElementMixin(LitElement) {
 
             // inputted amount could not be used
             // reverting back to stored amount if present
-            const grossAmountFromStore = await UserSelectionStore.retrieveGrossAmount();
+            const grossAmountFromStore = userSelectionsStore.retrieveSelectedGrossAmount();
 
             // no stored amount was found
             if (!grossAmountFromStore) {
@@ -291,7 +294,7 @@ export class HomeView extends BaseElementMixin(LitElement) {
             return;
         }
 
-        UserSelectionStore.updateGrossAmount(unformattedAmount);
+        userSelectionsStore.updateSelectedGrossAmount(unformattedAmount);
 
         if (this.formatter) {
             this.grossAmount = this.formatter.format(unformattedAmount);
@@ -305,13 +308,13 @@ export class HomeView extends BaseElementMixin(LitElement) {
     /**
      * @param {String} formattedSalaryAmount
      */
-    _sanitizeSalaryAmount(formattedSalaryAmount) {
+    #sanitizeSalaryAmount(formattedSalaryAmount) {
 
         if (!this.formatter) {
             return formattedSalaryAmount;
         }
 
-        const { currencySymbol, decimalSymbol } = this._extractCurrencyAndDecimalSymbolFromLocale();
+        const { currencySymbol, decimalSymbol } = this.#extractCurrencyAndDecimalSymbolFromLocale();
 
         // match anything that does not match either number or the decimal character
         const regularExpression = RegExp(`[^0-9${decimalSymbol}]+\\g`);
@@ -319,12 +322,12 @@ export class HomeView extends BaseElementMixin(LitElement) {
         return formattedSalaryAmount.replace(currencySymbol, '').replace(regularExpression, '');
     }
 
-    _extractCurrencyAndDecimalSymbolFromLocale() {
+    #extractCurrencyAndDecimalSymbolFromLocale() {
 
         // workaround for iOS Safari 12 and below since
         // formatToParts was not available until iOS Safari 13
         if (!Intl.NumberFormat.prototype.formatToParts) {
-            return this._calculateCurrencyAndDecimalSymbolsForOlderBrowsers();
+            return this.#calculateCurrencyAndDecimalSymbolsForOlderBrowsers();
         }
 
         // Get the currency symbol for the country locale
@@ -333,19 +336,19 @@ export class HomeView extends BaseElementMixin(LitElement) {
         // for selected country locale
         const parts = this.formatter.formatToParts(3.5);
         
-        const currencyPart = this._findCurrencyPart(parts);
+        const currencyPart = this.#findCurrencyPart(parts);
         const currencySymbol = currencyPart.value;
 
-        const decimalPart = this._findDecimalPart(parts);
+        const decimalPart = this.#findDecimalPart(parts);
         const decimalSymbol = decimalPart.value;
 
         return { currencySymbol, decimalSymbol };
     }
 
     /**
-     * @param {Array<Intl.NumberFormatPart>} parts 
+     * @param {Array<NumberFormatPart>} parts
      */
-    _findCurrencyPart(parts) {
+    #findCurrencyPart(parts) {
         
         const currencyIndex = parts.findIndex(part => part.type === 'currency');
 
@@ -353,19 +356,19 @@ export class HomeView extends BaseElementMixin(LitElement) {
     }
 
     /**
-     * @param {Array<Intl.NumberFormatPart>} parts 
+     * @param {Array<NumberFormatPart>} parts
      */
-    _findDecimalPart(parts) {
+    #findDecimalPart(parts) {
 
         const decimalIndex = parts.findIndex(part => part.type === 'decimal');
 
         return parts[decimalIndex];
     }
 
-    _calculateCurrencyAndDecimalSymbolsForOlderBrowsers() {
+    #calculateCurrencyAndDecimalSymbolsForOlderBrowsers() {
 
         const currencySymbol = this.selectedCountry.currency;
-        const decimalSymbol = this._getDecimalSeparator(this.selectedCountry.locale);
+        const decimalSymbol = this.#getDecimalSeparator(this.selectedCountry.locale);
 
         // return the currency & decimal symbols from json file
         return { currencySymbol, decimalSymbol };
@@ -374,7 +377,7 @@ export class HomeView extends BaseElementMixin(LitElement) {
     /**
      * @param {String} locale
      */
-    _getDecimalSeparator(locale) {
+    #getDecimalSeparator(locale) {
 
         const numberWithDecimalSeparator = 1.1;
         return numberWithDecimalSeparator.toLocaleString(locale).substring(1, 2);
@@ -384,7 +387,7 @@ export class HomeView extends BaseElementMixin(LitElement) {
      * @param {KeyboardEvent} event
      * @param {HTMLInputElement} grossAmountElement
      */
-    _handleGrossAmountEnterKey(event, grossAmountElement) {
+    #handleGrossAmountEnterKey(event, grossAmountElement) {
         if (event.keyCode !== 13) return;
         event.preventDefault();
         grossAmountElement.blur();
@@ -394,18 +397,19 @@ export class HomeView extends BaseElementMixin(LitElement) {
      * @param {Event} event
      * @param {SalaryType} salaryType
      */
-    _handleSelectedSalaryType(event, salaryType) {
+    #handleSelectedSalaryType(event, salaryType) {
         event.preventDefault();
 
         this.selectedPeriod = salaryType;
-        this._updateSelectedSalaryTypeLinks();
-        UserSelectionStore.updateSalaryType(salaryType);
+        this.#updateSelectedSalaryTypeLinks();
+
+        userSelectionsStore.updateSelectedSalaryType(salaryType);
     }
 
     /**
      * @param {Country} selectedCountry
      */
-    _updateCurrencyFormatter(selectedCountry) {
+    #updateCurrencyFormatter(selectedCountry) {
         const formatter = new Intl.NumberFormat(selectedCountry.locale, {
             style: 'currency',
             currency: selectedCountry.currency,
@@ -415,36 +419,35 @@ export class HomeView extends BaseElementMixin(LitElement) {
         this.formatter = formatter;
     }
 
-    _updateSelectedSalaryTypeLinks() {
+    #updateSelectedSalaryTypeLinks() {
 
         const annualSalaryTypeLink = this.shadowRoot.querySelector('a#annual-salary-type');
         const monthlySalaryTypeLink = this.shadowRoot.querySelector('a#monthly-salary-type');
 
         if (this.selectedPeriod === SalaryTypes.ANNUAL) {
-            this._removeActiveClass(monthlySalaryTypeLink);
-            this._addActiveClass(annualSalaryTypeLink);
+            this.#removeActiveClass(monthlySalaryTypeLink);
+            this.#addActiveClass(annualSalaryTypeLink);
         }
 
         if (this.selectedPeriod === SalaryTypes.MONTHLY) {
-            this._removeActiveClass(annualSalaryTypeLink);
-            this._addActiveClass(monthlySalaryTypeLink);
+            this.#removeActiveClass(annualSalaryTypeLink);
+            this.#addActiveClass(monthlySalaryTypeLink);
         }
     }
 
     /**
      * @param {Element} element
      */
-    _removeActiveClass(element) {
+    #removeActiveClass(element) {
         element.classList.remove('active');
     }
 
     /**
      * @param {Element} element
      */
-    _addActiveClass(element) {
+    #addActiveClass(element) {
         element.classList.add('active');
     }
 }
 
-// @ts-ignore
 window.customElements.define('home-view', HomeView);

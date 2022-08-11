@@ -5,8 +5,8 @@ import { ToggleCss } from '../../../base/ToggleCss.js';
 import { ListGroupCss } from '../../../base/ListGroupCss.js';
 import { BlueprintCss } from '../../../base/BlueprintCss.js';
 import { GermanTaxOptions } from '../model/GermanTaxOptions.js';
-import { UserSelectionStore } from '../../../datastore/UserSelectionStore.js';
-import CountryIDsEnum from '../../CountryIDsEnum.js';
+// import { UserSelectionStore } from '../../../datastore/UserSelectionStore.js';
+import CountryIDsEnum from '../../../datastore/CountryIDsEnum.js';
 import { CommonTaxOptionsViewCss } from '../../CommonTaxOptionViewCss.js';
 import { GermanyTaxOptionsViewCss } from './GermanyTaxOptionsViewCss.js';
 

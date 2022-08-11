@@ -1,21 +1,12 @@
-import { TaxOptions } from '../../../model/TaxOptions.js';
-import CountryIDsEnum from '../../CountryIDsEnum.js';
 
-export class CyprusTaxOptions extends TaxOptions {
-    /**
-     * @param {Boolean} selfEmployed
-     */
-    constructor(selfEmployed = false) {
-        super(CountryIDsEnum.CYPRUS_ID);
-        this.selfEmployed = selfEmployed;
-    }
+export class CyprusTaxOptions {
 
     /**
-     * @param {Object} obj
-     * @returns {CyprusTaxOptions}
+     * @param {EmploymentType} employmentType
      */
-    static createFromObject(obj) {
-        const cyprusTaxOptions = new CyprusTaxOptions();
-        return Object.assign(cyprusTaxOptions, obj);
+    constructor(employmentType ) {
+        this.employmentType = employmentType;
+        Object.freeze(this.employmentType);
+        Object.freeze(this);
     }
 }

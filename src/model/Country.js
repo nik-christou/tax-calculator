@@ -7,7 +7,13 @@ export class Country {
      * @param {String} flag
      * @param {Boolean} additionalOptions
      */
-    constructor(id, name, locale, currency, flag, additionalOptions) {
+    constructor(id,
+                name,
+                locale,
+                currency,
+                flag,
+                additionalOptions) {
+
         this.id = id;
         this.name = name;
         this.locale = locale;

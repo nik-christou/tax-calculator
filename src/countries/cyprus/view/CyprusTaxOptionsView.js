@@ -5,14 +5,17 @@ import { ToggleCss } from '../../../base/ToggleCss.js';
 import { ListGroupCss } from '../../../base/ListGroupCss.js';
 import { BlueprintCss } from '../../../base/BlueprintCss.js';
 import { CyprusTaxOptions } from '../model/CyprusTaxOptions.js';
-import { UserSelectionStore } from '../../../datastore/UserSelectionStore.js';
-import CountryIDsEnum from '../../CountryIDsEnum.js';
+import { userSelectionsStore } from '../../../datastore/UserSelectionsStore.js';
+import CountryIDsEnum from '../../../datastore/CountryIDsEnum.js';
 import { CommonTaxOptionsViewCss } from '../../CommonTaxOptionViewCss.js';
+import { EmploymentTypes } from "../../../model/EmploymentTypes";
+import {TaxOptions} from "../../../model/TaxOptions";
 
 export class CyprusTaxOptionsView extends BaseElementMixin(LitElement) {
 
     static get properties() {
         return {
+            employmentStatus: {type: Boolean, reflect: true},
             cyprusTaxOptions: CyprusTaxOptions
         };
     }
@@ -22,44 +25,61 @@ export class CyprusTaxOptionsView extends BaseElementMixin(LitElement) {
     }
 
     render() {
-        return CyprusTaxOptionsViewTemplate(this.cyprusTaxOptions);
+        return CyprusTaxOptionsViewTemplate(this.employmentStatus);
     }
 
     constructor() {
         super();
-        this.cyprusTaxOptions = new CyprusTaxOptions();
+        this._loadUserSelectionFromDatastore();
     }
 
     firstUpdated() {
-        this._loadUserSelectionFromDatastore();
-        this._addIsSelfEmployedListener();
+        this.#addEmploymentStatusListener();
     }
 
     _loadUserSelectionFromDatastore() {
 
-        UserSelectionStore.retrieveCountryOptionByCountryId(CountryIDsEnum.CYPRUS_ID).then((countryOptions) => {
-            if (!countryOptions || countryOptions.countryId !== CountryIDsEnum.CYPRUS_ID) return;
-            this.cyprusTaxOptions = CyprusTaxOptions.createFromObject(countryOptions);
-        });
+        const selectedTaxOptions = userSelectionsStore.retrieveSelectedTaxOptions();
+
+        if (!selectedTaxOptions || selectedTaxOptions.countryId !== CountryIDsEnum.CYPRUS_ID) {
+            return;
+        }
+
+        const {type} = selectedTaxOptions?.options?.employmentType;
+
+        if(EmploymentTypes.SELF_EMPLOYED.type === type) {
+            this.employmentStatus = true;
+        } else {
+            this.employmentStatus = false;
+        }
     }
 
-    _addIsSelfEmployedListener() {
-        const selfEmployedElement = this.shadowRoot.querySelector('input#selfEmployed');
-        selfEmployedElement.addEventListener('input', (event) => {
-            this._handleIsSelfEmployedChange(event, selfEmployedElement);
+    #addEmploymentStatusListener() {
+        const employmentStatusElement = this.shadowRoot.querySelector('input#employmentTypeStatus');
+        employmentStatusElement.addEventListener('input', (event) => {
+            this.#handleEmploymentStatusChange(event, employmentStatusElement);
         });
     }
 
     /**
      * @param {Event} event
-     * @param {HTMLInputElement} selfEmployedElement
+     * @param {HTMLInputElement} employmentStatusElement
      */
-    _handleIsSelfEmployedChange(event, selfEmployedElement) {
+    #handleEmploymentStatusChange(event, employmentStatusElement) {
 
-        this.cyprusTaxOptions.selfEmployed = selfEmployedElement.checked;
-        UserSelectionStore.updateCountryOptions(this.cyprusTaxOptions);
+        const employmentType = this.#retrieveEmploymentType(employmentStatusElement.checked);
+        const cyprusTaxOptions = new CyprusTaxOptions(employmentType);
+        const taxOptions = new TaxOptions(CountryIDsEnum.CYPRUS_ID, cyprusTaxOptions);
+
+        userSelectionsStore.updateTaxOptions(taxOptions);
+    }
+
+    #retrieveEmploymentType(checkedStatus) {
+        if(checkedStatus) {
+            return EmploymentTypes.SELF_EMPLOYED;
+        }
+        return EmploymentTypes.EMPLOYED;
     }
 }
 
-// @ts-ignore
 window.customElements.define('cyprus-tax-options-view', CyprusTaxOptionsView);

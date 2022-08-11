@@ -1,16 +1,16 @@
-import { html } from 'lit-html';
+import { html } from 'lit';
 
 /**
  * @param {Number} amount
- * @param {Intl.NumberFormat} formatter
+ * @param {NumberFormat} formatter
  */
 function formatAmount(formatter, amount) {
     return formatter.format(amount);
 }
 
 /**
- * @param {import('../model/CyprusTaxBracket.js').CyprusTaxBracket} taxBracket
- * @param {Intl.NumberFormat} formatter
+ * @param {CyprusTaxBracket} taxBracket
+ * @param {NumberFormat} formatter
  */
 const taxBracketItemTemplate = (taxBracket, formatter) => html`
     <div class="list-group-item tax-bracket-item">
@@ -22,8 +22,8 @@ const taxBracketItemTemplate = (taxBracket, formatter) => html`
 `;
 
 /**
- * @param {import('../model/CyprusTaxDetails.js').CyprusTaxDetails} taxDetails
- * @param {Intl.NumberFormat} formatter
+ * @param {CyprusTaxDetails} taxDetails
+ * @param {NumberFormat} formatter
  */
 const CyprusTaxDetailsViewTemplate = (taxDetails, formatter) => html`
     <h3>Employee Contributions</h3>

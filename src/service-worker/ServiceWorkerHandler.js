@@ -1,24 +1,24 @@
-import { registerSW } from 'virtual:pwa-register'
+// import { registerSW } from 'virtual:pwa-register'
 
 export class ServiceWorkerHandler {
 
-    /**
-     * @param {import('../component/snackbar/SnackbarNotification.js').SnackbarNotication} snackbarNotication
-     */
-    static async register(snackbarNotication) {
-
-        if (!('serviceWorker' in navigator)) {
-            return;
-        }
-
-        const updateSW = registerSW({
-            onNeedRefresh() {
-                snackbarNotication.show();
-            }
-        });
-
-        snackbarNotication.addEventListener('refreshNotificationEvent', (_) => {
-            updateSW();
-        });
-    }
+    // /**
+    //  * @param {import('../component/snackbar/SnackbarNotification.js').SnackbarNotification} snackbarNotification
+    //  */
+    // static async register(snackbarNotification) {
+    //
+    //     if (!('serviceWorker' in navigator)) {
+    //         return;
+    //     }
+    //
+    //     const updateSW = registerSW({
+    //         onNeedRefresh() {
+    //             snackbarNotification.show();
+    //         }
+    //     });
+    //
+    //     snackbarNotification.addEventListener('refreshNotificationEvent', (_) => {
+    //         updateSW();
+    //     });
+    // }
 }

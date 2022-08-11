@@ -1,16 +1,14 @@
-import { html } from 'lit-html';
-
+import { html } from 'lit';
 import '../../countries/cyprus/view/CyprusTaxOptionsView.js';
 import '../../countries/australia/view/AustraliaTaxOptionsView.js';
 import '../../countries/germany/view/GermanyTaxOptionsView.js';
 
-export class TaxOptionsViewTemplateLoader {
+class TaxOptionsViewTemplateLoader {
     /**
      * @param {import('../../model/Country.js').Country} country
      */
-    static getTaxOptionsViewTemplateTag(country) {
+    retrieveTaxOptionsViewTemplateTag(country) {
         if (!country) return;
-
         switch (country.id) {
             case 1:
                 return html`<cyprus-tax-options-view></cyprus-tax-options-view>`;
@@ -21,3 +19,5 @@ export class TaxOptionsViewTemplateLoader {
         }
     }
 }
+
+export const taxOptionsViewTemplateLoader = Object.freeze(new TaxOptionsViewTemplateLoader());

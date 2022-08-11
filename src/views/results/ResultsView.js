@@ -9,10 +9,11 @@ import { TaxResults } from '../../model/TaxResults.js';
 import { TaxResult } from '../../model/TaxResult.js';
 import { SalaryDetails } from '../../model/SalaryDetails.js';
 import { TaxProcessorDispatcher } from './TaxProcessorDispatcher.js';
-import { UserSelectionStore } from '../../datastore/UserSelectionStore.js';
+import { userSelectionsStore } from "../../datastore/UserSelectionsStore.js";
 import { SalaryTypes } from '../../model/SalaryTypes.js';
 
 export class ResultsView extends BaseElementMixin(LitElement) {
+
     static get properties() {
         return {
             taxResults: TaxResults,
@@ -30,33 +31,33 @@ export class ResultsView extends BaseElementMixin(LitElement) {
 
     constructor() {
         super();
-
         const monthlyTaxResults = new TaxResult(0, 0, 0, 0, 0, []);
         const annualTaxResults = new TaxResult(0, 0, 0, 0, 0, []);
-
         this.taxResults = new TaxResults(monthlyTaxResults, annualTaxResults);
         this.formatter = new Intl.NumberFormat();
+        this._loadUserSelectionFromDatastore();
     }
 
     firstUpdated() {
         this._addNavBackListener();
-        this._loadUserSelectionFromDatastore();
     }
 
-    async _loadUserSelectionFromDatastore() {
-        const selectedCountry = await UserSelectionStore.retrieveCountry();
-        const selectedPeriodType = await UserSelectionStore.retrieveSalaryType();
-        const grossAmount = await UserSelectionStore.retrieveGrossAmount();
-        const includesThirteenOption = await UserSelectionStore.retrieveIncludesThirteenOption();
+    _loadUserSelectionFromDatastore() {
 
-        if (!selectedCountry || !selectedPeriodType) return;
+        const selectedCountry = userSelectionsStore.retrieveSelectedCountry();
+        const selectedSalaryType = userSelectionsStore.retrieveSalaryType();
+        const grossAmount = userSelectionsStore.retrieveSelectedGrossAmount();
+        const includesThirteenOption = userSelectionsStore.retrieveIncludesThirteenSalaryOption();
+
+        if (!selectedCountry || !selectedSalaryType) return;
 
         this._updateCurrencyFormatter(selectedCountry);
 
-        const selectedPeriod = selectedPeriodType.id === SalaryTypes.ANNUAL.id ? SalaryTypes.ANNUAL : SalaryTypes.MONTHLY;
+        const selectedPeriod = selectedSalaryType.id === SalaryTypes.ANNUAL.id ? SalaryTypes.ANNUAL : SalaryTypes.MONTHLY;
 
         const salaryDetails = new SalaryDetails(grossAmount, selectedPeriod, includesThirteenOption);
-        const taxResults = await TaxProcessorDispatcher.dispatch(selectedCountry.id, salaryDetails);
+        
+        const taxResults = TaxProcessorDispatcher.dispatch(selectedCountry.id, salaryDetails);
 
         this.taxResults = taxResults;
     }

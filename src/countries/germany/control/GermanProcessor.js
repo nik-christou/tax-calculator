@@ -1,6 +1,6 @@
 import { GermanTaxCalculator } from './GermanTaxCalculator.js';
-import { TaxDetailsStore } from '../../../datastore/TaxDetailsStore.js';
-import { UserSelectionStore } from '../../../datastore/UserSelectionStore.js';
+import { taxDetailsStore } from '../../../datastore/TaxDetailsStore.js';
+// import { UserSelectionStore } from '../../../datastore/UserSelectionStore.js';
 import { GermanTaxOptions } from '../model/GermanTaxOptions.js';
 
 export class GermanProcessor {
@@ -12,7 +12,7 @@ export class GermanProcessor {
      */
     static async processGermanTax(countryId, salaryDetails) {
         
-        const germanTaxDetails = await TaxDetailsStore.getTaxDetailsByCountryById(countryId);
+        const germanTaxDetails = await taxDetailsStore.getTaxDetailsByCountryById(countryId);
         const taxOptions = await UserSelectionStore.retrieveCountryOptionByCountryId(countryId);
         const germanTaxOptions = GermanTaxOptions.createFromObject(taxOptions);
 

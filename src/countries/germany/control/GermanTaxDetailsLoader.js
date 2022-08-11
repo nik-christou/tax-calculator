@@ -10,18 +10,18 @@ export class GermanyTaxDetailsLoader {
     /**
      * @static
      * 
-     * @param {Object} jsonData
+     * @param {Object} countryObject
      * 
      * @returns {Promise<GermanTaxDetails>}
      */
-    static async loadTaxDetailsFromJsonData(jsonData) {
+    static async loadTaxDetailsFromCountryObject(countryObject) {
 
-        const singleTaxBrackets = this._loadSingleTaxBrackets(jsonData);
-        const marriedTaxBrackets = this._loadMarriedTaxBrackets(jsonData);
-        const pensionInsurance = this._loadPensionInsurance(jsonData);
-        const unemploymentInsurance = this._loadUnemploymentInsurance(jsonData);
-        const healthInsurance = this._loadHealthInsurance(jsonData);
-        const longTermCareInsurance = this._loadLongTermCareInsurance(jsonData);
+        const singleTaxBrackets = this._loadSingleTaxBrackets(countryObject);
+        const marriedTaxBrackets = this._loadMarriedTaxBrackets(countryObject);
+        const pensionInsurance = this._loadPensionInsurance(countryObject);
+        const unemploymentInsurance = this._loadUnemploymentInsurance(countryObject);
+        const healthInsurance = this._loadHealthInsurance(countryObject);
+        const longTermCareInsurance = this._loadLongTermCareInsurance(countryObject);
 
         return new GermanTaxDetails(singleTaxBrackets, 
             marriedTaxBrackets,

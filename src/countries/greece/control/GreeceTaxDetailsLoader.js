@@ -6,15 +6,15 @@ export class GreeceTaxDetailsLoader {
 
     /**
      * @static
-     * @param {Object} jsonData
+     * @param {Object} countryObject
      * 
      * @returns {Promise<GreeceTaxDetails>}
      */
-    static async loadTaxDetailsFromJsonData(jsonData) {
+    static async loadTaxDetailsFromCountryObject(countryObject) {
 
         const taxBrackets = [];
 
-        jsonData.taxBrackets.forEach((taxBracketJson) => {
+        countryObject.taxBrackets.forEach((taxBracketJson) => {
             
             const end = taxBracketJson.end === -1 ? Number.POSITIVE_INFINITY : taxBracketJson.end;
             const taxBracket = new GreeceTaxBracket(taxBracketJson.start, end, taxBracketJson.ratePercent);
@@ -22,22 +22,22 @@ export class GreeceTaxDetailsLoader {
             taxBrackets.push(taxBracket);
         });
 
-        const socialSecurityContribution = this._loadSocialSecurityContributionData(jsonData);
+        const socialSecurityContribution = this._loadSocialSecurityContributionData(countryObject);
 
         return new GreeceTaxDetails(taxBrackets, socialSecurityContribution);
     }
 
     /**
-     * @param {{ socialSecurity: any; }} jsonData
+     * @param {{ socialSecurity: any; }} countryObject
      * 
      * @returns {GreeceSocialSecurity} social security
      */
-    static _loadSocialSecurityContributionData(jsonData) {
+    static _loadSocialSecurityContributionData(countryObject) {
 
-        const socialSecurityJsonData = jsonData.socialSecurity;
+        const socialSecurityObject = countryObject.socialSecurity;
 
         return new GreeceSocialSecurity(
-            socialSecurityJsonData.percent,
-            socialSecurityJsonData.maxAmount);
+            socialSecurityObject.percent,
+            socialSecurityObject.maxAmount);
     }
 }

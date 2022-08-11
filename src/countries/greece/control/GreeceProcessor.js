@@ -1,4 +1,4 @@
-import { TaxDetailsStore } from '../../../datastore/TaxDetailsStore.js';
+import { taxDetailsStore } from '../../../datastore/TaxDetailsStore.js';
 import { GreeceTaxCalculator } from './GreeceTaxCalculator.js';
 
 export class GreeceProcessor {
@@ -10,7 +10,7 @@ export class GreeceProcessor {
      */
     static async processGreeceTax(countryId, salaryDetails) {
         
-        const taxDetails = await TaxDetailsStore.getTaxDetailsByCountryById(countryId);
+        const taxDetails = await taxDetailsStore.getTaxDetailsByCountryById(countryId);
 
         const taxResults = GreeceTaxCalculator.calculateTax(taxDetails, salaryDetails);
 

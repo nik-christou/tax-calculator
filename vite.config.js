@@ -1,6 +1,5 @@
 import { defineConfig } from 'vite';
-import { VitePWA } from 'vite-plugin-pwa';
-import fs from 'fs';
+// import { VitePWA } from 'vite-plugin-pwa';
 
 // https://vitejs.dev/config/
 
@@ -54,7 +53,7 @@ const vitePWAOptions = {
 
 export default defineConfig({
   root: '.',
-  publicDir: 'public',
+  publicDir: 'public'
   // preview: {
   //   // add certificates to test service worker locally
   //   https: {
@@ -62,7 +61,7 @@ export default defineConfig({
   //     cert: fs.readFileSync('./cert/localhost.pem')
   //   }
   // },
-  plugins: [
-    VitePWA(vitePWAOptions)
-  ]
+  // plugins: [
+  //   VitePWA(vitePWAOptions)
+  // ]
 })

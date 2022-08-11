@@ -20,16 +20,15 @@
   },
   "dependencies": {
     "@vaadin/router": "1.7.4",
-    "idb": "7.0.0",
-    "lit": "2.1.1"
+    "lit": "2.2.8"
   },
   "devDependencies": {
     "@esm-bundle/chai": "4.3.4-fix.0",
-    "@open-wc/testing": "3.0.3",
-    "@web/test-runner": "0.13.25",
-    "https-localhost": "4.7.0",
-    "sinon": "12.0.1",
-    "vite": "2.7.10",
-    "vite-plugin-pwa": "0.11.12"
+    "@open-wc/testing": "3.1.6",
+    "@web/test-runner": "0.14.0",
+    "https-localhost": "4.7.1",
+    "sinon": "14.0.0",
+    "vite": "3.0.4",
+    "vite-plugin-pwa": "0.12.3"
   }
 }
