@@ -1,5 +1,5 @@
-import { CyprusTaxOptions } from '../model/CyprusTaxOptions.js';
-import {EmploymentTypes} from "../../../model/EmploymentTypes";
+import {CyprusTaxOptions} from '../../model/CyprusTaxOptions.js';
+import {EmploymentTypes} from "../../../../model/EmploymentTypes";
 
 class CyprusTaxOptionsLoader {
 

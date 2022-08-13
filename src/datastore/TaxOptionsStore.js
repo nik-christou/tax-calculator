@@ -1,4 +1,4 @@
-import { dataLoaderUtil } from "./DataLoaderUtil.js";
+import {TaxOptions} from "../model/TaxOptions";
 
 const TAX_OPTIONS_KEY_PREFIX = "tax_options_id_";
 
@@ -13,7 +13,7 @@ class TaxOptionsStore {
         const taxOptionsItem = window.localStorage.getItem(taxOptionsKey);
         const taxOptionsObj = JSON.parse(taxOptionsItem);
         const {countryId, options} = taxOptionsObj;
-        return dataLoaderUtil.createTaxOptions(countryId, options);
+        return new TaxOptions(countryId, options);
     }
 
     /**

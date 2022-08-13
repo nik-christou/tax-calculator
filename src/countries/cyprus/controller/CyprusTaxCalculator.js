@@ -1,8 +1,8 @@
-import { TaxResult } from '../../../model/TaxResult.js';
-import { TaxResults } from '../../../model/TaxResults.js';
-import { TaxBreakdownBracket } from '../../../model/TaxBreakdownBracket.js';
-import { TaxCalculatorUtil } from '../../TaxCalculatorUtil.js';
-import {EmploymentTypes} from "../../../model/EmploymentTypes";
+import {TaxResult} from '../../../model/TaxResult.js';
+import {TaxResults} from '../../../model/TaxResults.js';
+import {TaxBreakdownBracket} from '../../../model/TaxBreakdownBracket.js';
+import {TaxCalculatorUtil} from '../../TaxCalculatorUtil.js';
+import {EmploymentTypes} from "../../../model/EmploymentTypes.js";
 
 export class CyprusTaxCalculator {
 
@@ -85,7 +85,7 @@ export class CyprusTaxCalculator {
      */
     #calculateSocialInsurancePercentage(cyprusTaxDetails, cyprusTaxOptions) {
 
-        if (cyprusTaxOptions.employmentType == EmploymentTypes.SELF_EMPLOYED) {
+        if (cyprusTaxOptions.employmentType === EmploymentTypes.SELF_EMPLOYED) {
             return cyprusTaxDetails.selfEmployedContributions.socialInsurancePercent;
         }
 
@@ -99,7 +99,7 @@ export class CyprusTaxCalculator {
      */
     #calculateHealthInsurancePercentage(cyprusTaxDetails, cyprusTaxOptions) {
 
-        if (cyprusTaxOptions.employmentType == EmploymentTypes.SELF_EMPLOYED) {
+        if (cyprusTaxOptions.employmentType === EmploymentTypes.SELF_EMPLOYED) {
             return cyprusTaxDetails.selfEmployedContributions.healthContributionPercent;
         }
 

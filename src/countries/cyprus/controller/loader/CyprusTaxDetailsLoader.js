@@ -1,12 +1,12 @@
-import { CyprusTaxDetails } from '../model/CyprusTaxDetails.js';
-import { CyprusTaxBracket } from '../model/CyprusTaxBracket.js';
-import { CyprusContributions } from '../model/CyprusContributions.js';
+import {CyprusTaxDetails} from '../../model/CyprusTaxDetails.js';
+import {CyprusTaxBracket} from '../../model/CyprusTaxBracket.js';
+import {CyprusContributions} from '../../model/CyprusContributions.js';
 
 export class CyprusTaxDetailsLoader {
 
     /**
      * @param {JSON} countryObj
-     * @returns {Promise<CyprusTaxDetails>}
+     * @returns {CyprusTaxDetails}
      */
     loadTaxDetailsFromCountryObject(countryObj) {
 

@@ -115,7 +115,7 @@ export const TaxCalculatorAppCss = css`
         -webkit-animation-duration: 0.3s;
         -webkit-animation-name: slideOutLeft;
         -webkit-animation-timing-function: ease-in-out;
-        animation-delay: 0.01s;s
+        animation-delay: 0.01s;
         animation-duration: 0.3s;
         animation-name: slideOutLeft;
         animation-timing-function: ease-in-out;

@@ -1,4 +1,4 @@
-import { dataLoaderUtil } from "./DataLoaderUtil.js";
+import {TaxDetails} from "../model/TaxDetails";
 
 const TAX_DETAILS_KEY_PREFIX = "tax_details_id_";
 
@@ -12,7 +12,7 @@ class TaxDetailsStore {
         const taxDetailsItem = window.localStorage.getItem(taxDetailsKey);
         const taxDetailsObj = JSON.parse(taxDetailsItem);
         const {countryId, details} = taxDetailsObj;
-        return dataLoaderUtil.createTaxDetails(countryId, details);
+        return new TaxDetails(countryId, details);
     }
 
     /**

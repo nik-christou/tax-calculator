@@ -1,4 +1,4 @@
-import { datastoreManager } from "./DatastoreManager.js";
+import {datastoreUpdater} from "./DatastoreUpdater.js";
 
 const TAX_CALCULATOR_CACHE_STORE_NAME = "tax_calculator_cache";
 const CYPRUS_TAX_DATA_URL = new URL('/data/cyprus_data_v1.json', import.meta.url);
@@ -9,7 +9,6 @@ const GERMANY_TAX_DATA_URL = new URL('/data/germany_data_v1.json', import.meta.u
 class CountriesCacheHandler {
 
     #countriesDataUrls;
-    #loadedCountriesTaxDataJson;
 
     constructor() {
         this.#countriesDataUrls = [
@@ -40,10 +39,10 @@ class CountriesCacheHandler {
             const countryJsonUrl = newOrUpdatedUrls[index];
             const countryTaxDataJson = await cache.match(countryJsonUrl);
             const countryJson = await countryTaxDataJson.json();
-            datastoreManager.handleNewOrUpdateCountryJson(countryJson);
+            datastoreUpdater.handleNewOrUpdateCountryJson(countryJson);
         }
 
-        // handle removals in cache by looping all the keys in cache
+        // TODO: handle removals in cache by looping all the keys in cache
         // and comparing it to the Urls we have hardcoded
         // any diff it needs to be removed
     }

@@ -1,4 +1,4 @@
-import { dataLoaderUtil } from "./DataLoaderUtil.js";
+import {countryFromJsonConverter} from "../countries/CountryFromJsonConverter.js";
 
 const COUNTRY_KEY_PREFIX = "country_id_";
 
@@ -12,7 +12,7 @@ class CountryStore {
         const countryKey = this.#calculateCountryKey(id);
         const countryItem = window.localStorage.getItem(countryKey);
         const countryObj = JSON.parse(countryItem);
-        return dataLoaderUtil.convertCountryFromJson(countryObj);
+        return countryFromJsonConverter.convertCountryFromJson(countryObj);
     }
 
     /**
@@ -45,7 +45,7 @@ class CountryStore {
                 continue;
             }
             const countryObj = JSON.parse(countryItem);
-            const country = dataLoaderUtil.convertCountryFromJson(countryObj);
+            const country = countryFromJsonConverter.convertCountryFromJson(countryObj);
             countries.push(country);
         }
 
