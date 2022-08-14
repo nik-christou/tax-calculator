@@ -25,7 +25,6 @@ export class SWUpdateNotification extends BaseElementMixin(LitElement) {
     }
 
     firstUpdated() {
-        console.log("SWUpdateNotification firstUpdated called");
         const refreshLink = this.shadowRoot.querySelector('a#refreshButton');
         const closeLink = this.shadowRoot.querySelector('button.close-link');
         refreshLink.addEventListener('click', event => this.#handleRefreshLink(event));

@@ -5,6 +5,9 @@ const vitePWAOptions = {
     registerType: 'prompt',
     injectRegister: 'script',
     strategies: 'generateWS',
+    devOptions: {
+        enabled: true
+    },
     includeAssets: [
         'favicon.svg',
         'favicon.ico',
@@ -18,7 +21,7 @@ const vitePWAOptions = {
     workbox: {
         sourcemap: false,
         clientsClaim: true,
-        skipWaiting: true,
+        skipWaiting: false,
         cleanupOutdatedCaches: true,
         offlineGoogleAnalytics: false
     },

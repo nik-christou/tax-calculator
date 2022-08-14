@@ -4,20 +4,20 @@ import {SnackbarNotification} from "./src/sw/SnackbarNotification.js";
 import {serviceWorkerHandler} from "./src/sw/SWHandler.js";
 import {SWUpdateNotification} from "./src/sw/SWUpdateNotification.js";
 
-// import countries json files under public/data are updated
-// wrapped in async cause top-leve await is not yet supported
 (async () => {
     await countriesCacheHandler.updateCountriesJsonDataCache();
 })();
-// countriesCacheHandler.updateCountriesJsonDataCache().then(() => {
-//
-// });
 
-// register notification component for service worker notification
-serviceWorkerHandler.register(SnackbarNotification);
+/**
+ * @type {CustomElementRegistry}
+ */
+const customElementsRegistry = window.customElements;
 
-// register service worker notification
-window.customElements.define('sw-update-notification', SWUpdateNotification);
+customElementsRegistry.define('snackbar-notification', SnackbarNotification);
+customElementsRegistry.define('sw-update-notification', SWUpdateNotification);
+customElementsRegistry.define('tax-calculator-app', TaxCalculatorApp);
 
-// register the root app element
-window.customElements.define('tax-calculator-app', TaxCalculatorApp);
+customElementsRegistry.whenDefined('snackbar-notification').then(() => {
+    const snackbarNotificationElement = document.querySelector("snackbar-notification");
+    serviceWorkerHandler.register(snackbarNotificationElement);
+});

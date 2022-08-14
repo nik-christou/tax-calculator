@@ -42,9 +42,6 @@ export class SnackbarNotification extends BaseElementMixin(LitElement) {
      * @returns {Promise} which is resolved when the animation ends
      */
     show() {
-
-        console.log("Snackbar Notification show function called !");
-
         const hostElement = this.shadowRoot.host;
         const showAnimationCssClassName = 'notification-entering';
         const visibleCssClassName = 'visible';
@@ -70,7 +67,6 @@ export class SnackbarNotification extends BaseElementMixin(LitElement) {
      * @returns {Promise} which is resolved when the animation ends
      */
     hide() {
-
         const hostElement = this.shadowRoot.host;
         const hideAnimationCssClassName = 'notification-leaving';
         const visibleCssClassName = 'visible';
@@ -143,5 +139,3 @@ export class SnackbarNotification extends BaseElementMixin(LitElement) {
         return totalHeight;
     }
 }
-
-window.customElements.define('snackbar-notification', SnackbarNotification);
