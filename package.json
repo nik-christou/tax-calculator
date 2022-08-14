@@ -11,8 +11,7 @@
   "scripts": {
     "vite:dev": "vite dev",
     "vite:build": "vite build",
-    "vite:preview": "vite preview",
-    "https:dist": "serve dist",
+    "https:dist": "http-server ./dist --tls --cert ./cert/127.0.0.1.pem --key ./cert/127.0.0.1-key.pem",
     "cert": "rm -rf .cert && mkdir -p .cert && mkcert -key-file ./.cert/key.pem -cert-file ./.cert/cert.pem 'localhost'",
     "tests": "web-test-runner ./test/**/*.test.js --node-resolve; exit 0",
     "tests:watch": "web-test-runner test/**/*.test.js --node-resolve --watch; exit 0",
@@ -26,9 +25,10 @@
     "@esm-bundle/chai": "4.3.4-fix.0",
     "@open-wc/testing": "3.1.6",
     "@web/test-runner": "0.14.0",
-    "https-localhost": "4.7.1",
+    "http-server": "^14.1.1",
     "sinon": "14.0.0",
     "vite": "3.0.4",
-    "vite-plugin-pwa": "0.12.3"
+    "vite-plugin-pwa": "0.12.3",
+    "workbox-window": "6.5.4"
   }
 }

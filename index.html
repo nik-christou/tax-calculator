@@ -1,32 +1,37 @@
 <!doctype html>
 <html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-    <meta name="Description" content="Salary Tax calculator for multiple countries">
-    
-    <title>Salary Tax Calculator</title>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+        <meta name="Description" content="Salary Tax calculator for multiple countries">
 
-    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-    <link rel="alternate icon" href="/favicon.ico" type="image/png" sizes="16x16" />
-    <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180" />
-    <link rel="mask-icon" href="/favicon.svg" color="#ffffff" />
-    <meta name="theme-color" content="#4e7ac7" />
+        <title>Salary Tax Calculator</title>
 
-    <link rel="stylesheet" href="/normalize.css"/>
-    <style>
-        @font-face {
-            font-family: 'Roboto';
-            font-style: normal;
-            font-weight: 400;
-            src: local('Roboto'), local('Roboto-Regular'),
-                url('fonts/roboto/roboto-v20-latin-regular.woff2') format('woff2'),
-                url('fonts/roboto/roboto-v20-latin-regular.woff') format('woff');
-        }
-    </style>
-    <script type="module" src="./src/TaxCalculatorApp.js"></script>
-</head>
-<body>
-  <tax-calculator-app></tax-calculator-app>
-</body>
+        <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+        <link rel="alternate icon" href="/favicon.ico" type="image/png" sizes="16x16" />
+        <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180" />
+        <link rel="mask-icon" href="/favicon.svg" color="#ffffff" />
+        <meta name="theme-color" content="#4e7ac7" />
+
+        <link rel="stylesheet" href="/normalize.css"/>
+        <style>
+            @font-face {
+                font-family: 'Roboto';
+                font-style: normal;
+                font-weight: 400;
+                src: local('Roboto'), local('Roboto-Regular'),
+                    url('fonts/roboto/roboto-v20-latin-regular.woff2') format('woff2'),
+                    url('fonts/roboto/roboto-v20-latin-regular.woff') format('woff');
+            }
+        </style>
+    </head>
+    <body>
+        <tax-calculator-app></tax-calculator-app>
+
+        <snackbar-notification>
+            <sw-update-notification></sw-update-notification>
+        </snackbar-notification>
+
+        <script type="module" src="./index.js"></script>
+    </body>
 </html>

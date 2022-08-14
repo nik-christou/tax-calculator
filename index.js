@@ -1,23 +1,23 @@
-import { Router } from '@vaadin/router';
-import { routes } from './src/Routes.js';
-// import { TaxCalculatorApp } from './src/TaxCalculatorApp.js';
+import {TaxCalculatorApp} from "./src/TaxCalculatorApp.js";
+import {countriesCacheHandler} from "./src/datastore/CountriesCacheHandler.js";
+import {SnackbarNotification} from "./src/sw/SnackbarNotification.js";
+import {serviceWorkerHandler} from "./src/sw/SWHandler.js";
+import {SWUpdateNotification} from "./src/sw/SWUpdateNotification.js";
 
-const taxAppElementName = 'tax-calculator-app';
-const customElementsRegistry = window.customElements;
+// import countries json files under public/data are updated
+// wrapped in async cause top-leve await is not yet supported
+(async () => {
+    await countriesCacheHandler.updateCountriesJsonDataCache();
+})();
+// countriesCacheHandler.updateCountriesJsonDataCache().then(() => {
+//
+// });
 
-customElementsRegistry.whenDefined(taxAppElementName).then(() => {
+// register notification component for service worker notification
+serviceWorkerHandler.register(SnackbarNotification);
 
-    const router = new Router(outletElement);
-    router.setRoutes(routes);
+// register service worker notification
+window.customElements.define('sw-update-notification', SWUpdateNotification);
 
-});
-
-
-// /** */
-// function _prepareRouter(element) {
-//     const outletElement = 
-//     const router = new Router(outletElement);
-//     router.setRoutes(routes);
-// }
-
-// window.customElements.define(taxAppElementName, TaxCalculatorApp);
+// register the root app element
+window.customElements.define('tax-calculator-app', TaxCalculatorApp);

@@ -1,12 +1,8 @@
-import { LitElement, html } from 'lit';
-import { BaseElementMixin } from './base/BaseElementMixin.js';
-import { TaxCalculatorAppCss } from './TaxCalculatorAppCss.js';
-// import { ServiceWorkerHandler } from './service-worker/ServiceWorkerHandler.js';
-import { Router } from '@vaadin/router';
-import { routes } from './Routes.js';
-import './component/snackbar/SnackbarNotification.js';
-import './service-worker/ServiceWorkerUpdateNotification.js';
-import { countriesCacheHandler } from './datastore/CountriesCacheHandler.js';
+import {LitElement, html} from 'lit';
+import {routes} from './Routes.js';
+import {Router} from '@vaadin/router';
+import {BaseElementMixin} from './base/BaseElementMixin.js';
+import {TaxCalculatorAppCss} from './TaxCalculatorAppCss.js';
 
 export class TaxCalculatorApp extends BaseElementMixin(LitElement) {
 
@@ -21,41 +17,22 @@ export class TaxCalculatorApp extends BaseElementMixin(LitElement) {
         return html`
             <div class="main">
                 <div id="outlet"></div>
-                <snackbar-notification>
-                    <service-worker-update-notification></service-worker-update-notification>
-                </snackbar-notification>
             </div>
         `;
     }
 
-    async firstUpdated() {
-        // this._prepareServiceWorker();
-        await this.prepareCaching();
+    firstUpdated() {
         this.#prepareRouter();
     }
 
-    async prepareCaching() {
-        await countriesCacheHandler.updateCountriesJsonDataCache();
-    }
-
-    getRouterOutlet() {
-        return this.shadowRoot.querySelector('#outlet');
-    }
-
-    getSnackbarNotification() {
-        return this.shadowRoot.querySelector('snackbar-notification');
-    }
+    // can Router be set from outside using the whenDefined ?
+    // getRouterOutlet() {
+    //     return this.shadowRoot.querySelector('#outlet');
+    // }
 
     #prepareRouter() {
         const outletElement = this.shadowRoot.querySelector('#outlet');
         const router = new Router(outletElement);
         void router.setRoutes(routes);
     }
-
-    // _prepareServiceWorker() {
-    //     const serviceWorkerNotification = this.shadowRoot.querySelector('snackbar-notification');
-    //     void ServiceWorkerHandler.register(serviceWorkerNotification);
-    // }
 }
-
-window.customElements.define('tax-calculator-app', TaxCalculatorApp);

@@ -1,9 +1,8 @@
-import { LitElement } from 'lit';
-import { html } from 'lit-html';
-import { BaseElementMixin } from '../../base/BaseElementMixin.js';
-import { SnackbarNotificationCss } from './SnackbarNotificationCss.js';
+import {LitElement, html} from 'lit';
+import {BaseElementMixin} from '../base/BaseElementMixin.js';
+import {SnackbarNotificationCss} from './SnackbarNotificationCss.js';
 
-export class SnackbarNotication extends BaseElementMixin(LitElement) {
+export class SnackbarNotification extends BaseElementMixin(LitElement) {
 
     static get properties() {
         return {
@@ -43,6 +42,9 @@ export class SnackbarNotication extends BaseElementMixin(LitElement) {
      * @returns {Promise} which is resolved when the animation ends
      */
     show() {
+
+        console.log("Snackbar Notification show function called !");
+
         const hostElement = this.shadowRoot.host;
         const showAnimationCssClassName = 'notification-entering';
         const visibleCssClassName = 'visible';
@@ -142,5 +144,4 @@ export class SnackbarNotication extends BaseElementMixin(LitElement) {
     }
 }
 
-// @ts-ignore
-window.customElements.define('snackbar-notification', SnackbarNotication);
+window.customElements.define('snackbar-notification', SnackbarNotification);

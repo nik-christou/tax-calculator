@@ -1,12 +1,11 @@
-import { LitElement } from 'lit';
-import { html } from 'lit-html';
-import { BaseElementMixin } from '../base/BaseElementMixin.js';
-import { ServiceWorkerUpdateNotificationCss } from './ServiceWorkerUpdateNotificationCss.js';
+import {LitElement, html} from 'lit';
+import {BaseElementMixin} from '../base/BaseElementMixin.js';
+import {SWUpdateNotificationCss} from './SWUpdateNotificationCss.js';
 
-export class ServiceWorkerUpdateNotication extends BaseElementMixin(LitElement) {
+export class SWUpdateNotification extends BaseElementMixin(LitElement) {
 
     static get styles() {
-        return [...super.styles, ServiceWorkerUpdateNotificationCss];
+        return [...super.styles, SWUpdateNotificationCss];
     }
 
     render() {
@@ -26,59 +25,47 @@ export class ServiceWorkerUpdateNotication extends BaseElementMixin(LitElement) 
     }
 
     firstUpdated() {
-
+        console.log("SWUpdateNotification firstUpdated called");
         const refreshLink = this.shadowRoot.querySelector('a#refreshButton');
         const closeLink = this.shadowRoot.querySelector('button.close-link');
-
-        refreshLink.addEventListener('click', event => this._handleRefreshLink(event));
-        closeLink.addEventListener('click', event => this._handleCloseLink(event));
+        refreshLink.addEventListener('click', event => this.#handleRefreshLink(event));
+        closeLink.addEventListener('click', event => this.#handleCloseLink(event));
     }
 
     /**
      * @param {MouseEvent} event
      */
-    _handleRefreshLink(event) {
-
+    #handleRefreshLink(event) {
         event.preventDefault();
         event.stopPropagation();
-        
-        this._fireRefreshNotificationEvent();
+        this.#fireRefreshNotificationEvent();
     }
 
     /**
      * @param {MouseEvent} event
      */
-    _handleCloseLink(event) {
-
+    #handleCloseLink(event) {
         event.preventDefault();
         event.stopPropagation();
-
-        this._fireCloseNotificationEvent();
+        this.#fireCloseNotificationEvent();
     }
 
-    _fireRefreshNotificationEvent() {
-
+    #fireRefreshNotificationEvent() {
         const refreshNotificationEvent = new window.CustomEvent('refreshNotificationEvent', {
             bubbles: true,
             composed: true
         });
-
         this.dispatchEvent(refreshNotificationEvent);
     }
 
     /**
      * Fire the necessary event to close the notification component
      */
-    _fireCloseNotificationEvent() {
-
+    #fireCloseNotificationEvent() {
         const closeNotificationEvent = new window.CustomEvent('hideNotificationEvent', {
             bubbles: true,
             composed: true
         });
-
         this.dispatchEvent(closeNotificationEvent);
     }
 }
-
-// @ts-ignore
-window.customElements.define('service-worker-update-notification', ServiceWorkerUpdateNotication);

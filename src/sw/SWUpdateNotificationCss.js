@@ -1,14 +1,11 @@
-import { css } from 'lit-element/lit-element.js';
+import {css} from 'lit';
 
-export const ServiceWorkerUpdateNotificationCss = css`
+export const SWUpdateNotificationCss = css`
 
     :host {
         display: flex;
         height: auto;
-        padding-left: 20px;
-        padding-right: 20px;
-        padding-top: 10px;
-        padding-bottom: 10px;
+        padding: 20px 10px;
         color: #fff;
         background-color: #333;
     }
