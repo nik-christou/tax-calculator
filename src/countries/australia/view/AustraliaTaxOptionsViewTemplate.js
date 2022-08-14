@@ -1,9 +1,9 @@
-import { html } from 'lit-html';
+import { html } from 'lit';
 
 /**
- * @param {import('../model/AustraliaTaxOptions.js').AustraliaOptions} australiaOptions
+ * @param {Boolean} australiaOptions
  */
-const AustraliaTaxOptionsViewTemplate = (australiaOptions) => html`
+const AustraliaTaxOptionsViewTemplate = (residentStatus) => html`
     <div class="list-group">
         <div class="list-group-item">
             <div class="options-item">
@@ -19,7 +19,7 @@ const AustraliaTaxOptionsViewTemplate = (australiaOptions) => html`
                         id="resident"
                         type="checkbox"
                         name="resident"
-                        ?checked="${australiaOptions.isResident}"
+                        ?checked="${residentStatus}"
                         class="toggle toggle-round cmn-toggle cmn-toggle-round"
                     />
                     <label for="resident"></label>

@@ -1,8 +1,8 @@
 
 export class AustraliaTaxDetails {
     /**
-     * @param {import('./AustraliaResidents.js').AustraliaResidents} residents
-     * @param {import('./AustraliaNonResidents.js').AustraliaNonResidents} nonResidents
+     * @param {AustraliaResidents} residents
+     * @param {AustraliaNonResidents} nonResidents
      */
     constructor(residents, nonResidents) {
         this.residents = residents;

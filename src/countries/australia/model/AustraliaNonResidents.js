@@ -1,7 +1,7 @@
 
 export class AustraliaNonResidents {
     /**
-     * @param {Array<import('./AustraliaTaxBracket.js').AustraliaTaxBracket>} taxBrackets
+     * @param {AustraliaTaxBracket[]} taxBrackets
      */
     constructor(taxBrackets) {
         this.taxBrackets = taxBrackets;

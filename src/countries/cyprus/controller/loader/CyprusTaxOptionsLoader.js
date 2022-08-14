@@ -7,7 +7,7 @@ class CyprusTaxOptionsLoader {
     * @param {JSON} countryJsonObj
     * @returns {CyprusTaxOptions}
     */
-    loadTaxOptionsFromCountryObject(countryJsonObj) {
+    loadCyprusTaxOptionsFromCountryObject(countryJsonObj) {
 
         const {taxOptions} = countryJsonObj;
         const {employmentType} = taxOptions;

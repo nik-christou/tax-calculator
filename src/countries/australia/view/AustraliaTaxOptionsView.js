@@ -1,19 +1,21 @@
-import { LitElement } from 'lit';
-import { BaseElementMixin } from '../../../base/BaseElementMixin.js';
-import { AustraliaTaxOptionsViewTemplate } from './AustraliaTaxOptionsViewTemplate.js';
-import { ToggleCss } from '../../../base/ToggleCss.js';
-import { ListGroupCss } from '../../../base/ListGroupCss.js';
-import { BlueprintCss } from '../../../base/BlueprintCss.js';
-import { AustraliaOptions } from '../model/AustraliaTaxOptions.js';
-// import { UserSelectionStore } from '../../../datastore/UserSelectionStore.js';
+import {LitElement} from 'lit';
+import {BaseElementMixin} from '../../../base/BaseElementMixin.js';
+import {TaxOptions} from "../../../model/TaxOptions.js";
+import {AustraliaTaxOptions} from '../model/AustraliaTaxOptions.js';
+import {AustraliaTaxOptionsViewTemplate} from './AustraliaTaxOptionsViewTemplate.js';
+import {ToggleCss} from '../../../base/ToggleCss.js';
+import {ListGroupCss} from '../../../base/ListGroupCss.js';
+import {BlueprintCss} from '../../../base/BlueprintCss.js';
+import {userSelectionsStore} from '../../../datastore/UserSelectionsStore.js';
 import CountryIDsEnum from '../../../datastore/CountryIDsEnum.js';
-import { CommonTaxOptionsViewCss } from '../../CommonTaxOptionViewCss.js';
+import {CommonTaxOptionsViewCss} from '../../CommonTaxOptionViewCss.js';
+import {ResidenceTypes} from "../../../model/ResidenceTypes.js";
 
 export class AustraliaTaxOptionsView extends BaseElementMixin(LitElement) {
 
     static get properties() {
         return {
-            australiaOptions: AustraliaOptions
+            residentStatus: Boolean
         };
     }
 
@@ -22,42 +24,61 @@ export class AustraliaTaxOptionsView extends BaseElementMixin(LitElement) {
     }
 
     render() {
-        return AustraliaTaxOptionsViewTemplate(this.australiaOptions);
+        return AustraliaTaxOptionsViewTemplate(this.residentStatus);
     }
 
     constructor() {
         super();
-        this.australiaOptions = new AustraliaOptions();
+        this.#loadUserSelectionFromDatastore();
     }
 
     firstUpdated() {
-        this._loadUserSelectionFromDatastore();
-        this._addIsResidentListener();
+        this.#addIsResidentListener();
     }
 
-    _loadUserSelectionFromDatastore() {
-        UserSelectionStore.retrieveCountryOptions().then((countryOptions) => {
-            if (!countryOptions || countryOptions.countryId !== CountryIDsEnum.AUSTRALIA_ID) return;
-            this.australiaOptions = AustraliaOptions.createFromObject(countryOptions);
-        });
+    #loadUserSelectionFromDatastore() {
+
+        const selectedTaxOptions = userSelectionsStore.retrieveSelectedTaxOptions();
+
+        if(!selectedTaxOptions || selectedTaxOptions.countryId !== CountryIDsEnum.AUSTRALIA_ID) {
+            return;
+        }
+
+        const {type} = selectedTaxOptions?.options?.residenceType;
+
+        if(type === ResidenceTypes.RESIDENT.type) {
+            this.residentStatus = true;
+        } else {
+            this.residentStatus = false;
+        }
     }
 
-    _addIsResidentListener() {
-        const residentElement = this.shadowRoot.querySelector('input#resident');
-        residentElement.addEventListener('input', (event) => {
-            this._handleIsResidentChange(event, residentElement);
+    #addIsResidentListener() {
+        const residentTypeElement = this.shadowRoot.querySelector('input#resident');
+        residentTypeElement.addEventListener('input', (event) => {
+            this.#handleIsResidentChange(event, residentTypeElement);
         });
     }
 
     /**
      * @param {Event} event
-     * @param {HTMLInputElement} isResidentElement
+     * @param {HTMLInputElement} residentTypeElement
      */
-    _handleIsResidentChange(event, isResidentElement) {
-        this.australiaOptions.isResident = isResidentElement.checked;
-        UserSelectionStore.updateCountryOptions(this.australiaOptions);
+    #handleIsResidentChange(event, residentTypeElement) {
+
+        const residentType = this.#retrieveResidentType(residentTypeElement.checked);
+        const australiaTaxOptions = new AustraliaTaxOptions(residentType);
+        const taxOptions = new TaxOptions(CountryIDsEnum.AUSTRALIA_ID, australiaTaxOptions);
+
+        userSelectionsStore.updateTaxOptions(taxOptions);
+    }
+
+    #retrieveResidentType(checkedStatus) {
+        if(checkedStatus) {
+            return ResidenceTypes.RESIDENT;
+        }
+        return ResidenceTypes.NON_RESIDENT;
     }
 }
 
-// @ts-ignore
 window.customElements.define('australia-tax-options-view', AustraliaTaxOptionsView);

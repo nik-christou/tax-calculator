@@ -1,50 +1,49 @@
-import { TaxResult } from '../../../model/TaxResult.js';
-import { TaxResults } from '../../../model/TaxResults.js';
-import { TaxCalculatorUtil } from '../../TaxCalculatorUtil.js';
+import {TaxResult} from '../../../model/TaxResult.js';
+import {TaxResults} from '../../../model/TaxResults.js';
+import {TaxCalculatorUtil} from '../../TaxCalculatorUtil.js';
+import {ResidenceTypes} from "../../../model/ResidenceTypes";
 
-export class AustraliaTaxCalculator {
+class AustraliaTaxCalculator {
 
     /**
-     * @param {import('../model/AustraliaTaxDetails.js').AustraliaTaxDetails} australiaTaxDetails
-     * @param {import('../model/AustraliaTaxOptions.js').AustraliaOptions} australiaTaxOptions
-     * @param {import('../../../model/SalaryDetails.js').SalaryDetails} salaryDetails
+     * @param {AustraliaTaxDetails} australiaTaxDetails
+     * @param {AustraliaTaxOptions} australiaTaxOptions
+     * @param {SalaryDetails} salaryDetails
      */
-    static calculateTax(australiaTaxDetails, australiaTaxOptions, salaryDetails) {
+    calculateTax(australiaTaxDetails, australiaTaxOptions, salaryDetails) {
 
         const annualGrossAmount = TaxCalculatorUtil.calculateAnnualGrossAmount(salaryDetails);
-
-        return this._calculateTaxFromAnnualIncome(australiaTaxDetails, australiaTaxOptions, salaryDetails, annualGrossAmount);
+        return this.#calculateTaxFromAnnualIncome(australiaTaxDetails, australiaTaxOptions, salaryDetails, annualGrossAmount);
     }
 
     /**
-     * @param {import('../model/AustraliaTaxDetails.js').AustraliaTaxDetails} australiaTaxDetails
-     * @param {import('../model/AustraliaTaxOptions.js').AustraliaOptions} australiaTaxOptions
-     * @param {import('../../../model/SalaryDetails.js').SalaryDetails} salaryDetails
+     * @param {AustraliaTaxDetails} australiaTaxDetails
+     * @param {AustraliaTaxOptions} australiaTaxOptions
+     * @param {SalaryDetails} salaryDetails
      * @param {Number} annualGrossAmount
      */
-    static _calculateTaxFromAnnualIncome(australiaTaxDetails, australiaTaxOptions, salaryDetails, annualGrossAmount) {
+    #calculateTaxFromAnnualIncome(australiaTaxDetails, australiaTaxOptions, salaryDetails, annualGrossAmount) {
 
-        if (australiaTaxOptions.isResident) {
+        if (australiaTaxOptions.residenceType.type === ResidenceTypes.RESIDENT.type) {
 
-            const annualTaxResults = this._calculateTaxForResidents(australiaTaxDetails.residents, annualGrossAmount);
+            const annualTaxResults = this.#calculateTaxForResidents(australiaTaxDetails.residents, annualGrossAmount);
             const monthlyTaxResults = TaxCalculatorUtil.convertAnnualToMonthlyTax(annualTaxResults, salaryDetails.includesThirteen);
 
             return new TaxResults(monthlyTaxResults, annualTaxResults);
         }
 
-        const annualTaxResults = this._calculateTaxForNonResidents(australiaTaxDetails.nonResidents, annualGrossAmount);
+        const annualTaxResults = this.#calculateTaxForNonResidents(australiaTaxDetails.nonResidents, annualGrossAmount);
         const monthlyTaxResults = TaxCalculatorUtil.convertAnnualToMonthlyTax(annualTaxResults, salaryDetails.includesThirteen);
 
         return new TaxResults(monthlyTaxResults, annualTaxResults);
     }
 
     /**
-     * @param {import('../model/AustraliaResidents.js').AustraliaResidents} australiaResidents
+     * @param {AustraliaResidents} australiaResidents
      * @param {Number} annualGrossAmount
-     *
-     * @returns {TaxResult} the tax result
+     * @returns {TaxResult}
      */
-    static _calculateTaxForResidents(australiaResidents, annualGrossAmount) {
+    #calculateTaxForResidents(australiaResidents, annualGrossAmount) {
 
         const lastTaxBracketIndex = australiaResidents.taxBrackets.length - 1;
 
@@ -70,12 +69,11 @@ export class AustraliaTaxCalculator {
     }
 
     /**
-     * @param {import('../model/AustraliaNonResidents.js').AustraliaNonResidents} australiaNonResidents
+     * @param {AustraliaNonResidents} australiaNonResidents
      * @param {Number} annualGrossAmount
-     *
-     * @returns {TaxResult} the tax result
+     * @returns {TaxResult}
      */
-    static _calculateTaxForNonResidents(australiaNonResidents, annualGrossAmount) {
+    #calculateTaxForNonResidents(australiaNonResidents, annualGrossAmount) {
         
         const lastTaxBracketIndex = australiaNonResidents.taxBrackets.length - 1;
 
@@ -99,3 +97,5 @@ export class AustraliaTaxCalculator {
         return new TaxResult(annualGrossAmount, totalTax, 0, 0, netAmount);
     }
 }
+
+export const australiaTaxCalculator = Object.freeze(new AustraliaTaxCalculator());

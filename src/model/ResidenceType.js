@@ -1,4 +1,5 @@
-export class EmploymentType {
+
+export class ResidenceType {
 
     /**
      * @param {Number} id

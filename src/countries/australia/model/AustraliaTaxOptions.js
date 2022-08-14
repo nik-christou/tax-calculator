@@ -1,21 +1,11 @@
-import { TaxOptions } from '../../../model/TaxOptions.js';
-import CountryIDsEnum from '../../../datastore/CountryIDsEnum.js';
 
-export class AustraliaOptions extends TaxOptions {
+export class AustraliaTaxOptions {
     /**
-     * @param {Boolean} isResident
+     * @param {ResidenceType} residentType
      */
-    constructor(isResident = true) {
-        super(CountryIDsEnum.AUSTRALIA_ID);
-        this.isResident = isResident;
-    }
-
-    /**
-     * @param {Object} obj
-     * @returns {AustraliaOptions}
-     */
-    static createFromObject(obj) {
-        const australianOptions = new AustraliaOptions();
-        return Object.assign(australianOptions, obj);
+    constructor(residenceType) {
+        this.residenceType = residenceType;
+        Object.freeze(this.residenceType);
+        Object.freeze(this);
     }
 }

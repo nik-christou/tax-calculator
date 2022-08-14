@@ -16,8 +16,8 @@ class CyprusTaxOptionsConverter {
         return new CyprusTaxOptions(employmentType);
     }
 
-    #retrieveEmploymentType(employmentType) {
-        if(employmentType === EmploymentTypes.EMPLOYED.type) {
+    #retrieveEmploymentType(employmentTypeFromObj) {
+        if(employmentTypeFromObj === EmploymentTypes.EMPLOYED.type) {
             return EmploymentTypes.EMPLOYED;
         }
         return EmploymentTypes.SELF_EMPLOYED;
@@ -28,7 +28,7 @@ class CyprusTaxOptionsConverter {
      * @returns {CyprusTaxOptions}
      */
     convertIntoCyprusTaxOptionsFromJson(countryJson) {
-        return cyprusTaxOptionsLoader.loadTaxOptionsFromCountryObject(countryJson);
+        return cyprusTaxOptionsLoader.loadCyprusTaxOptionsFromCountryObject(countryJson);
     }
 
     /**

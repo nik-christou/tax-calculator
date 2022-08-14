@@ -6,7 +6,8 @@ import {userSelectionsStore} from "./UserSelectionsStore.js";
 import {countryFromJsonConverter} from "../countries/CountryFromJsonConverter.js";
 import {cyprusTaxOptionsConverter} from "../countries/cyprus/controller/converter/CyprusTaxOptionsConverter.js";
 import {cyprusTaxDetailsConverter} from "../countries/cyprus/controller/converter/CyprusTaxDetailsConverter.js";
-// import {AustraliaTaxDetailsLoader} from "../countries/australia/controller/AustraliaTaxDetailsLoader";
+import {australiaTaxDetailsConverter} from "../countries/australia/controller/converter/AustraliaTaxDetailsConverter.js";
+import {australiaTaxOptionsConverter} from "../countries/australia/controller/converter/AustraliaTaxOptionsConverter.js";
 // import {GermanyTaxDetailsLoader} from "../countries/germany/control/GermanTaxDetailsLoader";
 // import {GreeceTaxDetailsLoader} from "../countries/greece/control/GreeceTaxDetailsLoader";
 
@@ -44,8 +45,8 @@ class DatastoreUpdater {
         switch (id) {
             case CountryIDsEnum.CYPRUS_ID:
                 return this.#extractTaxDetailsFromCyprusJson(id, countryJson);
-            // case CountryIDsEnum.AUSTRALIA_ID:
-            //     return AustraliaTaxDetailsLoader.loadTaxDetailsFromCountryObject(countryObj);
+            case CountryIDsEnum.AUSTRALIA_ID:
+                return this.#extractTaxDetailsFromAustraliaJson(id, countryJson);
             // case CountryIDsEnum.GERMANY_ID:
             //     return GermanyTaxDetailsLoader.loadTaxDetailsFromCountryObject(countryObj);
             // case CountryIDsEnum.GREECE_ID:
@@ -66,6 +67,16 @@ class DatastoreUpdater {
     }
 
     /**
+     * @param {Number} countryId
+     * @param {JSON} countryJson
+     * @returns {TaxDetails}
+     */
+    #extractTaxDetailsFromAustraliaJson(countryId, countryJson) {
+        const australiaTaxDetails = australiaTaxDetailsConverter.convertIntoAustraliaTaxDetailsFromJson(countryJson);
+        return australiaTaxDetailsConverter.convertIntoTaxDetails(countryId, australiaTaxDetails);
+    }
+
+    /**
      * @param {JSON} countryJson
      * @returns {TaxOptions|null}
      */
@@ -76,8 +87,8 @@ class DatastoreUpdater {
         switch (id) {
             case CountryIDsEnum.CYPRUS_ID:
                 return this.#extractTaxOptionsFromCyprusJson(id, countryJson);
-            // case CountryIDsEnum.AUSTRALIA_ID:
-            //     return AustraliaTaxDetailsLoader.loadTaxDetailsFromCountryObject(countryObj);
+            case CountryIDsEnum.AUSTRALIA_ID:
+                return this.#extractTaxOptionsFromAustraliaJson(id, countryJson);
             // case CountryIDsEnum.GERMANY_ID:
             //     return GermanyTaxDetailsLoader.loadTaxDetailsFromCountryObject(countryObj);
             // case CountryIDsEnum.GREECE_ID:
@@ -95,6 +106,16 @@ class DatastoreUpdater {
     #extractTaxOptionsFromCyprusJson(countryId, countryJson) {
         const cyprusTaxOptions = cyprusTaxOptionsConverter.convertIntoCyprusTaxOptionsFromJson(countryJson);
         return cyprusTaxOptionsConverter.convertIntoTaxOptions(countryId, cyprusTaxOptions);
+    }
+
+    /**
+     * @param {Number} countryId
+     * @param {JSON} countryJson
+     * @returns {TaxOptions}
+     */
+    #extractTaxOptionsFromAustraliaJson(countryId, countryJson) {
+        const australiaTaxOptions = australiaTaxOptionsConverter.convertIntoAustraliaTaxOptionsFromJson(countryJson);
+        return australiaTaxOptionsConverter.convertIntoTaxOptions(countryId, australiaTaxOptions);
     }
 }
 
