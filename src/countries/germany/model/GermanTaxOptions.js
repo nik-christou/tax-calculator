@@ -1,24 +1,15 @@
-import { TaxOptions } from '../../../model/TaxOptions.js';
-import CountryIDsEnum from '../../../datastore/CountryIDsEnum.js';
 
-export class GermanTaxOptions extends TaxOptions {
+export class GermanTaxOptions {
     
     /**
-     * @param {Boolean} single
-     * @param {Boolean} withChild
+     * @param {MaritalStatus} maritalStatus
+     * @param {ParentalStatus} parentalStatus
      */
-    constructor(single = true, withChild = false) {
-        super(CountryIDsEnum.GERMANY_ID);
-        this.single = single;
-        this.withChild = withChild;
-    }
-
-    /**
-     * @param {Object} obj
-     * @returns {GermanTaxOptions}
-     */
-    static createFromObject(obj) {
-        const germanTaxOptions = new GermanTaxOptions();
-        return Object.assign(germanTaxOptions, obj);
+    constructor(maritalStatus, parentalStatus) {
+        this.maritalStatus = maritalStatus;
+        this.parentalStatus = parentalStatus;
+        Object.freeze(this.maritalStatus);
+        Object.freeze(this.parentalStatus);
+        Object.freeze(this);
     }
 }

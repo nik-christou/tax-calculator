@@ -2,7 +2,7 @@ import {CyprusTaxDetails} from '../../model/CyprusTaxDetails.js';
 import {CyprusTaxBracket} from '../../model/CyprusTaxBracket.js';
 import {CyprusContributions} from '../../model/CyprusContributions.js';
 
-export class CyprusTaxDetailsLoader {
+class CyprusTaxDetailsLoader {
 
     /**
      * @param {JSON} countryObj

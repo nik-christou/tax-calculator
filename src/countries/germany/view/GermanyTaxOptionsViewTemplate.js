@@ -1,9 +1,6 @@
-import { html } from 'lit-html';
+import {html} from "lit";
 
-/**
- * @param {import('../model/GermanTaxOptions.js').GermanTaxOptions} germanTaxOptions
- */
-const GermanTaxOptionsViewTemplate = (germanTaxOptions) => html`
+const GermanTaxOptionsViewTemplate = html`
     <div class="list-group">
         <div class="list-group-item">
             <div class="options-item">

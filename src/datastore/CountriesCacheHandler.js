@@ -14,7 +14,6 @@ class CountriesCacheHandler {
         this.#countriesDataUrls = [
             CYPRUS_TAX_DATA_URL,
             AUSTRALIA_TAX_DATA_URL,
-            GREECE_TAX_DATA_URL,
             GERMANY_TAX_DATA_URL
         ];
     }

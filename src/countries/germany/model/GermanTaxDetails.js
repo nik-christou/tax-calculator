@@ -1,12 +1,13 @@
 
 export class GermanTaxDetails {
+
     /**
-     * @param {Array<import('./GermanTaxBracket.js').GermanTaxBracket>} singleTaxBrackets
-     * @param {Array<import('./GermanTaxBracket.js').GermanTaxBracket>} marriedTaxBrackets
-     * @param {import('./GermanPensionInsurance.js').GermanPensionInsurance} pensionInsurance
-     * @param {import('./GermanUnemploymentInsurance.js').GermanUnemploymentInsurance} unemploymentInsurance
-     * @param {import('./GermanHealthInsurance.js').GermanHealthInsurance} healthInsurance
-     * @param {import('./GermanLongTermCareInsurance.js').GermanLongTermCareInsurance} longTermCareInsurance
+     * @param {GermanTaxBracket[]} singleTaxBrackets
+     * @param {GermanTaxBracket[]} marriedTaxBrackets
+     * @param {GermanPensionInsurance} pensionInsurance
+     * @param {GermanUnemploymentInsurance} unemploymentInsurance
+     * @param {GermanHealthInsurance} healthInsurance
+     * @param {GermanLongTermCareInsurance} longTermCareInsurance
      */
     constructor(singleTaxBrackets, 
         marriedTaxBrackets, 

@@ -1,30 +1,24 @@
-import { LitElement } from 'lit';
-import { BaseElementMixin } from '../../../base/BaseElementMixin.js';
-import { GermanTaxOptionsViewTemplate } from './GermanyTaxOptionsViewTemplate.js';
-import { ToggleCss } from '../../../base/ToggleCss.js';
-import { ListGroupCss } from '../../../base/ListGroupCss.js';
-import { BlueprintCss } from '../../../base/BlueprintCss.js';
-import { GermanTaxOptions } from '../model/GermanTaxOptions.js';
-// import { UserSelectionStore } from '../../../datastore/UserSelectionStore.js';
+import {LitElement} from 'lit';
+import {BaseElementMixin} from '../../../base/BaseElementMixin.js';
+import {GermanTaxOptionsViewTemplate} from './GermanyTaxOptionsViewTemplate.js';
+import {ToggleCss} from '../../../base/ToggleCss.js';
+import {ListGroupCss} from '../../../base/ListGroupCss.js';
+import {BlueprintCss} from '../../../base/BlueprintCss.js';
+import {GermanTaxOptions} from '../model/GermanTaxOptions.js';
 import CountryIDsEnum from '../../../datastore/CountryIDsEnum.js';
-import { CommonTaxOptionsViewCss } from '../../CommonTaxOptionViewCss.js';
-import { GermanyTaxOptionsViewCss } from './GermanyTaxOptionsViewCss.js';
-
-const MaritalTypes = {
-    SINGLE: 1,
-    MARRIED: 2
-};
-
-const ParentalTypes = {
-    CHILDREN: 1,
-    NO_CHILDREN: 2
-};
+import {CommonTaxOptionsViewCss} from '../../CommonTaxOptionViewCss.js';
+import {GermanyTaxOptionsViewCss} from './GermanyTaxOptionsViewCss.js';
+import {userSelectionsStore} from "../../../datastore/UserSelectionsStore.js";
+import {MaritalStatuses} from "../../../model/MaritalStatuses.js";
+import {ParentalStatuses} from "../../../model/ParentalStatuses.js";
+import {TaxOptions} from "../../../model/TaxOptions.js";
 
 export class GermanTaxOptionsView extends BaseElementMixin(LitElement) {
 
     static get properties() {
         return {
-            germanTaxOptions: GermanTaxOptions
+            married: Boolean,
+            withChildren: Boolean
         };
     }
 
@@ -40,155 +34,148 @@ export class GermanTaxOptionsView extends BaseElementMixin(LitElement) {
     }
 
     render() {
-        return GermanTaxOptionsViewTemplate(this.germanTaxOptions);
+        return GermanTaxOptionsViewTemplate;
     }
 
     constructor() {
         super();
-        this.germanTaxOptions = new GermanTaxOptions();
+        this.#loadUserSelectionFromDatastore();
     }
 
     firstUpdated() {
-        this._loadUserSelectionFromDatastore();
-        this._addMaritalStatusListeners();
-        this._addParentalStatusListeners();
-
-        // update active links using either default country options
-        // or the country options from the store
-        this._updateSelectedMaritalTypeLinks();
-        this._updateSelectedParentalTypeLinks();
+        this.#addMaritalStatusListeners();
+        this.#addParentalStatusListeners();
+        this.#updateSelectedMaritalTypeLinks();
+        this.#updateSelectedParentalTypeLinks();
     }
 
-    async _loadUserSelectionFromDatastore() {
+    #loadUserSelectionFromDatastore() {
 
-        const countryOptions = await UserSelectionStore.retrieveCountryOptionByCountryId(CountryIDsEnum.GERMANY_ID);
+        const selectedTaxOptions = userSelectionsStore.retrieveSelectedTaxOptions();
+        if (!selectedTaxOptions || selectedTaxOptions.countryId !== CountryIDsEnum.GERMANY_ID) {
+            return;
+        }
 
-        if (!countryOptions || countryOptions.countryId !== CountryIDsEnum.GERMANY_ID) return;
-        this.germanTaxOptions = GermanTaxOptions.createFromObject(countryOptions);
+        const {maritalStatus, parentalStatus} = selectedTaxOptions.options;
 
-        // update active links right after the country options is retrieved from store
-        this._updateSelectedMaritalTypeLinks();
-        this._updateSelectedParentalTypeLinks();
+        this.married = maritalStatus.type === MaritalStatuses.MARRIED.type;
+        this.withChildren = parentalStatus.type === ParentalStatuses.WITH_CHILDREN.type;
     }
 
-    _addMaritalStatusListeners() {
+    #addMaritalStatusListeners() {
         
         const singleStatusElement = this.shadowRoot.querySelector('a#single-status');
         const marriedStatusElement = this.shadowRoot.querySelector('a#married-status');
 
         singleStatusElement.addEventListener('click', (event) => {
-            this._handleSelectedMaritalStatus(event, MaritalTypes.SINGLE);
+            this.#handleSelectedMaritalStatus(event, MaritalStatuses.SINGLE);
         });
 
         marriedStatusElement.addEventListener('click', (event) => {
-            this._handleSelectedMaritalStatus(event, MaritalTypes.MARRIED);
+            this.#handleSelectedMaritalStatus(event, MaritalStatuses.MARRIED);
         });
     }
 
-    _addParentalStatusListeners() {
+    #addParentalStatusListeners() {
         
         const childrenStatusElement = this.shadowRoot.querySelector('a#children');
         const noChildrenStatusElement = this.shadowRoot.querySelector('a#no-children');
 
         childrenStatusElement.addEventListener('click', (event) => {
-            this._handleSelectedParentalStatus(event, ParentalTypes.CHILDREN);
+            this.#handleSelectedParentalStatus(event, ParentalStatuses.WITH_CHILDREN);
         });
 
         noChildrenStatusElement.addEventListener('click', (event) => {
-            this._handleSelectedParentalStatus(event, ParentalTypes.NO_CHILDREN);
+            this.#handleSelectedParentalStatus(event, ParentalStatuses.NO_CHILDREN);
         });
     }
 
     /**
      * @param {Event} event
-     * @param {HTMLInputElement} withChildElement
+     * @param {ParentalStatus} parentalStatus
      */
-    _handleWithChildChange(event, withChildElement) {
-
-        this.germanTaxOptions.withChild = withChildElement.checked;
-        UserSelectionStore.updateCountryOptions(this.germanTaxOptions);
+    #handleSelectedParentalStatus(event, parentalStatus) {
+        event.preventDefault();
+        this.withChildren = parentalStatus.type === ParentalStatuses.WITH_CHILDREN.type;
+        this.#saveTaxOptionsToDatastore();
+        this.#updateSelectedParentalTypeLinks();
     }
 
     /**
      * @param {Event} event
-     * @param {Number} parentalType
+     * @param {MaritalStatus} maritalStatus
      */
-    _handleSelectedParentalStatus(event, parentalType) {
-
+    #handleSelectedMaritalStatus(event, maritalStatus) {
         event.preventDefault();
-
-        if (parentalType === ParentalTypes.CHILDREN) {
-            this.germanTaxOptions.withChild = true;
-        } else {
-            this.germanTaxOptions.withChild = false;
-        }
-
-        UserSelectionStore.updateCountryOptions(this.germanTaxOptions);
-
-        this._updateSelectedParentalTypeLinks();
+        this.married = maritalStatus.type !== MaritalStatuses.SINGLE.type;
+        this.#saveTaxOptionsToDatastore();
+        this.#updateSelectedMaritalTypeLinks();
     }
 
-    /**
-     * @param {Event} event
-     * @param {Number} maritalType
-     */
-    _handleSelectedMaritalStatus(event, maritalType) {
-        
-        event.preventDefault();
+    #saveTaxOptionsToDatastore() {
 
-        if (maritalType === MaritalTypes.SINGLE) {
-            this.germanTaxOptions.single = true;
+        let maritalStatus;
+        let parentalStatus;
+
+        if(this.married) {
+            maritalStatus = MaritalStatuses.MARRIED
         } else {
-            this.germanTaxOptions.single = false;
+            maritalStatus = MaritalStatuses.SINGLE;
         }
 
-        UserSelectionStore.updateCountryOptions(this.germanTaxOptions);
+        if(this.withChildren) {
+            parentalStatus = ParentalStatuses.WITH_CHILDREN;
+        } else {
+            parentalStatus = ParentalStatuses.NO_CHILDREN;
+        }
 
-        this._updateSelectedMaritalTypeLinks();
+        const germanTaxOptions = new GermanTaxOptions(maritalStatus, parentalStatus);
+        const taxOptions = new TaxOptions(CountryIDsEnum.GERMANY_ID, germanTaxOptions);
+
+        userSelectionsStore.updateTaxOptions(taxOptions);
     }
 
-    _updateSelectedParentalTypeLinks() {
+    #updateSelectedParentalTypeLinks() {
 
         const childrenStatusElement = this.shadowRoot.querySelector('a#children');
         const noChildrenStatusElement = this.shadowRoot.querySelector('a#no-children');
 
-        if (this.germanTaxOptions.withChild) {
-            this._removeActiveClass(noChildrenStatusElement);
-            this._addActiveClass(childrenStatusElement);
+        if (this.withChildren) {
+            this.#removeActiveClass(noChildrenStatusElement);
+            this.#addActiveClass(childrenStatusElement);
         } else {
-            this._removeActiveClass(childrenStatusElement);
-            this._addActiveClass(noChildrenStatusElement);
+            this.#removeActiveClass(childrenStatusElement);
+            this.#addActiveClass(noChildrenStatusElement);
         }
     }
 
-    _updateSelectedMaritalTypeLinks() {
+    #updateSelectedMaritalTypeLinks() {
 
         const singleStatusElement = this.shadowRoot.querySelector('a#single-status');
         const marriedStatusElement = this.shadowRoot.querySelector('a#married-status');
 
-        if (this.germanTaxOptions.single) {
-            this._removeActiveClass(marriedStatusElement);
-            this._addActiveClass(singleStatusElement);
+        if (this.married) {
+            this.#removeActiveClass(singleStatusElement);
+            this.#addActiveClass(marriedStatusElement);
         } else {
-            this._removeActiveClass(singleStatusElement);
-            this._addActiveClass(marriedStatusElement);
+            this.#removeActiveClass(marriedStatusElement);
+            this.#addActiveClass(singleStatusElement);
         }
     }
 
     /**
      * @param {Element} element
      */
-    _removeActiveClass(element) {
+    #removeActiveClass(element) {
         element.classList.remove('active');
     }
 
     /**
      * @param {Element} element
      */
-    _addActiveClass(element) {
+    #addActiveClass(element) {
         element.classList.add('active');
     }
 }
 
-// @ts-ignore
 window.customElements.define('german-tax-options-view', GermanTaxOptionsView);

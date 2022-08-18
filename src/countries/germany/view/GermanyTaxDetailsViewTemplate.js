@@ -1,16 +1,16 @@
-import { html } from 'lit-html';
+import {html} from "lit";
 
 /**
  * @param {Number} amount
- * @param {Intl.NumberFormat} formatter
+ * @param {NumberFormat} formatter
  */
 function formatAmount(formatter, amount) {
     return formatter.format(amount);
 }
 
 /**
- * @param {import('../model/GermanTaxBracket.js').GermanTaxBracket} taxBracket
- * @param {Intl.NumberFormat} formatter
+ * @param {GermanTaxBracket} taxBracket
+ * @param {NumberFormat} formatter
  */
 const taxBracketItemTemplate = (taxBracket, formatter) => html`
     <div class="list-group-item tax-bracket-item">
@@ -22,8 +22,8 @@ const taxBracketItemTemplate = (taxBracket, formatter) => html`
 `;
 
 /**
- * @param {import('../model/GermanTaxDetails.js').GermanTaxDetails} taxDetails
- * @param {Intl.NumberFormat} formatter
+ * @param {GermanTaxDetails} taxDetails
+ * @param {NumberFormat} formatter
  */
 const GermanTaxDetailsViewTemplate = (taxDetails, formatter) => html`
     <h3>Contributions</h3>

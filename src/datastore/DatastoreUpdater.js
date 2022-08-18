@@ -8,8 +8,9 @@ import {cyprusTaxOptionsConverter} from "../countries/cyprus/controller/converte
 import {cyprusTaxDetailsConverter} from "../countries/cyprus/controller/converter/CyprusTaxDetailsConverter.js";
 import {australiaTaxDetailsConverter} from "../countries/australia/controller/converter/AustraliaTaxDetailsConverter.js";
 import {australiaTaxOptionsConverter} from "../countries/australia/controller/converter/AustraliaTaxOptionsConverter.js";
-// import {GermanyTaxDetailsLoader} from "../countries/germany/control/GermanTaxDetailsLoader";
-// import {GreeceTaxDetailsLoader} from "../countries/greece/control/GreeceTaxDetailsLoader";
+import {germanTaxDetailsConverter} from "../countries/germany/controller/converter/GermanTaxDetailsConverter.js";
+import {germanTaxOptionsConverter} from "../countries/germany/controller/converter/GermanTaxOptionsConverter.js";
+// import {GreeceTaxDetailsLoader} from "../countries/greece/controller/GreeceTaxDetailsLoader.js";
 
 class DatastoreUpdater {
 
@@ -22,14 +23,10 @@ class DatastoreUpdater {
         countryStore.addOrReplaceCountry(newOrUpdatedCountry);
 
         const newOrUpdatedTaxDetails = this.#extractTaxDetailsFromCountryJson(newOrUpdatedCountryDataJson);
-        if(newOrUpdatedTaxDetails) {
-            taxDetailsStore.addOrReplaceTaxDetails(newOrUpdatedTaxDetails);
-        }
+        taxDetailsStore.addOrReplaceTaxDetails(newOrUpdatedTaxDetails);
 
         const newOrUpdatedTaxOptions = this.#extractTaxOptionsFromCountryJson(newOrUpdatedCountryDataJson);
-        if(newOrUpdatedTaxOptions) {
-            taxOptionsStore.addOrReplaceTaxOptions(newOrUpdatedTaxOptions);
-        }
+        taxOptionsStore.addOrReplaceTaxOptions(newOrUpdatedTaxOptions);
 
         userSelectionsStore.resetUserSelections();
     }
@@ -47,8 +44,8 @@ class DatastoreUpdater {
                 return this.#extractTaxDetailsFromCyprusJson(id, countryJson);
             case CountryIDsEnum.AUSTRALIA_ID:
                 return this.#extractTaxDetailsFromAustraliaJson(id, countryJson);
-            // case CountryIDsEnum.GERMANY_ID:
-            //     return GermanyTaxDetailsLoader.loadTaxDetailsFromCountryObject(countryObj);
+            case CountryIDsEnum.GERMANY_ID:
+                return this.#extractTaxDetailsFromGermanyJson(id, countryJson);
             // case CountryIDsEnum.GREECE_ID:
             //     return GreeceTaxDetailsLoader.loadTaxDetailsFromCountryObject(countryObj);
             default:
@@ -77,6 +74,16 @@ class DatastoreUpdater {
     }
 
     /**
+     * @param {Number} countryId
+     * @param {JSON} countryJson
+     * @returns {TaxDetails}
+     */
+    #extractTaxDetailsFromGermanyJson(countryId, countryJson) {
+        const germanyTaxDetails = germanTaxDetailsConverter.convertIntoGermanTaxDetailsFromJson(countryJson);
+        return germanTaxDetailsConverter.convertIntoTaxDetails(countryId, germanyTaxDetails);
+    }
+
+    /**
      * @param {JSON} countryJson
      * @returns {TaxOptions|null}
      */
@@ -89,8 +96,8 @@ class DatastoreUpdater {
                 return this.#extractTaxOptionsFromCyprusJson(id, countryJson);
             case CountryIDsEnum.AUSTRALIA_ID:
                 return this.#extractTaxOptionsFromAustraliaJson(id, countryJson);
-            // case CountryIDsEnum.GERMANY_ID:
-            //     return GermanyTaxDetailsLoader.loadTaxDetailsFromCountryObject(countryObj);
+            case CountryIDsEnum.GERMANY_ID:
+                return this.#extractTaxOptionsFromGermanJson(id, countryJson);
             // case CountryIDsEnum.GREECE_ID:
             //     return GreeceTaxDetailsLoader.loadTaxDetailsFromCountryObject(countryObj);
             default:
@@ -116,6 +123,16 @@ class DatastoreUpdater {
     #extractTaxOptionsFromAustraliaJson(countryId, countryJson) {
         const australiaTaxOptions = australiaTaxOptionsConverter.convertIntoAustraliaTaxOptionsFromJson(countryJson);
         return australiaTaxOptionsConverter.convertIntoTaxOptions(countryId, australiaTaxOptions);
+    }
+
+    /**
+     * @param {Number} countryId
+     * @param {JSON} countryJson
+     * @returns {TaxOptions}
+     */
+    #extractTaxOptionsFromGermanJson(countryId, countryJson) {
+        const germanTaxOptions = germanTaxOptionsConverter.convertIntoGermanTaxOptionsFromJson(countryJson);
+        return australiaTaxOptionsConverter.convertIntoTaxOptions(countryId, germanTaxOptions);
     }
 }
 
