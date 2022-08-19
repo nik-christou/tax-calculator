@@ -1,6 +1,6 @@
+import {TaxDetails} from "../../../../model/TaxDetails.js";
+import {CyprusTaxDetails} from "../../model/CyprusTaxDetails.js";
 import {cyprusTaxDetailsLoader} from "../loader/CyprusTaxDetailsLoader.js";
-import {TaxDetails} from "../../../../model/TaxDetails";
-import {CyprusTaxDetails} from "../../model/CyprusTaxDetails";
 
 class CyprusTaxDetailsConverter {
 

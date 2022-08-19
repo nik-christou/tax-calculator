@@ -2,8 +2,8 @@
 export class GreeceTaxDetails {
 
     /**
-     * @param {Array<import('./GreeceTaxBracket.js').GreeceTaxBracket>} taxBrackets
-     * @param {import('./GreeceSocialSecurity.js').GreeceSocialSecurity} socialSecurity
+     * @param {GreeceTaxBracket[]} taxBrackets
+     * @param {GreeceSocialSecurity} socialSecurity
      */
     constructor(taxBrackets, socialSecurity) {
 

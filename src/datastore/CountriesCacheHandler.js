@@ -14,13 +14,14 @@ class CountriesCacheHandler {
         this.#countriesDataUrls = [
             CYPRUS_TAX_DATA_URL,
             AUSTRALIA_TAX_DATA_URL,
-            GERMANY_TAX_DATA_URL
+            GERMANY_TAX_DATA_URL,
+            GREECE_TAX_DATA_URL
         ];
     }
 
     async updateCountriesJsonDataCache() {
 
-        const cache = await caches.open(TAX_CALCULATOR_CACHE_STORE_NAME);
+        const cache = await window.caches.open(TAX_CALCULATOR_CACHE_STORE_NAME);
 
         const newOrUpdatedUrls = [];
 

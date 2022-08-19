@@ -1,6 +1,6 @@
-import { taxDetailsStore } from "./TaxDetailsStore.js";
-import { taxOptionsStore } from "./TaxOptionsStore.js";
-import { UserSelection } from "../model/UserSelection";
+import {taxDetailsStore} from "./TaxDetailsStore.js";
+import {taxOptionsStore} from "./TaxOptionsStore.js";
+import {UserSelection} from "../model/UserSelection.js";
 
 const USER_SELECTIONS_KEY = "user_selections";
 
@@ -13,10 +13,12 @@ class UserSelectionsStore {
     updateSelectedCountry(country) {
         const userSelections = this.retrieveUserSelections();
         const taxDetailsForNewCountry = taxDetailsStore.retrieveTaxDetailsByCountryById(country.id);
-        const taxOptionsForNewCountry = taxOptionsStore.retrieveTaxOptionsByCountryById(country.id);
         userSelections.selectedCountry = country;
         userSelections.selectedTaxDetails = taxDetailsForNewCountry;
-        userSelections.selectedTaxOptions = this.#cloneTaxOptions(taxOptionsForNewCountry);
+        const taxOptionsForNewCountry = taxOptionsStore.retrieveTaxOptionsByCountryById(country.id);
+        if(taxOptionsForNewCountry) {
+            userSelections.selectedTaxOptions = this.#cloneTaxOptions(taxOptionsForNewCountry);
+        }
         this.addOrReplaceUserSelections(userSelections);
         return this.retrieveUserSelections();
     }

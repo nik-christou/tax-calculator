@@ -10,7 +10,7 @@ import {australiaTaxDetailsConverter} from "../countries/australia/controller/co
 import {australiaTaxOptionsConverter} from "../countries/australia/controller/converter/AustraliaTaxOptionsConverter.js";
 import {germanTaxDetailsConverter} from "../countries/germany/controller/converter/GermanTaxDetailsConverter.js";
 import {germanTaxOptionsConverter} from "../countries/germany/controller/converter/GermanTaxOptionsConverter.js";
-// import {GreeceTaxDetailsLoader} from "../countries/greece/controller/GreeceTaxDetailsLoader.js";
+import {greeceTaxDetailsConverter} from "../countries/greece/controller/converter/GreeceTaxDetailsConverter.js";
 
 class DatastoreUpdater {
 
@@ -26,7 +26,9 @@ class DatastoreUpdater {
         taxDetailsStore.addOrReplaceTaxDetails(newOrUpdatedTaxDetails);
 
         const newOrUpdatedTaxOptions = this.#extractTaxOptionsFromCountryJson(newOrUpdatedCountryDataJson);
-        taxOptionsStore.addOrReplaceTaxOptions(newOrUpdatedTaxOptions);
+        if(newOrUpdatedTaxOptions) {
+            taxOptionsStore.addOrReplaceTaxOptions(newOrUpdatedTaxOptions);
+        }
 
         userSelectionsStore.resetUserSelections();
     }
@@ -46,8 +48,8 @@ class DatastoreUpdater {
                 return this.#extractTaxDetailsFromAustraliaJson(id, countryJson);
             case CountryIDsEnum.GERMANY_ID:
                 return this.#extractTaxDetailsFromGermanyJson(id, countryJson);
-            // case CountryIDsEnum.GREECE_ID:
-            //     return GreeceTaxDetailsLoader.loadTaxDetailsFromCountryObject(countryObj);
+            case CountryIDsEnum.GREECE_ID:
+                return this.#extractTaxDetailsFromGreeceJson(id, countryJson);
             default:
                 return null;
         }
@@ -84,6 +86,16 @@ class DatastoreUpdater {
     }
 
     /**
+     * @param {Number} countryId
+     * @param {JSON} countryJson
+     * @returns {TaxDetails}
+     */
+    #extractTaxDetailsFromGreeceJson(countryId, countryJson) {
+        const greeceTaxDetails = greeceTaxDetailsConverter.convertIntoGreeceTaxDetailsFromJson(countryJson)
+        return greeceTaxDetailsConverter.convertIntoTaxDetails(countryId, greeceTaxDetails);
+    }
+
+    /**
      * @param {JSON} countryJson
      * @returns {TaxOptions|null}
      */
@@ -98,8 +110,6 @@ class DatastoreUpdater {
                 return this.#extractTaxOptionsFromAustraliaJson(id, countryJson);
             case CountryIDsEnum.GERMANY_ID:
                 return this.#extractTaxOptionsFromGermanJson(id, countryJson);
-            // case CountryIDsEnum.GREECE_ID:
-            //     return GreeceTaxDetailsLoader.loadTaxDetailsFromCountryObject(countryObj);
             default:
                 return null;
         }

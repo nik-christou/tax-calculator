@@ -11,6 +11,9 @@ class TaxOptionsStore {
     retrieveTaxOptionsByCountryById(id) {
         const taxOptionsKey = this.#calculateTaxOptionsKey(id);
         const taxOptionsItem = window.localStorage.getItem(taxOptionsKey);
+        if(!taxOptionsItem) {
+            return null;
+        }
         const taxOptionsObj = JSON.parse(taxOptionsItem);
         const {countryId, options} = taxOptionsObj;
         return new TaxOptions(countryId, options);

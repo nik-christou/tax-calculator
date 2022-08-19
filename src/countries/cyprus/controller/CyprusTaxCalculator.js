@@ -4,7 +4,7 @@ import {TaxBreakdownBracket} from '../../../model/TaxBreakdownBracket.js';
 import {TaxCalculatorUtil} from '../../TaxCalculatorUtil.js';
 import {EmploymentTypes} from "../../../model/EmploymentTypes.js";
 
-export class CyprusTaxCalculator {
+class CyprusTaxCalculator {
 
     /**
      * @param {CyprusTaxDetails} cyprusTaxDetails
