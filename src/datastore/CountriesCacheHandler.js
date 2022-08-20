@@ -1,39 +1,44 @@
 import {datastoreUpdater} from "./DatastoreUpdater.js";
-
-const TAX_CALCULATOR_CACHE_STORE_NAME = "tax_calculator_cache";
-const CYPRUS_TAX_DATA_URL = new URL('/data/cyprus_data_v1.json', import.meta.url);
-const AUSTRALIA_TAX_DATA_URL = new URL('/data/australia_data_v1.json', import.meta.url);
-const GREECE_TAX_DATA_URL = new URL('/data/greece_data_v1.json', import.meta.url);
-const GERMANY_TAX_DATA_URL = new URL('/data/germany_data_v1.json', import.meta.url);
+import {countriesDataUrls} from "./CountryDataUrls";
 
 class CountriesCacheHandler {
 
-    #countriesDataUrls;
-
-    constructor() {
-        this.#countriesDataUrls = [
-            CYPRUS_TAX_DATA_URL,
-            AUSTRALIA_TAX_DATA_URL,
-            GERMANY_TAX_DATA_URL,
-            GREECE_TAX_DATA_URL
-        ];
-    }
+    #TAX_CALCULATOR_CACHE_STORE_NAME = "tax_calculator_cache";
 
     async updateCountriesJsonDataCache() {
 
-        const cache = await window.caches.open(TAX_CALCULATOR_CACHE_STORE_NAME);
+        const cache = await window.caches.open(this.#TAX_CALCULATOR_CACHE_STORE_NAME);
+        const newOrUpdatedUrls = await this.#processJsonURLs(cache);
+
+        await this.#handleAddedCacheEntries(cache, newOrUpdatedUrls);
+        await this.#handleOutdatedCacheEntries(cache);
+    }
+
+    /**
+     * @param {Cache} cache
+     * @returns {Promise<URL[]>}
+     */
+    async #processJsonURLs(cache) {
 
         const newOrUpdatedUrls = [];
 
-        // process all the hardcoded country json files and update cache with
-        // any new or updated urls - updating means a new version url file name
-        for(let index = 0; index < this.#countriesDataUrls.length; index++) {
-            const countryJsonUrl = this.#countriesDataUrls[index];
+        for(let index = 0; index < countriesDataUrls.length; index++) {
+            const countryJsonUrl = countriesDataUrls[index];
             const countryWasAddedOrUpdated = await this.#retrieveOrAddCountryTaxData(countryJsonUrl, cache);
             if(countryWasAddedOrUpdated) {
                 newOrUpdatedUrls.push(countryJsonUrl);
             }
         }
+
+        return newOrUpdatedUrls;
+    }
+
+    /**
+     * @param {Cache} cache
+     * @param {URL[]} newOrUpdatedUrls
+     * @returns {Promise<void>}
+     */
+    async #handleAddedCacheEntries(cache, newOrUpdatedUrls) {
 
         for(let index = 0; index < newOrUpdatedUrls.length; index++) {
             const countryJsonUrl = newOrUpdatedUrls[index];
@@ -41,16 +46,33 @@ class CountriesCacheHandler {
             const countryJson = await countryTaxDataJson.json();
             datastoreUpdater.handleNewOrUpdateCountryJson(countryJson);
         }
+    }
 
-        // TODO: handle removals in cache by looping all the keys in cache
-        // and comparing it to the Urls we have hardcoded
-        // any diff it needs to be removed
+    /**
+     * @param {Cache} cache
+     * @returns {Promise<void>}
+     */
+    async #handleOutdatedCacheEntries(cache) {
+
+        const keys = await cache.keys();
+
+        for(let index = 0; index < keys.length; index++) {
+            const request = keys.at(index);
+            const fileUrl = request.url;
+            const matched = countriesDataUrls.find(url => url.href === fileUrl);
+            if(!matched) {
+                const cacheRecordDeleted = await cache.delete(request);
+                if(cacheRecordDeleted) {
+                    console.log("Cache record for outdated request ["+request.url+"] was deleted");
+                }
+            }
+        }
     }
 
     /**
      * @param {URL} url
      * @param {Cache} cache
-     * @returns {Promise<boolean>} true if this url is updated or new in the cache
+     * @returns {Promise<boolean>} true if this url is new in the cache
      */
     async #retrieveOrAddCountryTaxData(url, cache) {
 
