@@ -1,8 +1,3 @@
-import './views/home/HomeView.js';
-import './views/results/ResultsView.js';
-import './views/tax_details/TaxDetailsView.js';
-import './views/tax_options/TaxOptionsView.js';
-import './views/country_selection/CountrySelectionView.js';
 
 export const routes = [
     {
@@ -10,6 +5,9 @@ export const routes = [
         children: [
             {
                 path: '/',
+                action: async () => {
+                    await import('./views/home/HomeView.js');
+                },
                 animate: {
                     enter: 'home-entering',
                     leave: 'home-leaving'
@@ -18,6 +16,9 @@ export const routes = [
             },
             {
                 path: '/home',
+                action: async () => {
+                    await import('./views/home/HomeView.js');
+                },
                 animate: {
                     enter: 'home-entering',
                     leave: 'home-leaving'
@@ -26,6 +27,9 @@ export const routes = [
             },
             {
                 path: '/country-selection',
+                action: async () => {
+                    await import('./views/country_selection/CountrySelectionView.js');
+                },
                 animate: {
                     enter: 'country-selection-entering',
                     leave: 'country-selection-leaving'
@@ -34,6 +38,9 @@ export const routes = [
             },
             {
                 path: '/results',
+                action: async () => {
+                    await import('./views/results/ResultsView.js');
+                },
                 animate: {
                     enter: 'results-entering',
                     leave: 'results-leaving'
@@ -42,6 +49,9 @@ export const routes = [
             },
             {
                 path: '/tax-details',
+                action: async () => {
+                    await import('./views/tax_details/TaxDetailsView.js');
+                },
                 animate: {
                     enter: 'tax-details-entering',
                     leave: 'tax-details-leaving'
@@ -50,6 +60,9 @@ export const routes = [
             },
             {
                 path: '/tax-options',
+                action: async () => {
+                    await import('./views/tax_options/TaxOptionsView.js');
+                },
                 animate: {
                     enter: 'tax-options-entering',
                     leave: 'tax-options-leaving'

@@ -21,7 +21,7 @@ export const HomeViewCss = css`
     .navbar {
         line-height: 2.4em;
         overflow: hidden;
-        background-color: #4e7ac7;
+        background-color: hsl(218, 52%, 54%); 
         color: #fff;
         margin-bottom: 0px;
         box-shadow: rgba(0, 0, 0, 0.2) 0px 1px 2px;

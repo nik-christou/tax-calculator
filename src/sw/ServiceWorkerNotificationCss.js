@@ -1,13 +1,13 @@
 import {css} from 'lit';
 
-export const SWUpdateNotificationCss = css`
+export const ServiceWorkerNotificationCss = css`
 
     :host {
         display: flex;
         height: auto;
         padding: 20px 10px;
         color: #fff;
-        background-color: #333;
+        background-color: hsl(218, 52%, 30%);
     }
 
     .notification-container {
@@ -28,7 +28,7 @@ export const SWUpdateNotificationCss = css`
 
     .refresh-link {
         padding: 10px;
-        color: deepskyblue;
+        color: white;
         text-decoration: none;
         -webkit-tap-highlight-color: transparent;
     }

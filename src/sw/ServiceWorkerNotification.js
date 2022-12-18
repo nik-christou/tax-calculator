@@ -1,11 +1,11 @@
 import {LitElement, html} from 'lit';
 import {BaseElementMixin} from '../base/BaseElementMixin.js';
-import {SWUpdateNotificationCss} from './SWUpdateNotificationCss.js';
+import {ServiceWorkerNotificationCss} from './ServiceWorkerNotificationCss.js';
 
-export class SWUpdateNotification extends BaseElementMixin(LitElement) {
+export class ServiceWorkerNotification extends BaseElementMixin(LitElement) {
 
     static get styles() {
-        return [...super.styles, SWUpdateNotificationCss];
+        return [...super.styles, ServiceWorkerNotificationCss];
     }
 
     render() {

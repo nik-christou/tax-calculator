@@ -28,7 +28,7 @@ export const ButtonCss = css`
     }
 
     .btn:hover {
-        color: #212529;
+        color: #212529; 
         text-decoration: none;
     }
 

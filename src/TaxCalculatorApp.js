@@ -18,8 +18,4 @@ export class TaxCalculatorApp extends BaseElementMixin(LitElement) {
             </div>
         `;
     }
-
-    // createRenderRoot() {
-    //     return this;
-    // }
 }

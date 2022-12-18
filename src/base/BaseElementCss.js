@@ -45,7 +45,6 @@ export const BaseElementCss = css`
     h5,
     h6 {
         font-size: 1em;
-        font-weight: bold;
     }
 
     table {
