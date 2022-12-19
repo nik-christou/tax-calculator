@@ -11,6 +11,7 @@ import { InputGroupCss } from '../../base/InputGroupCss.js';
 import { ToggleCss } from '../../base/ToggleCss.js';
 import { BlueprintCss } from '../../base/BlueprintCss.js';
 import { ButtonCss } from '../../base/ButtonCss.js';
+import {ResultsUrlSearchParametersFactory} from "./ResultsUrlSearchParametersFactory";
 
 export class HomeView extends BaseElementMixin(LitElement) {
 
@@ -20,8 +21,7 @@ export class HomeView extends BaseElementMixin(LitElement) {
             selectedPeriod: SalaryType,
             grossAmount: String,
             includesThirteen: Boolean,
-            formatter: Intl.NumberFormat,
-            location: Object
+            formatter: Intl.NumberFormat
         };
     }
 
@@ -47,6 +47,7 @@ export class HomeView extends BaseElementMixin(LitElement) {
         this.includesThirteen = false;
         this.formatter = null;
         this.#loadUserSelectionFromDatastore();
+        this.resultsUrlSearchParametersFactory = new ResultsUrlSearchParametersFactory();
     }
 
     firstUpdated() {
@@ -194,7 +195,7 @@ export class HomeView extends BaseElementMixin(LitElement) {
 
         event.preventDefault();
 
-        window.history.pushState(this.location.pathname, 'Tax Details', '/tax-details');
+        window.history.pushState(location.pathname, 'Tax Details', '/tax-details');
         window.history.go(1);
         window.dispatchEvent(new window.PopStateEvent('popstate'));
     }
@@ -206,7 +207,7 @@ export class HomeView extends BaseElementMixin(LitElement) {
         
         event.preventDefault();
 
-        window.history.pushState(this.location.pathname, 'Country Selection', '/country-selection');
+        window.history.pushState(location.pathname, 'Country Selection', '/country-selection');
         window.history.go(1);
         window.dispatchEvent(new window.PopStateEvent('popstate'));
     }
@@ -220,7 +221,9 @@ export class HomeView extends BaseElementMixin(LitElement) {
 
         if (this.selectedCountry && this.selectedPeriod && this.grossAmount) {
 
-            window.history.pushState(this.location.pathname, 'Tax Results', '/results');
+            const resultsUrl = this.resultsUrlSearchParametersFactory.generateResultsUrlWithSearchParams();
+
+            window.history.pushState(location.pathname, 'Tax Results', resultsUrl);
             window.history.go(1);
             window.dispatchEvent(new window.PopStateEvent('popstate'));
         }

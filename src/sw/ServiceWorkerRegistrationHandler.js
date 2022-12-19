@@ -5,7 +5,7 @@ export class ServiceWorkerRegistrationHandler {
     /**
      * @param {SnackbarNotification} snackbarNotification
      */
-    static async register(snackbarNotification) {
+    async register(snackbarNotification) {
 
         if (!('serviceWorker' in navigator) && !/localhost/.test(window.location)) {
             return;
@@ -24,5 +24,3 @@ export class ServiceWorkerRegistrationHandler {
 
     }
 }
-
-export const serviceWorkerHandler = Object.freeze(new ServiceWorkerRegistrationHandler());

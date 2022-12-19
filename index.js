@@ -29,7 +29,7 @@ customElementsRegistry.define('tax-calculator-app', TaxCalculatorApp);
  */
 customElementsRegistry.whenDefined('snackbar-notification').then(async () => {
     const snackbarNotificationElement = document.querySelector("snackbar-notification");
-    await ServiceWorkerRegistrationHandler.register(snackbarNotificationElement);
+    await new ServiceWorkerRegistrationHandler().register(snackbarNotificationElement);
 });
 
 /**

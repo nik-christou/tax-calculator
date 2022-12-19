@@ -1,16 +1,17 @@
-import { LitElement } from 'lit';
-import { BaseElementMixin } from '../../base/BaseElementMixin.js';
-import { ResultsViewTemplate } from './ResultsViewTemplate.js';
-import { BlueprintCss } from '../../base/BlueprintCss.js';
-import { ResultsViewCss } from './ResultsViewCss.js';
-import { TableCss } from '../../base/TableCss.js';
-import { ListGroupCss } from '../../base/ListGroupCss.js';
-import { TaxResults } from '../../model/TaxResults.js';
-import { TaxResult } from '../../model/TaxResult.js';
-import { SalaryDetails } from '../../model/SalaryDetails.js';
-import { TaxProcessorDispatcher } from './TaxProcessorDispatcher.js';
-import { userSelectionsStore } from "../../datastore/UserSelectionsStore.js";
-import { SalaryTypes } from '../../model/SalaryTypes.js';
+import {LitElement} from 'lit';
+import {BaseElementMixin} from '../../base/BaseElementMixin.js';
+import {ResultsViewTemplate} from './ResultsViewTemplate.js';
+import {BlueprintCss} from '../../base/BlueprintCss.js';
+import {ResultsViewCss} from './ResultsViewCss.js';
+import {TableCss} from '../../base/TableCss.js';
+import {ListGroupCss} from '../../base/ListGroupCss.js';
+import {TaxResults} from '../../model/TaxResults.js';
+import {TaxResult} from '../../model/TaxResult.js';
+import {SalaryDetails} from '../../model/SalaryDetails.js';
+import {TaxProcessorDispatcher} from './TaxProcessorDispatcher.js';
+import {userSelectionsStore} from "../../datastore/UserSelectionsStore.js";
+import {SalaryTypes} from '../../model/SalaryTypes.js';
+import {ResultsSearchParametersProcessor} from './ResultsSearchParametersProcessor.js';
 
 export class ResultsView extends BaseElementMixin(LitElement) {
 
@@ -35,11 +36,28 @@ export class ResultsView extends BaseElementMixin(LitElement) {
         const annualTaxResults = new TaxResult(0, 0, 0, 0, 0, []);
         this.taxResults = new TaxResults(monthlyTaxResults, annualTaxResults);
         this.formatter = new Intl.NumberFormat();
+        this.resultsSearchParametersProcessor = new ResultsSearchParametersProcessor();
         this._loadUserSelectionFromDatastore();
     }
 
     firstUpdated() {
         this._addNavBackListener();
+    }
+
+    /**
+     * Router life cycle function
+     *
+     * @param {RouterLocation} location
+     * @param {PreventAndRedirectCommands} commands
+     * @param {Router} router
+     */
+    async onAfterEnter(location, commands, router) {
+
+        const searchParams = new URLSearchParams(location.search);
+        await this.resultsSearchParametersProcessor.processSearchParameters(searchParams);
+
+        this._loadUserSelectionFromDatastore();
+        this.requestUpdate();
     }
 
     _loadUserSelectionFromDatastore() {
@@ -56,7 +74,7 @@ export class ResultsView extends BaseElementMixin(LitElement) {
         const selectedPeriod = selectedSalaryType.id === SalaryTypes.ANNUAL.id ? SalaryTypes.ANNUAL : SalaryTypes.MONTHLY;
 
         const salaryDetails = new SalaryDetails(grossAmount, selectedPeriod, includesThirteenOption);
-        
+
         const taxResults = TaxProcessorDispatcher.dispatch(selectedCountry.id, salaryDetails);
 
         this.taxResults = taxResults;
@@ -87,7 +105,7 @@ export class ResultsView extends BaseElementMixin(LitElement) {
         event.preventDefault();
         this._goToHome();
     }
-    
+
     _goToHome() {
 
         if (window.history.state) {
