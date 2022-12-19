@@ -11,13 +11,14 @@ class CyprusTaxOptionsConverter {
      */
     convertIntoCyprusTaxOptions(taxOptions) {
         const cyprusTaxOptionsObj = taxOptions.options;
-        const {employmentTypeFromObj} = cyprusTaxOptionsObj;
-        const employmentType = this.#retrieveEmploymentType(employmentTypeFromObj);
-        return new CyprusTaxOptions(employmentType);
+        const {employmentType} = cyprusTaxOptionsObj;
+        const employmentTypeObj = this.#retrieveEmploymentType(employmentType);
+        return new CyprusTaxOptions(this.#retrieveEmploymentType(employmentTypeObj));
     }
 
     #retrieveEmploymentType(employmentTypeFromObj) {
-        if(employmentTypeFromObj === EmploymentTypes.EMPLOYED.type) {
+        console.log(employmentTypeFromObj);
+        if(employmentTypeFromObj.type === EmploymentTypes.EMPLOYED.type) {
             return EmploymentTypes.EMPLOYED;
         }
         return EmploymentTypes.SELF_EMPLOYED;

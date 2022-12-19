@@ -12,21 +12,21 @@ class GermanTaxOptionsConverter {
      */
     convertIntoGermanTaxOptions(taxOptions) {
         const germanTaxOptionsObj = taxOptions.options;
-        const {maritalStatusFromObj, parentalStatusFromObj} = germanTaxOptionsObj;
-        const marital = this.#retrieveMaritalStatus(maritalStatusFromObj);
-        const parental = this.#retrieveParentalStatus(parentalStatusFromObj);
-        return new GermanTaxOptions(marital, parental);
+        const {maritalStatus, parentalStatus} = germanTaxOptionsObj;
+        const maritalStatusObj = this.#retrieveMaritalStatus(maritalStatus);
+        const parentalStatusObj = this.#retrieveParentalStatus(parentalStatus);
+        return new GermanTaxOptions(maritalStatusObj, parentalStatusObj);
     }
 
     #retrieveMaritalStatus(maritalStatus) {
-        if(maritalStatus === MaritalStatuses.SINGLE.type) {
+        if(maritalStatus.type === MaritalStatuses.SINGLE.type) {
             return MaritalStatuses.SINGLE;
         }
         return MaritalStatuses.MARRIED;
     }
 
     #retrieveParentalStatus(parentalStatus) {
-        if(parentalStatus === ParentalStatuses.NO_CHILDREN.type) {
+        if(parentalStatus.type === ParentalStatuses.NO_CHILDREN.type) {
             return ParentalStatuses.NO_CHILDREN;
         }
         return ParentalStatuses.WITH_CHILDREN;

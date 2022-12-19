@@ -1,4 +1,4 @@
-import { html } from 'lit-html';
+import {html} from 'lit';
 
 /**
  * @param {Number} amount
@@ -64,10 +64,11 @@ const taxBreakdownTemplate = (taxResults, formatter) => {
 };
 
 /**
+ * @param {Country} country
  * @param {import('../../model/TaxResults.js').TaxResults} taxResults
  * @param {Intl.NumberFormat} formatter
  */
-const ResultsViewTemplate = (taxResults, formatter) => html`
+const ResultsViewTemplate = (country, taxResults, formatter) => html`
     <div bp="grid" class="main-grid">
         <main bp="12">
             <div bp="grid 4" class="navbar">
@@ -79,6 +80,16 @@ const ResultsViewTemplate = (taxResults, formatter) => html`
                 </a>
                 <div class="title">
                     Tax Results
+                </div>
+            </div>
+            <div class="main-container">
+                <div class="list-group">
+                    <div class="list-group-item">
+                        <div class="result-item-container">
+                            <h5>Country:</h5>
+                            <span>${country?.name}</span>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="main-container" bp="grid 6@md">

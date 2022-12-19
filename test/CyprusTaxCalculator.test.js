@@ -7,7 +7,8 @@ import { CyprusTaxBracket } from "../src/countries/cyprus/model/CyprusTaxBracket
 import { CyprusTaxDetails } from "../src/countries/cyprus/model/CyprusTaxDetails.js";
 import { CyprusTaxOptions } from "../src/countries/cyprus/model/CyprusTaxOptions.js";
 import { CyprusContributions} from "../src/countries/cyprus/model/CyprusContributions.js";
-import { CyprusTaxCalculator } from "../src/countries/cyprus/controller/CyprusTaxCalculator.js";
+import { cyprusTaxCalculator } from "../src/countries/cyprus/controller/CyprusTaxCalculator.js";
+import {EmploymentTypes} from "../src/model/EmploymentTypes";
 
 describe("CyprusTaxCalculator tests", () => {
     
@@ -21,7 +22,7 @@ describe("CyprusTaxCalculator tests", () => {
         const selfEmployedSocialInsurance = 15.6;
         const selfEmployedHealthContribution = 4.00;
         const maximumAnnualHealthInsuranceCap = 180_000;
-        const maximumAnnutalSocialInsuranceCap = 58_080;
+        const maximumAnnualSocialInsuranceCap = 58_080;
 
         const taxBrackets = [
             new CyprusTaxBracket(0, 19500, 0),
@@ -40,8 +41,8 @@ describe("CyprusTaxCalculator tests", () => {
         const employerContributions = new CyprusContributions(employerSocialInsurance, employerHealthContribution);
         const selftEmployedContributions = new CyprusContributions(selfEmployedSocialInsurance, selfEmployedHealthContribution);
         const cyprusTaxDetails = new CyprusTaxDetails(taxBrackets, 
-            employerContributions, selftEmployedContributions, maximumAnnualHealthInsuranceCap, maximumAnnutalSocialInsuranceCap);
-        const cyprusTaxOptions = new CyprusTaxOptions(false);
+            employerContributions, selftEmployedContributions, maximumAnnualHealthInsuranceCap, maximumAnnualSocialInsuranceCap);
+        const cyprusTaxOptions = new CyprusTaxOptions(EmploymentTypes.EMPLOYED);
         const salaryDetails = new SalaryDetails(annualSalaryAmount, SalaryTypes.ANNUAL, includesThirteen);
 
         const expectedMonthlyGrossAmount = 1538.4615384615386;
@@ -75,7 +76,7 @@ describe("CyprusTaxCalculator tests", () => {
         );
         
         // when
-        const taxResults = CyprusTaxCalculator.calculateTax(cyprusTaxDetails, cyprusTaxOptions, salaryDetails);
+        const taxResults = cyprusTaxCalculator.calculateTax(cyprusTaxDetails, cyprusTaxOptions, salaryDetails);
 
         // then
         assert.deepEqual(taxResults.monthlyTaxResult, expectedMonthlyTaxResult, "monthly tax results do not match");
@@ -154,7 +155,7 @@ describe("CyprusTaxCalculator tests", () => {
         );
 
         // when
-        const taxResults = CyprusTaxCalculator.calculateTax(cyprusTaxDetails, cyprusTaxOptions, salaryDetails);
+        const taxResults = cyprusTaxCalculator.calculateTax(cyprusTaxDetails, cyprusTaxOptions, salaryDetails);
 
         // then
         assert.deepEqual(taxResults.monthlyTaxResult, expectedMonthlyTaxResult, "monthly tax results do not match");

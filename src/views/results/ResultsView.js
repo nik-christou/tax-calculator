@@ -12,11 +12,13 @@ import {TaxProcessorDispatcher} from './TaxProcessorDispatcher.js';
 import {userSelectionsStore} from "../../datastore/UserSelectionsStore.js";
 import {SalaryTypes} from '../../model/SalaryTypes.js';
 import {ResultsSearchParametersProcessor} from './ResultsSearchParametersProcessor.js';
+import {Country} from "../../model/Country.js";
 
 export class ResultsView extends BaseElementMixin(LitElement) {
 
     static get properties() {
         return {
+            country: Country,
             taxResults: TaxResults,
             formatter: Intl.NumberFormat
         };
@@ -27,7 +29,7 @@ export class ResultsView extends BaseElementMixin(LitElement) {
     }
 
     render() {
-        return ResultsViewTemplate(this.taxResults, this.formatter);
+        return ResultsViewTemplate(this.country, this.taxResults, this.formatter);
     }
 
     constructor() {
@@ -37,7 +39,6 @@ export class ResultsView extends BaseElementMixin(LitElement) {
         this.taxResults = new TaxResults(monthlyTaxResults, annualTaxResults);
         this.formatter = new Intl.NumberFormat();
         this.resultsSearchParametersProcessor = new ResultsSearchParametersProcessor();
-        this._loadUserSelectionFromDatastore();
     }
 
     firstUpdated() {
@@ -57,6 +58,7 @@ export class ResultsView extends BaseElementMixin(LitElement) {
         await this.resultsSearchParametersProcessor.processSearchParameters(searchParams);
 
         this._loadUserSelectionFromDatastore();
+
         this.requestUpdate();
     }
 
@@ -77,6 +79,7 @@ export class ResultsView extends BaseElementMixin(LitElement) {
 
         const taxResults = TaxProcessorDispatcher.dispatch(selectedCountry.id, salaryDetails);
 
+        this.country = selectedCountry;
         this.taxResults = taxResults;
     }
 

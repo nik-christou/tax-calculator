@@ -13,6 +13,10 @@ class CyprusTaxCalculator {
      */
     calculateTax(cyprusTaxDetails, cyprusTaxOptions, salaryDetails) {
         const annualGrossAmount = TaxCalculatorUtil.calculateAnnualGrossAmount(salaryDetails);
+
+        console.log(cyprusTaxDetails);
+        console.log(cyprusTaxOptions);
+
         return this.#calculateTaxFromAnnualIncome(cyprusTaxDetails, cyprusTaxOptions, salaryDetails, annualGrossAmount);
     }
 
