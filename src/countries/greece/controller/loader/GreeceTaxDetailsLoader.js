@@ -6,6 +6,7 @@ class GreeceTaxDetailsLoader {
 
     /**
      * @param {JSON} countryObj
+            const end = taxBracketJson.end === null ? null : taxBracketJson.end;
      * @returns {GreeceTaxDetails}
      */
     loadTaxDetailsFromCountryObject(countryObj) {
@@ -15,9 +16,8 @@ class GreeceTaxDetailsLoader {
         const taxBrackets = [];
 
         taxDetails.taxBrackets.forEach((taxBracketJson) => {
-            
-            const end = taxBracketJson.end === -1 ? Number.POSITIVE_INFINITY : taxBracketJson.end;
-            const taxBracket = new GreeceTaxBracket(taxBracketJson.start, end, taxBracketJson.ratePercent);
+
+            const taxBracket = new GreeceTaxBracket(taxBracketJson.start, taxBracketJson.end, taxBracketJson.ratePercent);
 
             taxBrackets.push(taxBracket);
         });

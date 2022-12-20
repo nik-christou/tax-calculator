@@ -27,8 +27,8 @@ function isDeductableAmount(formatter, amount) {
  const taxBreakdownBracketTemplate = (taxBreakdownBracket, formatter) => html`
  <div class="list-group-item">
      <div class="tax-breakdown-item-container">
-        ${taxBreakdownBracket.end === Number.POSITIVE_INFINITY
-        ? html`<div class="tax-breakdown-item"><span>${formatAmount(formatter, taxBreakdownBracket.start)} and over</span></div>`
+        ${taxBreakdownBracket.end === null
+        ? html`<div class="tax-breakdown-item"><span>${formatAmount(formatter, taxBreakdownBracket.start)} and above</span></div>`
         : html`<div><span>${formatAmount(formatter, taxBreakdownBracket.start)} - ${formatAmount(formatter, taxBreakdownBracket.end)}</span></div>`}
         <div class="tax-breakdown-rate"><span>${taxBreakdownBracket.ratePercent}%</span></div>
         <div class="tax-breakdown-amount"><span>${formatAmount(formatter, taxBreakdownBracket.taxAmount)}</span></div>

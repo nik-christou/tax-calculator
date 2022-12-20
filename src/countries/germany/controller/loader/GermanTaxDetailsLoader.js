@@ -42,9 +42,8 @@ class GermanyTaxDetailsLoader {
         const singleTaxBrackets = [];
 
         single.forEach((taxBracketJson) => {
-            
-            const end = taxBracketJson.end === -1 ? Number.POSITIVE_INFINITY : taxBracketJson.end;
-            const taxBracket = new GermanTaxBracket(taxBracketJson.start, end, taxBracketJson.ratePercent);
+
+            const taxBracket = new GermanTaxBracket(taxBracketJson.start, taxBracketJson.end, taxBracketJson.ratePercent);
 
             singleTaxBrackets.push(taxBracket);
         });
@@ -64,9 +63,8 @@ class GermanyTaxDetailsLoader {
         const marriedTaxBrackets = [];
 
         married.forEach((taxBracketJson) => {
-            
-            const end = taxBracketJson.end === -1 ? Number.POSITIVE_INFINITY : taxBracketJson.end;
-            const taxBracket = new GermanTaxBracket(taxBracketJson.start, end, taxBracketJson.ratePercent);
+
+            const taxBracket = new GermanTaxBracket(taxBracketJson.start, taxBracketJson.end, taxBracketJson.ratePercent);
 
             marriedTaxBrackets.push(taxBracket);
         });

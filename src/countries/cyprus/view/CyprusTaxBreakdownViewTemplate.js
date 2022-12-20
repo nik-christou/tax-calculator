@@ -14,8 +14,8 @@ import { html } from 'lit';
  */
  const taxBreakdownBracketItemTemplate = (taxBreakdownBracket, formatter) => html`
  <div class="list-group-item tax-bracket-item">
-     ${taxBreakdownBracket.taxBracket.end === Number.POSITIVE_INFINITY
-     ? html`${formatAmount(formatter, taxBreakdownBracket.taxBracket.start)} and over`
+     ${taxBreakdownBracket.taxBracket.end === null
+     ? html`${formatAmount(formatter, taxBreakdownBracket.taxBracket.start)} and above`
      : html`<span>${formatAmount(formatter, taxBreakdownBracket.taxBracket.start)} - ${formatAmount(formatter, taxBreakdownBracket.taxBracket.end)}</span>`}
      <span>${taxBreakdownBracket.taxBracket.ratePercent}%</span>
      <span>${formatAmount(formatter, taxBreakdownBracket.taxAmount)}</span>

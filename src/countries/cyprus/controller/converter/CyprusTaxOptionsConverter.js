@@ -17,7 +17,6 @@ class CyprusTaxOptionsConverter {
     }
 
     #retrieveEmploymentType(employmentTypeFromObj) {
-        console.log(employmentTypeFromObj);
         if(employmentTypeFromObj.type === EmploymentTypes.EMPLOYED.type) {
             return EmploymentTypes.EMPLOYED;
         }

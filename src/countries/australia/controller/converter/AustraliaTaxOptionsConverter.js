@@ -11,17 +11,18 @@ class AustraliaTaxOptionsConverter {
      */
     convertIntoAustraliaTaxOptions(taxOptions) {
         const australiaTaxOptionsObj = taxOptions.options;
-        const {residenceTypeFromObj} = australiaTaxOptionsObj;
-        const residenceType = this.#retrieveResidenceType(residenceTypeFromObj);
-        return new AustraliaTaxOptions(residenceType);
+        const {residenceType} = australiaTaxOptionsObj;
+        const residenceTypeObj = this.#retrieveResidenceType(residenceType);
+
+        return new AustraliaTaxOptions(residenceTypeObj);
     }
 
     /**
-     * @param {JSON} residenceTypeFromObj
+     * @param {ResidenceType} residenceTypeObj
      * @returns {ResidenceType}
      */
-    #retrieveResidenceType(residenceTypeFromObj) {
-        if(residenceTypeFromObj === ResidenceTypes.RESIDENT.type) {
+    #retrieveResidenceType(residenceTypeObj) {
+        if(residenceTypeObj.type === ResidenceTypes.RESIDENT.type) {
             return ResidenceTypes.RESIDENT;
         }
         return ResidenceTypes.NON_RESIDENT;

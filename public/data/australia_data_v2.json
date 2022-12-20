@@ -13,14 +13,15 @@
                 {"start": 18201, "end": 37000, "fixedCharge": 0, "ratePercent": 19},
                 {"start": 37001, "end": 90000, "fixedCharge": 3572, "ratePercent": 32.5},
                 {"start": 90001, "end": 180000, "fixedCharge": 20797, "ratePercent": 37},
-                {"start": 180001, "end": -1, "fixedCharge": 54096, "ratePercent": 45}
+                {"start": 180001, "end": null, "fixedCharge": 54096, "ratePercent": 45}
             ]
         },
         "nonResident": {
+            "medicarePercent": 2,
             "taxBrackets": [
                 {"start": 0, "end": 90000, "fixedCharge": 0, "ratePercent": 32.5},
                 {"start": 90001, "end": 180000, "fixedCharge": 29250, "ratePercent": 32.5},
-                {"start": 180001, "end": -1, "fixedCharge": 62550, "ratePercent": 45}
+                {"start": 180001, "end": null, "fixedCharge": 62550, "ratePercent": 45}
             ]
         }
     },

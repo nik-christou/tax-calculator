@@ -13,10 +13,6 @@ class CyprusTaxCalculator {
      */
     calculateTax(cyprusTaxDetails, cyprusTaxOptions, salaryDetails) {
         const annualGrossAmount = TaxCalculatorUtil.calculateAnnualGrossAmount(salaryDetails);
-
-        console.log(cyprusTaxDetails);
-        console.log(cyprusTaxOptions);
-
         return this.#calculateTaxFromAnnualIncome(cyprusTaxDetails, cyprusTaxOptions, salaryDetails, annualGrossAmount);
     }
 
@@ -61,7 +57,7 @@ class CyprusTaxCalculator {
         
         let totalTax = 0;
         let remainingAmount = annualGrossAfterDeductions;
-        let taxBreakdownBrackets = [cyprusTaxDetails.taxBrackets.length];
+        const taxBreakdownBrackets = [cyprusTaxDetails.taxBrackets.length];
         
         for (let index = lastTaxBracketIndex; index >= 0; index--) {
 
@@ -73,7 +69,11 @@ class CyprusTaxCalculator {
                 totalTax += tax;
                 
                 remainingAmount = bracket.start - 1;
-                taxBreakdownBrackets[index] = new TaxBreakdownBracket(bracket.start, bracket.end, bracket.ratePercent, tax);
+
+                taxBreakdownBrackets[index] = new TaxBreakdownBracket(
+                    bracket.start,
+                    index === lastTaxBracketIndex ? null : bracket.end,
+                    bracket.ratePercent, tax);
             }
         }
 

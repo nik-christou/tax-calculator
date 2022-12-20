@@ -13,7 +13,7 @@
             {"start": 19501, "end": 28000, "ratePercent": 20},
             {"start": 28001, "end": 36300, "ratePercent": 25},
             {"start": 36301, "end": 60000, "ratePercent": 30},
-            {"start": 60000, "end": -1, "ratePercent": 35}
+            {"start": 60001, "end": null, "ratePercent": 35}
         ],
         "employed": {
             "socialInsurancePercent": 8.3,

@@ -16,7 +16,7 @@ class CyprusTaxDetailsLoader {
 
         taxDetails.taxBrackets.forEach((taxBracketData) => {
             
-            const end = taxBracketData.end === -1 ? Number.POSITIVE_INFINITY : taxBracketData.end;
+            const end = taxBracketData.end === null ? null : taxBracketData.end;
             const taxBracket = new CyprusTaxBracket(taxBracketData.start, end, taxBracketData.ratePercent);
 
             taxBrackets.push(taxBracket);

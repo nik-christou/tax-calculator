@@ -11,6 +11,7 @@ import {MaritalStatuses} from "../../model/MaritalStatuses";
 import {ParentalStatuses} from "../../model/ParentalStatuses";
 import {EmploymentTypes} from "../../model/EmploymentTypes";
 import {TaxOptions} from "../../model/TaxOptions";
+import {ResidenceTypes} from "../../model/ResidenceTypes";
 
 export class ResultsSearchParametersProcessor {
 
@@ -23,10 +24,6 @@ export class ResultsSearchParametersProcessor {
         const grossAmount = urlSearchParams.get('grossAmount');
         const salaryType = urlSearchParams.get('salaryType');
         const includesThirteen = urlSearchParams.get('includesThirteen');
-
-        // if(countryId || grossAmount || salaryType || includesThirteen) {
-        //     return;
-        // }
 
         const country = countryStore.retrieveCountryById(countryId);
         const taxDetails = taxDetailsStore.retrieveTaxDetailsByCountryById(countryId);
@@ -78,7 +75,11 @@ export class ResultsSearchParametersProcessor {
      * @param {URLSearchParams} urlSearchParams
      */
     #processAustraliaTaxOptions(taxOptions, urlSearchParams) {
-        const residenceType = urlSearchParams.get('residenceType');
+
+        const residenceType = urlSearchParams.get('residenceType') === ResidenceTypes.RESIDENT.type
+            ? ResidenceTypes.RESIDENT
+            : ResidenceTypes.NON_RESIDENT;
+
         return new TaxOptions(taxOptions.countryId, new AustraliaTaxOptions(residenceType));
     }
 

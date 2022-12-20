@@ -42,7 +42,7 @@ class GreeceTaxCalculator {
 
             const bracket = taxDetails.taxBrackets[index];
 
-            if (remainingAmount >= bracket.start && remainingAmount <= bracket.end) {
+            if (remainingAmount >= bracket.start && (remainingAmount <= bracket.end || index === lastTaxBracketIndex)) {
 
                 const tax = (remainingAmount - bracket.start) * bracket.ratePercent * 0.01;
                 totalTax += tax;

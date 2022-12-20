@@ -34,7 +34,7 @@ class AustraliaTaxDetailsLoader {
     #loadNonResidentsData(taxDetails) {
         const {nonResident} = taxDetails;
         const taxBrackets = this.#loadTaxBrackets(nonResident.taxBrackets);
-        return new AustraliaNonResidents(taxBrackets);
+        return new AustraliaNonResidents(taxBrackets, nonResident.medicarePercent);
     }
 
     /**
@@ -44,13 +44,13 @@ class AustraliaTaxDetailsLoader {
         const taxBrackets = [];
 
         taxBracketsJson.forEach((taxBracketJson) => {
-            const end = taxBracketJson.end === -1 ? Number.POSITIVE_INFINITY : taxBracketJson.end;
+
             const taxBracket = new AustraliaTaxBracket(
-                taxBracketJson.start, 
-                end, 
+                taxBracketJson.start,
+                taxBracketJson.end,
                 taxBracketJson.fixedCharge, 
                 taxBracketJson.ratePercent);
-
+            console.log(taxBracket);
             taxBrackets.push(taxBracket);
         });
 

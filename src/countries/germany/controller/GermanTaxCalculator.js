@@ -3,6 +3,7 @@ import {TaxResults} from '../../../model/TaxResults.js';
 import {TaxCalculatorUtil} from '../../TaxCalculatorUtil.js';
 import {MaritalStatuses} from "../../../model/MaritalStatuses.js";
 import {ParentalStatuses} from "../../../model/ParentalStatuses.js";
+import {TaxBreakdownBracket} from "../../../model/TaxBreakdownBracket";
 
 class GermanTaxCalculator {
 
@@ -41,19 +42,25 @@ class GermanTaxCalculator {
 
         const lastTaxBracketIndex = this.#getLastTaxBracketIndex(germanTaxDetails, germanTaxOptions);
 
-        let remainingAmount = annualGrossAmount;
         let totalTax = 0;
+        let remainingAmount = annualGrossAmount;
+        const taxBreakdownBrackets = [this.#getTaxBracketsSize(germanTaxDetails, germanTaxOptions)];
 
         for (let index = lastTaxBracketIndex; index >= 0; index--) {
 
             const bracket = this.#getTaxBracket(germanTaxDetails, germanTaxOptions, index);
 
-            if (remainingAmount >= bracket.start && remainingAmount <= bracket.end) {
+            if (remainingAmount >= bracket.start && (remainingAmount <= bracket.end || index === lastTaxBracketIndex)) {
 
                 const tax = (remainingAmount - bracket.start) * bracket.ratePercent * 0.01;
                 totalTax += tax;
 
                 remainingAmount = bracket.start - 1;
+
+                taxBreakdownBrackets[index] = new TaxBreakdownBracket(
+                    bracket.start,
+                    index === lastTaxBracketIndex ? null : bracket.end,
+                    bracket.ratePercent, tax);
             }
         }
 
@@ -65,7 +72,7 @@ class GermanTaxCalculator {
         const socialContributionsTotal = pensionInsurance + unemploymentInsurance + longTermInsurance;
         const netAmount = annualGrossAmount - totalTax - healthInsurance - socialContributionsTotal;
 
-        return new TaxResult(annualGrossAmount, totalTax, socialContributionsTotal, healthInsurance, netAmount);
+        return new TaxResult(annualGrossAmount, totalTax, socialContributionsTotal, healthInsurance, netAmount, taxBreakdownBrackets);
     }
 
     /**
@@ -80,6 +87,19 @@ class GermanTaxCalculator {
         }
 
         return germanTaxDetails.marriedTaxBrackets[index];
+    }
+
+    /**
+     * @param {GermanTaxDetails} germanTaxDetails
+     * @param {GermanTaxOptions} germanTaxOptions
+     */
+    #getTaxBracketsSize(germanTaxDetails, germanTaxOptions) {
+
+        if (germanTaxOptions.maritalStatus.type === MaritalStatuses.SINGLE.type) {
+            return germanTaxDetails.singleTaxBrackets.length;
+        }
+
+        return germanTaxDetails.marriedTaxBrackets.length;
     }
 
     /**

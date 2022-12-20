@@ -14,8 +14,8 @@ function formatAmount(formatter, amount) {
  */
 const taxBracketItemTemplate = (taxBracket, formatter) => html`
     <div class="list-group-item tax-bracket-item">
-        ${taxBracket.end === Number.POSITIVE_INFINITY
-        ? html`${formatAmount(formatter, taxBracket.start)} and over`
+        ${taxBracket.end === null
+        ? html`${formatAmount(formatter, taxBracket.start)} and above`
         : html`<span>${formatAmount(formatter, taxBracket.start)} - ${formatAmount(formatter, taxBracket.end)}</span>`}
         <span>${taxBracket.ratePercent}%</span>
     </div>
@@ -26,7 +26,7 @@ const taxBracketItemTemplate = (taxBracket, formatter) => html`
  * @param {NumberFormat} formatter
  */
 const AustraliaTaxDetailsViewTemplate = (taxDetails, formatter) => html`
-    <h3>Contributions - Residents</h3>
+    <h3>Contributions</h3>
     <div class="list-group">
         <div class="list-group-item contribution-item">
             <span>Medicare:</span>

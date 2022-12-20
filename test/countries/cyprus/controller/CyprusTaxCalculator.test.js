@@ -1,14 +1,14 @@
 import { assert } from "@esm-bundle/chai";
-import { TaxResult } from "../src/model/TaxResult.js";
-import { SalaryDetails } from "../src/model/SalaryDetails.js";
-import { SalaryTypes } from "../src/model/SalaryTypes.js";
-import { TaxBreakdownBracket } from '../src/model/TaxBreakdownBracket.js';
-import { CyprusTaxBracket } from "../src/countries/cyprus/model/CyprusTaxBracket.js";
-import { CyprusTaxDetails } from "../src/countries/cyprus/model/CyprusTaxDetails.js";
-import { CyprusTaxOptions } from "../src/countries/cyprus/model/CyprusTaxOptions.js";
-import { CyprusContributions} from "../src/countries/cyprus/model/CyprusContributions.js";
-import { cyprusTaxCalculator } from "../src/countries/cyprus/controller/CyprusTaxCalculator.js";
-import {EmploymentTypes} from "../src/model/EmploymentTypes";
+import { TaxResult } from "../../../../src/model/TaxResult.js";
+import { SalaryDetails } from "../../../../src/model/SalaryDetails.js";
+import { SalaryTypes } from "../../../../src/model/SalaryTypes.js";
+import { TaxBreakdownBracket } from '../../../../src/model/TaxBreakdownBracket.js';
+import { CyprusTaxBracket } from "../../../../src/countries/cyprus/model/CyprusTaxBracket.js";
+import { CyprusTaxDetails } from "../../../../src/countries/cyprus/model/CyprusTaxDetails.js";
+import { CyprusTaxOptions } from "../../../../src/countries/cyprus/model/CyprusTaxOptions.js";
+import { CyprusContributions} from "../../../../src/countries/cyprus/model/CyprusContributions.js";
+import { cyprusTaxCalculator } from "../../../../src/countries/cyprus/controller/CyprusTaxCalculator.js";
+import {EmploymentTypes} from "../../../../src/model/EmploymentTypes";
 
 describe("CyprusTaxCalculator tests", () => {
     

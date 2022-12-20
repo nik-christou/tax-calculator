@@ -10,7 +10,7 @@
         {"start": 10001, "end": 20000, "ratePercent": 22},
         {"start": 20001, "end": 30000, "ratePercent": 28},
         {"start": 30001, "end": 40000, "ratePercent": 36},
-        {"start": 40001, "end": -1, "ratePercent": 44}
+        {"start": 40001, "end": null, "ratePercent": 44}
       ],
       "socialSecurity": {
         "percent": 14.12,

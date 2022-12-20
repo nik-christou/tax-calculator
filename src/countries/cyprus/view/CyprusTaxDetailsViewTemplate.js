@@ -1,4 +1,4 @@
-import { html } from 'lit';
+import {html} from 'lit';
 
 /**
  * @param {Number} amount
@@ -14,8 +14,8 @@ function formatAmount(formatter, amount) {
  */
 const taxBracketItemTemplate = (taxBracket, formatter) => html`
     <div class="list-group-item tax-bracket-item">
-        ${taxBracket.end === Number.POSITIVE_INFINITY
-        ? html`${formatAmount(formatter, taxBracket.start)} and over`
+        ${taxBracket.end === null
+        ? html`${formatAmount(formatter, taxBracket.start)} and above`
         : html`<span>${formatAmount(formatter, taxBracket.start)} - ${formatAmount(formatter, taxBracket.end)}</span>`}
         <span>${taxBracket.ratePercent}%</span>
     </div>
