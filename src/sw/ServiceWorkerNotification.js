@@ -25,7 +25,7 @@ export class ServiceWorkerNotification extends BaseElement {
         `;
     }
 
-    firstUpdated() {
+    firstUpdated(_changedProperties) {
         const refreshLink = this.shadowRoot.querySelector('a#refreshButton');
         const closeLink = this.shadowRoot.querySelector('button.close-link');
         refreshLink.addEventListener('click', event => this.#handleRefreshLink(event));

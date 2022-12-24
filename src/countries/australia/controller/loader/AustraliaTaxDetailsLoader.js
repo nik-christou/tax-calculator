@@ -50,7 +50,7 @@ class AustraliaTaxDetailsLoader {
                 taxBracketJson.end,
                 taxBracketJson.fixedCharge, 
                 taxBracketJson.ratePercent);
-            console.log(taxBracket);
+
             taxBrackets.push(taxBracket);
         });
 

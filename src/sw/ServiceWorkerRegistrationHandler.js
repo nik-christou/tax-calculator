@@ -1,4 +1,5 @@
 import {registerSW} from 'virtual:pwa-register';
+import {userSelectionsStore} from '../datastore/UserSelectionsStore.js';
 
 export class ServiceWorkerRegistrationHandler {
 
@@ -16,7 +17,8 @@ export class ServiceWorkerRegistrationHandler {
             async onNeedRefresh() {
                 addEventListener('refreshNotificationEvent', (_) => {
 
-                    // TODO: Clear user selection in local storage
+                    // clear user selections before updating
+                    userSelectionsStore.resetUserSelections();
 
                     updateSW(true);
                 });
