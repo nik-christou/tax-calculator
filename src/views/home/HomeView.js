@@ -1,39 +1,34 @@
-import { LitElement } from 'lit';
-import { BaseElementMixin } from '../../base/BaseElementMixin.js';
-import { HomeViewTemplate } from './HomeViewTemplate.js';
-import { userSelectionsStore } from "../../datastore/UserSelectionsStore.js";
-import { HomeViewCss } from './HomeViewCss.js';
-import { Country } from '../../model/Country.js';
-import { SalaryType } from '../../model/SalaryType.js';
-import { SalaryTypes } from '../../model/SalaryTypes.js';
-import { ListGroupCss } from '../../base/ListGroupCss.js';
-import { InputGroupCss } from '../../base/InputGroupCss.js';
-import { ToggleCss } from '../../base/ToggleCss.js';
-import { BlueprintCss } from '../../base/BlueprintCss.js';
-import { ButtonCss } from '../../base/ButtonCss.js';
+import {BaseElement} from '../../base/BaseElement.js';
+import {HomeViewTemplate} from './HomeViewTemplate.js';
+import {userSelectionsStore} from "../../datastore/UserSelectionsStore.js";
+import {Country} from '../../model/Country.js';
+import {SalaryType} from '../../model/SalaryType.js';
+import {SalaryTypes} from '../../model/SalaryTypes.js';
 import {ResultsUrlSearchParametersFactory} from "./ResultsUrlSearchParametersFactory";
+import {BlueprintCss} from '../../base/BlueprintCss.js';
+import {ButtonsCssTaggedTemplate} from '@twbs-css/template-literals';
+import {FormsCssTaggedTemplate} from '@twbs-css/template-literals';
+import {ListGroupCssTaggedTemplate} from '@twbs-css/template-literals';
+import {HomeViewCss} from './HomeViewCss.js';
 
-export class HomeView extends BaseElementMixin(LitElement) {
+export class HomeView extends BaseElement {
 
-    static get properties() {
-        return {
-            selectedCountry: Country,
-            selectedPeriod: SalaryType,
-            grossAmount: String,
-            includesThirteen: Boolean,
-            formatter: Intl.NumberFormat
-        };
-    }
+    static properties = {
+        selectedCountry: Country,
+        selectedPeriod: SalaryType,
+        grossAmount: String,
+        includesThirteen: Boolean,
+        formatter: Intl.NumberFormat
+    };
 
-    static get styles() {
-        return [...super.styles,
-            BlueprintCss,
-            ListGroupCss,
-            InputGroupCss,
-            ToggleCss,
-            ButtonCss,
-            HomeViewCss];
-    }
+    static styles = [
+        BaseElement.styles,
+        BlueprintCss,
+        ListGroupCssTaggedTemplate,
+        FormsCssTaggedTemplate,
+        ButtonsCssTaggedTemplate,
+        HomeViewCss
+    ];
 
     render() {
         return HomeViewTemplate(this.selectedCountry, this.includesThirteen, this.grossAmount);
@@ -50,7 +45,7 @@ export class HomeView extends BaseElementMixin(LitElement) {
         this.resultsUrlSearchParametersFactory = new ResultsUrlSearchParametersFactory();
     }
 
-    firstUpdated() {
+    firstUpdated(_changedProperties) {
         this.#addSalaryTypeClickListeners();
         this.#addGrossAmountInputListener();
         this.#addIncludesThirteenInputListener();
@@ -78,7 +73,7 @@ export class HomeView extends BaseElementMixin(LitElement) {
     #loadSelectedPeriodFromStore() {
 
         const selectedSalaryTypeId = userSelectionsStore.retrieveSalaryType();
-        if(!selectedSalaryTypeId) return;
+        if (!selectedSalaryTypeId) return;
 
         const selectedSalaryType = userSelectionsStore.retrieveSalaryType();
         if (!selectedSalaryType) return;
@@ -107,8 +102,7 @@ export class HomeView extends BaseElementMixin(LitElement) {
     }
 
     #loadThirteenSalaryFromStore() {
-        const includesThirteenOption = userSelectionsStore.retrieveIncludesThirteenSalaryOption();
-        this.includesThirteen = includesThirteenOption;
+        this.includesThirteen = userSelectionsStore.retrieveIncludesThirteenSalaryOption();
     }
 
     #addSalaryTypeClickListeners() {
@@ -154,7 +148,7 @@ export class HomeView extends BaseElementMixin(LitElement) {
             this.#handleCalculateClickEvent(event);
         });
     }
-    
+
     #addCountrySelectionListener() {
 
         const countrySelectionLink = this.shadowRoot.querySelector('a#countrySelectionLink');
@@ -169,7 +163,7 @@ export class HomeView extends BaseElementMixin(LitElement) {
     #addTaxOptionsListener() {
 
         const taxOptionsLink = this.shadowRoot.querySelector('a#taxOptionsLink');
-        
+
         // some countries do not have additional options
         if (taxOptionsLink) {
             taxOptionsLink.addEventListener('click', event => this.#handleTaxOptionsClickEvent(event));
@@ -177,7 +171,7 @@ export class HomeView extends BaseElementMixin(LitElement) {
     }
 
     /**
-     * @param {MouseEvent} event 
+     * @param {MouseEvent} event
      */
     #handleTaxOptionsClickEvent(event) {
 
@@ -189,7 +183,7 @@ export class HomeView extends BaseElementMixin(LitElement) {
     }
 
     /**
-     * @param {MouseEvent} event 
+     * @param {MouseEvent} event
      */
     #handleTaxDetailsClickEvent(event) {
 
@@ -201,10 +195,10 @@ export class HomeView extends BaseElementMixin(LitElement) {
     }
 
     /**
-     * @param {MouseEvent} event 
+     * @param {MouseEvent} event
      */
     #handleCountrySelectionClickEvent(event) {
-        
+
         event.preventDefault();
 
         window.history.pushState(location.pathname, 'Country Selection', '/country-selection');
@@ -216,7 +210,7 @@ export class HomeView extends BaseElementMixin(LitElement) {
      * @param {Event} event
      */
     #handleCalculateClickEvent(event) {
-        
+
         event.preventDefault();
 
         if (this.selectedCountry && this.selectedPeriod && this.grossAmount) {
@@ -277,7 +271,7 @@ export class HomeView extends BaseElementMixin(LitElement) {
         if (!unformattedAmount) {
 
             // inputted amount could not be used
-            // reverting back to stored amount if present
+            // revert to stored amount if present
             const grossAmountFromStore = userSelectionsStore.retrieveSelectedGrossAmount();
 
             // no stored amount was found
@@ -317,7 +311,7 @@ export class HomeView extends BaseElementMixin(LitElement) {
             return formattedSalaryAmount;
         }
 
-        const { currencySymbol, decimalSymbol } = this.#extractCurrencyAndDecimalSymbolFromLocale();
+        const {currencySymbol, decimalSymbol} = this.#extractCurrencyAndDecimalSymbolFromLocale();
 
         // match anything that does not match either number or the decimal character
         const regularExpression = RegExp(`[^0-9${decimalSymbol}]+\\g`);
@@ -334,25 +328,25 @@ export class HomeView extends BaseElementMixin(LitElement) {
         }
 
         // Get the currency symbol for the country locale
-        // so we call the function with a random number
+        // next we call the function with a random number
         // in order to get the decimal and currency symbol
         // for selected country locale
         const parts = this.formatter.formatToParts(3.5);
-        
+
         const currencyPart = this.#findCurrencyPart(parts);
         const currencySymbol = currencyPart.value;
 
         const decimalPart = this.#findDecimalPart(parts);
         const decimalSymbol = decimalPart.value;
 
-        return { currencySymbol, decimalSymbol };
+        return {currencySymbol, decimalSymbol};
     }
 
     /**
      * @param {Array<NumberFormatPart>} parts
      */
     #findCurrencyPart(parts) {
-        
+
         const currencyIndex = parts.findIndex(part => part.type === 'currency');
 
         return parts[currencyIndex];
@@ -374,7 +368,7 @@ export class HomeView extends BaseElementMixin(LitElement) {
         const decimalSymbol = this.#getDecimalSeparator(this.selectedCountry.locale);
 
         // return the currency & decimal symbols from json file
-        return { currencySymbol, decimalSymbol };
+        return {currencySymbol, decimalSymbol};
     }
 
     /**
@@ -391,7 +385,7 @@ export class HomeView extends BaseElementMixin(LitElement) {
      * @param {HTMLInputElement} grossAmountElement
      */
     #handleGrossAmountEnterKey(event, grossAmountElement) {
-        if (event.keyCode !== 13) return;
+        if (event.key !== "Enter") return;
         event.preventDefault();
         grossAmountElement.blur();
     }
@@ -413,13 +407,11 @@ export class HomeView extends BaseElementMixin(LitElement) {
      * @param {Country} selectedCountry
      */
     #updateCurrencyFormatter(selectedCountry) {
-        const formatter = new Intl.NumberFormat(selectedCountry.locale, {
+        this.formatter = new Intl.NumberFormat(selectedCountry.locale, {
             style: 'currency',
             currency: selectedCountry.currency,
             minimumFractionDigits: 2
         });
-
-        this.formatter = formatter;
     }
 
     #updateSelectedSalaryTypeLinks() {

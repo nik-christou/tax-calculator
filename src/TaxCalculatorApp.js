@@ -1,15 +1,15 @@
-import {LitElement, html} from 'lit';
-import {BaseElementMixin} from './base/BaseElementMixin.js';
+import {html} from 'lit';
+import {BaseElement} from './base/BaseElement.js';
 import {TaxCalculatorAppCss} from './TaxCalculatorAppCss.js';
+import {HostCssTaggedTemplate} from '@twbs-css/template-literals';
 
-export class TaxCalculatorApp extends BaseElementMixin(LitElement) {
+export class TaxCalculatorApp extends BaseElement {
 
-    static get styles() {
-        return [
-            ...super.styles, 
-            TaxCalculatorAppCss
-        ];
-    }
+    static styles = [
+        HostCssTaggedTemplate,
+        BaseElement.styles,
+        TaxCalculatorAppCss
+    ];
     
     render() {
         return html`

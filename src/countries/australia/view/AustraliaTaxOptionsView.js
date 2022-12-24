@@ -1,27 +1,28 @@
-import {LitElement} from 'lit';
-import {BaseElementMixin} from '../../../base/BaseElementMixin.js';
+import {BaseElement} from '../../../base/BaseElement.js';
 import {TaxOptions} from "../../../model/TaxOptions.js";
 import {AustraliaTaxOptions} from '../model/AustraliaTaxOptions.js';
 import {AustraliaTaxOptionsViewTemplate} from './AustraliaTaxOptionsViewTemplate.js';
-import {ToggleCss} from '../../../base/ToggleCss.js';
-import {ListGroupCss} from '../../../base/ListGroupCss.js';
-import {BlueprintCss} from '../../../base/BlueprintCss.js';
 import {userSelectionsStore} from '../../../datastore/UserSelectionsStore.js';
 import CountryIDsEnum from '../../../datastore/CountryIDsEnum.js';
-import {CommonTaxOptionsViewCss} from '../../CommonTaxOptionViewCss.js';
 import {ResidenceTypes} from "../../../model/ResidenceTypes.js";
+import {BlueprintCss} from '../../../base/BlueprintCss.js';
+import {ListGroupCssTaggedTemplate} from '@twbs-css/template-literals';
+import {FormsCssTaggedTemplate} from '@twbs-css/template-literals';
+import {CommonTaxOptionsViewCss} from '../../CommonTaxOptionViewCss.js';
 
-export class AustraliaTaxOptionsView extends BaseElementMixin(LitElement) {
+export class AustraliaTaxOptionsView extends BaseElement {
 
-    static get properties() {
-        return {
-            residentStatus: Boolean
-        };
-    }
+    static properties = {
+        residentStatus: Boolean
+    };
 
-    static get styles() {
-        return [...super.styles, BlueprintCss, ListGroupCss, ToggleCss, CommonTaxOptionsViewCss];
-    }
+    static styles = [
+        BaseElement.styles,
+        BlueprintCss,
+        ListGroupCssTaggedTemplate,
+        FormsCssTaggedTemplate,
+        CommonTaxOptionsViewCss
+    ];
 
     render() {
         return AustraliaTaxOptionsViewTemplate(this.residentStatus);
@@ -32,7 +33,7 @@ export class AustraliaTaxOptionsView extends BaseElementMixin(LitElement) {
         this.#loadUserSelectionFromDatastore();
     }
 
-    firstUpdated() {
+    firstUpdated(_changedProperties) {
         this.#addIsResidentListener();
     }
 
@@ -46,11 +47,7 @@ export class AustraliaTaxOptionsView extends BaseElementMixin(LitElement) {
 
         const {type} = selectedTaxOptions?.options?.residenceType;
 
-        if(type === ResidenceTypes.RESIDENT.type) {
-            this.residentStatus = true;
-        } else {
-            this.residentStatus = false;
-        }
+        this.residentStatus = type === ResidenceTypes.RESIDENT.type;
     }
 
     #addIsResidentListener() {

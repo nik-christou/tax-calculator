@@ -1,4 +1,4 @@
-import { html } from 'lit';
+import {html} from 'lit';
 
 const TaxOptionsViewTemplate = (countrySpecificTaxOptionsViewTemplate) => html`
     <div bp="grid" class="main-grid">
@@ -6,7 +6,7 @@ const TaxOptionsViewTemplate = (countrySpecificTaxOptionsViewTemplate) => html`
             <div bp="grid 4" class="navbar">
                 <a href="#" class="nav-back">
                     <svg class="icon-chevron-left">
-                        <path d="M14.19 16.005l7.869 7.868-2.129 2.129-9.996-9.997L19.937 6.002l2.127 2.129z" />
+                        <path d="M14.19 16.005l7.869 7.868-2.129 2.129-9.996-9.997L19.937 6.002l2.127 2.129z"/>
                     </svg>
                     Home
                 </a>
@@ -21,4 +21,4 @@ const TaxOptionsViewTemplate = (countrySpecificTaxOptionsViewTemplate) => html`
     </div>
 `;
 
-export { TaxOptionsViewTemplate };
+export {TaxOptionsViewTemplate};

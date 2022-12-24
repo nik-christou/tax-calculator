@@ -114,20 +114,23 @@ const HomeViewTemplate = (selectedCountry, includesThirteen, grossAmount) => htm
                         <div class="thirteen-container">
                             <h5 class="item-label">Includes 13th:</h5>
                             <div>
-                                <input
-                                    id="includesThirteen"
-                                    type="checkbox"
-                                    name="includesThirteen"
-                                    ?checked="${includesThirteen}"
-                                    class="toggle toggle-round"
-                                />
-                                <label for="includesThirteen"></label>
+                                <div class="form-check form-switch">
+                                    <input
+                                        id="includesThirteen"
+                                        name="employmentTypeStatus"
+                                        class="form-check-input"
+                                        ?checked=${includesThirteen}
+                                        type="checkbox"
+                                    />
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
                 <br />
-                <button class="btn btn-primary btn-lg btn-block calculate-btn">Calculate</button>
+                <div class="calculate-btn-container">
+                    <button class="btn btn-lg calculate-btn">Calculate</button>
+                </div>
                 <br />
             </div>
         </main>

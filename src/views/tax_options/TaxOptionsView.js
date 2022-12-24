@@ -1,23 +1,24 @@
-import { LitElement } from 'lit';
-import { BaseElementMixin } from '../../base/BaseElementMixin.js';
-import { TaxOptionsViewTemplate } from './TaxOptionsViewTemplate.js';
-import { TaxOptionsViewCss } from './TaxOptionsViewCss.js';
-import { SwitchCss } from '../../base/SwitchCss.js';
-import { ListGroupCss } from '../../base/ListGroupCss.js';
-import { BlueprintCss } from '../../base/BlueprintCss.js';
-import { userSelectionsStore } from "../../datastore/UserSelectionsStore.js";
-import { taxOptionsViewTemplateLoader } from './TaxOptionsViewTemplateLoader.js';
-import { Country } from '../../model/Country.js';
+import {BaseElement} from '../../base/BaseElement.js';
+import {TaxOptionsViewTemplate} from './TaxOptionsViewTemplate.js';
+import {Country} from '../../model/Country.js';
+import {userSelectionsStore} from "../../datastore/UserSelectionsStore.js";
+import {taxOptionsViewTemplateLoader} from './TaxOptionsViewTemplateLoader.js';
+import {BlueprintCss} from '../../base/BlueprintCss.js';
+import {ListGroupCssTaggedTemplate} from '@twbs-css/template-literals';
+import {TaxOptionsViewCss} from './TaxOptionsViewCss.js';
 
-export class CountryTaxOptionsView extends BaseElementMixin(LitElement) {
+export class CountryTaxOptionsView extends BaseElement {
 
-    static get properties() {
-        return { selectedCountry: Country };
-    }
+    static properties = {
+        selectedCountry: Country
+    };
 
-    static get styles() {
-        return [...super.styles, BlueprintCss, ListGroupCss, SwitchCss, TaxOptionsViewCss];
-    }
+    static styles = [
+        BaseElement.styles,
+        BlueprintCss,
+        ListGroupCssTaggedTemplate,
+        TaxOptionsViewCss
+    ];
 
     render() {
         return TaxOptionsViewTemplate(() => this.#loadCountrySpecificTaxOptionsViewTemplate());
@@ -28,7 +29,7 @@ export class CountryTaxOptionsView extends BaseElementMixin(LitElement) {
         this.selectedCountry = userSelectionsStore.retrieveSelectedCountry();
     }
 
-    async firstUpdated() {
+    firstUpdated(_changedProperties) {
         this.#addNavBackListener();
     }
 

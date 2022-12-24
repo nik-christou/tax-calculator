@@ -82,6 +82,10 @@ export const TaxDetailsViewCss = css`
         border-bottom-right-radius: 1rem;
         border-bottom-left-radius: 1rem;
     }
+    
+    h6, .h6, h5, .h5, h4, .h4, h3, .h3, h2, .h2, h1, .h1 {
+      margin: 0.6em 0;
+    }
 
     .contribution-item {
         display: flex;

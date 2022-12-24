@@ -15,14 +15,15 @@ const AustraliaTaxOptionsViewTemplate = (residentStatus) => html`
                     </small>
                 </div>
                 <div>
-                    <input
-                        id="resident"
-                        type="checkbox"
-                        name="resident"
-                        ?checked="${residentStatus}"
-                        class="toggle toggle-round cmn-toggle cmn-toggle-round"
-                    />
-                    <label for="resident"></label>
+                    <div class="form-check form-switch">
+                        <input 
+                            id="resident"
+                            name="resident"
+                            class="form-check-input"
+                            ?checked="${residentStatus}"
+                            type="checkbox"
+                        />
+                    </div>
                 </div>
             </div>
         </div>

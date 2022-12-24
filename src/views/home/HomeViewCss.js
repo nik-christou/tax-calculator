@@ -1,246 +1,285 @@
-import { css } from 'lit';
+import {css} from 'lit';
 
 export const HomeViewCss = css`
-    :host {
-        min-height: 100vh;
-        min-width: 100vw;
-        will-change: transform, opacity;
-        transform-style: preserve-3d;
-        backface-visibility: hidden;
-        transform: translate3d(0, 0, 0);
-        -webkit-transform-style: preserve-3d;
-        -webkit-backface-visibility: hidden;
-        -webkit-transform: translate3d(0, 0, 0);
-    }
+  :host {
+    min-height: 100vh;
+    min-width: 100vw;
+    will-change: transform, opacity;
+    transform-style: preserve-3d;
+    backface-visibility: hidden;
+    transform: translate3d(0, 0, 0);
+    -webkit-transform-style: preserve-3d;
+    -webkit-backface-visibility: hidden;
+    -webkit-transform: translate3d(0, 0, 0);
+  }
 
-    .grid-container {
-        min-width: 100vw;
-        min-height: 100vh;
-    }
+  .grid-container {
+    min-width: 100vw;
+    min-height: 100vh;
+  }
 
-    .navbar {
-        line-height: 2.4em;
-        overflow: hidden;
-        background-color: hsl(218, 52%, 54%); 
-        color: #fff;
-        margin-bottom: 0px;
-        box-shadow: rgba(0, 0, 0, 0.2) 0px 1px 2px;
-        padding: 0.7em 0.5em;
-    }
+  .navbar {
+    line-height: 2.4em;
+    overflow: hidden;
+    background-color: hsl(218, 52%, 54%);
+    color: #fff;
+    margin-bottom: 0px;
+    box-shadow: rgba(0, 0, 0, 0.2) 0px 1px 2px;
+    padding: 0.7em 0.5em;
+  }
 
-    .navbar .title {
-        display: flex;
-        height: 100%;
-        width: 100%;
-        min-width: max-content;
-        font-size: 1.4em;
-        align-items: center;
-        justify-content: center;
-        color: #fff;
-        line-height: 1.5;
-        border-width: 0px;
-        text-decoration: none;
-    }
+  .navbar .title {
+    display: flex;
+    height: 100%;
+    width: 100%;
+    min-width: max-content;
+    font-size: 1.4em;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    line-height: 1.5;
+    border-width: 0px;
+    text-decoration: none;
+  }
 
-    main {
-        background-color: #f2f2f2;
-    }
+  main {
+    background-color: #f2f2f2;
+  }
 
-    .main-container {
-        padding-top: 10px;
-        padding-left: 1em;
-        padding-right: 1em;
-    }
+  .main-container {
+    padding-top: 10px;
+    padding-left: 1em;
+    padding-right: 1em;
+  }
 
-    .logo {
-        width: 100%;
-        max-width: 24px;
-        margin-right: 10px;
-        float: left;
-        border-style: none;
-    }
+  .logo {
+    width: 100%;
+    max-width: 24px;
+    margin-right: 10px;
+    float: left;
+    border-style: none;
+  }
 
-    .list-group-item:first-child {
-        border-top-left-radius: 1rem;
-        border-top-right-radius: 1rem;
-    }
+  .list-group-item {
+    position: relative;
+    display: block;
+    padding: 0.75rem 1.25rem;
+    background-color: #fff;
+    border: 1px solid rgba(0, 0, 0, 0.125);
+  }
 
-    .list-group-item:last-child {
-        border-bottom-right-radius: 1rem;
-        border-bottom-left-radius: 1rem;
-    }
+  .list-group-item-action:hover {
+    cursor: pointer;
+  }
 
-    .list-group-item.list-group-item-action {
-        user-select: none;
-        -webkit-tap-highlight-color: transparent;
-    }
+  .list-group-item:first-child {
+    border-top-left-radius: 1rem;
+    border-top-right-radius: 1rem;
+  }
 
-    .country-container {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-    }
+  .list-group-item:last-child {
+    border-bottom-right-radius: 1rem;
+    border-bottom-left-radius: 1rem;
+  }
 
-    .selected-country-container {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-    }
+  .list-group-item.list-group-item-action {
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+  }
 
-    .selected-country-container img.right-chevron {
-        height: 20px;
-        margin-left: 20px;
-    }
+  .country-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
 
-    .selected-country-container .country-info {
-        display: flex;
-        align-items: center;
-        justify-content: flex-start;
-    }
+  .country-container h5 {
+    margin-bottom: 0;
+  }
 
-    .selected-country-container .country-info img {
-        height: 50px;
-    }
+  .selected-country-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
 
-    .selected-country-container .country-info .item-info {
-        display: flex;
-        margin-left: 10px;
-        flex-direction: column;
-    }
+  .selected-country-container img.right-chevron {
+    height: 20px;
+    margin-left: 20px;
+  }
 
-    .thirteen-container {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
+  .selected-country-container .country-info {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+  }
 
-        --toggle-round-label-width: 65px;
-        --toggle-round-label-height: 35px;
-        --toggle-round-label-background-color: #dddddd;
-        --toggle-round-label-background-color-before: #f1f1f1;
-        --toggle-round-label-background-color-before-checked: #4e7ac7;
-        --toggle-round-label-width-after: 33px;
-        --toggle-round-label-background-color-after: #ffffff;
-        --toggle-round-label-margin-left-after-checked: 30px;
-    }
+  .selected-country-container .country-info img {
+    height: 50px;
+  }
 
-    .salary-type-container {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        --list-group-item-active-background-color: #4e7ac7;
-    }
+  .selected-country-container .country-info .item-info {
+    display: flex;
+    margin-left: 10px;
+    flex-direction: column;
+  }
 
-    .salary-type-container .salary-type-values {
-        margin-top: 0;
-        width: 100%;
-        text-align: center;
-    }
+  .thirteen-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
 
-    .salary-type-container .item-label {
-        margin-right: 20px;
-    }
+  .thirteen-container h5 {
+    margin-bottom: 0;
+  }
 
-    .salary-type-container .salary-type-values .list-group-item {
-        user-select: none;
-        -webkit-tap-highlight-color: transparent;
-    }
+  .thirteen-container .form-switch .form-check-input {
+    height: 2em;
+    width: 3.5em;
+  }
 
-    .salary-type-container .salary-type-values #annual-salary-type {
-        border-bottom-left-radius: 1rem;
-        border-top-left-radius: 1rem;
-        padding: 0.6rem;
-    }
+  .thirteen-container .form-switch .form-check-input:checked {
+    background-color: hsl(218, 51.9%, 54.3%);
+  }
 
-    .salary-type-container .salary-type-values #monthly-salary-type {
-        border-top-right-radius: 1rem;
-        border-bottom-right-radius: 1rem;
-        padding: 0.6rem;
-    }
+  .salary-type-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  
+  .salary-type-container .list-group-item.active {
+    --bs-list-group-active-color: white;
+    --bs-list-group-active-bg: hsl(218, 51.9%, 54.3%);
+    --bs-list-group-active-border-color: hsl(218, 51.9%, 54.3%);
+  }
 
-    .salary-input-container {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        margin-top: 5px;
-        margin-bottom: 5px;
-    }
+  .salary-type-container .salary-type-values {
+    margin-top: 0;
+    width: 100%;
+    text-align: center;
+  }
 
-    .salary-input-container .item-label {
-        margin-right: 20px;
-    }
+  .salary-type-container .item-label {
+    margin-right: 20px;
+    margin-bottom: 0;
+  }
 
-    .salary-input-container .salary-input {
-        width: 100%;
-        border-radius: 1rem;
-    }
+  .salary-type-container .salary-type-values .list-group-item {
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+  }
 
-    .salary-input-container .salary-input:invalid {
-        box-shadow: none;
-        -moz-box-shadow: none;
-    }
+  .salary-type-container .salary-type-values #annual-salary-type {
+    border-bottom-left-radius: 1rem;
+    border-top-left-radius: 1rem;
+    padding: 0.6rem;
+  }
 
-    .salary-input-container .salary-input:focus {
-        outline: none;
-        box-shadow: 0 0 3pt 2pt #4e7ac7;
-    }
+  .salary-type-container .salary-type-values #monthly-salary-type {
+    border-top-right-radius: 1rem;
+    border-bottom-right-radius: 1rem;
+    padding: 0.6rem;
+  }
 
-    .options-item {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-    }
+  .salary-input-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 5px;
+    margin-bottom: 5px;
+  }
 
-    .options-item .resident-input-group {
-        display: flex;
-        margin-top: 10px;
-    }
+  .salary-input-container .item-label {
+    margin-right: 20px;
+    margin-bottom: 0;
+  }
 
-    .tax-details-container {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-    }
+  .salary-input-container .salary-input {
+    width: 100%;
+    border-radius: 1rem;
+  }
 
-    .tax-details-container .tax-details-container-img {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-    }
+  .salary-input-container .salary-input:invalid {
+    box-shadow: none;
+    -moz-box-shadow: none;
+  }
 
-    .tax-details-container .tax-details-container-img img.right-chevron {
-        height: 20px;
-        margin-left: 20px;
-    }
+  .salary-input-container .salary-input:focus {
+    outline: none;
+    box-shadow: 0 0 3pt 2pt #4e7ac7;
+  }
 
-    .tax-options-container {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-    }
+  .options-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
 
-    .tax-options-container .tax-options-container-img {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-    }
+  .options-item .resident-input-group {
+    display: flex;
+    margin-top: 10px;
+  }
 
-    .tax-options-container .tax-options-container-img img.right-chevron {
-        height: 20px;
-        margin-left: 20px;
-    }
+  .tax-details-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
 
-    .calculate-btn {
-        --btn-font-size: 1.5em;
-        --btn-border-radius: 1em;
-        --btn-primary-background-color: #4e7ac7;
-        --btn-primary-border-color: #4e7ac7;
-        --btn-primary-background-color-hover: #0069d9;
-        --btn-primary-border-color-hover: #0062cc;
-        --btn-primary-background-color-focus: #0069d9;
-        --btn-primary-border-color-focus: #0062cc;
-        --btn-primary-background-color-disabled: #007bff;
-        --btn-primary-border-color-disabled: #007bff;
-        --btn-primary-background-color-active: #0062cc;
-        --btn-primary-border-color-active: #005cbf;
-    }
+  .tax-details-container h5 {
+    margin-bottom: 0;
+  }
+
+  .tax-details-container .tax-details-container-img {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .tax-details-container .tax-details-container-img img.right-chevron {
+    height: 20px;
+    margin-left: 20px;
+  }
+
+  .tax-options-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .tax-options-container h5 {
+    margin-bottom: 0;
+  }
+
+  .tax-options-container .tax-options-container-img {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .tax-options-container .tax-options-container-img img.right-chevron {
+    height: 20px;
+    margin-left: 20px;
+  }
+
+  .calculate-btn-container {
+    display: grid;
+  }
+
+  .calculate-btn-container .calculate-btn {
+    --bs-btn-border-radius: 1em;
+    --bs-btn-bg: hsl(218, 51.9%, 54.3%);
+    --bs-btn-color: white;
+    --bs-btn-border-color: hsl(218, 51.9%, 54.3%);
+    --bs-btn-hover-bg: hsl(218, 51.9%, 45%);
+    --bs-btn-hover-color: white;
+    --bs-btn-hover-border-color: hsl(218, 51.9%, 45%);
+    --bs-btn-disabled-bg: hsl(216, 98%, 52%);
+    --bs-btn-disabled-color: white;
+    --bs-btn-active-bg: hsl(218, 51.9%, 45%);
+    --bs-btn-active-color: white;
+    --bs-btn-active-border-color: hsl(218, 51.9%, 45%);
+  }
 `;

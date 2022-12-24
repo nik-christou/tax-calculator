@@ -1,18 +1,17 @@
-import {LitElement, html} from 'lit';
-import {BaseElementMixin} from '../base/BaseElementMixin.js';
+import {html} from 'lit';
+import {BaseElement} from '../base/BaseElement.js';
 import {SnackbarNotificationCss} from './SnackbarNotificationCss.js';
 
-export class SnackbarNotification extends BaseElementMixin(LitElement) {
+export class SnackbarNotification extends BaseElement {
 
-    static get properties() {
-        return {
-            visible: { type: Boolean, reflect: true }
-        };
-    }
+    static properties = {
+        visible: {type: Boolean, reflect: true}
+    };
 
-    static get styles() {
-        return [...super.styles, SnackbarNotificationCss];
-    }
+    static styles = [
+        BaseElement.styles,
+        SnackbarNotificationCss
+    ];
 
     render() {
         return html`
@@ -129,8 +128,8 @@ export class SnackbarNotification extends BaseElementMixin(LitElement) {
                 const marginBottomValue = window.getComputedStyle(slotElement).marginBottom;
 
                 // remove px suffix - just extract the number
-                const marginTop = Number(marginTopValue.slice(0, marginTopValue.length-2));
-                const marginBottom = Number(marginBottomValue.slice(0, marginBottomValue.length-2));
+                const marginTop = Number(marginTopValue.slice(0, marginTopValue.length - 2));
+                const marginBottom = Number(marginBottomValue.slice(0, marginBottomValue.length - 2));
 
                 totalHeight += (slotElementHeight + marginTop + marginBottom);
             }

@@ -7,9 +7,9 @@ export class TaxProcessorDispatcher {
     
     /**
      * @param {Number} countryId
-     * @param {import('../../model/SalaryDetails.js').SalaryDetails} salaryDetails
+     * @param {SalaryDetails} salaryDetails
      *
-     * @returns {Promise<import('../../model/TaxResults.js').TaxResults>}
+     * @returns {TaxResults}
      */
     static dispatch(countryId, salaryDetails) {
 

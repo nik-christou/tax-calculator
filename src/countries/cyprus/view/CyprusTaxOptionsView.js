@@ -1,27 +1,28 @@
-import {LitElement} from 'lit';
-import {BaseElementMixin} from '../../../base/BaseElementMixin.js';
+import {BaseElement} from '../../../base/BaseElement.js';
 import {TaxOptions} from "../../../model/TaxOptions.js";
 import {CyprusTaxOptions} from '../model/CyprusTaxOptions.js';
 import {CyprusTaxOptionsViewTemplate} from './CyprusTaxOptionsViewTemplate.js';
-import {ToggleCss} from '../../../base/ToggleCss.js';
-import {ListGroupCss} from '../../../base/ListGroupCss.js';
-import {BlueprintCss} from '../../../base/BlueprintCss.js';
 import {userSelectionsStore} from '../../../datastore/UserSelectionsStore.js';
 import CountryIDsEnum from '../../../datastore/CountryIDsEnum.js';
-import {CommonTaxOptionsViewCss} from '../../CommonTaxOptionViewCss.js';
 import {EmploymentTypes} from "../../../model/EmploymentTypes.js";
+import {BlueprintCss} from '../../../base/BlueprintCss.js';
+import {ListGroupCssTaggedTemplate} from '@twbs-css/template-literals';
+import {FormsCssTaggedTemplate} from '@twbs-css/template-literals';
+import {CommonTaxOptionsViewCss} from '../../CommonTaxOptionViewCss.js';
 
-export class CyprusTaxOptionsView extends BaseElementMixin(LitElement) {
+export class CyprusTaxOptionsView extends BaseElement {
 
-    static get properties() {
-        return {
-            employmentStatus: Boolean
-        };
-    }
+    static properties = {
+        employmentStatus: Boolean
+    };
 
-    static get styles() {
-        return [...super.styles, BlueprintCss, ListGroupCss, ToggleCss, CommonTaxOptionsViewCss];
-    }
+    static styles = [
+        BaseElement.styles,
+        BlueprintCss,
+        ListGroupCssTaggedTemplate,
+        FormsCssTaggedTemplate,
+        CommonTaxOptionsViewCss
+    ];
 
     render() {
         return CyprusTaxOptionsViewTemplate(this.employmentStatus);
@@ -32,7 +33,7 @@ export class CyprusTaxOptionsView extends BaseElementMixin(LitElement) {
         this._loadUserSelectionFromDatastore();
     }
 
-    firstUpdated() {
+    firstUpdated(_changedProperties) {
         this.#addEmploymentStatusListener();
     }
 
@@ -46,11 +47,7 @@ export class CyprusTaxOptionsView extends BaseElementMixin(LitElement) {
 
         const {type} = selectedTaxOptions?.options?.employmentType;
 
-        if(type === EmploymentTypes.SELF_EMPLOYED.type) {
-            this.employmentStatus = true;
-        } else {
-            this.employmentStatus = false;
-        }
+        this.employmentStatus = type === EmploymentTypes.SELF_EMPLOYED.type;
     }
 
     #addEmploymentStatusListener() {

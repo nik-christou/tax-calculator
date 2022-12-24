@@ -15,6 +15,9 @@ export class ServiceWorkerRegistrationHandler {
             onOfflineReady() {},
             async onNeedRefresh() {
                 addEventListener('refreshNotificationEvent', (_) => {
+
+                    // TODO: Clear user selection in local storage
+
                     updateSW(true);
                 });
                 await snackbarNotification.show();

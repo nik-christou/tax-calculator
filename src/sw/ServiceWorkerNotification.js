@@ -1,12 +1,13 @@
-import {LitElement, html} from 'lit';
-import {BaseElementMixin} from '../base/BaseElementMixin.js';
+import {html} from 'lit';
+import {BaseElement} from '../base/BaseElement.js';
 import {ServiceWorkerNotificationCss} from './ServiceWorkerNotificationCss.js';
 
-export class ServiceWorkerNotification extends BaseElementMixin(LitElement) {
+export class ServiceWorkerNotification extends BaseElement {
 
-    static get styles() {
-        return [...super.styles, ServiceWorkerNotificationCss];
-    }
+    static styles = [
+        BaseElement.styles,
+        ServiceWorkerNotificationCss
+    ];
 
     render() {
         return html`

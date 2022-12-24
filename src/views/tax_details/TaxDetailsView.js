@@ -1,27 +1,27 @@
-import { LitElement } from 'lit';
-import { BaseElementMixin } from '../../base/BaseElementMixin.js';
-import { userSelectionsStore } from "../../datastore/UserSelectionsStore.js";
-import { taxDetailsStore } from '../../datastore/TaxDetailsStore.js';
-import { TaxDetailsViewTemplate } from './TaxDetailsViewTemplate.js';
-import { taxDetailsViewTemplateLoader } from './TaxDetailsViewTemplateLoader.js';
-import { ListGroupCss } from '../../base/ListGroupCss.js';
-import { BlueprintCss } from '../../base/BlueprintCss.js';
-import { TaxDetailsViewCss } from './TaxDetailsViewCss.js';
-import { Country } from '../../model/Country.js';
+import {Country} from '../../model/Country.js';
+import {BaseElement} from '../../base/BaseElement.js';
+import {userSelectionsStore} from "../../datastore/UserSelectionsStore.js";
+import {taxDetailsStore} from '../../datastore/TaxDetailsStore.js';
+import {TaxDetailsViewTemplate} from './TaxDetailsViewTemplate.js';
+import {taxDetailsViewTemplateLoader} from './TaxDetailsViewTemplateLoader.js';
+import {BlueprintCss} from '../../base/BlueprintCss.js';
+import {ListGroupCssTaggedTemplate} from '@twbs-css/template-literals';
+import {TaxDetailsViewCss} from './TaxDetailsViewCss.js';
 
-export class TaxDetailsView extends BaseElementMixin(LitElement) {
+export class TaxDetailsView extends BaseElement {
     
-    static get properties() {
-        return {
-            taxDetails: Object,
-            selectedCountry: Country,
-            formatter: Intl.NumberFormat
-        };
-    }
+    static properties = {
+        taxDetails: Object,
+        selectedCountry: Country,
+        formatter: Intl.NumberFormat
+    };
 
-    static get styles() {
-        return [...super.styles, BlueprintCss, ListGroupCss, TaxDetailsViewCss];
-    }
+    static styles = [
+        BaseElement.styles,
+        BlueprintCss,
+        ListGroupCssTaggedTemplate,
+        TaxDetailsViewCss
+    ];
 
     render() {
         return TaxDetailsViewTemplate(() => this.#loadCountrySpecificTemplate());
@@ -32,11 +32,10 @@ export class TaxDetailsView extends BaseElementMixin(LitElement) {
         this.formatter = null;
         this.taxDetails = null;
         this.selectedCountry = null;
-        this.countryTaxDetailsView = null;
         this.#loadUserSelectionFromDatastore();
     }
 
-    firstUpdated() {
+    firstUpdated(_changedProperties) {
         this.#addNavBackListener();
     }
 
@@ -89,13 +88,11 @@ export class TaxDetailsView extends BaseElementMixin(LitElement) {
      * @param {Country} selectedCountry
      */
     #updateCurrencyFormatter(selectedCountry) {
-        const formatter = new Intl.NumberFormat(selectedCountry.locale, {
+        this.formatter = new Intl.NumberFormat(selectedCountry.locale, {
             style: 'currency',
             currency: selectedCountry.currency,
             minimumFractionDigits: 2
         });
-
-        this.formatter = formatter;
     }
 }
 

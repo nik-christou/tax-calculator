@@ -1,6 +1,6 @@
-import { SalaryTypes } from '../model/SalaryTypes.js';
-import { TaxResult } from '../model/TaxResult.js';
-import { TaxBreakdownBracket } from '../model/TaxBreakdownBracket.js';
+import {SalaryTypes} from '../model/SalaryTypes.js';
+import {TaxResult} from '../model/TaxResult.js';
+import {TaxBreakdownBracket} from '../model/TaxBreakdownBracket.js';
  
 export class TaxCalculatorUtil {
 

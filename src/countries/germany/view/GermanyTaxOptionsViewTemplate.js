@@ -1,6 +1,6 @@
 import {html} from "lit";
 
-const GermanTaxOptionsViewTemplate = html`
+const GermanTaxOptionsViewTemplate = (married, withChildren) => html`
     <div class="list-group">
         <div class="list-group-item">
             <div class="options-item">
@@ -8,10 +8,12 @@ const GermanTaxOptionsViewTemplate = html`
                     <h5 class="option-description">Marital status</h5>
                 </div>
                 <div>
-                    <ul class="list-group list-group-horizontal marital-status-values">
-                        <a id="single-status" class="list-group-item list-group-item-action active">Single</a>
-                        <a id="married-status" class="list-group-item list-group-item-action">Married</a>
-                    </ul>
+                    <div class="btn-group">
+                        <input id="single-status" name="marital-status" type="radio" class="btn-check" autocomplete="off" ?checked=${!married}>
+                        <label class="btn btn-outline-primary" for="single-status">Single</label>
+                        <input id="married-status" name="marital-status" type="radio" class="btn-check" autocomplete="off" ?checked=${married}>
+                        <label class="btn btn-outline-primary" for="married-status">Married</label>
+                    </div>
                 </div>
             </div>
         </div>
@@ -21,10 +23,12 @@ const GermanTaxOptionsViewTemplate = html`
                     <h5 class="option-description">Parental status</h5>
                 </div>
                 <div>
-                    <ul class="list-group list-group-horizontal parental-status-values">
-                        <a id="children" class="list-group-item list-group-item-action active">Children</a>
-                        <a id="no-children" class="list-group-item list-group-item-action">No Children</a>
-                    </ul>
+                    <div class="btn-group">
+                        <input id="no-children" name="parental-status" type="radio" class="btn-check" autocomplete="off" ?checked=${!withChildren}>
+                        <label class="btn btn-outline-primary" for="no-children">No children</label>
+                        <input id="with-children" name="parental-status" type="radio" class="btn-check" autocomplete="off" ?checked=${withChildren}>
+                        <label class="btn btn-outline-primary" for="with-children">With children</label>
+                    </div>
                 </div>
             </div>
         </div>

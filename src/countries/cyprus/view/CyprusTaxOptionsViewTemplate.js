@@ -11,14 +11,15 @@ const CyprusTaxOptionsViewTemplate = (employmentStatus) => html`
                     <h5 class="option-description">Self-employed</h5>
                 </div>
                 <div>
-                    <input
-                        id="employmentTypeStatus"
-                        type="checkbox"
-                        name="employmentTypeStatus"
-                        ?checked=${employmentStatus}
-                        class="toggle toggle-round cmn-toggle cmn-toggle-round"
-                    />
-                    <label for="employmentTypeStatus"></label>
+                    <div class="form-check form-switch">
+                        <input
+                            id="employmentTypeStatus" 
+                            name="employmentTypeStatus" 
+                            class="form-check-input"
+                            ?checked=${employmentStatus}
+                            type="checkbox" 
+                        />
+                    </div>
                 </div>
             </div>
         </div>

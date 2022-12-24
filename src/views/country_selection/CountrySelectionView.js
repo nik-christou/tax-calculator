@@ -1,43 +1,40 @@
-import { LitElement } from 'lit';
-import { BaseElementMixin } from '../../base/BaseElementMixin.js';
-import { CountrySelectionViewTemplate } from './CountrySelectionViewTemplate.js';
-import { countryStore } from "../../datastore/CountryStore.js";
-import { userSelectionsStore } from "../../datastore/UserSelectionsStore.js";
-import { ListGroupCss } from '../../base/ListGroupCss.js';
-import { CountrySelectionViewCss } from './CountrySelectionViewCss.js';
-import { BlueprintCss } from '../../base/BlueprintCss.js';
+import {BaseElement} from '../../base/BaseElement.js';
+import {CountrySelectionViewTemplate} from './CountrySelectionViewTemplate.js';
+import {countryStore} from "../../datastore/CountryStore.js";
+import {userSelectionsStore} from "../../datastore/UserSelectionsStore.js";
+import {BlueprintCss} from '../../base/BlueprintCss.js';
+import {ListGroupCssTaggedTemplate} from '@twbs-css/template-literals';
+import {CountrySelectionViewCss} from './CountrySelectionViewCss.js';
 
-export class CountrySelectionView extends BaseElementMixin(LitElement) {
-    static get properties() {
-        return {
-            countries: Array,
-            selectedId: Number
-        };
-    }
+export class CountrySelectionView extends BaseElement {
 
-    static get styles() {
-        return [...super.styles,
-            BlueprintCss,
-            ListGroupCss,
-            CountrySelectionViewCss];
-    }
+    static properties = {
+        countries: Array,
+        selectedId: Number
+    };
+
+    static styles = [
+        BaseElement.styles,
+        BlueprintCss,
+        ListGroupCssTaggedTemplate,
+        CountrySelectionViewCss
+    ];
 
     render() {
         return CountrySelectionViewTemplate(
-            this.countries, 
-            this.selectedId, 
+            this.countries,
+            this.selectedId,
             this.#handleSelectedCountry.bind(this));
     }
-    
+
     constructor() {
         super();
         this.#loadCountries();
         this.#loadSelectedCountry();
     }
 
-    firstUpdated() {
+    firstUpdated(_changedProperties) {
         this.#addNavBackListener();
-
     }
 
     #loadSelectedCountry() {
