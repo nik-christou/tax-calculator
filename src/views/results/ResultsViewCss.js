@@ -67,6 +67,22 @@ export const ResultsViewCss = css`
     text-decoration: none;
   }
 
+  .navbar .share-container {
+    display: flex;
+    align-items: center;
+    padding-right: 10px;
+    justify-content: right;
+  }
+
+  .navbar .share-container a {
+    --bs-link-color: white;
+    text-decoration: underline;
+  }
+
+  .navbar .share-container a:hover {
+    --bs-link-hover-color: white;
+  }
+
   .main-container {
     padding-top: 10px;
     padding-left: 1em;
@@ -100,7 +116,7 @@ export const ResultsViewCss = css`
   .result-item-container h5 {
     margin-bottom: 0;
   }
-  
+
   .result-item-container span.deduction {
     color: red;
   }

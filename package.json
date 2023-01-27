@@ -1,6 +1,6 @@
 {
   "name": "tax-calculator",
-  "version": "v2.0.1",
+  "version": "v2.0.2",
   "description": "Salary Tax Calculator for multiple countries",
   "author": "Nikolas Christou",
   "license": "MIT",
@@ -21,7 +21,7 @@
   "dependencies": {
     "@twbs-css/template-literals": "1.0.2",
     "@vaadin/router": "1.7.4",
-    "lit": "2.5.0"
+    "lit": "2.6.1"
   },
   "devDependencies": {
     "@esm-bundle/chai": "4.3.4-fix.0",
@@ -29,8 +29,8 @@
     "@web/test-runner": "0.15.0",
     "http-server": "14.1.1",
     "sinon": "15.0.1",
-    "vite": "4.0.1",
-    "vite-plugin-pwa": "0.14.0",
+    "vite": "4.0.4",
+    "vite-plugin-pwa": "0.14.1",
     "workbox-window": "6.5.4"
   }
 }

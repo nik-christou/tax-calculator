@@ -42,6 +42,7 @@ export class ResultsView extends BaseElement {
 
     firstUpdated(_changedProperties) {
         this._addNavBackListener();
+        this.#addShareButtonListener();
     }
 
     /**
@@ -87,6 +88,11 @@ export class ResultsView extends BaseElement {
         navBackLink.addEventListener('click', (event) => this._handleNavBackEvent(event));
     }
 
+    #addShareButtonListener() {
+        const shareBtnLink = this.shadowRoot.querySelector('a#shareBtn');
+        shareBtnLink.addEventListener('click', (event) => this.#handleShareButtonEvent(event));
+    }
+
     /**
      * @param {import('../../model/Country.js').Country} selectedCountry
      */
@@ -104,6 +110,26 @@ export class ResultsView extends BaseElement {
     _handleNavBackEvent(event) {
         event.preventDefault();
         this._goToHome();
+    }
+
+    /**
+     * @param {Event} event
+     */
+    #handleShareButtonEvent(event) {
+        event.preventDefault();
+
+        if (!navigator.share) {
+            console.log("Web share API feature is not available");
+            return;
+        }
+
+        navigator.share({
+            title: 'Tax Calculator Results',
+            text: 'Tax calculation results',
+            url: window.location.href,
+        })
+        .then(() => console.log('Successful share'))
+        .catch((error) => console.log('Error sharing', error));
     }
 
     _goToHome() {
