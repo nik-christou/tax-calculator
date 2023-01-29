@@ -1,4 +1,4 @@
-import { assert } from "@esm-bundle/chai";
+import { describe, it, assert } from "vitest";
 import { TaxResult } from "../../../../src/model/TaxResult.js";
 import { SalaryDetails } from "../../../../src/model/SalaryDetails.js";
 import { SalaryTypes } from "../../../../src/model/SalaryTypes.js";
@@ -108,14 +108,14 @@ describe("CyprusTaxCalculator tests", () => {
         expectedAnnualTaxBreakdownBrackets.push(new TaxBreakdownBracket(19501, 28000, 20, 1699.8));
         expectedAnnualTaxBreakdownBrackets.push(new TaxBreakdownBracket(28001, 36300, 25, 2074.75));
         expectedAnnualTaxBreakdownBrackets.push(new TaxBreakdownBracket(36301, 60000, 30, 7109.400000000001));
-        expectedAnnualTaxBreakdownBrackets.push(new TaxBreakdownBracket(60000, -1, 35, 66643.276));
+        expectedAnnualTaxBreakdownBrackets.push(new TaxBreakdownBracket(60000, null, 35, 66643.276));
 
         const expectedMonthlyTaxBreakdownBrackets = new Array();
         expectedMonthlyTaxBreakdownBrackets.push(new TaxBreakdownBracket(0, 19500, 0, 0));
         expectedMonthlyTaxBreakdownBrackets.push(new TaxBreakdownBracket(19501, 28000, 20, 130.75384615384615));
         expectedMonthlyTaxBreakdownBrackets.push(new TaxBreakdownBracket(28001, 36300, 25, 159.59615384615384));
         expectedMonthlyTaxBreakdownBrackets.push(new TaxBreakdownBracket(36301, 60000, 30, 546.8769230769232));
-        expectedMonthlyTaxBreakdownBrackets.push(new TaxBreakdownBracket(60000, -1, 35, 5126.405846153846));
+        expectedMonthlyTaxBreakdownBrackets.push(new TaxBreakdownBracket(60000, null, 35, 5126.405846153846));
 
         const employerContributions = new CyprusContributions(employerSocialInsurance, employerHealthContribution);
         const selftEmployedContributions = new CyprusContributions(selfEmployedSocialInsurance, selfEmployedHealthContribution);
